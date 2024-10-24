@@ -2,9 +2,6 @@ from typing import Any, Callable
 from sklearn.metrics import classification_report
 
 
-# Ideas:
-# - track time for each prediction
-
 def evaluate(
     X: list[str], 
     y_true: list[int], 
