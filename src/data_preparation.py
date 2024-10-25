@@ -25,7 +25,7 @@ def preprocess_text_series(text_series):
 
 def prepare_data(promotional_file, good_file, nrows=None):
     """
-    Loads the first 10 lines of data from the CSV files, cleans up the texts and returns them as a DataFrame.
+    Loads the data from the CSV files, cleans up the texts and returns them as a DataFrame.
     """
     promo_df = pd.read_csv(promotional_file, nrows=nrows)
     good_df = pd.read_csv(good_file, nrows=nrows)
