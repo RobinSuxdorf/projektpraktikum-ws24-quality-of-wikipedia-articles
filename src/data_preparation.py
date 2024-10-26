@@ -2,6 +2,9 @@
 
 import pandas as pd
 import nltk
+import logging
+
+logging.getLogger(__name__)
 
 try:
     from nltk.corpus import stopwords
@@ -25,6 +28,7 @@ def preprocess_text_series(text_series):
     Returns:
         pd.Series: A pandas Series with cleaned text.
     """
+    logging.info("Preprocessing text data.")
     text_series = text_series.str.replace(r"\W", " ", regex=True)
     text_series = text_series.str.lower()
     text_series = text_series.apply(
@@ -45,18 +49,23 @@ def prepare_data(promotional_file, good_file, nrows=None):
     Returns:
         pd.DataFrame: A pandas DataFrame containing preprocessed text data and corresponding labels (1 for promotional, 0 for non-promotional).
     """
+    logging.info("Loading promotional and non-promotional data.")
     try:
         promo_df = pd.read_csv(promotional_file, nrows=nrows)
         good_df = pd.read_csv(good_file, nrows=nrows)
     except FileNotFoundError as e:
+        logging.error(f"Error reading files: {e}")
         raise FileNotFoundError(f"Error reading files: {e}")
 
+    logging.info("Preprocessing promotional data.")
     promo_df["cleaned_text"] = preprocess_text_series(promo_df["text"])
     promo_df["label"] = 1
 
+    logging.info("Preprocessing non-promotional data.")
     good_df["cleaned_text"] = preprocess_text_series(good_df["text"])
     good_df["label"] = 0
 
+    logging.info("Combining datasets.")
     data = pd.concat(
         [promo_df[["cleaned_text", "label"]], good_df[["cleaned_text", "label"]]],
         axis=0,
@@ -64,4 +73,5 @@ def prepare_data(promotional_file, good_file, nrows=None):
 
     data = data.sample(frac=1).reset_index(drop=True)
 
+    logging.info("Data preparation complete.")
     return data

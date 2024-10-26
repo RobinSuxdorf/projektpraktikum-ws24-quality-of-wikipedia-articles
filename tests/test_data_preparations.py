@@ -3,7 +3,10 @@
 import unittest
 import pandas as pd
 import os
+import logging
 from src.data_preparation import preprocess_text_series, prepare_data
+
+logging.getLogger(__name__)
 
 
 class TestDataPreparation(unittest.TestCase):
@@ -21,6 +24,7 @@ class TestDataPreparation(unittest.TestCase):
 
         Creates sample text series and dataframes, and saves them to CSV files.
         """
+        logging.info("Setting up sample data for tests.")
         self.sample_text_series = pd.Series(
             ["Hello, this is a TEST sentence!", "It contains symbols and stopwords."]
         )
@@ -49,6 +53,7 @@ class TestDataPreparation(unittest.TestCase):
 
         Removes the sample CSV files created during testing.
         """
+        logging.info("Cleaning up files created during tests.")
         if os.path.exists(self.PROMO_FILE):
             os.remove(self.PROMO_FILE)
         if os.path.exists(self.GOOD_FILE):
@@ -62,6 +67,7 @@ class TestDataPreparation(unittest.TestCase):
 
         Checks that the returned series matches the expected cleaned series.
         """
+        logging.info("Testing preprocess_text_series function.")
         cleaned_series = preprocess_text_series(self.sample_text_series)
         pd.testing.assert_series_equal(
             cleaned_series, self.expected_cleaned_text_series
@@ -73,6 +79,7 @@ class TestDataPreparation(unittest.TestCase):
 
         Checks that the returned DataFrame has 'cleaned_text' and 'label' columns.
         """
+        logging.info("Testing prepare_data output format.")
         data = prepare_data(self.PROMO_FILE, self.GOOD_FILE)
         self.assertIsInstance(data, pd.DataFrame)
         self.assertIn("cleaned_text", data.columns)
@@ -84,6 +91,7 @@ class TestDataPreparation(unittest.TestCase):
 
         Verifies that the DataFrame has the correct number of rows based on the nrows argument.
         """
+        logging.info("Testing prepare_data row count with nrows=1.")
         data = prepare_data(self.PROMO_FILE, self.GOOD_FILE, nrows=1)
         self.assertEqual(len(data), 2)
 
@@ -93,6 +101,7 @@ class TestDataPreparation(unittest.TestCase):
 
         Checks that promotional data is labeled with 1 and non-promotional data with 0.
         """
+        logging.info("Testing prepare_data labels.")
         data = prepare_data(self.PROMO_FILE, self.GOOD_FILE)
         self.assertIn(1, data["label"].values)
         self.assertIn(0, data["label"].values)
@@ -103,6 +112,7 @@ class TestDataPreparation(unittest.TestCase):
 
         Verifies that the cleaned text is in lowercase and contains no special characters.
         """
+        logging.info("Testing prepare_data content preprocessing.")
         data = prepare_data(self.PROMO_FILE, self.GOOD_FILE)
         for text in data["cleaned_text"]:
             self.assertTrue(text.islower())
@@ -114,6 +124,7 @@ class TestDataPreparation(unittest.TestCase):
 
         Expects a FileNotFoundError when a non-existent file is provided.
         """
+        logging.info("Testing prepare_data with a non-existent file.")
         with self.assertRaises(FileNotFoundError):
             prepare_data("tests/non_existent_file.csv", self.GOOD_FILE)
 
@@ -123,6 +134,7 @@ class TestDataPreparation(unittest.TestCase):
 
         Expects an EmptyDataError when an empty file is provided.
         """
+        logging.info("Testing prepare_data with an empty file.")
         open(self.EMPTY_FILE, "w").close()
         with self.assertRaises(pd.errors.EmptyDataError):
             prepare_data(self.EMPTY_FILE, self.GOOD_FILE)
