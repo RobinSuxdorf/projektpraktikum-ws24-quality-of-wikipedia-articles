@@ -13,12 +13,13 @@ class WikipediaArticleDataset(Dataset):
         encode (Callable[[str], list[int]]): A function for encoding the articles.
         transform (Callable[[str], str] | None): A function for transforming the articles.
     """
+
     def __init__(
         self,
         articles: list[str],
         labels: list[int],
         encode: Callable[[str], list[int]],
-        transform: Callable[[str], str] | None = None
+        transform: Callable[[str], str] | None = None,
     ) -> None:
         self._articles = articles
         self._labels = labels

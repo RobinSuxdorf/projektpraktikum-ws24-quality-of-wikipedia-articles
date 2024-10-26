@@ -3,9 +3,7 @@ from sklearn.metrics import classification_report
 
 
 def evaluate(
-    X: list[str], 
-    y_true: list[int], 
-    predictor: Callable[[Any], int]
+    X: list[str], y_true: list[int], predictor: Callable[[Any], int]
 ) -> dict[str, dict[str, int | float]]:
     """
     Evaluate the predictor method on the dataset.

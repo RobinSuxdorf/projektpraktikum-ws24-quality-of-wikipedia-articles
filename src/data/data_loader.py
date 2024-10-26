@@ -3,9 +3,9 @@ import pandas as pd
 
 
 def load_data(
-    good_file_path: str, 
-    promo_file_path: str, 
-    transform: Callable[[pd.Series], str] | None = None
+    good_file_path: str,
+    promo_file_path: str,
+    transform: Callable[[pd.Series], str] | None = None,
 ) -> pd.DataFrame:
     """
     Load, merges and optionally transforms promotional and non-promotional wikipedia articles.
@@ -13,8 +13,8 @@ def load_data(
     Args:
         good_file_path (str): Path to the CSV file containing the 'good' articles.
         promo_file_path (str): Path to the CSV file containing the 'promotional' articles.
-        transform (Callable[[pd.Series], str] | None): A function that applies 
-            a transformation to each row of the DataFrame. Expected to return a 
+        transform (Callable[[pd.Series], str] | None): A function that applies
+            a transformation to each row of the DataFrame. Expected to return a
             string, which will be used as the value for the "text" column.
 
     Returns:
