@@ -45,6 +45,6 @@ Logging is centrally configured in `main.py`, and each module uses `logging.getL
 
 ## Guidelines
 
-- **PEP 8**: Follow PEP 8 coding standards and black formmatter to maintain code consistency.
+- **PEP 8 & black**: Follow PEP 8 coding standards and use black formatter to maintain code consistency.
 - **Logging**: Use `logging.getLogger(__name__)` for logging in each module to integrate with the centralized logging configuration.
 - **Testing**: Add or update tests for any new features or modifications to maintain robustness.
