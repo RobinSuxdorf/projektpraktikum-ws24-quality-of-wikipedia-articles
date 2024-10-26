@@ -8,13 +8,20 @@ class WikipediaArticleDataset(Dataset):
         self,
         articles: list[str],
         labels: list[int],
-        tokenizer: Callable[[str], list[int]] # TODO: Change to transform
+        transform: Callable[[str], list[int]]
     ) -> None:
-        self._articles = [tokenizer(article) for article in articles]
+        self._articles = articles
         self._labels = labels
+        self._transform = transform
 
     def __len__(self) -> int:
         return len(self._articles)
 
-    def __getitem__(self, idx: int) -> tuple[torch.Tensor, torch.Tensor]:
-        return torch.LongTensor(self._articles[idx]), torch.Tensor(self._labels[idx])
+    def __getitem__(self, idx: int) -> tuple[torch.LongTensor, torch.Tensor]:
+        article = self._articles[idx]
+        label = self._labels[idx]
+
+        if self._transform:
+            article = self._transform(article)
+
+        return torch.LongTensor(article), torch.Tensor(label)
