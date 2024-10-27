@@ -53,4 +53,4 @@ class WikipediaArticleDataset(Dataset):
 
         encoded = self._encode(article)
 
-        return torch.LongTensor(encoded), torch.Tensor(label)
+        return torch.LongTensor(encoded), torch.tensor(label, dtype=torch.float32)
