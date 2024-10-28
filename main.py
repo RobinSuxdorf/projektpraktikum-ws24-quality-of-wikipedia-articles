@@ -12,7 +12,7 @@ logging.basicConfig(
 
 PROMOTIONAL_FILE = "data/raw/promotional.csv"
 GOOD_FILE = "data/raw/good.csv"
-NROWS = 10000
+NROWS = 100000
 MODEL_PATH = "models/naive_bayes_model.pkl"
 VECTORIZER_PATH = "models/tfidf_vectorizer.pkl"
 
