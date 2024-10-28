@@ -33,3 +33,5 @@ if __name__ == "__main__":
     joblib.dump(model, MODEL_PATH)
     joblib.dump(vectorizer, VECTORIZER_PATH)
     logging.info("Model and vectorizer saved.")
+
+    logging.info("Pipeline completed.")
