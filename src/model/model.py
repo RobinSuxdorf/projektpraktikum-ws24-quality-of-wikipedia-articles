@@ -23,8 +23,8 @@ class RNN(nn.Module):
     def forward(self, x: torch.Tensor) -> torch.Tensor:
         x = self.embedding(x)  # (batch_size, seq_length, embedding_dim)
         h_0 = torch.zeros(
-            self.num_layers, x.size(0), self.hidden_size
-        )  # .to(x.device)  # (num_layers, batch_size, hidden_size)
+            self.num_layers, x.size(0), self.hidden_size, device=x.device
+        )  # (num_layers, batch_size, hidden_size)
         out, _ = self.rnn(x, h_0)  # (batch_size, seq_length, hidden_size)
         out = out[:, -1, :]  # (batch_size, hidden_size)
         out = self.fc(out)  # (batch_size, output_size)
