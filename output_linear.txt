@@ -1,0 +1,20 @@
+024-11-01 23:54:13,949 - INFO - Downloading dataset
+2024-11-01 23:54:14,452 - INFO - Dataset downloaded to: C:\Users\U542596\.cache\kagglehub\datasets\urbanbricks\wikipedia-promotional-articles\versions\8
+2024-11-01 23:54:17,983 - INFO - Dataset shape: (54116, 8)
+2024-11-01 23:54:17,984 - INFO - Extracting features
+2024-11-01 23:54:56,810 - INFO - Feature matrix shape: (54116, 700884)
+2024-11-01 23:54:58,596 - INFO - LinearSVC(C=1) - Evaluating model
+2024-11-01 23:54:58,631 - INFO - LinearSVC(C=1) - Confusion Matrix:
+[[5813  231]
+ [ 245 4535]]
+2024-11-01 23:54:58,800 - INFO - LinearSVC(C=1) - Classification Report:
+              precision    recall  f1-score   support
+
+        good       0.96      0.96      0.96      6044
+ promotional       0.95      0.95      0.95      4780
+
+    accuracy                           0.96     10824
+   macro avg       0.96      0.96      0.96     10824
+weighted avg       0.96      0.96      0.96     10824
+
+2024-11-01 23:54:58,810 - INFO - LinearSVC(C=1) - Accuracy: 0.9560236511456024
