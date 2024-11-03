@@ -4,4 +4,5 @@ __all__ = [
     "tune_model",
     "tune_model_optuna",
     "evaluate_model",
+    "evaluate_model_with_categories",
 ]

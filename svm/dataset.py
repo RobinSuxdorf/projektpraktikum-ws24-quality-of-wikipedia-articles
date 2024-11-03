@@ -29,4 +29,5 @@ def load_data_frame(frac: float = 1.0, random_state: int = 42) -> pd.DataFrame:
     promo_df["label"] = "promotional"
     df = pd.concat([good_df, promo_df])
     logging.info("Dataset shape: %s", df.shape)
+    logging.info("Dataset info: %s", df.info())
     return df

@@ -2,7 +2,7 @@ import logging
 import sklearn.model_selection as skms
 import sklearn.svm as sksvm
 import svm.dataset
-import svm.evalutation
+import svm.evaluation
 import svm.features
 import svm.tuning
 
@@ -29,31 +29,31 @@ def main():
     svm_model_linearsvc = svm.tuning.tune_model(
         X_train, y_train, sksvm.LinearSVC(), param_grid
     )
-    svm.evalutation.evaluate_model(X_test, y_test, svm_model_linearsvc)
+    svm.evaluation.evaluate_model(X_test, y_test, svm_model_linearsvc)
 
     # Linear SVM
     svm_model_linear = svm.tuning.tune_model(
         X_train, y_train, sksvm.SVC(kernel="linear"), param_grid
     )
-    svm.evalutation.evaluate_model(X_test, y_test, svm_model_linear)
+    svm.evaluation.evaluate_model(X_test, y_test, svm_model_linear)
 
     # RBF SVM
     svm_model_rbf = svm.tuning.tune_model(
         X_train, y_train, sksvm.SVC(kernel="rbf", gamma="scale"), param_grid
     )
-    svm.evalutation.evaluate_model(X_test, y_test, svm_model_rbf)
+    svm.evaluation.evaluate_model(X_test, y_test, svm_model_rbf)
 
     # Polynomial SVM
     svm_model_poly = svm.tuning.tune_model(
         X_train, y_train, sksvm.SVC(kernel="poly", gamma="scale"), param_grid
     )
-    svm.evalutation.evaluate_model(X_test, y_test, svm_model_poly)
+    svm.evaluation.evaluate_model(X_test, y_test, svm_model_poly)
 
     # Sigmoid SVM
     svm_model_sigmoid = svm.tuning.tune_model(
         X_train, y_train, sksvm.SVC(kernel="sigmoid", gamma="scale"), param_grid
     )
-    svm.evalutation.evaluate_model(X_test, y_test, svm_model_sigmoid)
+    svm.evaluation.evaluate_model(X_test, y_test, svm_model_sigmoid)
 
 
 if __name__ == "__main__":
