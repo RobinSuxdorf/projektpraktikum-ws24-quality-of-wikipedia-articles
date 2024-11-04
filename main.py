@@ -2,8 +2,7 @@
 
 import logging
 import sys
-from src import load_data
-from src.utils import get_argument_parser, validate_file_paths
+from src import load_data, get_argument_parser, validate_file_paths
 
 logging.basicConfig(
     level=logging.INFO,
