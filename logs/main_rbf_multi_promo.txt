@@ -1,0 +1,99 @@
+2024-11-04 21:59:29,652 - INFO - Downloading dataset
+2024-11-04 21:59:30,178 - INFO - Dataset downloaded to: C:\Users\U542596\.cache\kagglehub\datasets\urbanbricks\wikipedia-promotional-articles\versions\8
+2024-11-04 21:59:33,707 - INFO - Dataset shape: (10823, 8)
+<class 'pandas.core.frame.DataFrame'>
+Index: 10823 entries, 10370 to 12090
+Data columns (total 8 columns):
+ #   Column  Non-Null Count  Dtype  
+---  ------  --------------  -----  
+ 0   text    10823 non-null  object 
+ 1   url     10823 non-null  object 
+ 2   label   10823 non-null  object 
+ 3   advert  4767 non-null   float64
+ 4   coi     4767 non-null   float64
+ 5   fanpov  4767 non-null   float64
+ 6   pr      4767 non-null   float64
+ 7   resume  4767 non-null   float64
+dtypes: float64(5), object(3)
+memory usage: 761.0+ KB
+2024-11-04 21:59:33,712 - INFO - Dataset info: None
+2024-11-04 21:59:33,713 - INFO - Extracting features for promotional articles
+2024-11-04 21:59:35,304 - INFO - Feature matrix shape: (4767, 112541)
+2024-11-04 21:59:35,305 - INFO - Labels shape: (4767, 5)
+2024-11-04 22:01:09,686 - INFO - MultiOutputClassifier(estimator=SVC(), n_jobs=1) - Evaluating model
+2024-11-04 22:01:32,442 - INFO - MultiOutputClassifier(estimator=SVC(), n_jobs=1) - Evaluating output: advert
+2024-11-04 22:01:32,445 - INFO - MultiOutputClassifier(estimator=SVC(), n_jobs=1) - Confusion Matrix for advert:
+[[  5 192]
+ [  4 753]]
+2024-11-04 22:01:32,448 - INFO - MultiOutputClassifier(estimator=SVC(), n_jobs=1) - Classification Report for advert:      
+              precision    recall  f1-score   support
+
+         0.0       0.56      0.03      0.05       197
+         1.0       0.80      0.99      0.88       757
+
+    accuracy                           0.79       954
+   macro avg       0.68      0.51      0.47       954
+weighted avg       0.75      0.79      0.71       954
+
+2024-11-04 22:01:32,449 - INFO - MultiOutputClassifier(estimator=SVC(), n_jobs=1) - Accuracy for advert: 0.7945492662473794
+2024-11-04 22:01:32,449 - INFO - MultiOutputClassifier(estimator=SVC(), n_jobs=1) - Evaluating output: coi
+2024-11-04 22:01:32,450 - INFO - MultiOutputClassifier(estimator=SVC(), n_jobs=1) - Confusion Matrix for coi:
+[[880   0]
+ [ 74   0]]
+2024-11-04 22:01:32,454 - INFO - MultiOutputClassifier(estimator=SVC(), n_jobs=1) - Classification Report for coi:
+              precision    recall  f1-score   support
+
+         0.0       0.92      1.00      0.96       880
+         1.0       0.00      0.00      0.00        74
+
+    accuracy                           0.92       954
+   macro avg       0.46      0.50      0.48       954
+weighted avg       0.85      0.92      0.89       954
+
+2024-11-04 22:01:32,456 - INFO - MultiOutputClassifier(estimator=SVC(), n_jobs=1) - Accuracy for coi: 0.9224318658280922
+2024-11-04 22:01:32,456 - INFO - MultiOutputClassifier(estimator=SVC(), n_jobs=1) - Evaluating output: fanpov
+2024-11-04 22:01:32,458 - INFO - MultiOutputClassifier(estimator=SVC(), n_jobs=1) - Confusion Matrix for fanpov:
+[[895   0]
+ [ 59   0]]
+2024-11-04 22:01:32,462 - INFO - MultiOutputClassifier(estimator=SVC(), n_jobs=1) - Classification Report for fanpov:
+              precision    recall  f1-score   support
+
+         0.0       0.94      1.00      0.97       895
+         1.0       0.00      0.00      0.00        59
+
+    accuracy                           0.94       954
+   macro avg       0.47      0.50      0.48       954
+weighted avg       0.88      0.94      0.91       954
+
+2024-11-04 22:01:32,464 - INFO - MultiOutputClassifier(estimator=SVC(), n_jobs=1) - Accuracy for fanpov: 0.9381551362683438
+2024-11-04 22:01:32,464 - INFO - MultiOutputClassifier(estimator=SVC(), n_jobs=1) - Evaluating output: pr
+2024-11-04 22:01:32,466 - INFO - MultiOutputClassifier(estimator=SVC(), n_jobs=1) - Confusion Matrix for pr:
+[[897   0]
+ [ 57   0]]
+2024-11-04 22:01:32,470 - INFO - MultiOutputClassifier(estimator=SVC(), n_jobs=1) - Classification Report for pr:
+              precision    recall  f1-score   support
+
+         0.0       0.94      1.00      0.97       897
+         1.0       0.00      0.00      0.00        57
+
+    accuracy                           0.94       954
+   macro avg       0.47      0.50      0.48       954
+weighted avg       0.88      0.94      0.91       954
+
+2024-11-04 22:01:32,472 - INFO - MultiOutputClassifier(estimator=SVC(), n_jobs=1) - Accuracy for pr: 0.940251572327044
+2024-11-04 22:01:32,473 - INFO - MultiOutputClassifier(estimator=SVC(), n_jobs=1) - Evaluating output: resume
+2024-11-04 22:01:32,474 - INFO - MultiOutputClassifier(estimator=SVC(), n_jobs=1) - Confusion Matrix for resume:
+[[855   1]
+ [ 98   0]]
+2024-11-04 22:01:32,479 - INFO - MultiOutputClassifier(estimator=SVC(), n_jobs=1) - Classification Report for resume:
+              precision    recall  f1-score   support
+
+         0.0       0.90      1.00      0.95       856
+         1.0       0.00      0.00      0.00        98
+
+    accuracy                           0.90       954
+   macro avg       0.45      0.50      0.47       954
+weighted avg       0.81      0.90      0.85       954
+
+2024-11-04 22:01:32,481 - INFO - MultiOutputClassifier(estimator=SVC(), n_jobs=1) - Accuracy for resume: 0.8962264150943396
+2024-11-04 22:01:32,481 - INFO - MultiOutputClassifier(estimator=SVC(), n_jobs=1) - Overall Accuracy: 0.8983228511530397
