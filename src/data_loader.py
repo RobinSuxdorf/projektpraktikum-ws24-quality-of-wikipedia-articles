@@ -2,7 +2,6 @@
 
 import pandas as pd
 import logging
-from typing import Optional
 
 logger = logging.getLogger(__name__)
 
@@ -10,7 +9,7 @@ logger = logging.getLogger(__name__)
 def load_data(
     good_file_path: str,
     promo_file_path: str,
-    nrows: Optional[int] = None,
+    nrows: int | None = None,
     shuffle: bool = True,
 ) -> pd.DataFrame:
     """
