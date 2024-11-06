@@ -1,23 +1,18 @@
 # src/data_preparation.py
 
+import logging
 import pandas as pd
 import nltk
-import logging
+from nltk.corpus import stopwords
 
-logging.getLogger(__name__)
+logger = logging.getLogger(__name__)
 
-try:
-    from nltk.corpus import stopwords
-
-    if not stopwords.words("english"):
-        nltk.download("stopwords")
-    STOPWORDS = set(stopwords.words("english"))
-except LookupError:
+if not stopwords.words("english"):
     nltk.download("stopwords")
-    STOPWORDS = set(stopwords.words("english"))
+STOPWORDS = set(stopwords.words("english"))
 
 
-def preprocess_text_series(text_series):
+def preprocess_text_series(text_series: pd.Series) -> pd.Series:
     """
     Preprocess a pandas Series containing text data by removing non-word characters, converting to lowercase,
     and removing stopwords.
@@ -28,50 +23,10 @@ def preprocess_text_series(text_series):
     Returns:
         pd.Series: A pandas Series with cleaned text.
     """
-    logging.info("Preprocessing text data.")
+    logger.info("Preprocessing text data.")
     text_series = text_series.str.replace(r"\W", " ", regex=True)
     text_series = text_series.str.lower()
     text_series = text_series.apply(
         lambda x: " ".join([word for word in x.split() if word not in STOPWORDS])
     )
     return text_series
-
-
-def prepare_data(promotional_file, good_file, nrows=None):
-    """
-    Load promotional and non-promotional text data from CSV files, preprocess the text, and combine them into a single dataset.
-
-    Args:
-        promotional_file (str): Path to the CSV file containing promotional text data.
-        good_file (str): Path to the CSV file containing non-promotional text data.
-        nrows (int, optional): Number of rows to read from each CSV file. Defaults to None, meaning all rows are read.
-
-    Returns:
-        pd.DataFrame: A pandas DataFrame containing preprocessed text data and corresponding labels (1 for promotional, 0 for non-promotional).
-    """
-    logging.info("Loading promotional and non-promotional data.")
-    try:
-        promo_df = pd.read_csv(promotional_file, nrows=nrows)
-        good_df = pd.read_csv(good_file, nrows=nrows)
-    except FileNotFoundError as e:
-        logging.error(f"Error reading files: {e}")
-        raise FileNotFoundError(f"Error reading files: {e}")
-
-    logging.info("Preprocessing promotional data.")
-    promo_df["cleaned_text"] = preprocess_text_series(promo_df["text"])
-    promo_df["label"] = 1
-
-    logging.info("Preprocessing non-promotional data.")
-    good_df["cleaned_text"] = preprocess_text_series(good_df["text"])
-    good_df["label"] = 0
-
-    logging.info("Combining datasets.")
-    data = pd.concat(
-        [promo_df[["cleaned_text", "label"]], good_df[["cleaned_text", "label"]]],
-        axis=0,
-    ).reset_index(drop=True)
-
-    data = data.sample(frac=1).reset_index(drop=True)
-
-    logging.info("Data preparation complete.")
-    return data
