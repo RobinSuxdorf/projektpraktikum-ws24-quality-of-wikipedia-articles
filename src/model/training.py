@@ -1,3 +1,4 @@
+from sklearn.metrics import accuracy_score
 import torch
 import torch.nn as nn
 import torch.optim as optim
@@ -6,55 +7,47 @@ from torch.utils.data import DataLoader
 
 def train_one_epoch(
     model: nn.Module,
-    train_dataloader: DataLoader,
+    train_loader: DataLoader,
     criterion: nn.Module,
     optimizer: optim.Optimizer,
     device: torch.device,
 ):
     model.train()
-    train_loss = 0.0
-
-    for articles, labels in train_dataloader:
-        articles, labels = articles.to(device), labels.to(device)
-        outputs = model(articles)
-        labels = labels.view(-1, 1)
-        loss = criterion(outputs, labels)
-
+    total_loss = 0
+    for inputs, labels in train_loader:
         optimizer.zero_grad()
+        
+        outputs = model(inputs)
+        
+        # Ensure labels are the right shape: [batch_size, 1]
+        labels = labels.float().unsqueeze(1)
+        
+        # Calculate loss
+        loss = criterion(outputs, labels)
         loss.backward()
         optimizer.step()
-
-        train_loss += loss.item() * articles.size(0)
-
-    train_loss /= len(train_dataloader.dataset)
-    return train_loss
+        total_loss += loss.item()
+    
+    avg_loss = total_loss / len(train_loader)
+    return avg_loss
+   
 
 
 def evaluate_model(
     model: nn.Module,
-    test_dataloader: DataLoader,
-    criterion: nn.Module,
+    test_loader: DataLoader,
     device: torch.device,
 ):
     model.eval()
-    test_loss = 0.0
-    correct_predictions = 0
-    total_predictions = 0
-
+    test_preds, test_labels = [], []
     with torch.no_grad():
-        for articles, labels in test_dataloader:
-            articles, labels = articles.to(device), labels.to(device)
-
-            outputs = model(articles)
-            labels = labels.view(-1, 1)
-            loss = criterion(outputs, labels)
-
-            test_loss += loss.item() * articles.size(0)
-
-            predicted_labels = (outputs >= 0.5).float()
-            correct_predictions += (predicted_labels == labels).sum().item()
-            total_predictions += labels.size(0)
-
-    test_loss /= len(test_dataloader.dataset)
-    accuracy = correct_predictions / total_predictions
-    return test_loss, accuracy
+        for inputs, labels in test_loader:
+            outputs = model(inputs)
+            outputs = torch.sigmoid(outputs)  # Apply sigmoid for probability
+            
+            # Collect predictions and true labels for accuracy calculation
+            test_preds.extend(outputs.round().cpu().numpy())
+            test_labels.extend(labels.cpu().numpy())
+    
+    acc = accuracy_score(test_labels, test_preds)
+    return acc
