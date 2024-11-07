@@ -9,12 +9,14 @@ class WikipediaArticleDataset(Dataset):
         articles: list[str],
         labels: list[int],
         encode: Callable[[str], list[int]],
-        max_length: int
+        max_length: int,
+        device: torch.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     ) -> None:
         self._articles = articles
         self._labels = labels
         self._encode = encode
         self._max_length = max_length
+        self._device = device
 
     def __len__(self) -> int:
         return len(self._articles)
@@ -30,4 +32,4 @@ class WikipediaArticleDataset(Dataset):
         if len(encoded) < self._max_length:
             encoded += [0] * (self._max_length - len(encoded))
 
-        return torch.tensor(encoded), torch.tensor(label, dtype=torch.float)
+        return torch.tensor(encoded).to(self._device), torch.tensor(label, dtype=torch.float).to(self._device)
