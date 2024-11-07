@@ -3,6 +3,7 @@
 import argparse
 import os
 import logging
+import yaml
 
 logger = logging.getLogger(__name__)
 
@@ -49,6 +50,25 @@ Example usage:
         action="store_true",
         help="Whether to shuffle the combined dataset.",
     )
+    parser.add_argument(
+        "--model_path",
+        type=str,
+        default="models/naive_bayes_model.pkl",
+        help="Path to save the trained model.",
+    )
+    parser.add_argument(
+        "--vectorizer_path",
+        type=str,
+        default="models/tfidf_vectorizer.pkl",
+        help="Path to save the fitted vectorizer.",
+    )
+    parser.add_argument(
+        "-c",
+        "--config_path",
+        type=str,
+        default="src/config.yaml",
+        help="Path to the configuration file.",
+    )
     return parser
 
 
@@ -69,3 +89,18 @@ def validate_file_paths(good_file: str, promo_file: str) -> None:
     if not os.path.exists(promo_file):
         logger.error(f"Promotional file path does not exist: {promo_file}")
         raise FileNotFoundError(f"File not found: {promo_file}")
+
+
+def load_config(config_path: str) -> dict:
+    """
+    Load the configuration from a YAML file.
+
+    Args:
+        config_path (str): Path to the configuration file.
+
+    Returns:
+        dict: Configuration dictionary.
+    """
+    with open(config_path, "r") as file:
+        config = yaml.safe_load(file)
+    return config

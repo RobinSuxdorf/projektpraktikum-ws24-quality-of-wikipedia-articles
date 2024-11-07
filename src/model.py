@@ -8,7 +8,7 @@ from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_sc
 logging.getLogger(__name__)
 
 
-def train_naive_bayes(features, labels, test_size=0.2, random_state=42):
+def train_naive_bayes(features, labels, test_size=0.2, random_state=42, alpha=1.0):
     """
     Train a Naive Bayes classifier on the provided features and labels.
 
@@ -17,6 +17,7 @@ def train_naive_bayes(features, labels, test_size=0.2, random_state=42):
         labels (pd.Series or array-like): The labels corresponding to the text data.
         test_size (float, optional): Proportion of the dataset to include in the test split. Defaults to 0.2.
         random_state (int, optional): Random state for reproducibility. Defaults to 42.
+        alpha (float, optional): Additive (Laplace/Lidstone) smoothing parameter (0 for no smoothing). Defaults to 1.0.
 
     Returns:
         MultinomialNB: The trained Naive Bayes model.
@@ -27,7 +28,7 @@ def train_naive_bayes(features, labels, test_size=0.2, random_state=42):
     )
 
     logging.info("Training the Naive Bayes model.")
-    model = MultinomialNB()
+    model = MultinomialNB(alpha=alpha)
     model.fit(x_train, y_train)
 
     logging.info("Making predictions on the test set.")
