@@ -6,6 +6,7 @@ This project aims to analyze and classify Wikipedia articles into promotional an
 - [Installation](#installation)
 - [Code Formatter](#code-formatter)
 - [Usage](#usage)
+- [Configuration](#configuration)
 - [Project Structure](#project-structure)
 - [Logging](#logging)
 
@@ -33,15 +34,23 @@ python main.py
 
 You can also specify additional arguments:
 ```sh
-python main.py -g data/raw/good.csv -p data/raw/promotional.csv -n 1000 -s
+python main.py -c just-load
 ```
-* -g, --good_file: Path to the CSV file containing non-promotional text data.
-* -p, --promo_file: Path to the CSV file containing promotional text data.
-* -n, --nrows: Number of rows to read from each CSV file.
-* -s, --shuffle: Whether to shuffle the combined dataset.
+* -c, --config: Name of the YAML configuration file (without the .yaml extension).
+
+## Configuration
+Specify the configuration settings in the YAML files located in the configs/ directory. It should contain the following structure:
+```yaml
+data_loader:
+  good_file: "data/raw/good.csv"  # Path to the CSV file containing non-promotional text data.
+  promo_file: "data/raw/promotional.csv"  # Path to the CSV file containing promotional text data.
+  nrows: 1000  # (optional) Number of rows to read from each CSV file.
+  shuffle: true  # Whether to shuffle the combined dataset.
+```
 
 ## Project Structure
 * Praktikumsbericht/: Contains the LaTeX code for the report.
+* configs/: Contains the YAML configuration files.
 * src/: Contains the source code.
     * data_loader.py: Functions for loading and processing data.
     * utils.py: Utility functions including argument parsing and file validation.

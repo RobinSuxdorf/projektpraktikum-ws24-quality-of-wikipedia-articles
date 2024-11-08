@@ -3,6 +3,7 @@
 import argparse
 import os
 import logging
+import yaml
 
 logger = logging.getLogger(__name__)
 
@@ -16,53 +17,46 @@ def get_argument_parser() -> argparse.ArgumentParser:
     """
     parser = argparse.ArgumentParser(
         description="Load promotional and non-promotional data.",
-        epilog="""
-Example usage:
-  Simple: python main.py
-  Complex: python main.py -g data/raw/good.csv -p data/raw/promotional.csv -n 1000 -s
-""",
+        epilog="""Example usage: python main.py -c just-load""",
     )
     parser.add_argument(
-        "-g",
-        "--good_file",
+        "-c",
+        "--config",
         type=str,
-        default="data/raw/good.csv",
-        help="Path to the CSV file containing non-promotional text data.",
-    )
-    parser.add_argument(
-        "-p",
-        "--promo_file",
-        type=str,
-        default="data/raw/promotional.csv",
-        help="Path to the CSV file containing promotional text data.",
-    )
-    parser.add_argument(
-        "-n",
-        "--nrows",
-        type=int,
-        default=None,
-        help="Number of rows to read from each CSV file.",
-    )
-    parser.add_argument(
-        "-s",
-        "--shuffle",
-        action="store_true",
-        help="Whether to shuffle the combined dataset.",
+        required=True,
+        help="Name of the YAML configuration file.",
     )
     return parser
 
 
-def validate_file_paths(good_file: str, promo_file: str) -> None:
+def load_config(config_name: str) -> dict:
+    """
+    Load configuration from a YAML file.
+
+    Args:
+        config_name (str): Name of the YAML configuration file.
+
+    Returns:
+        dict: Configuration dictionary.
+    """
+    config_path = os.path.join("configs", f"{config_name}.yaml")
+    with open(config_path, "r") as file:
+        config = yaml.safe_load(file)
+    return config
+
+
+def validate_file_paths(data_loader_config: dict) -> None:
     """
     Validate that the provided file paths exist.
 
     Args:
-        good_file (str): Path to the non-promotional data file.
-        promo_file (str): Path to the promotional data file.
+        data_loader_config (dict): Configuration dictionary containing file paths.
 
     Raises:
         FileNotFoundError: If any of the provided file paths do not exist.
     """
+    good_file = data_loader_config.get("good_file")
+    promo_file = data_loader_config.get("promo_file")
     if not os.path.exists(good_file):
         logger.error(f"Good file path does not exist: {good_file}")
         raise FileNotFoundError(f"File not found: {good_file}")

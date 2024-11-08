@@ -2,7 +2,7 @@
 
 import logging
 import sys
-from src import load_data, get_argument_parser, validate_file_paths
+from src import load_data, get_argument_parser, validate_file_paths, load_config
 
 logging.basicConfig(
     level=logging.INFO,
@@ -17,14 +17,11 @@ def main() -> None:
     args = parser.parse_args()
 
     try:
-        validate_file_paths(args.good_file, args.promo_file)
-        data = load_data(
-            good_file_path=args.good_file,
-            promo_file_path=args.promo_file,
-            nrows=args.nrows,
-            shuffle=args.shuffle,
-        )
-        logger.info("Data loaded successfully.")
+        config = load_config(args.config)
+        data_loader_config = config.get("data_loader")
+        validate_file_paths(data_loader_config)
+        data = load_data(data_loader_config)
+
         logger.info(f"First few rows of the loaded data:\n{data.head()}")
         logger.info("Exiting with return code 0")
         sys.exit(0)
