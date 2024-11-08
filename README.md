@@ -29,12 +29,7 @@ ruff check .
 ## Usage
 To run the script, use the following command:
 ```sh
-python main.py
-```
-
-You can also specify additional arguments:
-```sh
-python main.py -c just-load
+python main.py -c <config-name>
 ```
 * -c, --config: Name of the YAML configuration file (without the .yaml extension).
 
