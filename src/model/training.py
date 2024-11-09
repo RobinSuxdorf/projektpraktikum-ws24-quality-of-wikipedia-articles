@@ -20,7 +20,7 @@ def train_one_epoch(
         outputs = model(inputs)
         
         # Ensure labels are the right shape: [batch_size, 1]
-        labels = labels.float().unsqueeze(1)
+        labels = labels.long()
         
         # Calculate loss
         loss = criterion(outputs, labels)
@@ -43,10 +43,10 @@ def evaluate_model(
     with torch.no_grad():
         for inputs, labels in test_loader:
             outputs = model(inputs)
-            outputs = torch.sigmoid(outputs)  # Apply sigmoid for probability
+            predictions = outputs.argmax(dim=1)
             
             # Collect predictions and true labels for accuracy calculation
-            test_preds.extend(outputs.round().cpu().numpy())
+            test_preds.extend(predictions.cpu().numpy())
             test_labels.extend(labels.cpu().numpy())
     
     acc = accuracy_score(test_labels, test_preds)

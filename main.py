@@ -11,7 +11,7 @@ embedding_dim = 256
 num_filters = 100
 filter_sizes = [3, 4, 5]
 max_length = 400
-num_classes = 1
+num_classes = 2
 tokenizer = tiktoken.get_encoding("cl100k_base")
 num_epochs = 5
 batch_size = 32
@@ -35,14 +35,14 @@ def main() -> None:
 
     optimizer = optim.Adam(model.parameters(), lr=0.001)
 
-    criterion = nn.BCEWithLogitsLoss()
+    criterion = nn.CrossEntropyLoss()
 
     for epoch in range(num_epochs):
-        avg_loss = train_one_epoch(model, train_loader, criterion, optimizer, "cpu")
+        avg_loss = train_one_epoch(model, train_loader, criterion, optimizer, device=device)
         print(f"Epoch {epoch+1}, Loss: {avg_loss:.4f}")
         
-        acc = evaluate_model(model, test_loader, "cpu")
-        print(f"Validation Accuracy: {acc:.4f}")
+        acc = evaluate_model(model, test_loader, device=device)
+        print(f"Test Accuracy: {acc:.4f}")
 
 if __name__ == "__main__":
     main()

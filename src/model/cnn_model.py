@@ -13,6 +13,7 @@ class TextCNN(nn.Module):
         ])
         self.fc = nn.Linear(num_filters * len(filter_sizes), num_classes)
         self.dropout = nn.Dropout(0.5)
+        self.sigmoid = nn.Sigmoid()
         
     def forward(self, x):
         x = self.embedding(x)  # Shape: (batch_size, max_length, embedding_dim)
@@ -26,4 +27,4 @@ class TextCNN(nn.Module):
         x = self.dropout(x)
         x = self.fc(x)
         
-        return x  # Output logits for BCEWithLogitsLoss
+        return self.sigmoid(x)
