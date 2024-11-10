@@ -38,10 +38,7 @@ def main() -> None:
         # Step 2: Preprocess Text Data
         preprocessing_config = config.get("preprocessing")
         data["cleaned_text"] = preprocess_text_series(
-            data["text"],
-            remove_stopwords=preprocessing_config["remove_stopwords"],
-            apply_stemming=preprocessing_config["apply_stemming"],
-            remove_numbers=preprocessing_config["remove_numbers"],
+            data["text"], preprocessing_config
         )
         logger.info(
             f"Text data preprocessed with remove_stopwords={preprocessing_config['remove_stopwords']}, apply_stemming={preprocessing_config['apply_stemming']}, remove_numbers={preprocessing_config['remove_numbers']}."
@@ -49,13 +46,7 @@ def main() -> None:
 
         # Step 3: Extract Features
         vectorizer_config = config.get("vectorizer")
-        vectorizer = get_vectorizer(
-            vectorizer_config["type"],
-            vectorizer_config["max_features"],
-            vectorizer_config["ngram_range"],
-            vectorizer_config["min_df"],
-            vectorizer_config["max_df"],
-        )
+        vectorizer = get_vectorizer(vectorizer_config)
         features = vectorizer.fit_transform(data["cleaned_text"])
         logger.info(
             f"Features extracted using {vectorizer_config['type']} vectorizer with max_features={vectorizer_config['max_features']}, ngram_range={vectorizer_config['ngram_range']}, min_df={vectorizer_config['min_df']}, max_df={vectorizer_config['max_df']}."
@@ -63,7 +54,7 @@ def main() -> None:
 
         # Step 4: Train Model
         model_config = config.get("naive_bayes")
-        model = train_naive_bayes(features, data["label"], alpha=model_config["alpha"])
+        model = train_naive_bayes(features, data["label"], model_config)
         logger.info(f"Naive Bayes model trained with alpha={model_config['alpha']}.")
 
         # Step 5: Save Model and Vectorizer

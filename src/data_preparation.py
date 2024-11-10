@@ -16,24 +16,22 @@ stemmer = PorterStemmer()
 
 
 def preprocess_text_series(
-    text_series: pd.Series,
-    remove_stopwords=True,
-    apply_stemming=True,
-    remove_numbers=True,
+    text_series: pd.Series, preprocessing_config: dict
 ) -> pd.Series:
     """
-    Preprocess a pandas Series containing text data by removing non-word characters, converting to lowercase,
-    and optionally removing stopwords, applying stemming, and removing numbers.
+    Preprocess a series of text data based on the provided configuration.
 
     Args:
-        text_series (pd.Series): A pandas Series containing text data to preprocess.
-        remove_stopwords (bool, optional): Whether to remove stopwords. Defaults to True.
-        apply_stemming (bool, optional): Whether to apply stemming. Defaults to True.
-        remove_numbers (bool, optional): Whether to remove numbers. Defaults to True.
+        text_series (pd.Series): Series containing text data.
+        preprocessing_config (dict): Configuration dictionary for preprocessing.
 
     Returns:
-        pd.Series: A pandas Series with cleaned text.
+        pd.Series: Preprocessed text data.
     """
+    remove_stopwords = preprocessing_config.get("remove_stopwords")
+    apply_stemming = preprocessing_config.get("apply_stemming")
+    remove_numbers = preprocessing_config.get("remove_numbers")
+
     logger.info("Preprocessing text data.")
 
     logger.info("Removing non-word characters.")
