@@ -1,3 +1,8 @@
+data_loader:
+    good_file: "data/raw/good.csv"
+    promo_file: "data/raw/promotional.csv"
+    shuffle: true
+
 preprocessing:
     remove_stopwords: true
     apply_stemming: false

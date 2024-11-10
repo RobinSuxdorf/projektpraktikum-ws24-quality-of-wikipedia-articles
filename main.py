@@ -28,22 +28,15 @@ def main() -> None:
     args = parser.parse_args()
 
     try:
-        validate_file_paths(args.good_file, args.promo_file)
-
-        logger.info(f"Arguments: {vars(args)}")
-
-        # Load configuration
-        config = load_config(args.config_path)
-        logger.info(f"Configuration loaded from {args.config_path}")
-
+        config = load_config(args.config)
         # Step 1: Load Data
-        data = load_data(args.good_file, args.promo_file, args.nrows)
-        logger.info(
-            f"Data loaded from {args.good_file} and {args.promo_file} with nrows={args.nrows}."
-        )
+        data_loader_config = config.get("data_loader")
+        validate_file_paths(data_loader_config)
+        data = load_data(data_loader_config)
+        logger.info(f"First few rows of the loaded data:\n{data.head()}")
 
         # Step 2: Preprocess Text Data
-        preprocessing_config = config["preprocessing"]
+        preprocessing_config = config.get("preprocessing")
         data["cleaned_text"] = preprocess_text_series(
             data["text"],
             remove_stopwords=preprocessing_config["remove_stopwords"],
@@ -55,7 +48,7 @@ def main() -> None:
         )
 
         # Step 3: Extract Features
-        vectorizer_config = config["vectorizer"]
+        vectorizer_config = config.get("vectorizer")
         vectorizer = get_vectorizer(
             vectorizer_config["type"],
             vectorizer_config["max_features"],
@@ -69,7 +62,7 @@ def main() -> None:
         )
 
         # Step 4: Train Model
-        model_config = config["naive_bayes"]
+        model_config = config.get("naive_bayes")
         model = train_naive_bayes(features, data["label"], alpha=model_config["alpha"])
         logger.info(f"Naive Bayes model trained with alpha={model_config['alpha']}.")
 
