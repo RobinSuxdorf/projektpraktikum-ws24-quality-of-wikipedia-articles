@@ -4,6 +4,7 @@ import argparse
 import os
 import logging
 import yaml
+import joblib
 
 logger = logging.getLogger(__name__)
 
@@ -25,18 +26,6 @@ def get_argument_parser() -> argparse.ArgumentParser:
         type=str,
         required=True,
         help="Name of the YAML configuration file.",
-    )
-    parser.add_argument(
-        "--model_path",
-        type=str,
-        default="models/naive_bayes_model.pkl",
-        help="Path to save the trained model.",
-    )
-    parser.add_argument(
-        "--vectorizer_path",
-        type=str,
-        default="models/tfidf_vectorizer.pkl",
-        help="Path to save the fitted vectorizer.",
     )
     return parser
 
@@ -75,3 +64,31 @@ def validate_file_paths(data_loader_config: dict) -> None:
     if not os.path.exists(promo_file):
         logger.error(f"Promotional file path does not exist: {promo_file}")
         raise FileNotFoundError(f"File not found: {promo_file}")
+
+
+def save_to_file(data, step_config: dict, step: str) -> None:
+    """
+    Save data to a file based on the provided configuration.
+
+    Args:
+        data: Data to be saved.
+        step_config (dict): Configuration dictionary for the current step.
+        step (str): Step name to determine the save path.
+    """
+    filename = step_config.get("save")
+    if filename and filename.lower() != "false":
+        if step == "data_loader" or step == "preprocessing":
+            directory = "data/processed"
+            file_path = f"{directory}/{filename}.csv"
+        else:
+            directory = "models"
+            file_path = f"{directory}/{filename}.pkl"
+
+        os.makedirs(directory, exist_ok=True)
+
+        if step == "data_loader" or step == "preprocessing":
+            data.to_csv(file_path, index=False)
+        else:
+            joblib.dump(data, file_path)
+
+        logger.info(f"{step.capitalize()} data saved to {file_path}.")

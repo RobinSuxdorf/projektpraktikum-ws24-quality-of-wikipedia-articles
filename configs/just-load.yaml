@@ -3,3 +3,4 @@ data_loader:
   promo_file: "data/raw/promotional.csv"
   # nrows: 1000
   shuffle: true
+  save: "false"
