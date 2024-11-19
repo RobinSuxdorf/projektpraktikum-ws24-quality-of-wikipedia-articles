@@ -80,6 +80,9 @@ def save_to_file(data, step_config: dict, step: str) -> None:
         if step == "data_loader" or step == "preprocessing":
             directory = "data/processed"
             file_path = f"{directory}/{filename}.csv"
+        elif step == "evaluation":
+            directory = "models"
+            file_path = f"{directory}/{filename}.png"
         else:
             directory = "models"
             file_path = f"{directory}/{filename}.pkl"
@@ -88,6 +91,8 @@ def save_to_file(data, step_config: dict, step: str) -> None:
 
         if step == "data_loader" or step == "preprocessing":
             data.to_csv(file_path, index=False)
+        elif step == "evaluation":
+            data.savefig(file_path)
         else:
             joblib.dump(data, file_path)
 

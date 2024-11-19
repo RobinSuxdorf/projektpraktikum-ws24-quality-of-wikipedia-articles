@@ -7,6 +7,7 @@ from src import (
     preprocess_text_series,
     get_vectorizer,
     train_naive_bayes,
+    evaluate_model,
     load_config,
     save_to_file,
 )
@@ -75,6 +76,15 @@ def run_pipeline(config) -> None:
     else:
         logger.warning("Model training step is not defined in the configuration.")
         return
+
+    logger.info("Starting model evaluation step.")
+    evaluation_config = config.get("evaluation")
+    if evaluation_config:
+        figure = evaluate_model(model, features, data["label"], evaluation_config)
+        logger.info("Figure created.")
+        save_to_file(figure, evaluation_config, "evaluation")
+    else:
+        logger.warning("Evaluation step is not defined in the configuration.")
 
 
 def main() -> None:

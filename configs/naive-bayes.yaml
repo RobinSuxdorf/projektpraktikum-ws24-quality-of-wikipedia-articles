@@ -21,3 +21,6 @@ vectorizer:
 naive_bayes:
     alpha: 1.0
     save: "naive_bayes_model"
+
+evaluation:
+    save: "naive_bayes_model"
