@@ -22,6 +22,10 @@ def load_data_frame(frac: float = 1.0, random_state: int = 42) -> pd.DataFrame:
     logging.info("Dataset downloaded to: %s", path_to_dataset)
     good_df = pd.read_csv(os.path.join(path_to_dataset, "good.csv"))
     promo_df = pd.read_csv(os.path.join(path_to_dataset, "promotional.csv"))
+    logging.info("good.csv shape: %s", good_df.shape)
+    logging.info("good.csv info: %s", good_df.info())
+    logging.info("promotional.csv shape: %s", promo_df.shape)
+    logging.info("promotional.csv info: %s", promo_df.info())
     if frac < 1:
         good_df = good_df.sample(frac=frac, random_state=random_state)
         promo_df = promo_df.sample(frac=frac, random_state=random_state)
