@@ -1,5 +1,5 @@
 import logging
-import svm.dataset
+import svm.wp_dump
 
 # Configure logging
 logging.basicConfig(
@@ -8,7 +8,7 @@ logging.basicConfig(
 
 
 def main():
-    svm.dataset.convert_wp_dump(
+    svm.wp_dump.convert_wp_dump(
         dump_path="C:/Users/U542596/Desktop/enwiki-20241020-pages-articles-multistream.xml.bz2",
         index_path="C:/Users/U542596/Desktop/enwiki-20241020-pages-articles-multistream-index.txt.bz2",
         output_csv_path="C:/Users/U542596/Desktop/enwiki-20241020-pages-articles-filtered.csv",
