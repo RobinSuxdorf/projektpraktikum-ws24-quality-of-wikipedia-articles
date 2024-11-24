@@ -7,6 +7,7 @@ import csv
 import re
 import xml.etree.ElementTree as ET
 from io import BytesIO
+from typing import List, Set
 
 
 def load_data_frame(frac: float = 1.0, random_state: int = 42) -> pd.DataFrame:
@@ -38,6 +39,40 @@ def load_data_frame(frac: float = 1.0, random_state: int = 42) -> pd.DataFrame:
     return df
 
 
+def _read_offsets(index_path: str) -> List[int]:
+    offsets = set()
+    with bz2.open(index_path, 'rt', encoding='utf-8') as index_file:
+        for line in index_file:
+            parts = line.split(':')
+            offset = int(parts[0])
+            offsets.add(offset)
+    return sorted(offsets)
+
+
+def _decompress_data(compressed_data: bytes) -> bytes:
+    return bz2.decompress(compressed_data)
+
+
+def _parse_xml(decompressed_data: bytes, offset: int) -> ET.Element:
+    wrapped_data = ["<root>", decompressed_data.decode('utf-8', errors='replace'), "</root>"]
+    return ET.fromstringlist(wrapped_data)
+
+
+def _process_page(page: ET.Element, good_article_re: re.Pattern, featured_article_re: re.Pattern, promotional_re: re.Pattern, curly_braces_re: re.Pattern) -> List:
+    text_elem = page.find('.//revision/text')
+    if text_elem is not None and text_elem.text is not None:
+        text = text_elem.text.replace('\n', ' ').replace('\r', ' ')
+        good_article = bool(good_article_re.search(text))
+        featured_article = bool(featured_article_re.search(text))
+        promotional = bool(promotional_re.search(text))
+        text = curly_braces_re.sub('', text)
+        if good_article or featured_article or promotional:
+            logging.info("Article flags - good_article: %d, featured_article: %d, promotional: %d",
+                         int(good_article), int(featured_article), int(promotional))
+            return [int(good_article), int(featured_article), int(promotional), text]
+    return []
+
+
 def convert_wp_dump(dump_path: str, index_path: str, output_csv_path: str, num_pages: int = -1):
     """
     Extracts Wikipedia articles from a multistream dump, processes them, and writes the results to a CSV file.
@@ -64,13 +99,7 @@ def convert_wp_dump(dump_path: str, index_path: str, output_csv_path: str, num_p
     curly_braces_re = re.compile(r'\{\{.*?\}\}')
 
     # Read the index file and get the byte offsets
-    offsets = set()
-    with bz2.open(index_path, 'rt', encoding='utf-8') as index_file:
-        for line in index_file:
-            parts = line.split(':')
-            offset = int(parts[0])
-            offsets.add(offset)
-    offsets = sorted(offsets)
+    offsets = _read_offsets(index_path)
     total_offsets = len(offsets)
     logging.info("Number of unique offsets read: %d", total_offsets)
 
@@ -94,39 +123,15 @@ def convert_wp_dump(dump_path: str, index_path: str, output_csv_path: str, num_p
                 compressed_data = dump_file.read(chunk_size)
                 logging.info("Number of bytes read: %d", len(compressed_data))
 
-                try:
-                    decompressed_data = bz2.decompress(compressed_data)
-                except OSError as e:
-                    logging.error("Decompression error at offset %d: %s", offset, e)
-                    pages_processed += 1
-                    continue
-
-                # Wrap the decompressed data with a root element and parse it using fromstringlist
-                try:
-                    wrapped_data = ["<root>", decompressed_data.decode('utf-8', errors='replace'), "</root>"]
-                    root = ET.fromstringlist(wrapped_data)
-                except ET.ParseError as e:
-                    logging.error("XML parsing error at offset %d: %s", offset, e)
-                    # Write the problematic chunk to the output file
-                    writer.writerow(['error', 'error', 'error', decompressed_data.decode('utf-8', errors='replace')])
-                    pages_processed += 1
-                    raise e
+                decompressed_data = _decompress_data(compressed_data)
+                root = _parse_xml(decompressed_data, offset)
 
                 for page in root.findall('.//page'):
                     if num_pages > 0 and pages_processed >= num_pages:
                         break
 
-                    text_elem = page.find('.//revision/text')
-                    if text_elem is not None and text_elem.text is not None:
-                        text = text_elem.text.replace('\n', ' ').replace('\r', ' ')
-                        good_article = bool(good_article_re.search(text))
-                        featured_article = bool(featured_article_re.search(text))
-                        promotional = bool(promotional_re.search(text))
-                        # Remove parts enclosed in double curly braces after checking for templates
-                        text = curly_braces_re.sub('', text)
-                        if good_article or featured_article or promotional:
-                            logging.info("Article flags - good_article: %d, featured_article: %d, promotional: %d",
-                                         int(good_article), int(featured_article), int(promotional))
-                            writer.writerow([int(good_article), int(featured_article), int(promotional), text])
+                    row = _process_page(page, good_article_re, featured_article_re, promotional_re, curly_braces_re)
+                    if row:
+                        writer.writerow(row)
                     pages_processed += 1
 
