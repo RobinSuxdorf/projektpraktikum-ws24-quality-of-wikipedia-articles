@@ -2,7 +2,6 @@ import logging
 import sys
 from src import (
     get_argument_parser,
-    validate_file_paths,
     load_data,
     preprocess_text_series,
     get_vectorizer,
@@ -10,6 +9,7 @@ from src import (
     evaluate_model,
     load_config,
     save_to_file,
+    load_from_file,
 )
 
 logging.basicConfig(
@@ -28,63 +28,65 @@ def run_pipeline(config) -> None:
     Args:
         config (dict): Configuration dictionary.
     """
-    logger.info("Starting data loading step.")
-    data_loader_config = config.get("data_loader")
-    if data_loader_config:
-        validate_file_paths(data_loader_config)
+    start_step = config.get("start_step")
+    data_file = config.get("data_file")
+    features_file = config.get("features_file")
+    model_file = config.get("model_file")
+    if data_file:
+        logger.info(f"Loading data from file: {data_file}")
+        data = load_from_file(data_file)
+    if features_file:
+        logger.info(f"Loading features from file: {features_file}")
+        features = load_from_file(features_file)
+    if model_file:
+        logger.info(f"Loading model from file: {model_file}")
+        model = load_from_file(model_file)
+
+    if start_step == "data_loader":
+        logger.info("Starting data loading step.")
+        data_loader_config = config.get("data_loader")
         data = load_data(data_loader_config)
         logger.info(f"First few rows of the loaded data:\n{data.head()}")
         save_to_file(data, data_loader_config, "data_loader")
     else:
-        logger.warning("Data loading step is not defined in the configuration.")
-        return
+        logger.info("Skipping data loading step.")
 
-    logger.info("Starting text data preprocessing step.")
-    preprocessing_config = config.get("preprocessing")
-    if preprocessing_config:
+    if start_step in ["data_loader", "preprocessing"]:
+        logger.info("Starting text data preprocessing step.")
+        preprocessing_config = config.get("preprocessing")
         data["cleaned_text"] = preprocess_text_series(
             data["text"], preprocessing_config
         )
-        logger.info(
-            f"Text data preprocessed with remove_stopwords={preprocessing_config['remove_stopwords']}, apply_stemming={preprocessing_config['apply_stemming']}, remove_numbers={preprocessing_config['remove_numbers']}."
-        )
+        logger.info(f"Text data preprocessed with {preprocessing_config}")
         data.drop(columns=["text"], inplace=True)
         save_to_file(data, preprocessing_config, "preprocessing")
     else:
-        logger.warning("Preprocessing step is not defined in the configuration.")
-        return
+        logger.info("Skipping text data preprocessing step.")
 
-    logger.info("Starting feature extraction step.")
-    vectorizer_config = config.get("vectorizer")
-    if vectorizer_config:
+    if start_step in ["data_loader", "preprocessing", "vectorizer"]:
+        logger.info("Starting feature extraction step.")
+        vectorizer_config = config.get("vectorizer")
         vectorizer = get_vectorizer(vectorizer_config)
         features = vectorizer.fit_transform(data["cleaned_text"])
-        logger.info(
-            f"Features extracted using {vectorizer_config['type']} vectorizer with max_features={vectorizer_config['max_features']}, ngram_range={vectorizer_config['ngram_range']}, min_df={vectorizer_config['min_df']}, max_df={vectorizer_config['max_df']}."
-        )
-        save_to_file(vectorizer, vectorizer_config, "vectorizer")
+        logger.info(f"Features extracted with {vectorizer_config}")
+        save_to_file(features, vectorizer_config, "vectorizer")
     else:
-        logger.warning("Vectorizer step is not defined in the configuration.")
-        return
+        logger.info("Skipping feature extraction step.")
 
-    logger.info("Starting model training step.")
-    model_config = config.get("naive_bayes")
-    if model_config:
+    if start_step in ["data_loader", "preprocessing", "vectorizer", "naive_bayes"]:
+        logger.info("Starting model training step.")
+        model_config = config.get("naive_bayes")
         model = train_naive_bayes(features, data["label"], model_config)
-        logger.info(f"Naive Bayes model trained with alpha={model_config['alpha']}.")
+        logger.info(f"Naive Bayes model trained with {model_config}.")
         save_to_file(model, model_config, "naive_bayes")
     else:
-        logger.warning("Model training step is not defined in the configuration.")
-        return
+        logger.info("Skipping model training step.")
 
     logger.info("Starting model evaluation step.")
     evaluation_config = config.get("evaluation")
-    if evaluation_config:
-        figure = evaluate_model(model, features, data["label"], evaluation_config)
-        logger.info("Figure created.")
-        save_to_file(figure, evaluation_config, "evaluation")
-    else:
-        logger.warning("Evaluation step is not defined in the configuration.")
+    figure = evaluate_model(model, features, data["label"], evaluation_config)
+    logger.info("Figure created.")
+    save_to_file(figure, evaluation_config, "evaluation")
 
 
 def main() -> None:

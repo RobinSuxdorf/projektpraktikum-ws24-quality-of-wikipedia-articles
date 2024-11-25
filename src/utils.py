@@ -5,6 +5,7 @@ import os
 import logging
 import yaml
 import joblib
+import pandas as pd
 
 logger = logging.getLogger(__name__)
 
@@ -46,26 +47,6 @@ def load_config(config_name: str) -> dict:
     return config
 
 
-def validate_file_paths(data_loader_config: dict) -> None:
-    """
-    Validate that the provided file paths exist.
-
-    Args:
-        data_loader_config (dict): Configuration dictionary containing file paths.
-
-    Raises:
-        FileNotFoundError: If any of the provided file paths do not exist.
-    """
-    good_file = data_loader_config.get("good_file")
-    promo_file = data_loader_config.get("promo_file")
-    if not os.path.exists(good_file):
-        logger.error(f"Good file path does not exist: {good_file}")
-        raise FileNotFoundError(f"File not found: {good_file}")
-    if not os.path.exists(promo_file):
-        logger.error(f"Promotional file path does not exist: {promo_file}")
-        raise FileNotFoundError(f"File not found: {promo_file}")
-
-
 def save_to_file(data, step_config: dict, step: str) -> None:
     """
     Save data to a file based on the provided configuration.
@@ -97,3 +78,22 @@ def save_to_file(data, step_config: dict, step: str) -> None:
             joblib.dump(data, file_path)
 
         logger.info(f"{step.capitalize()} data saved to {file_path}.")
+
+
+# TODO: Load from correct folders
+def load_from_file(file_path: str):
+    """
+    Load data from a specified file.
+
+    Args:
+        file_path (str): Path to the file to load data from.
+
+    Returns:
+        DataFrame: Loaded data.
+    """
+    if file_path.endswith(".csv"):
+        return pd.read_csv(file_path)
+    elif file_path.endswith(".pkl"):
+        return joblib.load(file_path)
+    else:
+        raise ValueError("Unsupported file format. Please use .csv or .pkl")

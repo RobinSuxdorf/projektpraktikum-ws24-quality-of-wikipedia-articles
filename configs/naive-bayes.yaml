@@ -1,3 +1,8 @@
+start_step: "data_loader"
+data_file: ""
+features_file: ""
+model_file: ""
+
 data_loader:
     good_file: "data/raw/good.csv"
     promo_file: "data/raw/promotional.csv"
@@ -16,7 +21,7 @@ vectorizer:
     ngram_range: "1,1"
     min_df: 1.0
     max_df: 1.0
-    save: "vectorizer"
+    save: "features"
 
 naive_bayes:
     alpha: 1.0
