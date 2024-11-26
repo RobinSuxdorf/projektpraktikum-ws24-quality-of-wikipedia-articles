@@ -26,9 +26,9 @@ def get_vectorizer(vectorizer_config: dict):
         return TfidfVectorizer(
             max_features=max_features,
             stop_words="english",
-            # ngram_range=ngram_range,
-            # min_df=min_df,
-            # max_df=max_df,
+            ngram_range=ngram_range,
+            min_df=min_df,
+            max_df=max_df,
         )
     elif vectorizer_type == "count":
         return CountVectorizer(

@@ -47,53 +47,45 @@ def load_config(config_name: str) -> dict:
     return config
 
 
-def save_to_file(data, step_config: dict, step: str) -> None:
+def save_to_file(data, step_config: dict) -> None:
     """
     Save data to a file based on the provided configuration.
 
     Args:
         data: Data to be saved.
         step_config (dict): Configuration dictionary for the current step.
-        step (str): Step name to determine the save path.
     """
     filename = step_config.get("save")
     if filename and filename.lower() != "false":
-        if step == "data_loader" or step == "preprocessing":
-            directory = "data/processed"
-            file_path = f"{directory}/{filename}.csv"
-        elif step == "evaluation":
-            directory = "models"
-            file_path = f"{directory}/{filename}.png"
-        else:
-            directory = "models"
-            file_path = f"{directory}/{filename}.pkl"
+        directory = "data\intermediary"
+        file_path = os.path.join(directory, filename)
 
         os.makedirs(directory, exist_ok=True)
 
-        if step == "data_loader" or step == "preprocessing":
+        if file_path.endswith(".csv"):
             data.to_csv(file_path, index=False)
-        elif step == "evaluation":
+        elif file_path.endswith(".png"):
             data.savefig(file_path)
         else:
             joblib.dump(data, file_path)
 
-        logger.info(f"{step.capitalize()} data saved to {file_path}.")
+        logger.info(f"Data saved to {file_path}.")
 
 
-# TODO: Load from correct folders
-def load_from_file(file_path: str):
+def load_from_file(filename: str):
     """
-    Load data from a specified file.
+    Load data from a file based on the provided filename.
 
     Args:
-        file_path (str): Path to the file to load data from.
+        filename (str): Name of the file to load data from.
 
     Returns:
-        DataFrame: Loaded data.
+        DataFrame or other: Loaded data.
     """
+    directory = "data/intermediary"
+    file_path = os.path.join(directory, filename)
+
     if file_path.endswith(".csv"):
         return pd.read_csv(file_path)
     elif file_path.endswith(".pkl"):
         return joblib.load(file_path)
-    else:
-        raise ValueError("Unsupported file format. Please use .csv or .pkl")

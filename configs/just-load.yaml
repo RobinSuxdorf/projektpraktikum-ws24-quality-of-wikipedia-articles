@@ -1,7 +1,8 @@
 start_step: "data_loader"
-data_file: ""
-features_file: ""
-model_file: ""
+load:
+  data_file: ""
+  features_file: ""
+  model_file: ""
 
 data_loader:
   good_file: "data/raw/good.csv"

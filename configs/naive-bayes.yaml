@@ -1,31 +1,32 @@
-start_step: "data_loader"
-data_file: ""
-features_file: ""
-model_file: ""
+start_step: "vectorizer"
+load:
+    data_file: "preprocessed_data.csv"
+    features_file: ""
+    model_file: ""
 
 data_loader:
     good_file: "data/raw/good.csv"
     promo_file: "data/raw/promotional.csv"
     shuffle: true
-    save: "loaded_data"
+    save: "loaded_data.csv"
 
 preprocessing:
     remove_stopwords: true
     apply_stemming: false
     remove_numbers: true
-    save: "preprocessed_data"
+    save: "preprocessed_data.csv"
 
 vectorizer:
     type: tfidf
     max_features: 1000
-    ngram_range: "1,1"
-    min_df: 1.0
+    ngram_range: [1, 1]
+    min_df: 0.01
     max_df: 1.0
-    save: "features"
+    save: "features.pkl"
 
 naive_bayes:
     alpha: 1.0
-    save: "naive_bayes_model"
+    save: "naive_bayes_model.pkl"
 
 evaluation:
-    save: "naive_bayes_model"
+    save: "evaluation.png"
