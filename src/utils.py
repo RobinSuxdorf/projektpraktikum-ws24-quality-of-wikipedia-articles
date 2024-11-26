@@ -57,7 +57,7 @@ def save_to_file(data, step_config: dict) -> None:
     """
     filename = step_config.get("save")
     if filename and filename.lower() != "false":
-        directory = "data\intermediary"
+        directory = "data/intermediary"
         file_path = os.path.join(directory, filename)
 
         os.makedirs(directory, exist_ok=True)
