@@ -13,7 +13,7 @@ def main():
         index_path="C:/Users/U542596/Desktop/enwiki-20241020-pages-articles-multistream-index.txt.bz2",
     ).write_to_csv(
         output_csv_path="C:/Users/U542596/Desktop/enwiki-20241020-pages-articles-filtered.csv",
-        num_pages=1000,
+        num_pages=-1,
     )
 
 

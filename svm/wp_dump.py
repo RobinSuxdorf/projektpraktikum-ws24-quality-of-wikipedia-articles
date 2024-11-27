@@ -10,11 +10,21 @@ class WikipediaDump:
     def __init__(self, dump_path: str, index_path: str):
         self.dump_path = dump_path
         self.index_path = index_path
-        self.good_article_re = re.compile(r"\{\{good article.*?\}\}", re.IGNORECASE)
-        self.featured_article_re = re.compile(
-            r"\{\{Featured article.*?\}\}", re.IGNORECASE
+
+        self.good_article_re = re.compile(r"\{\{Good article\}\}")
+        self.featured_article_re = re.compile(r"\{\{Featured article\}\}")
+
+        self.promotional_re = re.compile(
+            r"\{\{(Promotional|Ad|Advertising|Advertisement|Promotion|Promo)(\|.*)?\}\}"
         )
-        self.promotional_re = re.compile(r"\{\{Promotional.*?\}\}", re.IGNORECASE)
+        self.promotional_section_re = re.compile(r"\{\{Promotional section(\|.*)?\}\}")
+        self.press_release_re = re.compile(r"\{\{Cleanup press release(\|.*)?\}\}")
+        self.promotion_inline_re = re.compile(r"\{\{promotion-inline(\|.*)?\}\}")
+        self.fan_pov_re = re.compile(r"\{\{Fan POV(\|.*)?\}\}")
+        self.resume_re = re.compile(
+            r"\{\{(Resume-like|Like resume|Cleanup resume)(\|.*)?\}\}"
+        )
+
         self.curly_braces_re = re.compile(r"\{\{.*?\}\}")
 
     def write_to_csv(self, output_csv_path: str, num_pages: int = -1):
@@ -41,17 +51,17 @@ class WikipediaDump:
             dump_file.seek(offset)
             next_offset = offsets[i + 1] if i + 1 < len(offsets) else None
             chunk_size = next_offset - offset if next_offset else None
-            logging.info("Processing offset %d/%d", i + 1, total_offsets)
+            logging.info("Processing offset %d/%d (pages processed: %d)", i + 1, total_offsets, pages_processed)
             compressed_data = dump_file.read(chunk_size)
             decompressed_data = bz2.decompress(compressed_data)
             root = self._parse_xml(decompressed_data)
             for page in root.findall(".//page"):
+                pages_processed += 1
                 if num_pages > 0 and pages_processed >= num_pages:
                     break
                 row = self._process_page(page)
                 if row:
                     writer.writerow(row)
-                pages_processed += 1
 
     def _read_offsets(self) -> List[int]:
         offsets = set()
@@ -77,7 +87,14 @@ class WikipediaDump:
             text = text_elem.text.replace("\n", " ").replace("\r", " ")
             good_article = bool(self.good_article_re.search(text))
             featured_article = bool(self.featured_article_re.search(text))
-            promotional = bool(self.promotional_re.search(text))
+            promotional = bool(
+                self.promotional_re.search(text)
+                or self.promotional_section_re.search(text)
+                or self.press_release_re.search(text)
+                or self.promotion_inline_re.search(text)
+                or self.fan_pov_re.search(text)
+                or self.resume_re.search(text)
+            )
             text = self.curly_braces_re.sub("", text)
             if good_article or featured_article or promotional:
                 logging.info(
