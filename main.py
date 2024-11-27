@@ -21,13 +21,14 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 
-def run_binary_pipeline(config) -> None:
+def run_pipeline(config) -> None:
     """
     Run the data processing and model training pipeline for binary good-promotional classification.
 
     Args:
         config (dict): Configuration dictionary.
     """
+    usecase = config.get("usecase")
     start_step = config.get("start_step")
     load_config = config.get("load")
     data_file = load_config.get("data_file")
@@ -46,7 +47,7 @@ def run_binary_pipeline(config) -> None:
     if start_step == "data_loader":
         logger.info("Starting data loading step.")
         data_loader_config = config.get("data_loader")
-        data = load_data(data_loader_config, "binary")
+        data = load_data(data_loader_config, usecase)
         logger.info(f"First few rows of the loaded data:\n{data.head()}")
         save_to_file(data, data_loader_config)
     else:
@@ -90,49 +91,6 @@ def run_binary_pipeline(config) -> None:
     save_to_file(figure, evaluation_config)
 
 
-def run_multilabel_pipeline(config) -> None:
-    """_summary_
-
-    Args:
-        config (dict): Configuration dictionary.
-    """
-    start_step = config.get("start_step")
-    load_config = config.get("load")
-    data_file = load_config.get("data_file")
-    features_file = load_config.get("features_file")
-    model_file = load_config.get("model_file")
-    if data_file:
-        logger.info(f"Loading data from file: {data_file}")
-        data = load_from_file(load_config["data_file"])
-    if features_file:
-        logger.info(f"Loading features from file: {features_file}")
-        features = load_from_file(load_config["features_file"])
-    if model_file:
-        logger.info(f"Loading model from file: {model_file}")
-        model = load_from_file(load_config["model_file"])
-
-    if start_step == "data_loader":
-        logger.info("Starting data loading step.")
-        data_loader_config = config.get("data_loader")
-        data = load_data(data_loader_config, "multilabel")
-        logger.info(f"First few rows of the loaded data:\n{data.head()}")
-        save_to_file(data, data_loader_config)
-    else:
-        logger.info("Skipping data loading step.")
-
-    if start_step in ["data_loader", "preprocessing"]:
-        logger.info("Starting text data preprocessing step.")
-        preprocessing_config = config.get("preprocessing")
-        data["cleaned_text"] = preprocess_text_series(
-            data["text"], preprocessing_config
-        )
-        logger.info(f"Text data preprocessed with {preprocessing_config}")
-        data.drop(columns=["text"], inplace=True)
-        save_to_file(data, preprocessing_config)
-    else:
-        logger.info("Skipping text data preprocessing step.")
-
-
 def main() -> None:
     """
     Main function to run the data processing and model training pipeline.
@@ -142,11 +100,7 @@ def main() -> None:
 
     try:
         config = load_config(args.config)
-        usecase = config.get("usecase")
-        if usecase == "binary":
-            run_binary_pipeline(config)
-        elif usecase == "multilabel":
-            run_multilabel_pipeline(config)
+        run_pipeline(config)
         logger.info("Pipeline completed.")
         logger.info("Exiting with return code 0")
         sys.exit(0)

@@ -20,3 +20,11 @@ preprocessing:
   remove_numbers: true
   remove_whitespace: true
   save: "preprocessed_data.csv"
+
+vectorizer:
+  type: tfidf
+  max_features: 10_000
+  ngram_range: [1, 1]
+  min_df: 0.01
+  max_df: 1.0
+  save: "features.pkl"

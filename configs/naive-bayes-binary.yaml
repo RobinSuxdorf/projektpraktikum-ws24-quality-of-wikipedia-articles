@@ -1,11 +1,11 @@
 # configs/naive-bayes-binary.yaml
 
 usecase: "binary"
-start_step: "evaluation"
+start_step: "data_loader"
 load:
-  data_file: "preprocessed_data.csv"
-  features_file: "features.pkl"
-  model_file: "naive_bayes_model.pkl"
+  data_file: ""
+  features_file: ""
+  model_file: ""
 
 data_loader:
   good_file: "data/raw/good.csv"
