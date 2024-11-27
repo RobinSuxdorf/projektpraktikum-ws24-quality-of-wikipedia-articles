@@ -28,17 +28,22 @@ def preprocess_text_series(
     Returns:
         pd.Series: Preprocessed text data.
     """
+    remove_non_word = preprocessing_config.get("remove_non_word")
+    convert_lowercase = preprocessing_config.get("convert_lowercase")
     remove_stopwords = preprocessing_config.get("remove_stopwords")
     apply_stemming = preprocessing_config.get("apply_stemming")
     remove_numbers = preprocessing_config.get("remove_numbers")
+    remove_whitespace = preprocessing_config.get("remove_whitespace")
 
     logger.info("Preprocessing text data.")
 
-    logger.info("Removing non-word characters.")
-    text_series = text_series.str.replace(r"\W", " ", regex=True)
+    if remove_non_word:
+        logger.info("Removing non-word characters.")
+        text_series = text_series.str.replace(r"\W", " ", regex=True)
 
-    logger.info("Converting text to lowercase.")
-    text_series = text_series.str.lower()
+    if convert_lowercase:
+        logger.info("Converting text to lowercase.")
+        text_series = text_series.str.lower()
 
     if remove_stopwords:
         logger.info("Removing stopwords.")
@@ -56,8 +61,9 @@ def preprocess_text_series(
         logger.info("Removing numbers.")
         text_series = text_series.apply(lambda x: re.sub(r"\d+", "", x))
 
-    logger.info("Removing leading and trailing whitespace.")
-    text_series = text_series.str.strip()
+    if remove_whitespace:
+        logger.info("Removing leading and trailing whitespace.")
+        text_series = text_series.str.strip()
 
     logger.info("Text data preprocessing complete.")
     return text_series

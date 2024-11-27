@@ -1,4 +1,6 @@
-usecase: "binary_classification"
+# configs/naive-bayes-binary.yaml
+
+usecase: "binary"
 start_step: "evaluation"
 load:
   data_file: "preprocessed_data.csv"
@@ -12,9 +14,12 @@ data_loader:
   save: "loaded_data.csv"
 
 preprocessing:
+  remove_non_word: true
+  convert_lowercase: true
   remove_stopwords: false # didn't change kpis
   apply_stemming: false # didn't change kpis
   remove_numbers: false # removing numbers lowered f1 by 0.01 with max_features 10_000
+  remove_whitespace: true
   save: "preprocessed_data.csv"
 
 vectorizer:
