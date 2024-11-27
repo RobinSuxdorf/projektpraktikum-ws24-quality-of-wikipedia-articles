@@ -1,4 +1,4 @@
-# src/feature_engineering.py
+# src/vectorizer.py
 
 import logging
 from sklearn.feature_extraction.text import CountVectorizer, TfidfVectorizer

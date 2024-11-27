@@ -1,6 +1,6 @@
 from .data_loader import load_data
 from .preprocessing import preprocess_text_series
-from .feature_engineering import get_vectorizer
+from .vectorizer import get_vectorizer
 from .model import train_naive_bayes
 from .evaluation import evaluate_model
 from .utils import (

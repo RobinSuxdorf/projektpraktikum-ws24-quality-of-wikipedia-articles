@@ -3,6 +3,7 @@
 This project aims to analyze and classify Wikipedia articles into promotional and non-promotional categories.
 
 ## Table of Contents
+
 - [Installation](#installation)
 - [Code Formatter](#code-formatter)
 - [Usage](#usage)
@@ -13,43 +14,54 @@ This project aims to analyze and classify Wikipedia articles into promotional an
 ## Installation
 
 ### Prerequisites
+
 - Python 3.x
 
 To install the required packages, run the following command:
+
 ```sh
 pip install -r requirements.txt
 ```
 
 ## Code Formatter
+
 We use Ruff for code formatting. To format the code, run:
+
 ```sh
 ruff check .
 ```
 
 ## Usage
+
 To run the script, use the following command:
+
 ```sh
 python main.py -c <config-name>
 ```
-* -c, --config: Name of the YAML configuration file (without the .yaml extension).
+
+- -c, --config: Name of the YAML configuration file (without the .yaml extension).
 
 ## Configuration
+
 Specify the configuration settings in the YAML files located in the configs/ directory. It should contain the following structure:
+
 ```yaml
 data_loader:
-  good_file: "data/raw/good.csv"  # Path to the CSV file containing non-promotional text data.
-  promo_file: "data/raw/promotional.csv"  # Path to the CSV file containing promotional text data.
-  nrows: 1000  # (optional) Number of rows to read from each CSV file.
-  shuffle: true  # Whether to shuffle the combined dataset.
+  good_file: "data/raw/good.csv" # Path to the CSV file containing non-promotional text data.
+  promo_file: "data/raw/promotional.csv" # Path to the CSV file containing promotional text data.
+  nrows: 1000 # (optional) Number of rows to read from each CSV file.
+  shuffle: true # Whether to shuffle the combined dataset.
 ```
 
 ## Project Structure
-* Praktikumsbericht/: Contains the LaTeX code for the report.
-* configs/: Contains the YAML configuration files.
-* src/: Contains the source code.
-    * data_loader.py: Functions for loading and processing data.
-    * utils.py: Utility functions including argument parsing and file validation.
-* main.py: Main script to run the project.
+
+- Praktikumsbericht/: Contains the LaTeX code for the report.
+- configs/: Contains the YAML configuration files.
+- src/: Contains the source code.
+  - data_loader.py: Functions for loading and processing data.
+  - utils.py: Utility functions including argument parsing and file validation.
+- main.py: Main script to run the project.
 
 ## Logging
+
 Logs are saved to app.log and also printed to the console.

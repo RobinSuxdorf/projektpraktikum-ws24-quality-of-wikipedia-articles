@@ -1,4 +1,4 @@
-start_step: "naive_bayes"
+start_step: "data_loader"
 load:
   data_file: "preprocessed_data.csv"
   features_file: "features.pkl"
