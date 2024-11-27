@@ -78,6 +78,7 @@ def run_pipeline(config) -> None:
     if start_step in ["data_loader", "preprocessing", "vectorizer", "model"]:
         logger.info("Starting model training step.")
         model_config = config.get("model")
+        # TODO: enable multilabel
         model = train_model(features, data["label"], model_config)
         logger.info(f"Model trained with {model_config}.")
         save_to_file(model, model_config)
@@ -86,6 +87,7 @@ def run_pipeline(config) -> None:
 
     logger.info("Starting model evaluation step.")
     evaluation_config = config.get("evaluation")
+    # TODO: enable multilabel
     figure = evaluate_model(model, features, data["label"])
     logger.info("Figure created.")
     save_to_file(figure, evaluation_config)

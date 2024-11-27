@@ -28,3 +28,11 @@ vectorizer:
   min_df: 0.01
   max_df: 1.0
   save: "features.pkl"
+
+model:
+  type: naive_bayes
+  alpha: 1.0
+  save: "naive_bayes_multilabel.pkl"
+
+evaluation:
+  save: "evaluation.png"

@@ -34,7 +34,7 @@ vectorizer:
 model:
   type: naive_bayes
   alpha: 1.0 # 0.5 lowered decreased recall by 0.1 above 1 decreased precision by 0.1
-  save: "naive_bayes_model.pkl"
+  save: "naive_bayes_binary.pkl"
 
 evaluation:
   save: "evaluation.png"
