@@ -2,12 +2,12 @@
 
 import logging
 import matplotlib.pyplot as plt
-from sklearn.metrics import confusion_matrix, ConfusionMatrixDisplay
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score
 
 logger = logging.getLogger(__name__)
 
 
-def evaluate_model(model, x_test, y_test, evaluation_config: dict) -> plt.Figure:
+def evaluate_model(model, x_test, y_test) -> plt.Figure:
     """
     Evaluate the trained model and visualize the results.
 
@@ -15,7 +15,6 @@ def evaluate_model(model, x_test, y_test, evaluation_config: dict) -> plt.Figure
         model: Trained model.
         x_test: Test features.
         y_test: Test labels.
-        evaluation_config (dict): Configuration dictionary for evaluation.
 
     Returns:
         plt.Figure: Matplotlib figure object.
@@ -23,8 +22,28 @@ def evaluate_model(model, x_test, y_test, evaluation_config: dict) -> plt.Figure
     logger.info("Evaluating the model.")
     y_pred = model.predict(x_test)
 
-    cm = confusion_matrix(y_test, y_pred)
-    disp = ConfusionMatrixDisplay(confusion_matrix=cm)
-    disp.plot(cmap=plt.cm.Blues)
+    accuracy = accuracy_score(y_test, y_pred)
+    precision = precision_score(y_test, y_pred)
+    recall = recall_score(y_test, y_pred)
+    f1 = f1_score(y_test, y_pred)
 
-    return disp.figure_
+    logger.info(f"Model accuracy: {accuracy:.2f}")
+    logger.info(f"Precision: {precision:.2f}")
+    logger.info(f"Recall: {recall:.2f}")
+    logger.info(f"F1 Score: {f1:.2f}")
+
+    # Create a horizontal bar plot for the metrics
+    metrics = {
+        "Accuracy": accuracy,
+        "Precision": precision,
+        "Recall": recall,
+        "F1 Score": f1,
+    }
+    fig, ax = plt.subplots()
+    ax.barh(list(metrics.keys()), list(metrics.values()))
+    ax.set_xlim([0, 1])
+    ax.set_xlabel("Score")
+    ax.set_title("Model Evaluation Metrics")
+
+    fig.tight_layout()
+    return fig

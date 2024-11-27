@@ -5,7 +5,7 @@ from src import (
     load_data,
     preprocess_text_series,
     get_vectorizer,
-    train_naive_bayes,
+    train_model,
     evaluate_model,
     load_config,
     save_to_file,
@@ -21,9 +21,9 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 
-def run_pipeline(config) -> None:
+def run_binary_pipeline(config) -> None:
     """
-    Run the data processing and model training pipeline.
+    Run the data processing and model training pipeline for binary good-promotional classification.
 
     Args:
         config (dict): Configuration dictionary.
@@ -74,20 +74,24 @@ def run_pipeline(config) -> None:
     else:
         logger.info("Skipping feature extraction step.")
 
-    if start_step in ["data_loader", "preprocessing", "vectorizer", "naive_bayes"]:
+    if start_step in ["data_loader", "preprocessing", "vectorizer", "model"]:
         logger.info("Starting model training step.")
-        model_config = config.get("naive_bayes")
-        model = train_naive_bayes(features, data["label"], model_config)
-        logger.info(f"Naive Bayes model trained with {model_config}.")
+        model_config = config.get("model")
+        model = train_model(features, data["label"], model_config)
+        logger.info(f"Model trained with {model_config}.")
         save_to_file(model, model_config)
     else:
         logger.info("Skipping model training step.")
 
     logger.info("Starting model evaluation step.")
     evaluation_config = config.get("evaluation")
-    figure = evaluate_model(model, features, data["label"], evaluation_config)
+    figure = evaluate_model(model, features, data["label"])
     logger.info("Figure created.")
     save_to_file(figure, evaluation_config)
+
+
+def run_multilabel_pipeline(config) -> None:
+    pass
 
 
 def main() -> None:
@@ -99,7 +103,7 @@ def main() -> None:
 
     try:
         config = load_config(args.config)
-        run_pipeline(config)
+        run_binary_pipeline(config)
         logger.info("Pipeline completed.")
         logger.info("Exiting with return code 0")
         sys.exit(0)

@@ -1,8 +1,9 @@
-start_step: "data_loader"
+usecase: "binary_classification"
+start_step: "evaluation"
 load:
   data_file: "preprocessed_data.csv"
   features_file: "features.pkl"
-  model_file: ""
+  model_file: "naive_bayes_model.pkl"
 
 data_loader:
   good_file: "data/raw/good.csv"
@@ -25,7 +26,8 @@ vectorizer:
   # 0.001 and 0.9 increased recall by 0.01
   save: "features.pkl"
 
-naive_bayes:
+model:
+  type: naive_bayes
   alpha: 1.0 # 0.5 lowered decreased recall by 0.1 above 1 decreased precision by 0.1
   save: "naive_bayes_model.pkl"
 
