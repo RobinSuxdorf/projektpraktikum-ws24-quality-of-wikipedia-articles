@@ -2,9 +2,10 @@
 
 import logging
 import matplotlib.pyplot as plt
-from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score
+from sklearn.metrics import classification_report
 
 logger = logging.getLogger(__name__)
+logging.getLogger("matplotlib.category").setLevel(logging.WARNING)
 
 
 def evaluate_model(model, x_test, y_test) -> plt.Figure:
@@ -22,27 +23,21 @@ def evaluate_model(model, x_test, y_test) -> plt.Figure:
     logger.info("Evaluating the model.")
     y_pred = model.predict(x_test)
 
-    accuracy = accuracy_score(y_test, y_pred)
-    precision = precision_score(y_test, y_pred)
-    recall = recall_score(y_test, y_pred)
-    f1 = f1_score(y_test, y_pred)
+    report = classification_report(y_test, y_pred, output_dict=True, zero_division=0)
+    logger.info(
+        f"Classification Report:\n{classification_report(y_test, y_pred, zero_division=0)}"
+    )
 
-    logger.info(f"Model accuracy: {accuracy:.2f}")
-    logger.info(f"Precision: {precision:.2f}")
-    logger.info(f"Recall: {recall:.2f}")
-    logger.info(f"F1 Score: {f1:.2f}")
-
-    # Create a horizontal bar plot for the metrics
     metrics = {
-        "Accuracy": accuracy,
-        "Precision": precision,
-        "Recall": recall,
-        "F1 Score": f1,
+        label: report[label]["f1-score"]
+        for label in report
+        if label
+        not in ["accuracy", "micro avg", "macro avg", "weighted avg", "samples avg"]
     }
     fig, ax = plt.subplots()
     ax.barh(list(metrics.keys()), list(metrics.values()))
     ax.set_xlim([0, 1])
-    ax.set_xlabel("Score")
+    ax.set_xlabel("F1-Score")
     ax.set_title("Model Evaluation Metrics")
 
     fig.tight_layout()

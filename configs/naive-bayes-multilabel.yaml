@@ -32,6 +32,7 @@ vectorizer:
 model:
   type: naive_bayes
   alpha: 1.0
+  oversampling: true
   save: "naive_bayes_multilabel.pkl"
 
 evaluation:
