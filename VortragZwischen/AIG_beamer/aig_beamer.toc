@@ -1,0 +1,10 @@
+\babel@toc {english}{}\relax 
+\beamer@sectionintoc {1}{Organisation}{2}{0}{1}
+\beamer@sectionintoc {2}{Problemstellung}{4}{0}{2}
+\beamer@sectionintoc {3}{Datenvorbereitung und Analyse}{6}{0}{3}
+\beamer@sectionintoc {4}{Fortschritt Implementierung Modelle}{8}{0}{4}
+\beamer@subsectionintoc {4}{1}{Logistische Regression}{10}{0}{4}
+\beamer@subsectionintoc {4}{2}{Bayes Klassifikator}{12}{0}{4}
+\beamer@subsectionintoc {4}{3}{CNN}{14}{0}{4}
+\beamer@subsectionintoc {4}{4}{5.Ansatz}{16}{0}{4}
+\beamer@sectionintoc {5}{Zusammenfassung}{18}{0}{5}
