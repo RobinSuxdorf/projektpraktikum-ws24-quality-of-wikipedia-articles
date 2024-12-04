@@ -30,10 +30,10 @@ def run_pipeline(config) -> None:
     """
     usecase = config.get("usecase")
     start_step = config.get("start_step")
-    load_config = config.get("load")
-    data_file = load_config.get("data_file")
-    features_file = load_config.get("features_file")
-    model_file = load_config.get("model_file")
+    load_config = config.get("load", {})
+    data_file = load_config.get("data_file", "")
+    features_file = load_config.get("features_file", "")
+    model_file = load_config.get("model_file", "")
     if data_file:
         logger.info(f"Loading data from file: {data_file}")
         data = load_from_file(load_config["data_file"])

@@ -1,17 +1,18 @@
 # configs/naive-bayes-binary.yaml
 
 usecase: "binary"
-start_step: "data_loader"
+# start_step: "data_loader"
+start_step: "evaluation"
 load:
-  data_file: ""
-  features_file: ""
-  model_file: ""
+  data_file: "preprocessed_data_nbb.csv"
+  features_file: "features_nbb.pkl"
+  model_file: "naive_bayes_binary.pkl"
 
 data_loader:
   good_file: "data/raw/good.csv"
   promo_file: "data/raw/promotional.csv"
   shuffle: true
-  save: "loaded_data.csv"
+  save: "loaded_data_nbb.csv"
 
 preprocessing:
   remove_non_word: true
@@ -20,7 +21,7 @@ preprocessing:
   apply_stemming: false # didn't change kpis
   remove_numbers: false # removing numbers lowered f1 by 0.01 with max_features 10_000
   remove_whitespace: true
-  save: "preprocessed_data.csv"
+  save: "preprocessed_data_nbb.csv"
 
 vectorizer:
   type: tfidf # tfidf higher precision and count higher recall by 0.1 each
@@ -29,7 +30,7 @@ vectorizer:
   min_df: 0.001 # too high decreased f1 significantly
   max_df: 0.9 # too low decreased f1 by 0.01
   # 0.001 and 0.9 increased recall by 0.01
-  save: "features.pkl"
+  save: "features_nbb.pkl"
 
 model:
   type: naive_bayes
@@ -37,4 +38,4 @@ model:
   save: "naive_bayes_binary.pkl"
 
 evaluation:
-  save: "evaluation.png"
+  save: "evaluation_nbb.png"

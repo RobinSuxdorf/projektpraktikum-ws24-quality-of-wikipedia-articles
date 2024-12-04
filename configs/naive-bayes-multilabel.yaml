@@ -1,16 +1,17 @@
 # configs/naïve-bayes-multilabel.yaml
 
 usecase: "multilabel"
-start_step: "data_loader"
+# start_step: "data_loader"
+start_step: "evaluation"
 load:
-  data_file: ""
-  features_file: ""
-  model_file: ""
+  data_file: "preprocessed_data_nbm.csv"
+  features_file: "features_nbm.pkl"
+  model_file: "naive_bayes_multilabel.pkl"
 
 data_loader:
   promo_file: "data/raw/promotional.csv"
   shuffle: true
-  save: "loaded_data.csv"
+  save: "loaded_data_nbm.csv"
 
 preprocessing:
   remove_non_word: true
@@ -19,7 +20,7 @@ preprocessing:
   apply_stemming: false
   remove_numbers: true
   remove_whitespace: true
-  save: "preprocessed_data.csv"
+  save: "preprocessed_data_nbm.csv"
 
 vectorizer:
   type: tfidf
@@ -27,7 +28,7 @@ vectorizer:
   ngram_range: [1, 1]
   min_df: 0.01
   max_df: 1.0
-  save: "features.pkl"
+  save: "features_nbm.pkl"
 
 model:
   type: naive_bayes
@@ -36,4 +37,4 @@ model:
   save: "naive_bayes_multilabel.pkl"
 
 evaluation:
-  save: "evaluation.png"
+  save: "evaluation_nbm.png"
