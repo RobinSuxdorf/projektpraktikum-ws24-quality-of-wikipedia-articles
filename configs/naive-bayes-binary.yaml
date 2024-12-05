@@ -19,7 +19,7 @@ preprocessing:
   convert_lowercase: true
   remove_stopwords: false # didn't change kpis
   apply_stemming: false # didn't change kpis
-  remove_numbers: false # removing numbers lowered f1 by 0.01 with max_features 10_000
+  remove_numbers: false # removing numbers decreased f1 by 0.01 with max_features 10_000
   remove_whitespace: true
   save: "preprocessed_data_nbb.csv"
 
@@ -34,7 +34,7 @@ vectorizer:
 
 model:
   type: naive_bayes
-  alpha: 1.0 # 0.5 lowered decreased recall by 0.1 above 1 decreased precision by 0.1
+  alpha: 1.0 # 0.5 decreased recall by 0.1 above 1 decreased precision by 0.1
   save: "naive_bayes_binary.pkl"
 
 evaluation:
