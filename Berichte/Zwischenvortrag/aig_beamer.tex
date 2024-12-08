@@ -162,14 +162,41 @@ University of Hagen, Germany}
     \end{block}
 \end{frame}
 
-
-
-
-
 \subsection{Support Vector Machine}
 
-\begin{frame}{Support Vector Machine}
+\begin{frame}{Support Vector Machine (1)}
+    \begin{block}{Datenvorverarbeitung}
+        \begin{itemize}
+            \item Zusammenf\"uhren der CSV-Dateien
+            \item Entfernen \"uberfl\"ussiger Features
+        \end{itemize}
+    \end{block}
+\end{frame}
 
+\begin{frame}{Support Vector Machine (2)}
+    \begin{block}{Methode}
+        \begin{itemize}
+            \item TF-IDF-Vektorisierung
+            \item Vergleich verschiedener Kernels:
+                \begin{itemize}
+                    \item \texttt{linear}, \texttt{poly}, \texttt{rbf}, \texttt{sigmoid}.
+                    \item Keine Vorteile gegen\"uber \texttt{linear} festzustellen.
+                    \item \texttt{LinearSVC} mit deutlich geringerer Laufzeit.
+                    \item Parameter-Tuning mit \texttt{GridSearchCV}.
+                \end{itemize}
+            \item \textbf{Bin\"are Klassifikation}:
+                \begin{itemize}
+                    \item \texttt{LinearSVC} liefert Precision, Recall, F1-Score und Accuracy jeweils 0.96 - 0.97.
+                \end{itemize}
+            \item \textbf{Multilabel-Klassifikation}:
+                \begin{itemize}
+                    \item Klassifikation mit \texttt{MultiOutputClassifier} und \texttt{LinearSVC}.
+                    \item Nur \texttt{advert} einigerma\ss{}en identifizierbar mit F1-Score 0.86.
+                    \item Bei \texttt{coi}, \texttt{fanpov}, \texttt{pr}, \texttt{resume} F1-Scores von 0.00 bis 0.45.
+                    \item Nicht-lineare Kernels liefern \"ahnliche Ergebnisse.
+                \end{itemize}
+        \end{itemize}
+    \end{block}
 \end{frame}
 
 \subsection{Bayes Klassifikator}
