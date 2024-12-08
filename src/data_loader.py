@@ -2,17 +2,19 @@
 
 import logging
 import pandas as pd
+from typing import Literal
 
 logger = logging.getLogger(__name__)
 
 
-def load_data(data_loader_config: dict, usecase: str) -> pd.DataFrame:
-    """
-    Load text data from CSV files and combine them into a single dataset.
+def load_data(
+    data_loader_config: dict, usecase: Literal["binary", "multilabel"]
+) -> pd.DataFrame:
+    """_summary_
 
     Args:
-        data_loader_config (dict): Configuration dictionary containing file paths and other parameters.
-        usecase (str): The use case type, either 'binary' or 'multilabel'.
+        data_loader_config (dict): _description_
+        usecase (Literal[&quot;binary&quot;, &quot;multilabel&quot;]): _description_
 
     Returns:
         pd.DataFrame: A pandas DataFrame containing text data and corresponding labels.

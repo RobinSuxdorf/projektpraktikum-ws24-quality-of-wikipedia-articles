@@ -1,7 +1,7 @@
 from .data_loader import load_data
 from .preprocessing import preprocess_text_series
 from .vectorizer import get_vectorizer
-from .model import train_model
+from .train import train_model
 from .evaluation import evaluate_model
 from .utils import (
     get_argument_parser,

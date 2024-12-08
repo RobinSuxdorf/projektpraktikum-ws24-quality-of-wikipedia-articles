@@ -3,22 +3,22 @@
 import logging
 import matplotlib.pyplot as plt
 from sklearn.metrics import classification_report, accuracy_score
+from src.models import Model
 
 logger = logging.getLogger(__name__)
 logging.getLogger("matplotlib.category").setLevel(logging.WARNING)
 
 
-def evaluate_model(model, x_test, y_test) -> plt.Figure:
-    """
-    Evaluate the trained model and visualize the results.
+def evaluate_model(model: Model, x_test, y_test) -> plt.Figure:
+    """_summary_
 
     Args:
-        model: Trained model.
-        x_test: Test features.
-        y_test: Test labels.
+        model (Model): _description_
+        x_test (_type_): _description_
+        y_test (_type_): _description_
 
     Returns:
-        plt.Figure: Matplotlib figure object.
+        plt.Figure: _description_
     """
     logger.info("Evaluating the model.")
     y_pred = model.predict(x_test)
