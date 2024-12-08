@@ -7,10 +7,10 @@
 \usepackage[english]{babel}     % English language
 \usepackage[latin1]{inputenc}   % Input encoding
 \usepackage{tikz}               % For creating graphics
+\usepackage[mode=buildnew]{standalone}
 \usepackage{url}                % For including urls
 \usepackage{tabularx}           % For better tables
 \usepackage{xcolor}             % Für bunte Farbe :)
-
 
 \usetheme{aig}                  % Set beamer theme
 
@@ -51,9 +51,14 @@ University of Hagen, Germany}
 \section{Problemstellung}
 
 \begin{frame}{Problemstellung}
+    \textcolor{red}{Beispiel Wikipedia-Artikel mit promo}
+\end{frame}
+
+\begin{frame}{Problemstellung}
     \begin{block}{Problemstellung}
         Das Ziel dieses Projekts ist die Entwicklung von Modellen zur automatisierten Klassifikation von Wikipedia-Artikeln als promotional (werblich) oder nicht-promotional. Wikipedia strebt nach objektiven und neutralen Inhalten; daher ist die Identifizierung von Artikeln mit werbenden Charakter von gro\ss{}er Bedeutung, um die sachliche Qualit\"at der Plattform zu gew\"ahrleisten.
     \end{block}
+    \textcolor{red}{TODO: Konkret als Frage formulieren?\\ Zweite Frage ergänzen: Warum ist der Artikel nicht neutral?}
 \end{frame}
 
 \section{Daten}
@@ -68,6 +73,7 @@ University of Hagen, Germany}
 
 
 \begin{frame}{Weitere Daten}
+    \textcolor{red}{TODO: Ans Ende verschieben; Ausblick?}
     \begin{block}{Weitere Daten}
         \begin{itemize}
             \item Wikipedia-Dump
@@ -243,7 +249,62 @@ University of Hagen, Germany}
 \subsection{Convolutional Neural Network}
 
 \begin{frame}{Convolutional Neural Network}
+    \begin{block}{Idee}
+    \begin{itemize}
+        \item Position von relevanten Textbausteinen im Text ist nicht wichtig
 
+        \item nutze Filter um relevante Textbausteine zu finden
+        \begin{figure}
+            \centering
+            \includestandalone[width=12cm]{figures/conv1d}
+        \end{figure}
+    \end{itemize}
+    \end{block}
+\end{frame}
+
+\begin{frame}{Convolutional Neural Network}
+    \begin{block}{Datenvorverarbeitung}
+        \begin{itemize}
+            \item Tokenisierung mittels Byte Pair Encoding (cl100kbase)
+
+            \includestandalone[width=12cm]{figures/tokenization}
+
+            \textcolor{red}{Tokens to number}
+    
+            \item Konvertierung in Tensor f\"ur pytorch Datensatz 
+        \end{itemize}
+    \end{block}
+\end{frame}
+
+\begin{frame}{Convolutional Neural Network}
+    \begin{block}{Faltung}
+        \begin{itemize}
+            \item Embedding Layer
+        
+            \item \textcolor{red}{Bild von 1d Faltung auf Embedding Layer}
+
+            \item Pooling Layer
+        \end{itemize}
+    \end{block}
+\end{frame}
+
+\begin{frame}{Convolutional Neural Network}
+    \begin{block}{Training/Optimierung}
+        \begin{itemize}
+            \item Viele Hyperparameter
+            \begin{itemize}
+                \item Tokenizer
+
+                \item Embedding Dimension
+
+                \item Anzahl Conv Layers
+
+                \item FFN
+            \end{itemize}
+            
+            \item GridSearch
+        \end{itemize}
+    \end{block}
 \end{frame}
 
 \subsection{5.Ansatz}
