@@ -4,6 +4,8 @@ import argparse
 import os
 import logging
 import yaml
+import joblib
+import pandas as pd
 
 logger = logging.getLogger(__name__)
 
@@ -45,21 +47,45 @@ def load_config(config_name: str) -> dict:
     return config
 
 
-def validate_file_paths(data_loader_config: dict) -> None:
+def save_to_file(data, step_config: dict) -> None:
     """
-    Validate that the provided file paths exist.
+    Save data to a file based on the provided configuration.
 
     Args:
-        data_loader_config (dict): Configuration dictionary containing file paths.
-
-    Raises:
-        FileNotFoundError: If any of the provided file paths do not exist.
+        data: Data to be saved.
+        step_config (dict): Configuration dictionary for the current step.
     """
-    good_file = data_loader_config.get("good_file")
-    promo_file = data_loader_config.get("promo_file")
-    if not os.path.exists(good_file):
-        logger.error(f"Good file path does not exist: {good_file}")
-        raise FileNotFoundError(f"File not found: {good_file}")
-    if not os.path.exists(promo_file):
-        logger.error(f"Promotional file path does not exist: {promo_file}")
-        raise FileNotFoundError(f"File not found: {promo_file}")
+    filename = step_config.get("save")
+    if filename and filename.lower() != "false":
+        directory = "data/intermediary"
+        file_path = os.path.join(directory, filename)
+
+        os.makedirs(directory, exist_ok=True)
+
+        if file_path.endswith(".csv"):
+            data.to_csv(file_path, index=False)
+        elif file_path.endswith(".png"):
+            data.savefig(file_path)
+        else:
+            joblib.dump(data, file_path)
+
+        logger.info(f"Data saved to {file_path}.")
+
+
+def load_from_file(filename: str):
+    """
+    Load data from a file based on the provided filename.
+
+    Args:
+        filename (str): Name of the file to load data from.
+
+    Returns:
+        DataFrame or other: Loaded data.
+    """
+    directory = "data/intermediary"
+    file_path = os.path.join(directory, filename)
+
+    if file_path.endswith(".csv"):
+        return pd.read_csv(file_path)
+    elif file_path.endswith(".pkl"):
+        return joblib.load(file_path)
