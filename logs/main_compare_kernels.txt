@@ -1,14 +1,42 @@
-2024-11-03 20:36:05,323 - INFO - Downloading dataset
-2024-11-03 20:36:05,871 - INFO - Dataset downloaded to: C:\Users\U542596\.cache\kagglehub\datasets\urbanbricks\wikipedia-promotional-articles\versions\8
-2024-11-03 20:36:09,485 - INFO - Dataset shape: (5412, 8)
+2024-12-08 00:51:20,434 - INFO - Downloading dataset
+Warning: Looks like you're using an outdated `kagglehub` version, please consider updating (latest version: 0.3.4)
+2024-12-08 00:51:21,028 - INFO - Dataset downloaded to: C:\Users\U542596\.cache\kagglehub\datasets\urbanbricks\wikipedia-promotional-articles\versions\8
+2024-12-08 00:51:24,597 - INFO - good.csv shape: (30279, 2)
+<class 'pandas.core.frame.DataFrame'>
+RangeIndex: 30279 entries, 0 to 30278
+Data columns (total 2 columns):
+ #   Column  Non-Null Count  Dtype 
+---  ------  --------------  ----- 
+ 0   text    30279 non-null  object
+ 1   url     30279 non-null  object
+dtypes: object(2)
+memory usage: 473.2+ KB
+2024-12-08 00:51:24,606 - INFO - good.csv info: None
+2024-12-08 00:51:24,606 - INFO - promotional.csv shape: (23837, 7)
+<class 'pandas.core.frame.DataFrame'>
+RangeIndex: 23837 entries, 0 to 23836
+Data columns (total 7 columns):
+ #   Column  Non-Null Count  Dtype 
+---  ------  --------------  ----- 
+ 0   text    23837 non-null  object
+ 1   advert  23837 non-null  int64 
+ 2   coi     23837 non-null  int64 
+ 3   fanpov  23837 non-null  int64 
+ 4   pr      23837 non-null  int64 
+ 5   resume  23837 non-null  int64 
+ 6   url     23837 non-null  object
+dtypes: int64(5), object(2)
+memory usage: 1.3+ MB
+2024-12-08 00:51:24,610 - INFO - promotional.csv info: None       
+2024-12-08 00:51:24,699 - INFO - Dataset shape: (5412, 8)
 <class 'pandas.core.frame.DataFrame'>
 Index: 5412 entries, 10370 to 20726
 Data columns (total 8 columns):
- #   Column  Non-Null Count  Dtype  
----  ------  --------------  -----  
- 0   text    5412 non-null   object 
- 1   url     5412 non-null   object 
- 2   label   5412 non-null   object 
+ #   Column  Non-Null Count  Dtype
+---  ------  --------------  -----
+ 0   text    5412 non-null   object
+ 1   url     5412 non-null   object
+ 2   label   5412 non-null   object
  3   advert  2384 non-null   float64
  4   coi     2384 non-null   float64
  5   fanpov  2384 non-null   float64
@@ -16,105 +44,97 @@ Data columns (total 8 columns):
  7   resume  2384 non-null   float64
 dtypes: float64(5), object(3)
 memory usage: 380.5+ KB
-2024-11-03 20:36:09,489 - INFO - Dataset info: None
-2024-11-03 20:36:09,490 - INFO - Extracting features
-2024-11-03 20:36:13,553 - INFO - Feature matrix shape: (5412, 178845)
-2024-11-03 20:36:13,554 - INFO - Labels shape: (5412,)
-2024-11-03 20:36:09,489 - INFO - Dataset info: None
-2024-11-03 20:36:09,490 - INFO - Extracting features
-2024-11-03 20:36:13,553 - INFO - Feature matrix shape: (5412, 178845)
-2024-11-03 20:36:09,489 - INFO - Dataset info: None
-2024-11-03 20:36:09,489 - INFO - Dataset info: None
-2024-11-03 20:36:09,490 - INFO - Extracting features
-2024-11-03 20:36:13,553 - INFO - Feature matrix shape: (5412, 178845)
-2024-11-03 20:36:13,554 - INFO - Labels shape: (5412,)
-2024-11-03 20:36:13,573 - INFO - LinearSVC() - Tuning
-2024-11-03 20:36:22,046 - INFO - LinearSVC() - Best params: {'C': 10}
-2024-11-03 20:36:22,047 - INFO - LinearSVC() - Best score: 0.9325488259087693
-2024-11-03 20:36:22,047 - INFO - LinearSVC(C=10) - Evaluating model
-2024-11-03 20:36:22,051 - INFO - LinearSVC(C=10) - Confusion Matrix:
-[[584  37]
- [ 35 427]]
-2024-11-03 20:36:22,082 - INFO - LinearSVC(C=10) - Classification Report:
+2024-12-08 00:51:24,705 - INFO - Dataset info: None
+2024-12-08 00:51:24,705 - INFO - Extracting features
+2024-12-08 00:51:28,829 - INFO - Feature matrix shape: (5412, 178845)
+2024-12-08 00:51:28,830 - INFO - Labels shape: (5412,)
+2024-12-08 00:51:28,848 - INFO - LinearSVC() - Tuning
+2024-12-08 00:51:33,054 - INFO - LinearSVC() - Best params: {'C': 100}
+2024-12-08 00:51:33,055 - INFO - LinearSVC() - Best score: 0.9547229304889934
+2024-12-08 00:51:33,055 - INFO - LinearSVC(C=100) - Evaluating model
+2024-12-08 00:51:33,060 - INFO - LinearSVC(C=100) - Confusion Matrix:
+[[597  24]
+ [ 15 447]]
+2024-12-08 00:51:33,079 - INFO - LinearSVC(C=100) - Classification Report:
               precision    recall  f1-score   support
 
-        good       0.94      0.94      0.94       621
- promotional       0.92      0.92      0.92       462
+        good       0.98      0.96      0.97       621
+ promotional       0.95      0.97      0.96       462
 
-    accuracy                           0.93      1083
-   macro avg       0.93      0.93      0.93      1083
-weighted avg       0.93      0.93      0.93      1083
+    accuracy                           0.96      1083
+   macro avg       0.96      0.96      0.96      1083
+weighted avg       0.96      0.96      0.96      1083
 
-2024-11-03 20:36:22,085 - INFO - LinearSVC(C=10) - Accuracy: 0.9335180055401662
-2024-11-03 20:36:22,085 - INFO - SVC(kernel='linear') - Tuning
-2024-11-03 20:39:06,401 - INFO - SVC(kernel='linear') - Best params: {'C': 10}
-2024-11-03 20:39:06,402 - INFO - SVC(kernel='linear') - Best score: 0.9323176120359371
-2024-11-03 20:39:06,402 - INFO - SVC(C=10, kernel='linear') - Evaluating model        
-2024-11-03 20:39:14,123 - INFO - SVC(C=10, kernel='linear') - Confusion Matrix:
-[[584  37]
- [ 35 427]]
-2024-11-03 20:39:14,140 - INFO - SVC(C=10, kernel='linear') - Classification Report:      
+2024-12-08 00:51:33,081 - INFO - LinearSVC(C=100) - Accuracy: 0.96398891966759
+2024-12-08 00:51:33,081 - INFO - SVC(kernel='linear') - Tuning
+2024-12-08 00:53:52,728 - INFO - SVC(kernel='linear') - Best params: {'C': 10}
+2024-12-08 00:53:52,729 - INFO - SVC(kernel='linear') - Best score: 0.9547229304889934
+2024-12-08 00:53:52,729 - INFO - SVC(C=10, kernel='linear') - Evaluating model
+2024-12-08 00:53:58,714 - INFO - SVC(C=10, kernel='linear') - Confusion Matrix:
+[[597  24]
+ [ 15 447]]
+2024-12-08 00:53:58,731 - INFO - SVC(C=10, kernel='linear') - Classification Report:
               precision    recall  f1-score   support
 
-        good       0.94      0.94      0.94       621
- promotional       0.92      0.92      0.92       462
+        good       0.98      0.96      0.97       621
+ promotional       0.95      0.97      0.96       462
 
-    accuracy                           0.93      1083
-   macro avg       0.93      0.93      0.93      1083
-weighted avg       0.93      0.93      0.93      1083
+    accuracy                           0.96      1083
+   macro avg       0.96      0.96      0.96      1083
+weighted avg       0.96      0.96      0.96      1083
 
-2024-11-03 20:39:14,141 - INFO - SVC(C=10, kernel='linear') - Accuracy: 0.9335180055401662
-2024-11-03 20:39:14,142 - INFO - SVC() - Tuning
-2024-11-03 20:42:29,291 - INFO - SVC() - Best params: {'C': 10}
-2024-11-03 20:42:29,291 - INFO - SVC() - Best score: 0.9230759988786394
-2024-11-03 20:42:29,292 - INFO - SVC(C=10) - Evaluating model
-2024-11-03 20:42:40,556 - INFO - SVC(C=10) - Confusion Matrix:
-[[581  40]
- [ 33 429]]
-2024-11-03 20:42:40,573 - INFO - SVC(C=10) - Classification Report:
+2024-12-08 00:53:58,734 - INFO - SVC(C=10, kernel='linear') - Accuracy: 0.96398891966759
+2024-12-08 00:53:58,734 - INFO - SVC() - Tuning
+2024-12-08 00:56:59,433 - INFO - SVC() - Best params: {'C': 10}
+2024-12-08 00:56:59,434 - INFO - SVC() - Best score: 0.9496420990802174
+2024-12-08 00:56:59,435 - INFO - SVC(C=10) - Evaluating model
+2024-12-08 00:57:08,818 - INFO - SVC(C=10) - Confusion Matrix:
+[[597  24]
+ [ 19 443]]
+2024-12-08 00:57:08,836 - INFO - SVC(C=10) - Classification Report:
               precision    recall  f1-score   support
 
-        good       0.95      0.94      0.94       621
- promotional       0.91      0.93      0.92       462
+        good       0.97      0.96      0.97       621
+ promotional       0.95      0.96      0.95       462
 
-    accuracy                           0.93      1083
-   macro avg       0.93      0.93      0.93      1083
-weighted avg       0.93      0.93      0.93      1083
+    accuracy                           0.96      1083
+   macro avg       0.96      0.96      0.96      1083
+weighted avg       0.96      0.96      0.96      1083
 
-2024-11-03 20:42:40,577 - INFO - SVC(C=10) - Accuracy: 0.9325946445060018
-2024-11-03 20:42:40,577 - INFO - SVC(kernel='poly') - Tuning
-2024-11-03 20:46:05,604 - INFO - SVC(kernel='poly') - Best params: {'C': 10}
-2024-11-03 20:46:05,605 - INFO - SVC(kernel='poly') - Best score: 0.7114787275227277
-2024-11-03 20:46:05,605 - INFO - SVC(C=10, kernel='poly') - Evaluating model
-2024-11-03 20:46:18,535 - INFO - SVC(C=10, kernel='poly') - Confusion Matrix:
-[[596  25]
- [174 288]]
-2024-11-03 20:46:18,551 - INFO - SVC(C=10, kernel='poly') - Classification Report:
+2024-12-08 00:57:08,839 - INFO - SVC(C=10) - Accuracy: 0.9602954755309326
+2024-12-08 00:57:08,839 - INFO - SVC(kernel='poly') - Tuning
+2024-12-08 01:00:35,033 - INFO - SVC(kernel='poly') - Best params: {'C': 10}
+2024-12-08 01:00:35,033 - INFO - SVC(kernel='poly') - Best score: 0.9212289578021332
+2024-12-08 01:00:35,034 - INFO - SVC(C=10, kernel='poly') - Evaluating model
+2024-12-08 01:00:47,868 - INFO - SVC(C=10, kernel='poly') - Confusion Matrix:
+[[577  44]
+ [ 38 424]]
+2024-12-08 01:00:47,884 - INFO - SVC(C=10, kernel='poly') - Classification Report:
               precision    recall  f1-score   support
 
-        good       0.77      0.96      0.86       621
- promotional       0.92      0.62      0.74       462
+        good       0.94      0.93      0.93       621
+ promotional       0.91      0.92      0.91       462
 
-    accuracy                           0.82      1083
-   macro avg       0.85      0.79      0.80      1083
-weighted avg       0.84      0.82      0.81      1083
+    accuracy                           0.92      1083
+   macro avg       0.92      0.92      0.92      1083
+weighted avg       0.92      0.92      0.92      1083
 
-2024-11-03 20:46:18,554 - INFO - SVC(C=10, kernel='poly') - Accuracy: 0.8162511542012927
-2024-11-03 20:46:18,555 - INFO - SVC(kernel='sigmoid') - Tuning
-2024-11-03 20:48:32,025 - INFO - SVC(kernel='sigmoid') - Best params: {'C': 1}
-2024-11-03 20:48:32,026 - INFO - SVC(kernel='sigmoid') - Best score: 0.9272351786834692
-2024-11-03 20:48:32,027 - INFO - SVC(C=1, kernel='sigmoid') - Evaluating model
-2024-11-03 20:48:38,474 - INFO - SVC(C=1, kernel='sigmoid') - Confusion Matrix:
-[[589  32]
- [ 39 423]]
-2024-11-03 20:48:38,491 - INFO - SVC(C=1, kernel='sigmoid') - Classification Report:
+2024-12-08 01:00:47,887 - INFO - SVC(C=10, kernel='poly') - Accuracy: 0.9242843951985226
+2024-12-08 01:00:47,888 - INFO - SVC(kernel='sigmoid') - Tuning
+2024-12-08 01:02:32,612 - INFO - SVC(kernel='sigmoid') - Best params: {'C': 10}
+2024-12-08 01:02:32,613 - INFO - SVC(kernel='sigmoid') - Best score: 0.9549538773712104
+2024-12-08 01:02:32,614 - INFO - SVC(C=10, kernel='sigmoid') - Evaluating model
+2024-12-08 01:02:37,560 - INFO - SVC(C=10, kernel='sigmoid') - Confusion Matrix:
+[[595  26]
+ [ 16 446]]
+2024-12-08 01:02:37,577 - INFO - SVC(C=10, kernel='sigmoid') - Classification Report:
               precision    recall  f1-score   support
 
-        good       0.94      0.95      0.94       621
- promotional       0.93      0.92      0.92       462
+        good       0.97      0.96      0.97       621
+ promotional       0.94      0.97      0.96       462
 
-    accuracy                           0.93      1083
-   macro avg       0.93      0.93      0.93      1083
-weighted avg       0.93      0.93      0.93      1083
+    accuracy                           0.96      1083
+   macro avg       0.96      0.96      0.96      1083
+weighted avg       0.96      0.96      0.96      1083
 
-2024-11-03 20:48:38,494 - INFO - SVC(C=1, kernel='sigmoid') - Accuracy: 0.9344413665743305
+2024-12-08 01:02:37,579 - INFO - SVC(C=10, kernel='sigmoid') - Accuracy: 0.961218836565097

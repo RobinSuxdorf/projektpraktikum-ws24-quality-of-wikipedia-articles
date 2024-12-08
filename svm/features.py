@@ -16,7 +16,7 @@ def extract_features(df: pd.DataFrame) -> Tuple[csr_matrix, pd.Series]:
     tuple: A tuple containing the TF-IDF feature matrix (X) and the labels (y).
     """
     logging.info("Extracting features")
-    tfidf = TfidfVectorizer(stop_words="english", max_df=0.7)
+    tfidf = TfidfVectorizer(stop_words="english", max_df=0.7, sublinear_tf=True)
     X = tfidf.fit_transform(df["text"])
     y = df["label"]
     logging.info("Feature matrix shape: %s", X.shape)
@@ -37,7 +37,7 @@ def extract_features_with_categories(
     tuple: A tuple containing the TF-IDF feature matrix (X) and the labels DataFrame (y).
     """
     logging.info("Extracting features")
-    tfidf = TfidfVectorizer(stop_words="english", max_df=0.7)
+    tfidf = TfidfVectorizer(stop_words="english", max_df=0.7, sublinear_tf=True)
     X = tfidf.fit_transform(df["text"])
     df["label"] = df["label"].map({"good": 0, "promotional": 1})
     df[["advert", "coi", "fanpov", "pr", "resume"]] = df[
@@ -65,7 +65,7 @@ def extract_features_promotional_categories(
     logging.info("Extracting features for promotional articles")
     df = df[df["label"] == "promotional"]
     df = df.drop(columns=["label"])
-    tfidf = TfidfVectorizer(stop_words="english", max_df=0.7)
+    tfidf = TfidfVectorizer(stop_words="english", max_df=0.7, sublinear_tf=True)
     X = tfidf.fit_transform(df["text"])
     df[["advert", "coi", "fanpov", "pr", "resume"]] = df[
         ["advert", "coi", "fanpov", "pr", "resume"]
