@@ -10,15 +10,17 @@ logging.getLogger("matplotlib.category").setLevel(logging.WARNING)
 
 
 def evaluate_model(model: Model, x_test, y_test) -> plt.Figure:
-    """_summary_
+    """
+    Evaluate a trained model and visualize its classification performance.
 
     Args:
-        model (Model): _description_
-        x_test (_type_): _description_
-        y_test (_type_): _description_
+        model (Model): The trained model to evaluate.
+        x_test (array-like): Test dataset features.
+        y_test (array-like): True labels for the test dataset.
 
     Returns:
-        plt.Figure: _description_
+        plt.Figure: A matplotlib figure containing a bar chart of precision, recall,
+                    and F1-score for each label and overall accuracy.
     """
     logger.info("Evaluating the model.")
     y_pred = model.predict(x_test)
@@ -60,20 +62,19 @@ def evaluate_model(model: Model, x_test, y_test) -> plt.Figure:
                 va="bottom",
             )
 
-    ax.set_title("Metrics per label")
+    ax.set_title("Metrics per Label")
     ax.set_xticks(x)
     ax.set_xticklabels(labels)
     ax.set_ylim(0, 1.1)
     ax.legend()
 
-    if accuracy:
-        ax.text(
-            0.5,
-            0.95,
-            f"Accuracy: {accuracy:.2%}",
-            transform=ax.transAxes,
-            ha="center",
-        )
+    ax.text(
+        0.5,
+        0.95,
+        f"Accuracy: {accuracy:.2%}",
+        transform=ax.transAxes,
+        ha="center",
+    )
 
     fig.tight_layout()
     return fig

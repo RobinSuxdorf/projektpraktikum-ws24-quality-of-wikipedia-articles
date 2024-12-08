@@ -23,7 +23,7 @@ logger = logging.getLogger(__name__)
 
 def run_pipeline(config) -> None:
     """
-    Run the data processing and model training pipeline for binary good-promotional classification.
+    Run the data processing and model training pipeline for classification.
 
     Args:
         config (dict): Configuration dictionary.
