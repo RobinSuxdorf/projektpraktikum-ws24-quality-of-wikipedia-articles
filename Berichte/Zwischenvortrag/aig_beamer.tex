@@ -7,8 +7,10 @@
 \usepackage[english]{babel}     % English language
 \usepackage[latin1]{inputenc}   % Input encoding
 \usepackage{tikz}               % For creating graphics
+\usepackage[mode=buildnew]{standalone}
 \usepackage{url}                % For including urls
 \usepackage{tabularx}           % For better tables
+\usepackage{xcolor}             % Für bunte Farbe :)
 
 \usetheme{aig}                  % Set beamer theme
 
@@ -49,9 +51,14 @@ University of Hagen, Germany}
 \section{Problemstellung}
 
 \begin{frame}{Problemstellung}
+    \textcolor{red}{Beispiel Wikipedia-Artikel mit promo}
+\end{frame}
+
+\begin{frame}{Problemstellung}
     \begin{block}{Problemstellung}
         Das Ziel dieses Projekts ist die Entwicklung von Modellen zur automatisierten Klassifikation von Wikipedia-Artikeln als promotional (werblich) oder nicht-promotional. Wikipedia strebt nach objektiven und neutralen Inhalten; daher ist die Identifizierung von Artikeln mit werbenden Charakter von gro\ss{}er Bedeutung, um die sachliche Qualit\"at der Plattform zu gew\"ahrleisten.
     \end{block}
+    \textcolor{red}{TODO: Konkret als Frage formulieren?\\ Zweite Frage ergänzen: Warum ist der Artikel nicht neutral?}
 \end{frame}
 
 \section{Daten}
@@ -66,6 +73,7 @@ University of Hagen, Germany}
 
 
 \begin{frame}{Weitere Daten}
+    \textcolor{red}{TODO: Ans Ende verschieben; Ausblick?}
     \begin{block}{Weitere Daten}
         \begin{itemize}
             \item Wikipedia-Dump
@@ -80,14 +88,121 @@ University of Hagen, Germany}
 
 \subsection{Logistische Regression}
 
-\begin{frame}{Logistische Regressionn}
+\begin{frame}{Logistische Regression (1)}
+    \begin{block}{Datenvorverarbeitung}
+        \begin{itemize}
+            \item Entfernung von Sonderzeichen und Kleinbuchstabierung (nativ durch TF-IDF-Vektorisierung)
+            \item Stopw\"orter entfernt, aber Zahlen beibehalten
+            \item Optimierung der TF-IDF-Vektorisierung durch Gridsearch:
+                  \begin{itemize}
+                      \item Maximale Anzahl von Features: \{5000, \textbf{10000}, 20000\}
+                      \item n-Gramm-Bereich: \{(1,1), (\textbf{1,2}), \dots ,(3,4)\}
+                  \end{itemize}
+        \end{itemize}
+    \end{block}
+\end{frame}
 
+\begin{frame}{Logistische Regression (2)}
+    \begin{block}{Methode}
+        \begin{itemize}
+            \item Klassifikation mit \texttt{LogisticRegression}:
+                  \begin{itemize}
+                      \item Solver: \texttt{lbfgs}, \texttt{saga}
+                      \item Strafterm: \(L1\) oder \(L2\)-Regularisierung
+                      \item Multi-Class: \texttt{OneVsRestClassifier} f\"ur multilabel-Klassifikation
+                  \end{itemize}
+            \item Optimierung des Modells:
+                  \begin{itemize}
+                      \item Gridsearch f\"ur Hyperparameter der logistischen Regression:
+                            \begin{itemize}
+                                \item Regularisierungsparameter \(C\): \{0.01, 0.1, 1, 10, 100\}
+                                \item Verschiedene Solver (\texttt{lbfgs}, \texttt{saga})
+                            \end{itemize}
+                      \item Umgang mit Klassenungleichgewicht: Easy Data Augmentation (EDA) mit nltk.
+                            \begin{itemize}
+                                \item Synonym Replacement: Es werden zuf\"allig n W\"orter durch Synonyme ersetzt und als neuer Text mit gleichem Label ausgegeben.
+                                \item In Pr\"ufung: Random Swap, Random Insertion und Random Deletion
+                            \end{itemize}
+                  \end{itemize}
+        \end{itemize}
+    \end{block}
+\end{frame}
+
+\begin{frame}{Fortschritte durch bisherige Augmentierung}
+    \definecolor{mattegreen}{RGB}{120,180,120} % Mattes Grün
+    \definecolor{grey}{RGB}{150,150,150} % Dezentes Grau
+    \begin{block}{Verbesserung der Erkennungsraten (Recall) durch Augmentierung}
+        \begin{columns}[T,onlytextwidth]
+            \column{0.48\textwidth}
+            \textbf{Sublabel: advert}
+            \begin{itemize}
+                \item Original: 0.949
+                \item Augmented: 0.900 \tikz[baseline]{\node[anchor=base] {\textcolor{red}{$\searrow$}};}
+            \end{itemize}
+            
+            \textbf{Sublabel: coi}
+            \begin{itemize}
+                \item Original: 0.000
+                \item Augmented: 0.016 \tikz[baseline]{\node[anchor=base] {\textcolor{grey}{$\nearrow$}};}
+            \end{itemize}
+            
+            \textbf{Sublabel: resume}
+            \begin{itemize}
+                \item Original: 0.408
+                \item Augmented: 0.526 \tikz[baseline]{\node[anchor=base] {\textcolor{grey}{$\nearrow$}};}
+            \end{itemize}
+            
+            \column{0.48\textwidth}
+            \textbf{Sublabel: fanpov}
+            \begin{itemize}
+                \item Original: 0.195
+                \item Augmented: 0.427 \tikz[baseline]{\node[anchor=base] {\textcolor{mattegreen}{$\uparrow$}};}
+            \end{itemize}
+            
+            \textbf{Sublabel: pr}
+            \begin{itemize}
+                \item Original: 0.000
+                \item Augmented: 0.008 \tikz[baseline]{\node[anchor=base] {\textcolor{grey}{$\nearrow$}};}
+            \end{itemize}
+        \end{columns}
+    \end{block}
 \end{frame}
 
 \subsection{Support Vector Machine}
 
-\begin{frame}{Support Vector Machine}
+\begin{frame}{Support Vector Machine (1)}
+    \begin{block}{Datenvorverarbeitung}
+        \begin{itemize}
+            \item Zusammenf\"uhren der CSV-Dateien
+            \item Entfernen \"uberfl\"ussiger Features
+        \end{itemize}
+    \end{block}
+\end{frame}
 
+\begin{frame}{Support Vector Machine (2)}
+    \begin{block}{Methode}
+        \begin{itemize}
+            \item TF-IDF-Vektorisierung
+            \item Vergleich verschiedener Kernels:
+                \begin{itemize}
+                    \item \texttt{linear}, \texttt{poly}, \texttt{rbf}, \texttt{sigmoid}.
+                    \item Keine Vorteile gegen\"uber \texttt{linear} festzustellen.
+                    \item \texttt{LinearSVC} mit deutlich geringerer Laufzeit.
+                    \item Parameter-Tuning mit \texttt{GridSearchCV}.
+                \end{itemize}
+            \item \textbf{Bin\"are Klassifikation}:
+                \begin{itemize}
+                    \item \texttt{LinearSVC} liefert Precision, Recall, F1-Score und Accuracy jeweils 0.96 - 0.97.
+                \end{itemize}
+            \item \textbf{Multilabel-Klassifikation}:
+                \begin{itemize}
+                    \item Klassifikation mit \texttt{MultiOutputClassifier} und \texttt{LinearSVC}.
+                    \item Nur \texttt{advert} einigerma\ss{}en identifizierbar mit F1-Score 0.86.
+                    \item Bei \texttt{coi}, \texttt{fanpov}, \texttt{pr}, \texttt{resume} F1-Scores von 0.00 bis 0.45.
+                    \item Nicht-lineare Kernels liefern \"ahnliche Ergebnisse.
+                \end{itemize}
+        \end{itemize}
+    \end{block}
 \end{frame}
 
 \subsection{Bayes Klassifikator}
@@ -134,7 +249,62 @@ University of Hagen, Germany}
 \subsection{Convolutional Neural Network}
 
 \begin{frame}{Convolutional Neural Network}
+    \begin{block}{Idee}
+    \begin{itemize}
+        \item Position von relevanten Textbausteinen im Text ist nicht wichtig
 
+        \item nutze Filter um relevante Textbausteine zu finden
+        \begin{figure}
+            \centering
+            \includestandalone[width=12cm]{figures/conv1d}
+        \end{figure}
+    \end{itemize}
+    \end{block}
+\end{frame}
+
+\begin{frame}{Convolutional Neural Network}
+    \begin{block}{Datenvorverarbeitung}
+        \begin{itemize}
+            \item Tokenisierung mittels Byte Pair Encoding (cl100kbase)
+
+            \includestandalone[width=12cm]{figures/tokenization}
+
+            \textcolor{red}{Tokens to number}
+    
+            \item Konvertierung in Tensor f\"ur pytorch Datensatz 
+        \end{itemize}
+    \end{block}
+\end{frame}
+
+\begin{frame}{Convolutional Neural Network}
+    \begin{block}{Faltung}
+        \begin{itemize}
+            \item Embedding Layer
+        
+            \item \textcolor{red}{Bild von 1d Faltung auf Embedding Layer}
+
+            \item Pooling Layer
+        \end{itemize}
+    \end{block}
+\end{frame}
+
+\begin{frame}{Convolutional Neural Network}
+    \begin{block}{Training/Optimierung}
+        \begin{itemize}
+            \item Viele Hyperparameter
+            \begin{itemize}
+                \item Tokenizer
+
+                \item Embedding Dimension
+
+                \item Anzahl Conv Layers
+
+                \item FFN
+            \end{itemize}
+            
+            \item GridSearch
+        \end{itemize}
+    \end{block}
 \end{frame}
 
 \subsection{5.Ansatz}
