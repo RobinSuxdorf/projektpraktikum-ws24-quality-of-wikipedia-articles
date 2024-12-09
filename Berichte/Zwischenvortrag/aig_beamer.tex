@@ -64,25 +64,13 @@ University of Hagen, Germany}
 \section{Daten}
 
 \begin{frame}{Daten}
+    \textcolor{red}{Zwei Diagramme? neutral vs. promo und Verteilung innerhalb promo}
     \begin{itemize}
         \item 54116 gelabelte Wikipedia Artikel
 
         \item \includegraphics[width=10cm]{figures/distribution_multiple_classes.png}
     \end{itemize}
 \end{frame}
-
-
-\begin{frame}{Weitere Daten}
-    \textcolor{red}{TODO: Ans Ende verschieben; Ausblick?}
-    \begin{block}{Weitere Daten}
-        \begin{itemize}
-            \item Wikipedia-Dump
-            \item Versuche Daten zu Augmentieren
-            \item Suche nach Fanpages, Wissenschaftlichen Artikeln usw.
-        \end{itemize}
-    \end{block}
-\end{frame}
-
 
 \section{Ans\"atze}
 
@@ -171,6 +159,7 @@ University of Hagen, Germany}
 \subsection{Support Vector Machine}
 
 \begin{frame}{Support Vector Machine (1)}
+    \textcolor{red}{DELETE?}
     \begin{block}{Datenvorverarbeitung}
         \begin{itemize}
             \item Zusammenf\"uhren der CSV-Dateien
@@ -253,7 +242,7 @@ University of Hagen, Germany}
     \begin{itemize}
         \item Position von relevanten Textbausteinen im Text ist nicht wichtig
 
-        \item nutze Filter um relevante Textbausteine zu finden
+        \item nutze Faltung um relevante Textbausteine zu finden
         \begin{figure}
             \centering
             \includestandalone[width=12cm]{figures/conv1d}
@@ -309,6 +298,7 @@ University of Hagen, Germany}
 
 \subsection{5.Ansatz}
 \begin{frame}
+    \textcolor{red}{DELETE?}
     \begin{block}{Ideen 5. Ansatz}
         \begin{itemize}
             \item Graph der Beziehungen der Daten untereinander Darstellt
@@ -321,8 +311,36 @@ University of Hagen, Germany}
     \end{block}
 \end{frame}
 
+\section{Ausblick}
+\begin{frame}{Ausblick}
+    \begin{block}{Ausblick}
+        \begin{itemize}
+            \item Hyperparameter-Optimierung
+
+            \item Datensatz erweitern
+            \begin{itemize}
+                \item Wikipedia-Dump
+                
+                \item Datenaugmentation
+                \begin{itemize}
+                    \item W\"orter durch Synonyme ersetzen
+
+                    \item Artikel durch LLMs umschreiben lassen
+
+                    \item Artikel zwischen mehreren Sprachen hin und her \"ubersetzen lassen
+                \end{itemize}
+                
+                \item Transfer Learning (wissenschaftliche Paper)
+            \end{itemize}
+
+            \item Vortrainierte Modelle verwenden
+        \end{itemize}
+    \end{block}
+\end{frame}
+
 \section{Zusammenfassung}
 \begin{frame}
+    \textcolor{red}{DELETE?}
     \begin{block}{Zusammenfassung}
         \begin{itemize}
             \item Gemachte Arbeit
