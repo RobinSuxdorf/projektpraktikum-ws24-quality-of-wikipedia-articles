@@ -23,12 +23,14 @@ def get_vectorizer(vectorizer_config: dict):
     max_df = vectorizer_config.get("max_df")
 
     if vectorizer_type == "tfidf":
+        sublinear_tf = vectorizer_config.get("sublinear_tf")
         return TfidfVectorizer(
             max_features=max_features,
             stop_words="english",
             ngram_range=ngram_range,
             min_df=min_df,
             max_df=max_df,
+            sublinear_tf=sublinear_tf,
         )
     elif vectorizer_type == "count":
         return CountVectorizer(
