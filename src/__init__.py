@@ -1,4 +1,5 @@
 from .data_loader import load_data
+from .wikipedia_article_dataset import WikipediaArticleDataset
 from .preprocessing import preprocess_text_series
 from .vectorizer import get_vectorizer
 from .train import train_model
@@ -12,6 +13,7 @@ from .utils import (
 
 __all__ = [
     "load_data",
+    "WikipediaArticleDataset",
     "preprocess_text_series",
     "get_vectorizer",
     "train_model",
