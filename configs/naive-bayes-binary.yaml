@@ -2,7 +2,7 @@
 
 usecase: "binary"
 # start_step: "data_loader"
-start_step: "vectorizer"
+start_step: "evaluation"
 load:
   data_file: "preprocessed_data_nbb.csv"
   features_file: "features_nbb.pkl"

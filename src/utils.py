@@ -6,6 +6,7 @@ import logging
 import yaml
 import joblib
 import pandas as pd
+from src.models import Model
 
 logger = logging.getLogger(__name__)
 
@@ -47,24 +48,25 @@ def load_config(config_name: str) -> dict:
     return config
 
 
-def save_to_file(data, step_config: dict) -> None:
+def save_to_file(data: any, filename: str) -> None:
     """
     Save data to a file based on the provided configuration.
 
     Args:
-        data: Data to be saved.
-        step_config (dict): Configuration dictionary for the current step.
+        data (any): Data to be saved.
+        filename (str): Name of the file to save data to.
     """
-    filename = step_config.get("save")
     if filename and filename.lower() != "false":
         directory = "data/intermediary"
         file_path = os.path.join(directory, filename)
 
         os.makedirs(directory, exist_ok=True)
 
-        if file_path.endswith(".csv"):
+        if isinstance(data, pd.DataFrame):
             data.to_csv(file_path, index=False)
-        elif file_path.endswith(".png"):
+        elif isinstance(data, Model):
+            data.save(file_path)
+        elif hasattr(data, "savefig"):
             data.savefig(file_path)
         else:
             joblib.dump(data, file_path)
@@ -72,20 +74,29 @@ def save_to_file(data, step_config: dict) -> None:
         logger.info(f"Data saved to {file_path}.")
 
 
-def load_from_file(filename: str):
+def load_from_file(filename: str, data_type: str) -> any:
     """
-    Load data from a file based on the provided filename.
+    Load data from a file based on the provided configuration.
 
     Args:
         filename (str): Name of the file to load data from.
+        data_type (str): Type of data being loaded (e.g., "data", "features", "model").
 
     Returns:
-        DataFrame or other: Loaded data.
+        any: Loaded data.
     """
-    directory = "data/intermediary"
-    file_path = os.path.join(directory, filename)
+    if filename and filename.lower() != "false":
+        directory = "data/intermediary"
+        file_path = os.path.join(directory, filename)
 
-    if file_path.endswith(".csv"):
-        return pd.read_csv(file_path)
-    elif file_path.endswith(".pkl"):
-        return joblib.load(file_path)
+        if data_type == "data":
+            return pd.read_csv(file_path)
+        elif data_type == "features":
+            return joblib.load(file_path)
+        elif data_type == "model":
+            model = joblib.load(file_path)
+            if isinstance(model, Model):
+                model.load(file_path)
+            return model
+        else:
+            raise ValueError(f"Unknown data type: {data_type}")

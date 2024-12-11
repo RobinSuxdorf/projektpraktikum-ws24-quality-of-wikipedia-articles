@@ -21,7 +21,7 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 
-def run_pipeline(config) -> None:
+def run_pipeline(config: dict) -> None:
     """
     Run the data processing and model training pipeline for classification.
 
@@ -36,20 +36,20 @@ def run_pipeline(config) -> None:
     model_file = load_config.get("model_file", "")
     if data_file:
         logger.info(f"Loading data from file: {data_file}")
-        data = load_from_file(load_config["data_file"])
+        data = load_from_file(data_file, "data")
     if features_file:
         logger.info(f"Loading features from file: {features_file}")
-        features = load_from_file(load_config["features_file"])
+        features = load_from_file(features_file, "features")
     if model_file:
         logger.info(f"Loading model from file: {model_file}")
-        model = load_from_file(load_config["model_file"])
+        model = load_from_file(model_file, "model")
 
     if start_step == "data_loader":
         logger.info("Starting data loading step.")
         data_loader_config = config.get("data_loader")
         data = load_data(data_loader_config, usecase)
         logger.info(f"First few rows of the loaded data:\n{data.head()}")
-        save_to_file(data, data_loader_config)
+        save_to_file(data, data_loader_config["save"])
     else:
         logger.info("Skipping data loading step.")
 
@@ -61,7 +61,7 @@ def run_pipeline(config) -> None:
         )
         logger.info(f"Text data preprocessed with {preprocessing_config}")
         data.drop(columns=["text"], inplace=True)
-        save_to_file(data, preprocessing_config)
+        save_to_file(data, preprocessing_config["save"])
     else:
         logger.info("Skipping text data preprocessing step.")
 
@@ -71,7 +71,7 @@ def run_pipeline(config) -> None:
         vectorizer = get_vectorizer(vectorizer_config)
         features = vectorizer.fit_transform(data["cleaned_text"])
         logger.info(f"Features extracted with {vectorizer_config}")
-        save_to_file(features, vectorizer_config)
+        save_to_file(features, vectorizer_config["save"])
     else:
         logger.info("Skipping feature extraction step.")
 
@@ -82,7 +82,7 @@ def run_pipeline(config) -> None:
         model_config = config.get("model")
         model = train_model(features, labels, model_config)
         logger.info(f"Model trained with {model_config}.")
-        save_to_file(model, model_config)
+        save_to_file(model, model_config["save"])
     else:
         logger.info("Skipping model training step.")
 
@@ -90,7 +90,7 @@ def run_pipeline(config) -> None:
     evaluation_config = config.get("evaluation")
     figure = evaluate_model(model, features, labels)
     logger.info("Figure created.")
-    save_to_file(figure, evaluation_config)
+    save_to_file(figure, evaluation_config["save"])
 
 
 def main() -> None:
