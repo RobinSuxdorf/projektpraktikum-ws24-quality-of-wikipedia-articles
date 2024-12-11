@@ -51,25 +51,49 @@ University of Hagen, Germany}
 \section{Problemstellung}
 
 \begin{frame}{Problemstellung}
-    \textcolor{red}{Beispiel Wikipedia-Artikel mit promo}
+    \begin{figure}
+        \centering
+        \includegraphics[width=0.6\linewidth]{figures/example_promo_article.png}
+        \caption{\url{https://en.wikipedia.org/wiki/Raison\_(cigarette)}}
+        \label{fig:enter-label}
+    \end{figure}
 \end{frame}
 
 \begin{frame}{Problemstellung}
-    \begin{block}{Problemstellung}
-        Das Ziel dieses Projekts ist die Entwicklung von Modellen zur automatisierten Klassifikation von Wikipedia-Artikeln als promotional (werblich) oder nicht-promotional. Wikipedia strebt nach objektiven und neutralen Inhalten; daher ist die Identifizierung von Artikeln mit werbenden Charakter von gro\ss{}er Bedeutung, um die sachliche Qualit\"at der Plattform zu gew\"ahrleisten.
+    \begin{block}{Wann ist ein Wikipedia-Artikel gut?}
+        \begin{itemize}
+            \item redaktionelle Standards (Good article Kriterien)
+            \begin{itemize}
+                \item gut geschrieben
+            
+                \item korrekte und \"uberpr\"ufbare Informationen
+
+                \item neutral in der Sichtweise
+
+                \item verwenden Bilder mit geeigneten Urheberrechtslizenzen
+            \end{itemize}
+
+            \item Good article nomination (GAN)
+
+            \item nur 0.59\% der Wikipedia-Artikel sind gut (1 von 171)
+        \end{itemize}
     \end{block}
-    \textcolor{red}{TODO: Konkret als Frage formulieren?\\ Zweite Frage ergänzen: Warum ist der Artikel nicht neutral?}
+
+    \begin{block}{Problemstellung}
+        Ist ein gegebener Wikipedia-Artikeln gut oder promotional? \\
+
+        Zusatz: Falls ein Wikipedia-Artikel nicht gut ist, warum?
+    \end{block}
 \end{frame}
 
 \section{Daten}
 
+% 54116 gelabelte Wikipedia Artikel
 \begin{frame}{Daten}
-    \textcolor{red}{Zwei Diagramme? neutral vs. promo und Verteilung innerhalb promo}
-    \begin{itemize}
-        \item 54116 gelabelte Wikipedia Artikel
-
-        \item \includegraphics[width=10cm]{figures/distribution_multiple_classes.png}
-    \end{itemize}
+    \begin{figure}
+        \centering
+        \includegraphics[width=0.8\linewidth]{figures/distribution_multiple_classes.png}
+    \end{figure}
 \end{frame}
 
 \section{Ans\"atze}
@@ -117,6 +141,7 @@ University of Hagen, Germany}
 \end{frame}
 
 \begin{frame}{Fortschritte durch bisherige Augmentierung}
+    \textcolor{red}{Verschieben zu Ausblick?}
     \definecolor{mattegreen}{RGB}{120,180,120} % Mattes Grün
     \definecolor{grey}{RGB}{150,150,150} % Dezentes Grau
     \begin{block}{Verbesserung der Erkennungsraten (Recall) durch Augmentierung}
@@ -156,19 +181,14 @@ University of Hagen, Germany}
     \end{block}
 \end{frame}
 
-\subsection{Support Vector Machine}
-
-\begin{frame}{Support Vector Machine (1)}
-    \textcolor{red}{DELETE?}
-    \begin{block}{Datenvorverarbeitung}
-        \begin{itemize}
-            \item Zusammenf\"uhren der CSV-Dateien
-            \item Entfernen \"uberfl\"ussiger Features
-        \end{itemize}
-    \end{block}
+\begin{frame}{Logistische Regression}
+    \textcolor{red}{Bild von Ergebnissen}
 \end{frame}
 
-\begin{frame}{Support Vector Machine (2)}
+\subsection{Support Vector Machine}
+
+\begin{frame}{Support Vector Machine
+}
     \begin{block}{Methode}
         \begin{itemize}
             \item TF-IDF-Vektorisierung
@@ -192,6 +212,10 @@ University of Hagen, Germany}
                 \end{itemize}
         \end{itemize}
     \end{block}
+\end{frame}
+
+\begin{frame}{Support Vector Machine}
+    \textcolor{red}{Bild von Ergebnissen}
 \end{frame}
 
 \subsection{Bayes Klassifikator}
@@ -238,42 +262,22 @@ University of Hagen, Germany}
 \subsection{Convolutional Neural Network}
 
 \begin{frame}{Convolutional Neural Network}
-    \begin{block}{Idee}
-    \begin{itemize}
-        \item Position von relevanten Textbausteinen im Text ist nicht wichtig
-
-        \item nutze Faltung um relevante Textbausteine zu finden
-        \begin{figure}
-            \centering
-            \includestandalone[width=12cm]{figures/conv1d}
-        \end{figure}
-    \end{itemize}
-    \end{block}
-\end{frame}
-
-\begin{frame}{Convolutional Neural Network}
     \begin{block}{Datenvorverarbeitung}
         \begin{itemize}
-            \item Tokenisierung mittels Byte Pair Encoding (cl100kbase)
+            \item Tokenisierung mittels Byte Pair Encoding (cl100k\_base)
 
-            \includestandalone[width=12cm]{figures/tokenization}
-
-            \textcolor{red}{Tokens to number}
+            \item Tokens in Zahlen konvertieren
     
-            \item Konvertierung in Tensor f\"ur pytorch Datensatz 
+            \item Konvertierung in PyTorch Tensor
+
+            \item Tokenembedding
         \end{itemize}
     \end{block}
 \end{frame}
 
 \begin{frame}{Convolutional Neural Network}
     \begin{block}{Faltung}
-        \begin{itemize}
-            \item Embedding Layer
-        
-            \item \textcolor{red}{Bild von 1d Faltung auf Embedding Layer}
-
-            \item Pooling Layer
-        \end{itemize}
+        \textcolor{red}{Bild Architektur}
     \end{block}
 \end{frame}
 
@@ -288,6 +292,12 @@ University of Hagen, Germany}
 
                 \item Anzahl Conv Layers
 
+                \item Maximale L\"ange
+
+                \item Dropout
+
+                \item Filtergr\"o{\ss}en
+
                 \item FFN
             \end{itemize}
             
@@ -296,19 +306,8 @@ University of Hagen, Germany}
     \end{block}
 \end{frame}
 
-\subsection{5.Ansatz}
-\begin{frame}
-    \textcolor{red}{DELETE?}
-    \begin{block}{Ideen 5. Ansatz}
-        \begin{itemize}
-            \item Graph der Beziehungen der Daten untereinander Darstellt
-            \item Imitierung der Embeddings durch Gram-Schmidt-Verfahren
-                  \begin{itemize}
-                      \item Erste Versuche bereits gemacht
-                  \end{itemize}
-            \item Vortrainierte Embeddings, als Eingabe f\"ur andere Methoden des maschiniellen Lernens verwenden.
-        \end{itemize}
-    \end{block}
+\begin{frame}{Convolutional Neural Network}
+    \textcolor{red}{Bild von Ergebnissen}
 \end{frame}
 
 \section{Ausblick}
@@ -334,34 +333,6 @@ University of Hagen, Germany}
             \end{itemize}
 
             \item Vortrainierte Modelle verwenden
-        \end{itemize}
-    \end{block}
-\end{frame}
-
-\section{Zusammenfassung}
-\begin{frame}
-    \textcolor{red}{DELETE?}
-    \begin{block}{Zusammenfassung}
-        \begin{itemize}
-            \item Gemachte Arbeit
-                  \begin{itemize}
-                      \item 3 Klassische Verfahren implementiert
-                      \item CNN implementiert
-                      \item Erste Auswertungen gemacht
-                      \item F\"unfter Ansatz: erste Ideen gesammelt und Experimente gemacht
-                  \end{itemize}
-            \item Probleme
-                  \begin{itemize}
-                      \item Ungleiche Verteilung der Daten
-                  \end{itemize}
-            \item N\"achste Schritte
-                  \begin{itemize}
-                      \item Parameter der Klassischen Verfahren Anpassen
-                      \item Parameter des CNN anpassen
-                      \item Weitere Ideen f\"ur f\"unften Ansatz finden/erg\"anzen
-                            ausdenken bzw. weiter testen
-                      \item Weitere Datens\"atze finden bzw. Vorbereiten
-                  \end{itemize}
         \end{itemize}
     \end{block}
 \end{frame}
