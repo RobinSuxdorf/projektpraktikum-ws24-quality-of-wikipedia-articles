@@ -7,6 +7,7 @@
 \usepackage[english]{babel}     % English language
 \usepackage[latin1]{inputenc}   % Input encoding
 \usepackage{tikz}               % For creating graphics
+\usepackage{subfig}
 \usepackage[mode=buildnew]{standalone}
 \usepackage{url}                % For including urls
 \usepackage{tabularx}           % For better tables
@@ -130,7 +131,7 @@ University of Hagen, Germany}
                                 \item Regularisierungsparameter \(C\): \{0.01, 0.1, 1, 10, 100\}
                                 \item Verschiedene Solver (\texttt{lbfgs}, \texttt{saga})
                             \end{itemize}
-                      \item Umgang mit Klassenungleichgewicht: Easy Data Augmentation (EDA) mit nltk.
+                      \item \textcolor{red}{Umgang mit Klassenungleichgewicht}: Easy Data Augmentation (EDA) mit nltk.
                             \begin{itemize}
                                 \item Synonym Replacement: Es werden zuf\"allig n W\"orter durch Synonyme ersetzt und als neuer Text mit gleichem Label ausgegeben.
                                 \item In Pr\"ufung: Random Swap, Random Insertion und Random Deletion
@@ -140,55 +141,16 @@ University of Hagen, Germany}
     \end{block}
 \end{frame}
 
-\begin{frame}{Fortschritte durch bisherige Augmentierung}
-    \textcolor{red}{Verschieben zu Ausblick?}
-    \definecolor{mattegreen}{RGB}{120,180,120} % Mattes Grün
-    \definecolor{grey}{RGB}{150,150,150} % Dezentes Grau
-    \begin{block}{Verbesserung der Erkennungsraten (Recall) durch Augmentierung}
-        \begin{columns}[T,onlytextwidth]
-            \column{0.48\textwidth}
-            \textbf{Sublabel: advert}
-            \begin{itemize}
-                \item Original: 0.949
-                \item Augmented: 0.900 \tikz[baseline]{\node[anchor=base] {\textcolor{red}{$\searrow$}};}
-            \end{itemize}
-            
-            \textbf{Sublabel: coi}
-            \begin{itemize}
-                \item Original: 0.000
-                \item Augmented: 0.016 \tikz[baseline]{\node[anchor=base] {\textcolor{grey}{$\nearrow$}};}
-            \end{itemize}
-            
-            \textbf{Sublabel: resume}
-            \begin{itemize}
-                \item Original: 0.408
-                \item Augmented: 0.526 \tikz[baseline]{\node[anchor=base] {\textcolor{grey}{$\nearrow$}};}
-            \end{itemize}
-            
-            \column{0.48\textwidth}
-            \textbf{Sublabel: fanpov}
-            \begin{itemize}
-                \item Original: 0.195
-                \item Augmented: 0.427 \tikz[baseline]{\node[anchor=base] {\textcolor{mattegreen}{$\uparrow$}};}
-            \end{itemize}
-            
-            \textbf{Sublabel: pr}
-            \begin{itemize}
-                \item Original: 0.000
-                \item Augmented: 0.008 \tikz[baseline]{\node[anchor=base] {\textcolor{grey}{$\nearrow$}};}
-            \end{itemize}
-        \end{columns}
+\begin{frame}{Logistische Regression (3)}
+    \begin{block}{Ergebnisse}
+        \textcolor{red}{Bild von Ergbenissen}
+        %\includegraphics[width=6.8cm]{figures/evaluation_nbb.png} \includegraphics[width=6.8cm]{figures/evaluation_nbm.png}
     \end{block}
-\end{frame}
-
-\begin{frame}{Logistische Regression}
-    \textcolor{red}{Bild von Ergebnissen}
 \end{frame}
 
 \subsection{Support Vector Machine}
 
-\begin{frame}{Support Vector Machine
-}
+\begin{frame}{Support Vector Machine (1)}
     \begin{block}{Methode}
         \begin{itemize}
             \item TF-IDF-Vektorisierung
@@ -214,8 +176,11 @@ University of Hagen, Germany}
     \end{block}
 \end{frame}
 
-\begin{frame}{Support Vector Machine}
-    \textcolor{red}{Bild von Ergebnissen}
+\begin{frame}{Support Vector Machine (2)}
+    \begin{block}{Ergebnisse}
+        \textcolor{red}{Bild von Ergbenissen}
+        %\includegraphics[width=6.8cm]{figures/evaluation_nbb.png} \includegraphics[width=6.8cm]{figures/evaluation_nbm.png}
+    \end{block}
 \end{frame}
 
 \subsection{Bayes Klassifikator}
@@ -253,38 +218,54 @@ University of Hagen, Germany}
         \end{itemize}
     \end{block}
 \end{frame}
+
 \begin{frame}{Bayes Klassifikator (3)}
     \begin{block}{Ergebnisse}
-        \includegraphics[width=6.8cm]{figures/evaluation_nbb.png} \includegraphics[width=6.8cm]{figures/evaluation_nbm.png}
+        \begin{figure}
+            \centering
+            
+            \subfloat {{\includegraphics[width=.4\textwidth, height=5cm]{figures/evaluation_nbb.png}}}
+            \qquad
+            \subfloat {{\includegraphics[width=.4\textwidth, height=5cm]{figures/evaluation_nbm.png}}}
+        \end{figure}
     \end{block}
 \end{frame}
 
 \subsection{Convolutional Neural Network}
 
-\begin{frame}{Convolutional Neural Network}
+\begin{frame}{Convolutional Neural Network (1)}
     \begin{block}{Datenvorverarbeitung}
         \begin{itemize}
-            \item Tokenisierung mittels Byte Pair Encoding (cl100k\_base)
+            \item Textrepr\"asentation mittels Byte Pair Encoding (\texttt{cl100k\_base})
 
-            \item Tokens in Zahlen konvertieren
+            \item gegebenenfalls Padtokens erg\"anzen
     
-            \item Konvertierung in PyTorch Tensor
+            \item Konvertierung in \texttt{PyTorch Tensor}
 
-            \item Tokenembedding
+            \item als \texttt{PyTorch Dataset} implementiert
+        \end{itemize}
+    \end{block}
+
+    \begin{block}{Methode}
+        \begin{itemize}
+            \item Embedding Layer
+            \begin{itemize}
+                \item ein Embeddingvektor pro Token
+
+                \item auf diesem Layer wird die Faltungsoperation angewendet
+            \end{itemize}
+
+            \item \texttt{Conv1d} Layer: Sliding Window um Wikipedia-Artikel zu analysieren
+
+            \item Pooling Layer um Features zusammenzufassen
         \end{itemize}
     \end{block}
 \end{frame}
 
-\begin{frame}{Convolutional Neural Network}
-    \begin{block}{Faltung}
-        \textcolor{red}{Bild Architektur}
-    \end{block}
-\end{frame}
-
-\begin{frame}{Convolutional Neural Network}
+\begin{frame}{Convolutional Neural Network (2)}
     \begin{block}{Training/Optimierung}
         \begin{itemize}
-            \item Viele Hyperparameter
+            \item Modellparameter
             \begin{itemize}
                 \item Tokenizer
 
@@ -300,14 +281,25 @@ University of Hagen, Germany}
 
                 \item FFN
             \end{itemize}
+
+            \item Trainingsparameter
+            \begin{itemize}
+                \item Learning Rate
+
+                \item Batch Size
+
+                \item Epochen
+            \end{itemize}
             
-            \item GridSearch
+            \item GridSearch um gute Paramterkonfiguration systematisch zu finden
         \end{itemize}
     \end{block}
 \end{frame}
 
-\begin{frame}{Convolutional Neural Network}
-    \textcolor{red}{Bild von Ergebnissen}
+\begin{frame}{Convolutional Neural Network (3)}
+    \begin{block}{Ergebnisse}
+        \includegraphics[width=6.8cm]{figures/evaluation_cnnb.png} 
+    \end{block}
 \end{frame}
 
 \section{Ausblick}
@@ -315,26 +307,3 @@ University of Hagen, Germany}
     \begin{block}{Ausblick}
         \begin{itemize}
             \item Hyperparameter-Optimierung
-
-            \item Datensatz erweitern
-            \begin{itemize}
-                \item Wikipedia-Dump
-                
-                \item Datenaugmentation
-                \begin{itemize}
-                    \item W\"orter durch Synonyme ersetzen
-
-                    \item Artikel durch LLMs umschreiben lassen
-
-                    \item Artikel zwischen mehreren Sprachen hin und her \"ubersetzen lassen
-                \end{itemize}
-                
-                \item Transfer Learning (wissenschaftliche Paper)
-            \end{itemize}
-
-            \item Vortrainierte Modelle verwenden
-        \end{itemize}
-    \end{block}
-\end{frame}
-
-\end{document}
