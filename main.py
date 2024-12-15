@@ -5,6 +5,7 @@ import torch.nn as nn
 import torch.optim as optim
 from src.data import load_data, get_data_loaders
 from src.model import TextCNN, train_one_epoch, evaluate_model
+from sklearn.metrics import classification_report
 
 
 # number_of_elements = 100
@@ -48,7 +49,7 @@ def train_run(
 
     return avg_loss, acc
 
-def main() -> None:
+def grid_search_main() -> None:
     df = load_data("../good.csv", "../promotional.csv")
 
     embedding_dim_list = [256, 512, 1024]
@@ -76,6 +77,53 @@ def main() -> None:
                             f.write(f"Accuracy: {acc}\n")
                             f.write("\n")
     
+def main() -> None:
+    df = load_data("../good.csv", "../promotional.csv")
+
+    df = df.sample(frac=1).reset_index(drop=True)
+
+    train_loader, test_loader = get_data_loaders(df, tokenizer.encode, 400, batch_size=32, device = device)
+
+    model = TextCNN(
+        vocab_size=tokenizer.n_vocab, 
+        embedding_dim=256, 
+        num_classes=2,
+        num_filters=100, 
+        filter_sizes=[3, 4, 5], 
+        max_length=400
+    ).to(device)
+
+    optimizer = optim.Adam(model.parameters(), lr=0.001)
+
+    criterion = nn.CrossEntropyLoss()
+
+    for epoch in range(10):
+        loss = train_one_epoch(
+            model,
+            train_loader,
+            criterion,
+            optimizer,
+            device
+        )
+
+        acc = evaluate_model(model, test_loader, device=device)
+
+        print(f"Epoch {epoch}, loss: {loss}, accuracy: {acc}")
+
+    model.eval()
+    test_preds, test_labels = [], []
+    with torch.no_grad():
+        for inputs, labels in test_loader:
+            outputs = model(inputs)
+            predictions = outputs.argmax(dim=1)
+            
+            # Collect predictions and true labels for accuracy calculation
+            test_preds.extend(predictions.cpu().numpy())
+            test_labels.extend(labels.cpu().numpy())
+
+    report = classification_report(test_labels, test_preds)
+
+    print(report)
 
 if __name__ == "__main__":
     main()
