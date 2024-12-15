@@ -77,4 +77,6 @@ def evaluate_model(model: Model, x_test, y_test) -> plt.Figure:
     )
 
     fig.tight_layout()
+
+    logger.info("Evaluation finished.")
     return fig

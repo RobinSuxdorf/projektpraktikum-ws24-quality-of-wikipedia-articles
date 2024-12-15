@@ -4,7 +4,7 @@ from src import (
     get_argument_parser,
     load_data,
     preprocess_text_series,
-    get_vectorizer,
+    get_features,
     train_model,
     evaluate_model,
     load_config,
@@ -45,51 +45,40 @@ def run_pipeline(config: dict) -> None:
         model = load_from_file(model_file, "model")
 
     if start_step == "data_loader":
-        logger.info("Starting data loading step.")
         data_loader_config = config.get("data_loader")
         data = load_data(data_loader_config, usecase)
-        logger.info(f"First few rows of the loaded data:\n{data.head()}")
         save_to_file(data, data_loader_config["save"])
     else:
         logger.info("Skipping data loading step.")
 
     if start_step in ["data_loader", "preprocessing"]:
-        logger.info("Starting text data preprocessing step.")
         preprocessing_config = config.get("preprocessing")
         data["cleaned_text"] = preprocess_text_series(
             data["text"], preprocessing_config
         )
-        logger.info(f"Text data preprocessed with {preprocessing_config}")
-        data.drop(columns=["text"], inplace=True)
+        data = data.drop(columns=["text"])
         save_to_file(data, preprocessing_config["save"])
     else:
         logger.info("Skipping text data preprocessing step.")
 
-    if start_step in ["data_loader", "preprocessing", "vectorizer"]:
-        logger.info("Starting feature extraction step.")
-        vectorizer_config = config.get("vectorizer")
-        vectorizer = get_vectorizer(vectorizer_config)
-        features = vectorizer.fit_transform(data["cleaned_text"])
-        logger.info(f"Features extracted with {vectorizer_config}")
-        save_to_file(features, vectorizer_config["save"])
+    if start_step in ["data_loader", "preprocessing", "features"]:
+        features_config = config.get("features")
+        features = get_features(data["cleaned_text"], features_config)
+        save_to_file(features, features_config["save"])
     else:
         logger.info("Skipping feature extraction step.")
 
     labels = data.drop(columns=["cleaned_text"])
 
-    if start_step in ["data_loader", "preprocessing", "vectorizer", "model"]:
-        logger.info("Starting model training step.")
+    if start_step in ["data_loader", "preprocessing", "features", "model"]:
         model_config = config.get("model")
         model = train_model(features, labels, model_config)
-        logger.info(f"Model trained with {model_config}.")
         save_to_file(model, model_config["save"])
     else:
         logger.info("Skipping model training step.")
 
-    logger.info("Starting model evaluation step.")
     evaluation_config = config.get("evaluation")
     figure = evaluate_model(model, features, labels)
-    logger.info("Figure created.")
     save_to_file(figure, evaluation_config["save"])
 
 

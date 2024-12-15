@@ -30,6 +30,7 @@ class MultilabelNaiveBayes(Model):
     """
 
     def __init__(self, model_config):
+        random_state = model_config.get("random_state", None)
         alpha = model_config.get("alpha")
         oversampling = model_config.get("oversampling")
 
@@ -37,7 +38,7 @@ class MultilabelNaiveBayes(Model):
             self._model = OneVsRestClassifier(
                 Pipeline(
                     [
-                        ("oversample", RandomOverSampler(random_state=42)),
+                        ("oversample", RandomOverSampler(random_state=random_state)),
                         ("classifier", MultinomialNB(alpha=alpha)),
                     ]
                 )

@@ -9,7 +9,9 @@ import re
 
 logger = logging.getLogger(__name__)
 
-if not stopwords.words("english"):
+try:
+    nltk.data.find("stopwords")
+except LookupError:
     nltk.download("stopwords")
 STOPWORDS = set(stopwords.words("english"))
 stemmer = PorterStemmer()
@@ -28,14 +30,14 @@ def preprocess_text_series(
     Returns:
         pd.Series: Preprocessed text data.
     """
+    logger.info(f"Text data preprocessing with {preprocessing_config}")
+
     remove_non_word = preprocessing_config.get("remove_non_word")
     convert_lowercase = preprocessing_config.get("convert_lowercase")
     remove_stopwords = preprocessing_config.get("remove_stopwords")
     apply_stemming = preprocessing_config.get("apply_stemming")
     remove_numbers = preprocessing_config.get("remove_numbers")
     remove_whitespace = preprocessing_config.get("remove_whitespace")
-
-    logger.info("Preprocessing text data.")
 
     if remove_non_word:
         logger.info("Removing non-word characters.")
