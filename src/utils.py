@@ -7,7 +7,6 @@ import yaml
 import joblib
 import pandas as pd
 from enum import Enum
-from typing import Any
 from src.models import Model
 
 logger = logging.getLogger(__name__)
@@ -66,12 +65,12 @@ def load_config(config_name: str) -> dict:
         raise
 
 
-def save_to_file(data: Any, filename: str) -> None:
+def save_to_file(data: any, filename: str) -> None:
     """
     Save data to a file based on the provided configuration.
 
     Args:
-        data (Any): Data to be saved.
+        data (any): Data to be saved.
         filename (str): Name of the file to save data to.
     """
     if filename and filename.lower() != "false":
@@ -90,7 +89,7 @@ def save_to_file(data: Any, filename: str) -> None:
         logger.info(f"Data saved to {file_path}.")
 
 
-def load_from_file(filename: str, data_type: str) -> Any:
+def load_from_file(filename: str, data_type: str) -> any:
     """
     Load data from a file based on the provided configuration.
 
@@ -99,7 +98,7 @@ def load_from_file(filename: str, data_type: str) -> Any:
         data_type (str): Type of data being loaded (e.g., "data", "features", "model").
 
     Returns:
-        Any: Loaded data.
+        any: Loaded data.
     """
     if filename and filename.lower() != "false":
         file_path = os.path.join(DATA_DIR, filename)
