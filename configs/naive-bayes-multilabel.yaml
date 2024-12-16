@@ -23,7 +23,7 @@ preprocessing:
   save: "preprocessed_data_nbm.csv"
 
 features:
-  type: tfidf
+  type: tfidfs
   max_features: 10_000
   ngram_range: [1, 1]
   min_df: 0.01

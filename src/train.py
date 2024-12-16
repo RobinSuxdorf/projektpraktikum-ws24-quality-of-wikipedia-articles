@@ -2,13 +2,13 @@
 
 import logging
 from sklearn.model_selection import train_test_split
-from enum import Enum
+from enum import StrEnum
 from src.models import Model, NaiveBayes, MultilabelNaiveBayes
 
 logger = logging.getLogger(__name__)
 
 
-class ModelType(Enum):
+class ModelType(StrEnum):
     NAIVE_BAYES = "naive_bayes"
 
 
@@ -34,7 +34,7 @@ def train_model(features, labels, model_config: dict) -> Model:
         features, labels, test_size=test_size, random_state=random_state
     )
 
-    if model_type == ModelType.NAIVE_BAYES.value:
+    if model_type == ModelType.NAIVE_BAYES:
         if y_train.shape[1] == 1:
             logger.info("Training a binary Naive Bayes model.")
             model = NaiveBayes(model_config)
@@ -44,7 +44,7 @@ def train_model(features, labels, model_config: dict) -> Model:
             model = MultilabelNaiveBayes(model_config)
     else:
         logger.error(
-            f"Invalid model type '{model_type}'. Supported types: {[mt.value for mt in ModelType]}."
+            f"Invalid model type '{model_type}'. Supported types: {[mt for mt in ModelType]}."
         )
 
     model.fit(x_train, y_train)

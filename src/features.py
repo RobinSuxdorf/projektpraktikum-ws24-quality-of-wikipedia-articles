@@ -3,12 +3,12 @@
 import logging
 import pandas as pd
 from sklearn.feature_extraction.text import CountVectorizer, TfidfVectorizer
-from enum import Enum
+from enum import StrEnum
 
 logger = logging.getLogger(__name__)
 
 
-class FeatureType(Enum):
+class FeatureType(StrEnum):
     TFIDF = "tfidf"
     COUNT = "count"
 
@@ -30,7 +30,7 @@ def get_features(text_series: pd.Series, features_config: dict):
     min_df = features_config.get("min_df")
     max_df = features_config.get("max_df")
 
-    if feature_type == FeatureType.TFIDF.value:
+    if feature_type == FeatureType.TFIDF:
         logger.info("Using a TFIDF vectorizer.")
         sublinear_tf = features_config.get("sublinear_tf")
         vectorizer = TfidfVectorizer(
@@ -41,7 +41,7 @@ def get_features(text_series: pd.Series, features_config: dict):
             max_df=max_df,
             sublinear_tf=sublinear_tf,
         )
-    elif feature_type == FeatureType.COUNT.value:
+    elif feature_type == FeatureType.COUNT:
         logger.info("Using a count vectorizer.")
         vectorizer = CountVectorizer(
             max_features=max_features,
@@ -52,7 +52,7 @@ def get_features(text_series: pd.Series, features_config: dict):
         )
     else:
         logger.error(
-            f"Invalid vectorizer type '{feature_type}'. Supported types: {[ft.value for ft in feature_type]}."
+            f"Invalid feature extraction type '{feature_type}'. Supported types: {[ft for ft in FeatureType]}."
         )
 
     features = vectorizer.fit_transform(text_series)

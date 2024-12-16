@@ -6,7 +6,7 @@ import logging
 import yaml
 import joblib
 import pandas as pd
-from enum import Enum
+from enum import StrEnum
 from src.models import Model
 
 logger = logging.getLogger(__name__)
@@ -15,7 +15,7 @@ CONFIGS_DIR = "configs"
 DATA_DIR = "data/intermediary"
 
 
-class DataType(Enum):
+class DataType(StrEnum):
     DATA = "data"
     FEATURES = "features"
     MODEL = "model"
@@ -95,7 +95,7 @@ def load_from_file(filename: str, data_type: str) -> any:
 
     Args:
         filename (str): Name of the file to load data from.
-        data_type (str): Type of data being loaded (e.g., "data", "features", "model").
+        data_type (str): Type of data being loaded.
 
     Returns:
         any: Loaded data.
@@ -103,18 +103,16 @@ def load_from_file(filename: str, data_type: str) -> any:
     if filename and filename.lower() != "false":
         file_path = os.path.join(DATA_DIR, filename)
 
-        try:
-            if data_type == DataType.DATA.value:
-                return pd.read_csv(file_path)
-            elif data_type == DataType.FEATURES.value:
-                return joblib.load(file_path)
-            elif data_type == DataType.MODEL.value:
-                model = joblib.load(file_path)
-                if isinstance(model, Model):
-                    model.load(file_path)
-                return model
-            else:
-                raise ValueError(f"Unknown data type: {data_type}")
-        except FileNotFoundError:
-            logger.error(f"File {file_path} not found for data type {data_type}.")
-            raise
+        if data_type == DataType.DATA:
+            return pd.read_csv(file_path)
+        elif data_type == DataType.FEATURES:
+            return joblib.load(file_path)
+        elif data_type == DataType.MODEL:
+            model = joblib.load(file_path)
+            if isinstance(model, Model):
+                model.load(file_path)
+            return model
+        else:
+            logger.error(
+                f"Invalid data type '{data_type}'. Supported types: {[dt for dt in DataType]}."
+            )

@@ -3,12 +3,12 @@
 import logging
 import pandas as pd
 from typing import Literal
-from enum import Enum
+from enum import StrEnum
 
 logger = logging.getLogger(__name__)
 
 
-class Usecase(Enum):
+class Usecase(StrEnum):
     BINARY = "binary"
     MULTILABEL = "multilabel"
 
@@ -32,7 +32,7 @@ def load_data(
     nrows = data_loader_config.get("nrows", None)
     shuffle = data_loader_config.get("shuffle")
 
-    if usecase == Usecase.BINARY.value:
+    if usecase == Usecase.BINARY:
         good_file_path = data_loader_config.get("good_file")
 
         logger.info(
@@ -46,16 +46,14 @@ def load_data(
 
         df = pd.concat([good_df, promo_df], axis=0, ignore_index=True)
         df = df[["text", "label"]]
-
-    elif usecase == Usecase.MULTILABEL.value:
+    elif usecase == Usecase.MULTILABEL:
         logger.info("Loading promotional data for multilabel classification.")
         promo_df = pd.read_csv(promo_file_path, nrows=nrows)
 
         df = promo_df.drop(columns=["url"])
-
     else:
         logger.error(
-            f"Invalid model type '{usecase}'. Supported types: {[uc.value for uc in Usecase]}."
+            f"Invalid model type '{usecase}'. Supported types: {[uc for uc in Usecase]}."
         )
 
     if shuffle:
