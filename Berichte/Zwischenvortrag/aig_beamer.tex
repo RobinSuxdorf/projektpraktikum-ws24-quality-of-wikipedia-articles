@@ -18,7 +18,7 @@
 %=========================================================================================================================
 \title{Qualit\"at von Wikipedia-Artikeln}
 
-% \author[S. Author]{Some Author}
+\author[]{Alexander Kunze, Sebastian Bunge, Johannes Kr\"amer, Emmanuelle Steenhof, Robin Suxdorf}
 \institute{Artificial Intelligence Group,\\
 University of Hagen, Germany}
 \date{\today}
@@ -49,8 +49,6 @@ University of Hagen, Germany}
 \end{frame}
 \nologo
 
-\section{Problemstellung}
-
 \begin{frame}{Problemstellung}
     \begin{figure}
         \centering
@@ -76,9 +74,13 @@ University of Hagen, Germany}
 
             \item Good article nomination (GAN)
 
+            \pause
+
             \item nur 0.59\% der Wikipedia-Artikel sind gut (1 von 171)
         \end{itemize}
     \end{block}
+
+    \pause
 
     \begin{block}{Problemstellung}
         Ist ein gegebener Wikipedia-Artikeln gut oder promotional? \\
@@ -89,7 +91,6 @@ University of Hagen, Germany}
 
 \section{Daten}
 
-% 54116 gelabelte Wikipedia Artikel
 \begin{frame}{Daten}
     \begin{figure}
         \centering
@@ -97,129 +98,130 @@ University of Hagen, Germany}
     \end{figure}
 \end{frame}
 
+\subsection{Datenvorverarbeitung}
+
+\begin{frame}{Datenvorverarbeitung}
+    \begin{block}{Datenvorverarbeitung}
+        \begin{itemize}
+            \item Entfernung von Sonderzeichen und Kleinbuchstabierung
+
+            \item Entfernung von f\"uhrenden und folgenden Leerzeichen
+
+            \item Optional Stopw\"orter und Zahlen entfernen
+
+            \item Textrepr\"asentation mittels TF-IDF-Vektorisierung:
+                  \begin{itemize}
+                      \item Maximale Anzahl von Features
+                      \item n-Gramm-Bereich
+                      \item Minimale Dokumentenfrequenz (\texttt{min\_df})
+                      \item Maximale Dokumentenfrequenz (\texttt{max\_df})
+                  \end{itemize}
+        \end{itemize}
+    \end{block}
+\end{frame}
+
 \section{Ans\"atze}
+
+\begin{frame}{Genereller Ansatz}
+    \begin{block}{Genereller Ansatz}
+        \begin{itemize}
+            \item Metriken
+            \begin{itemize}
+                \item Precision
+
+                \item Recall
+    
+                \item $F_1$-Score
+            \end{itemize}
+
+            \item One-vs-Rest Strategie
+
+            \item Hyperparameteroptimierung durch GridSearch
+        \end{itemize}
+    \end{block}
+\end{frame}
 
 \subsection{Logistische Regression}
 
 \begin{frame}{Logistische Regression (1)}
-    \begin{block}{Datenvorverarbeitung}
+    \begin{block}{Hyperparameter}             
         \begin{itemize}
-            \item Entfernung von Sonderzeichen und Kleinbuchstabierung (nativ durch TF-IDF-Vektorisierung)
-            \item Stopw\"orter entfernt, aber Zahlen beibehalten
-            \item Optimierung der TF-IDF-Vektorisierung durch Gridsearch:
-                  \begin{itemize}
-                      \item Maximale Anzahl von Features: \{5000, \textbf{10000}, 20000\}
-                      \item n-Gramm-Bereich: \{(1,1), (\textbf{1,2}), \dots ,(3,4)\}
-                  \end{itemize}
+            \item Regularisierungsparameter \(C\): \{0.01, 0.1, 1, 10, 100\}
+            
+            \item Verschiedene Solver (\texttt{lbfgs}, \texttt{saga})
+
+            \item Strafterm: \(L1\) oder \(L2\)-Regularisierung
+            
+            \item Maximale Anzahl von Features: \{5000, 10000, 20000\}
+            
+            \item n-Gramm-Bereich: \{(1,1), (1,2), \dots ,(3,4)\}
         \end{itemize}
     \end{block}
 \end{frame}
 
 \begin{frame}{Logistische Regression (2)}
-    \begin{block}{Methode}
-        \begin{itemize}
-            \item Klassifikation mit \texttt{LogisticRegression}:
-                  \begin{itemize}
-                      \item Solver: \texttt{lbfgs}, \texttt{saga}
-                      \item Strafterm: \(L1\) oder \(L2\)-Regularisierung
-                      \item Multi-Class: \texttt{OneVsRestClassifier} f\"ur multilabel-Klassifikation
-                  \end{itemize}
-            \item Optimierung des Modells:
-                  \begin{itemize}
-                      \item Gridsearch f\"ur Hyperparameter der logistischen Regression:
-                            \begin{itemize}
-                                \item Regularisierungsparameter \(C\): \{0.01, 0.1, 1, 10, 100\}
-                                \item Verschiedene Solver (\texttt{lbfgs}, \texttt{saga})
-                            \end{itemize}
-                      \item \textcolor{red}{Umgang mit Klassenungleichgewicht}: Easy Data Augmentation (EDA) mit nltk.
-                            \begin{itemize}
-                                \item Synonym Replacement: Es werden zuf\"allig n W\"orter durch Synonyme ersetzt und als neuer Text mit gleichem Label ausgegeben.
-                                \item In Pr\"ufung: Random Swap, Random Insertion und Random Deletion
-                            \end{itemize}
-                  \end{itemize}
-        \end{itemize}
-    \end{block}
-\end{frame}
-
-\begin{frame}{Logistische Regression (3)}
     \begin{block}{Ergebnisse}
-        \textcolor{red}{Bild von Ergbenissen}
-        %\includegraphics[width=6.8cm]{figures/evaluation_nbb.png} \includegraphics[width=6.8cm]{figures/evaluation_nbm.png}
+        \begin{figure}
+            \centering
+            
+            \subfloat {{\includegraphics[width=.4\textwidth, height=5cm]{figures/evaluation_log_reg_b.png}}}
+            \qquad
+            \subfloat {{\includegraphics[width=.4\textwidth, height=5cm]{figures/evaluation_log_reg_m.png}}}
+        \end{figure}
     \end{block}
 \end{frame}
 
 \subsection{Support Vector Machine}
 
 \begin{frame}{Support Vector Machine (1)}
-    \begin{block}{Methode}
+    \begin{block}{Hyperparameter}
         \begin{itemize}
-            \item TF-IDF-Vektorisierung
             \item Vergleich verschiedener Kernels:
                 \begin{itemize}
-                    \item \texttt{linear}, \texttt{poly}, \texttt{rbf}, \texttt{sigmoid}.
-                    \item Keine Vorteile gegen\"uber \texttt{linear} festzustellen.
-                    \item \texttt{LinearSVC} mit deutlich geringerer Laufzeit.
-                    \item Parameter-Tuning mit \texttt{GridSearchCV}.
+                    \item \texttt{linear}, \texttt{poly}, \texttt{rbf}, \texttt{sigmoid}
+                    
+                    \item Keine Vorteile gegen\"uber \texttt{linear} festzustellen
                 \end{itemize}
-            \item \textbf{Bin\"are Klassifikation}:
-                \begin{itemize}
-                    \item \texttt{LinearSVC} liefert Precision, Recall, F1-Score und Accuracy jeweils 0.96 - 0.97.
-                \end{itemize}
-            \item \textbf{Multilabel-Klassifikation}:
-                \begin{itemize}
-                    \item Klassifikation mit \texttt{MultiOutputClassifier} und \texttt{LinearSVC}.
-                    \item Nur \texttt{advert} einigerma\ss{}en identifizierbar mit F1-Score 0.86.
-                    \item Bei \texttt{coi}, \texttt{fanpov}, \texttt{pr}, \texttt{resume} F1-Scores von 0.00 bis 0.45.
-                    \item Nicht-lineare Kernels liefern \"ahnliche Ergebnisse.
-                \end{itemize}
+
+            \item Regularisierungsparameter
         \end{itemize}
     \end{block}
 \end{frame}
 
 \begin{frame}{Support Vector Machine (2)}
     \begin{block}{Ergebnisse}
-        \textcolor{red}{Bild von Ergbenissen}
-        %\includegraphics[width=6.8cm]{figures/evaluation_nbb.png} \includegraphics[width=6.8cm]{figures/evaluation_nbm.png}
+        \begin{figure}
+            \centering
+            
+            \subfloat {{\includegraphics[width=.4\textwidth, height=5cm]{figures/evaluation_linear_svm.png}}}
+            \qquad
+            %\subfloat {{\includegraphics[width=.4\textwidth, height=5cm]{figures/evaluation_nbm.png}}}
+        \end{figure}
     \end{block}
 \end{frame}
 
 \subsection{Bayes Klassifikator}
 
 \begin{frame}{Bayes Klassifikator (1)}
-    \begin{block}{Datenvorverarbeitung}
-        \begin{itemize}
-            \item Entfernen von Nicht-Wort-Zeichen
-            \item Umwandlung in Kleinbuchstaben
-            \item Entfernung von f\"uhrenden und folgenden Leerzeichen
-            \item Beibehaltung von Stoppw\"ortern und Zahlen (KPIs nicht beeinflusst)
-        \end{itemize}
-    \end{block}
-\end{frame}
-\begin{frame}{Bayes Klassifikator (2)}
-    \begin{block}{Methode}
+    \begin{block}{Gew\"ahlte Hyperparameter}
         \begin{itemize}
             \item Textrepr\"asentation mittels TF-IDF-Vektorisierung:
                   \begin{itemize}
                       \item Maximale Anzahl von Features: 10.000
+                      
                       \item n-Gramm-Bereich: Unigramme (1,1)
+                      
                       \item Minimale Dokumentenfrequenz (\texttt{min\_df}): 0.001
+                      
                       \item Maximale Dokumentenfrequenz (\texttt{max\_df}): 0.9
                   \end{itemize}
+                  
             \item Einstellung des Gl\"attungsparameters \(\alpha = 1.0\)
-            \item \textbf{Bin\"are Klassifikation}:
-                  \begin{itemize}
-                      \item Einsatz von \texttt{MultinomialNB} f\"ur die Klassifikation zwischen promotional und nicht-promotional Artikeln
-                  \end{itemize}
-            \item \textbf{Multilabel-Klassifikation}:
-                  \begin{itemize}
-                      \item Verwendung von \texttt{OneVsRestClassifier} mit \texttt{MultinomialNB} f\"ur die Klassifikation in mehrere Klassen
-                      \item Behandlung des Klassenungleichgewichts durch Oversampling mit \texttt{RandomOverSampler}
-                  \end{itemize}
         \end{itemize}
     \end{block}
 \end{frame}
 
-\begin{frame}{Bayes Klassifikator (3)}
+\begin{frame}{Bayes Klassifikator (2)}
     \begin{block}{Ergebnisse}
         \begin{figure}
             \centering
@@ -238,48 +240,23 @@ University of Hagen, Germany}
         \begin{itemize}
             \item Textrepr\"asentation mittels Byte Pair Encoding (\texttt{cl100k\_base})
 
-            \item gegebenenfalls Padtokens erg\"anzen
-    
-            \item Konvertierung in \texttt{PyTorch Tensor}
+            \item Einheitliche Textl\"ange: gegebenenfalls Padtokens erg\"anzen
 
-            \item als \texttt{PyTorch Dataset} implementiert
+            \item Embedding Layer: ein Embeddingvektor pro Token
         \end{itemize}
     \end{block}
 
-    \begin{block}{Methode}
+    \pause
+
+    \begin{block}{Hyperparameter}
         \begin{itemize}
-            \item Embedding Layer
+            \item Modellparameter (Auswahl)
             \begin{itemize}
-                \item ein Embeddingvektor pro Token
+                \item Tokenizer, Embedding Dimension
 
-                \item auf diesem Layer wird die Faltungsoperation angewendet
-            \end{itemize}
+                \item Anzahl Faltungs-Layer, Filtergr\"o{\ss}en
 
-            \item \texttt{Conv1d} Layer: Sliding Window um Wikipedia-Artikel zu analysieren
-
-            \item Pooling Layer um Features zusammenzufassen
-        \end{itemize}
-    \end{block}
-\end{frame}
-
-\begin{frame}{Convolutional Neural Network (2)}
-    \begin{block}{Training/Optimierung}
-        \begin{itemize}
-            \item Modellparameter
-            \begin{itemize}
-                \item Tokenizer
-
-                \item Embedding Dimension
-
-                \item Anzahl Conv Layers
-
-                \item Maximale L\"ange
-
-                \item Dropout
-
-                \item Filtergr\"o{\ss}en
-
-                \item FFN
+                \item Feed Forward Neural Network
             \end{itemize}
 
             \item Trainingsparameter
@@ -288,22 +265,58 @@ University of Hagen, Germany}
 
                 \item Batch Size
 
-                \item Epochen
+                \item Anzahl Epochen
             \end{itemize}
-            
-            \item GridSearch um gute Paramterkonfiguration systematisch zu finden
         \end{itemize}
     \end{block}
 \end{frame}
 
-\begin{frame}{Convolutional Neural Network (3)}
+\begin{frame}{Convolutional Neural Network (2)}
     \begin{block}{Ergebnisse}
-        \includegraphics[width=6.8cm]{figures/evaluation_cnnb.png} 
+        \begin{figure}
+            \centering
+            \includegraphics[width=6.8cm]{figures/evaluation_cnnb.png} 
+        \end{figure} 
     \end{block}
 \end{frame}
 
-\section{Ausblick}
-\begin{frame}{Ausblick}
-    \begin{block}{Ausblick}
+\section{Zusammenfassung und Ausblick}
+\begin{frame}
+    \begin{block}{Zusammenfassung und Ausblick}
         \begin{itemize}
-            \item Hyperparameter-Optimierung
+            \item Gemachte Arbeit
+            \begin{itemize}
+                \item Drei klassische und ein Deep Learning Verfahren implementiert
+                
+                \item F\"unfter Ansatz: erste Ideen gesammelt und Experimente gemacht
+            \end{itemize}
+
+            \pause
+            
+            \item Problem: ungleiche Verteilung der Label
+
+            \pause
+        
+            \item N\"achste Schritte
+            \begin{itemize}
+                \item Datensatz erweitern
+                \begin{itemize}
+                    \item Wikipedia-Dump
+                    
+                    \item Datenaugmentation (Synonyme ersetzen, \"Ubersetzungen, LLMs)
+                    
+                    \item Transfer Learning (wissenschaftliche Paper)
+                \end{itemize}
+    
+                \item Hyperparameter-Optimierung
+    
+                \item Vortrainierte Modelle verwenden
+            \end{itemize}
+        \end{itemize}
+    \end{block}
+
+    \pause
+
+    Vielen Dank!
+\end{frame}
+\end{document}
