@@ -35,7 +35,9 @@ model:
   type: naive_bayes
   test_size: 0.2
   random_state: 42
-  alpha: 1.0
+  param_grid:
+    alpha: [0.01, 0.1, 0.5, 1.0, 1.5, 2.0]
+    fit_prior: [true, false]
   oversampling: true
   save: "naive_bayes_multilabel.pkl"
 

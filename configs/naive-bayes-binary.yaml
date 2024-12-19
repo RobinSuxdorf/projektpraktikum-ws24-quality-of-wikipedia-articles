@@ -37,7 +37,9 @@ model:
   type: naive_bayes
   test_size: 0.2
   random_state: 42
-  alpha: 1.0 # 0.5 decreased recall by 0.1 above 1 decreased precision by 0.1
+  param_grid:
+    alpha: [0.01, 0.1, 0.5, 1.0, 1.5, 2.0]
+    fit_prior: [true, false]
   save: "naive_bayes_binary.pkl"
 
 evaluation:
