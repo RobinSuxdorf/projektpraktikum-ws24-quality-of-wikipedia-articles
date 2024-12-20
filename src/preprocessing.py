@@ -30,7 +30,7 @@ def preprocess_text_series(
     Returns:
         pd.Series: Preprocessed text data.
     """
-    logger.info(f"Text data preprocessing with {preprocessing_config}")
+    logger.info(f"Preprocessing data with {preprocessing_config}")
 
     remove_non_word = preprocessing_config.get("remove_non_word")
     convert_lowercase = preprocessing_config.get("convert_lowercase")

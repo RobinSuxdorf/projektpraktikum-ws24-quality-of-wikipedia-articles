@@ -24,31 +24,31 @@ def get_features(text_series: pd.Series, features_config: dict):
     Returns:
         features (array-like): Input features for training the model.
     """
+    logger.info(f"Getting features with {features_config}.")
+
     feature_type = features_config.get("type")
-    max_features = features_config.get("max_features")
     ngram_range = tuple(features_config.get("ngram_range"))
-    min_df = features_config.get("min_df")
     max_df = features_config.get("max_df")
+    min_df = features_config.get("min_df")
+    max_features = features_config.get("max_features")
 
     if feature_type == FeatureType.TFIDF:
-        logger.info("Using a TFIDF vectorizer.")
+        logger.info("Using a TF-IDF vectorizer.")
         sublinear_tf = features_config.get("sublinear_tf")
         vectorizer = TfidfVectorizer(
-            max_features=max_features,
-            stop_words="english",
             ngram_range=ngram_range,
-            min_df=min_df,
             max_df=max_df,
+            min_df=min_df,
+            max_features=max_features,
             sublinear_tf=sublinear_tf,
         )
     elif feature_type == FeatureType.COUNT:
-        logger.info("Using a count vectorizer.")
+        logger.info("Using a Count vectorizer.")
         vectorizer = CountVectorizer(
-            max_features=max_features,
-            stop_words="english",
             ngram_range=ngram_range,
-            min_df=min_df,
             max_df=max_df,
+            min_df=min_df,
+            max_features=max_features,
         )
     else:
         logger.error(
