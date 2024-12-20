@@ -17,6 +17,24 @@ class NaiveBayes(Model):
     """
 
     def __init__(self, model_config):
+        alpha = model_config.get("alpha")
+        fit_prior = model_config.get("fit_prior")
+
+        self._model = MultinomialNB(alpha=alpha, fit_prior=fit_prior)
+
+    def fit(self, features, labels):
+        self._model.fit(features, labels)
+
+    def predict(self, features):
+        return self._model.predict(features)
+
+
+class NaiveBayesGridSearch(Model):
+    """
+    A Naive Bayes classifier using GridSearchCV for hyperparameter tuning.
+    """
+
+    def __init__(self, model_config):
         self._param_grid = model_config.get("param_grid")
 
         self._model = MultinomialNB()
@@ -39,6 +57,39 @@ class MultilabelNaiveBayes(Model):
     """
 
     def __init__(self, model_config):
+        alpha = model_config.get("alpha")
+        fit_prior = model_config.get("fit_prior")
+        random_state = model_config.get("random_state", None)
+        oversampling = model_config.get("oversampling")
+
+        if oversampling:
+            self._model = OneVsRestClassifier(
+                Pipeline(
+                    [
+                        ("oversample", RandomOverSampler(random_state=random_state)),
+                        ("classifier", MultinomialNB(alpha=alpha, fit_prior=fit_prior)),
+                    ]
+                ),
+                n_jobs=-1,
+            )
+        else:
+            self._model = OneVsRestClassifier(
+                MultinomialNB(alpha=alpha, fit_prior=fit_prior), n_jobs=-1
+            )
+
+    def fit(self, features, labels):
+        self._model.fit(features, labels)
+
+    def predict(self, features):
+        return self._model.predict(features)
+
+
+class MultilabelNaiveBayesGridSearch(Model):
+    """
+    A multilabel Naive Bayes classifier using GridSearchCV for hyperparameter tuning.
+    """
+
+    def __init__(self, model_config):
         self._param_grid = model_config.get("param_grid")
         random_state = model_config.get("random_state", None)
         oversampling = model_config.get("oversampling")
@@ -50,10 +101,11 @@ class MultilabelNaiveBayes(Model):
                         ("oversample", RandomOverSampler(random_state=random_state)),
                         ("classifier", MultinomialNB()),
                     ]
-                )
+                ),
+                n_jobs=-1,
             )
         else:
-            self._model = OneVsRestClassifier(MultinomialNB())
+            self._model = OneVsRestClassifier(MultinomialNB(), n_jobs=-1)
 
     def fit(self, features, labels):
         if isinstance(self._model.estimator, Pipeline):

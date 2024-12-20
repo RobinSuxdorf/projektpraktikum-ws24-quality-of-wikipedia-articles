@@ -35,6 +35,7 @@ model:
   type: naive_bayes
   test_size: 0.2
   random_state: 42
+  grid_search: true
   param_grid:
     alpha: [0.01, 0.1, 0.5, 1.0, 1.5, 2.0]
     fit_prior: [true, false]

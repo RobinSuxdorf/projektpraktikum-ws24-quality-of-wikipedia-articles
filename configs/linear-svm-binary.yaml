@@ -2,12 +2,12 @@
 
 usecase: "binary"
 
-# start_step: "data_loader"
-start_step: "features"
-load:
-  data_file: "preprocessed_data_linear_svm_b.csv"
-  # features_file: "features_linear_svm_b.pkl"
-  # model_file: "linear_svm_b.pkl"
+start_step: "data_loader"
+# start_step: "features"
+# load:
+#   data_file: "preprocessed_data_linear_svm_b.csv"
+#   features_file: "features_linear_svm_b.pkl"
+#   model_file: "linear_svm_b.pkl"
 
 data_loader:
   good_file: "data/raw/good.csv"
@@ -35,6 +35,9 @@ features:
 
 model:
   type: linear_svm
+  test_size: 0.2
+  random_state: 42
+  grid_search: false
   C: 1.0
   save: "linear_svm_b.pkl"
 
