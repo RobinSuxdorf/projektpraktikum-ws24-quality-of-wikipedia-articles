@@ -96,7 +96,7 @@ def main() -> None:
         logger.info("Exiting with return code 0")
         sys.exit(0)
     except Exception as e:
-        logger.error(f"An error occurred: {e}")
+        logger.error(f"An error occurred: {e}", exc_info=True)
         logger.info("Exiting with return code 1")
         sys.exit(1)
 

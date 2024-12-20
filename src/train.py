@@ -3,13 +3,20 @@
 import logging
 from sklearn.model_selection import train_test_split
 from enum import StrEnum
-from src.models import Model, NaiveBayes, MultilabelNaiveBayes
+from src.models import (
+    Model,
+    NaiveBayes,
+    MultilabelNaiveBayes,
+    LinearSupportVectorMachine,
+    MultilabelLinearSupportVectorMachine,
+)
 
 logger = logging.getLogger(__name__)
 
 
 class ModelType(StrEnum):
     NAIVE_BAYES = "naive_bayes"
+    LINEAR_SVM = "linear_svm"
 
 
 def train_model(features, labels, model_config: dict) -> Model:
@@ -42,6 +49,14 @@ def train_model(features, labels, model_config: dict) -> Model:
         else:
             logger.info("Training a multilabel Naive Bayes model.")
             model = MultilabelNaiveBayes(model_config)
+    elif model_type == ModelType.LINEAR_SVM:
+        if y_train.shape[1] == 1:
+            logger.info("Training a binary SVM model.")
+            model = LinearSupportVectorMachine(model_config)
+            y_train = y_train.values.ravel()  # Flatten labels for binary classification
+        else:
+            logger.info("Training a multilabel SVM model.")
+            model = MultilabelLinearSupportVectorMachine(model_config)
     else:
         logger.error(
             f"Invalid model type '{model_type}'. Supported types: {[mt for mt in ModelType]}."

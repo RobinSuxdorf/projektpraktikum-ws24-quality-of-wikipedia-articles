@@ -53,16 +53,10 @@ def load_config(config_name: str) -> dict:
         dict: Configuration dictionary.
     """
     config_path = os.path.join(CONFIGS_DIR, f"{config_name}.yaml")
-    try:
-        with open(config_path, "r") as file:
-            config = yaml.safe_load(file)
-        return config
-    except FileNotFoundError:
-        logger.error(f"Configuration file {config_path} not found.")
-        raise
-    except yaml.YAMLError as e:
-        logger.error(f"Error parsing YAML config: {e}")
-        raise
+    logger.info(f"Loading config from {config_path}.")
+    with open(config_path, "r") as file:
+        config = yaml.safe_load(file)
+    return config
 
 
 def save_to_file(data: any, filename: str) -> None:

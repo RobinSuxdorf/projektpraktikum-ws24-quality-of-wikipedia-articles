@@ -13,6 +13,7 @@ try:
     nltk.data.find("stopwords")
 except LookupError:
     nltk.download("stopwords")
+
 STOPWORDS = set(stopwords.words("english"))
 stemmer = PorterStemmer()
 
