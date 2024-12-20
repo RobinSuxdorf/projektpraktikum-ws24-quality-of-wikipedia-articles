@@ -9,8 +9,11 @@ import re
 
 logger = logging.getLogger(__name__)
 
-if not stopwords.words("english"):
+try:
+    nltk.data.find("stopwords")
+except LookupError:
     nltk.download("stopwords")
+
 STOPWORDS = set(stopwords.words("english"))
 stemmer = PorterStemmer()
 

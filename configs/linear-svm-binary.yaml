@@ -1,0 +1,44 @@
+# configs/linear-svm-binary.yaml
+
+usecase: "binary"
+
+start_step: "data_loader"
+load:
+#  data_file: "preprocessed_data_linear_svm_b.csv"
+#  features_file: "features_linear_svm_b.pkl"
+#  model_file: "linear_svm_b.pkl"
+  data_file: ""
+  features_file: ""
+  model_file: ""
+
+data_loader:
+  good_file: "data/raw/good.csv"
+  promo_file: "data/raw/promotional.csv"
+  shuffle: true
+  save: "loaded_data_linear_svm.csv"
+
+preprocessing:
+  remove_non_word: true
+  convert_lowercase: true
+  remove_stopwords: false
+  apply_stemming: false
+  remove_numbers: false
+  remove_whitespace: true
+  save: "preprocessed_data_linear_svm_b.csv"
+
+vectorizer:
+  type: tfidf
+  max_features: 10_000
+  ngram_range: [1, 1]
+  min_df: 0.001
+  max_df: 0.9
+  sublinear_tf: true
+  save: "features_linear_svm_b.pkl"
+
+model:
+  type: linear_svm
+  C: 1.0
+  save: "linear_svm_b.pkl"
+
+evaluation:
+  save: "evaluation_linear_svm_b.png"
