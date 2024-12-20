@@ -2,14 +2,12 @@
 
 usecase: "binary"
 
-start_step: "data_loader"
+# start_step: "data_loader"
+start_step: "features"
 load:
-#  data_file: "preprocessed_data_linear_svm_b.csv"
-#  features_file: "features_linear_svm_b.pkl"
-#  model_file: "linear_svm_b.pkl"
-  data_file: ""
-  features_file: ""
-  model_file: ""
+  data_file: "preprocessed_data_linear_svm_b.csv"
+  # features_file: "features_linear_svm_b.pkl"
+  # model_file: "linear_svm_b.pkl"
 
 data_loader:
   good_file: "data/raw/good.csv"
@@ -20,18 +18,18 @@ data_loader:
 preprocessing:
   remove_non_word: true
   convert_lowercase: true
-  remove_stopwords: false
+  remove_stopwords: true
   apply_stemming: false
   remove_numbers: false
   remove_whitespace: true
   save: "preprocessed_data_linear_svm_b.csv"
 
-vectorizer:
+features:
   type: tfidf
-  max_features: 10_000
   ngram_range: [1, 1]
-  min_df: 0.001
   max_df: 0.9
+  min_df: 0.001
+  max_features: 10_000
   sublinear_tf: true
   save: "features_linear_svm_b.pkl"
 
