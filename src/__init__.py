@@ -1,7 +1,7 @@
 from .data_loader import load_data
 from .wikipedia_article_dataset import WikipediaArticleDataset
 from .preprocessing import preprocess_text_series
-from .vectorizer import get_vectorizer
+from .features import get_features
 from .train import train_model
 from .evaluation import evaluate_model
 from .utils import (
@@ -15,7 +15,7 @@ __all__ = [
     "load_data",
     "WikipediaArticleDataset",
     "preprocess_text_series",
-    "get_vectorizer",
+    "get_features",
     "train_model",
     "evaluate_model",
     "get_argument_parser",

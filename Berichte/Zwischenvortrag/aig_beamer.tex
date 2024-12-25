@@ -7,6 +7,7 @@
 \usepackage[english]{babel}     % English language
 \usepackage[latin1]{inputenc}   % Input encoding
 \usepackage{tikz}               % For creating graphics
+\usepackage{subfig}
 \usepackage[mode=buildnew]{standalone}
 \usepackage{url}                % For including urls
 \usepackage{tabularx}           % For better tables
@@ -17,7 +18,7 @@
 %=========================================================================================================================
 \title{Qualit\"at von Wikipedia-Artikeln}
 
-% \author[S. Author]{Some Author}
+\author[]{Alexander Kunze, Sebastian Bunge, Johannes Kr\"amer, Emmanuelle Steenhof, Robin Suxdorf}
 \institute{Artificial Intelligence Group,\\
 University of Hagen, Germany}
 \date{\today}
@@ -48,322 +49,274 @@ University of Hagen, Germany}
 \end{frame}
 \nologo
 
-\section{Problemstellung}
-
 \begin{frame}{Problemstellung}
-    \textcolor{red}{Beispiel Wikipedia-Artikel mit promo}
+    \begin{figure}
+        \centering
+        \includegraphics[width=0.6\linewidth]{figures/example_promo_article.png}
+        \caption{\url{https://en.wikipedia.org/wiki/Raison\_(cigarette)}}
+        \label{fig:enter-label}
+    \end{figure}
 \end{frame}
 
 \begin{frame}{Problemstellung}
-    \begin{block}{Problemstellung}
-        Das Ziel dieses Projekts ist die Entwicklung von Modellen zur automatisierten Klassifikation von Wikipedia-Artikeln als promotional (werblich) oder nicht-promotional. Wikipedia strebt nach objektiven und neutralen Inhalten; daher ist die Identifizierung von Artikeln mit werbenden Charakter von gro\ss{}er Bedeutung, um die sachliche Qualit\"at der Plattform zu gew\"ahrleisten.
+    \begin{block}{Wann ist ein Wikipedia-Artikel gut?}
+        \begin{itemize}
+            \item redaktionelle Standards (Good article Kriterien)
+            \begin{itemize}
+                \item gut geschrieben
+            
+                \item korrekte und \"uberpr\"ufbare Informationen
+
+                \item neutral in der Sichtweise
+
+                \item verwenden Bilder mit geeigneten Urheberrechtslizenzen
+            \end{itemize}
+
+            \item Good article nomination (GAN)
+
+            \pause
+
+            \item nur 0.59\% der Wikipedia-Artikel sind gut (1 von 171)
+        \end{itemize}
     \end{block}
-    \textcolor{red}{TODO: Konkret als Frage formulieren?\\ Zweite Frage ergänzen: Warum ist der Artikel nicht neutral?}
+
+    \pause
+
+    \begin{block}{Problemstellung}
+        Ist ein gegebener Wikipedia-Artikeln gut oder promotional? \\
+
+        Zusatz: Falls ein Wikipedia-Artikel nicht gut ist, warum?
+    \end{block}
 \end{frame}
 
 \section{Daten}
 
 \begin{frame}{Daten}
-    \textcolor{red}{Zwei Diagramme? neutral vs. promo und Verteilung innerhalb promo}
-    \begin{itemize}
-        \item 54116 gelabelte Wikipedia Artikel
+    \begin{figure}
+        \centering
+        \includegraphics[width=0.8\linewidth]{figures/distribution_multiple_classes.png}
+    \end{figure}
+\end{frame}
 
-        \item \includegraphics[width=10cm]{figures/distribution_multiple_classes.png}
-    \end{itemize}
+\subsection{Datenvorverarbeitung}
+
+\begin{frame}{Datenvorverarbeitung}
+    \begin{block}{Datenvorverarbeitung}
+        \begin{itemize}
+            \item Entfernung von Sonderzeichen und Kleinbuchstabierung
+
+            \item Entfernung von f\"uhrenden und folgenden Leerzeichen
+
+            \item Optional Stopw\"orter und Zahlen entfernen
+
+            \item Textrepr\"asentation mittels TF-IDF-Vektorisierung:
+                  \begin{itemize}
+                      \item Maximale Anzahl von Features
+                      \item n-Gramm-Bereich
+                      \item Minimale Dokumentenfrequenz (\texttt{min\_df})
+                      \item Maximale Dokumentenfrequenz (\texttt{max\_df})
+                  \end{itemize}
+        \end{itemize}
+    \end{block}
 \end{frame}
 
 \section{Ans\"atze}
 
+\begin{frame}{Genereller Ansatz}
+    \begin{block}{Genereller Ansatz}
+        \begin{itemize}
+            \item Metriken
+            \begin{itemize}
+                \item Precision
+
+                \item Recall
+    
+                \item $F_1$-Score
+            \end{itemize}
+
+            \item One-vs-Rest Strategie
+
+            \item Hyperparameteroptimierung durch GridSearch
+        \end{itemize}
+    \end{block}
+\end{frame}
+
 \subsection{Logistische Regression}
 
 \begin{frame}{Logistische Regression (1)}
-    \begin{block}{Datenvorverarbeitung}
+    \begin{block}{Hyperparameter}             
         \begin{itemize}
-            \item Entfernung von Sonderzeichen und Kleinbuchstabierung (nativ durch TF-IDF-Vektorisierung)
-            \item Stopw\"orter entfernt, aber Zahlen beibehalten
-            \item Optimierung der TF-IDF-Vektorisierung durch Gridsearch:
-                  \begin{itemize}
-                      \item Maximale Anzahl von Features: \{5000, \textbf{10000}, 20000\}
-                      \item n-Gramm-Bereich: \{(1,1), (\textbf{1,2}), \dots ,(3,4)\}
-                  \end{itemize}
+            \item Regularisierungsparameter \(C\): \{0.01, 0.1, 1, 10, 100\}
+            
+            \item Verschiedene Solver (\texttt{lbfgs}, \texttt{saga})
+
+            \item Strafterm: \(L1\) oder \(L2\)-Regularisierung
+            
+            \item Maximale Anzahl von Features: \{5000, 10000, 20000\}
+            
+            \item n-Gramm-Bereich: \{(1,1), (1,2), \dots ,(3,4)\}
         \end{itemize}
     \end{block}
 \end{frame}
 
 \begin{frame}{Logistische Regression (2)}
-    \begin{block}{Methode}
-        \begin{itemize}
-            \item Klassifikation mit \texttt{LogisticRegression}:
-                  \begin{itemize}
-                      \item Solver: \texttt{lbfgs}, \texttt{saga}
-                      \item Strafterm: \(L1\) oder \(L2\)-Regularisierung
-                      \item Multi-Class: \texttt{OneVsRestClassifier} f\"ur multilabel-Klassifikation
-                  \end{itemize}
-            \item Optimierung des Modells:
-                  \begin{itemize}
-                      \item Gridsearch f\"ur Hyperparameter der logistischen Regression:
-                            \begin{itemize}
-                                \item Regularisierungsparameter \(C\): \{0.01, 0.1, 1, 10, 100\}
-                                \item Verschiedene Solver (\texttt{lbfgs}, \texttt{saga})
-                            \end{itemize}
-                      \item Umgang mit Klassenungleichgewicht: Easy Data Augmentation (EDA) mit nltk.
-                            \begin{itemize}
-                                \item Synonym Replacement: Es werden zuf\"allig n W\"orter durch Synonyme ersetzt und als neuer Text mit gleichem Label ausgegeben.
-                                \item In Pr\"ufung: Random Swap, Random Insertion und Random Deletion
-                            \end{itemize}
-                  \end{itemize}
-        \end{itemize}
-    \end{block}
-\end{frame}
-
-\begin{frame}{Fortschritte durch bisherige Augmentierung}
-    \definecolor{mattegreen}{RGB}{120,180,120} % Mattes Grün
-    \definecolor{grey}{RGB}{150,150,150} % Dezentes Grau
-    \begin{block}{Verbesserung der Erkennungsraten (Recall) durch Augmentierung}
-        \begin{columns}[T,onlytextwidth]
-            \column{0.48\textwidth}
-            \textbf{Sublabel: advert}
-            \begin{itemize}
-                \item Original: 0.949
-                \item Augmented: 0.900 \tikz[baseline]{\node[anchor=base] {\textcolor{red}{$\searrow$}};}
-            \end{itemize}
+    \begin{block}{Ergebnisse}
+        \begin{figure}
+            \centering
             
-            \textbf{Sublabel: coi}
-            \begin{itemize}
-                \item Original: 0.000
-                \item Augmented: 0.016 \tikz[baseline]{\node[anchor=base] {\textcolor{grey}{$\nearrow$}};}
-            \end{itemize}
-            
-            \textbf{Sublabel: resume}
-            \begin{itemize}
-                \item Original: 0.408
-                \item Augmented: 0.526 \tikz[baseline]{\node[anchor=base] {\textcolor{grey}{$\nearrow$}};}
-            \end{itemize}
-            
-            \column{0.48\textwidth}
-            \textbf{Sublabel: fanpov}
-            \begin{itemize}
-                \item Original: 0.195
-                \item Augmented: 0.427 \tikz[baseline]{\node[anchor=base] {\textcolor{mattegreen}{$\uparrow$}};}
-            \end{itemize}
-            
-            \textbf{Sublabel: pr}
-            \begin{itemize}
-                \item Original: 0.000
-                \item Augmented: 0.008 \tikz[baseline]{\node[anchor=base] {\textcolor{grey}{$\nearrow$}};}
-            \end{itemize}
-        \end{columns}
+            \subfloat {{\includegraphics[width=.4\textwidth, height=5cm]{figures/evaluation_log_reg_b.png}}}
+            \qquad
+            \subfloat {{\includegraphics[width=.4\textwidth, height=5cm]{figures/evaluation_log_reg_m.png}}}
+        \end{figure}
     \end{block}
 \end{frame}
 
 \subsection{Support Vector Machine}
 
 \begin{frame}{Support Vector Machine (1)}
-    \textcolor{red}{DELETE?}
-    \begin{block}{Datenvorverarbeitung}
+    \begin{block}{Hyperparameter}
         \begin{itemize}
-            \item Zusammenf\"uhren der CSV-Dateien
-            \item Entfernen \"uberfl\"ussiger Features
+            \item Vergleich verschiedener Kernels:
+                \begin{itemize}
+                    \item \texttt{linear}, \texttt{poly}, \texttt{rbf}, \texttt{sigmoid}
+                    
+                    \item Keine Vorteile gegen\"uber \texttt{linear} festzustellen
+                \end{itemize}
+
+            \item Regularisierungsparameter
         \end{itemize}
     \end{block}
 \end{frame}
 
 \begin{frame}{Support Vector Machine (2)}
-    \begin{block}{Methode}
-        \begin{itemize}
-            \item TF-IDF-Vektorisierung
-            \item Vergleich verschiedener Kernels:
-                \begin{itemize}
-                    \item \texttt{linear}, \texttt{poly}, \texttt{rbf}, \texttt{sigmoid}.
-                    \item Keine Vorteile gegen\"uber \texttt{linear} festzustellen.
-                    \item \texttt{LinearSVC} mit deutlich geringerer Laufzeit.
-                    \item Parameter-Tuning mit \texttt{GridSearchCV}.
-                \end{itemize}
-            \item \textbf{Bin\"are Klassifikation}:
-                \begin{itemize}
-                    \item \texttt{LinearSVC} liefert Precision, Recall, F1-Score und Accuracy jeweils 0.96 - 0.97.
-                \end{itemize}
-            \item \textbf{Multilabel-Klassifikation}:
-                \begin{itemize}
-                    \item Klassifikation mit \texttt{MultiOutputClassifier} und \texttt{LinearSVC}.
-                    \item Nur \texttt{advert} einigerma\ss{}en identifizierbar mit F1-Score 0.86.
-                    \item Bei \texttt{coi}, \texttt{fanpov}, \texttt{pr}, \texttt{resume} F1-Scores von 0.00 bis 0.45.
-                    \item Nicht-lineare Kernels liefern \"ahnliche Ergebnisse.
-                \end{itemize}
-        \end{itemize}
+    \begin{block}{Ergebnisse}
+        \begin{figure}
+            \centering
+            
+            \subfloat {{\includegraphics[width=.4\textwidth, height=5cm]{figures/evaluation_linear_svm.png}}}
+            \qquad
+            %\subfloat {{\includegraphics[width=.4\textwidth, height=5cm]{figures/evaluation_nbm.png}}}
+        \end{figure}
     \end{block}
 \end{frame}
 
 \subsection{Bayes Klassifikator}
 
 \begin{frame}{Bayes Klassifikator (1)}
-    \begin{block}{Datenvorverarbeitung}
-        \begin{itemize}
-            \item Entfernen von Nicht-Wort-Zeichen
-            \item Umwandlung in Kleinbuchstaben
-            \item Entfernung von f\"uhrenden und folgenden Leerzeichen
-            \item Beibehaltung von Stoppw\"ortern und Zahlen (KPIs nicht beeinflusst)
-        \end{itemize}
-    \end{block}
-\end{frame}
-\begin{frame}{Bayes Klassifikator (2)}
-    \begin{block}{Methode}
+    \begin{block}{Gew\"ahlte Hyperparameter}
         \begin{itemize}
             \item Textrepr\"asentation mittels TF-IDF-Vektorisierung:
                   \begin{itemize}
                       \item Maximale Anzahl von Features: 10.000
+                      
                       \item n-Gramm-Bereich: Unigramme (1,1)
+                      
                       \item Minimale Dokumentenfrequenz (\texttt{min\_df}): 0.001
+                      
                       \item Maximale Dokumentenfrequenz (\texttt{max\_df}): 0.9
                   \end{itemize}
+                  
             \item Einstellung des Gl\"attungsparameters \(\alpha = 1.0\)
-            \item \textbf{Bin\"are Klassifikation}:
-                  \begin{itemize}
-                      \item Einsatz von \texttt{MultinomialNB} f\"ur die Klassifikation zwischen promotional und nicht-promotional Artikeln
-                  \end{itemize}
-            \item \textbf{Multilabel-Klassifikation}:
-                  \begin{itemize}
-                      \item Verwendung von \texttt{OneVsRestClassifier} mit \texttt{MultinomialNB} f\"ur die Klassifikation in mehrere Klassen
-                      \item Behandlung des Klassenungleichgewichts durch Oversampling mit \texttt{RandomOverSampler}
-                  \end{itemize}
         \end{itemize}
     \end{block}
 \end{frame}
-\begin{frame}{Bayes Klassifikator (3)}
+
+\begin{frame}{Bayes Klassifikator (2)}
     \begin{block}{Ergebnisse}
-        \includegraphics[width=6.8cm]{figures/evaluation_nbb.png} \includegraphics[width=6.8cm]{figures/evaluation_nbm.png}
+        \begin{figure}
+            \centering
+            
+            \subfloat {{\includegraphics[width=.4\textwidth, height=5cm]{figures/evaluation_nbb.png}}}
+            \qquad
+            \subfloat {{\includegraphics[width=.4\textwidth, height=5cm]{figures/evaluation_nbm.png}}}
+        \end{figure}
     \end{block}
 \end{frame}
 
 \subsection{Convolutional Neural Network}
 
-\begin{frame}{Convolutional Neural Network}
-    \begin{block}{Idee}
-    \begin{itemize}
-        \item Position von relevanten Textbausteinen im Text ist nicht wichtig
-
-        \item nutze Faltung um relevante Textbausteine zu finden
-        \begin{figure}
-            \centering
-            \includestandalone[width=12cm]{figures/conv1d}
-        \end{figure}
-    \end{itemize}
-    \end{block}
-\end{frame}
-
-\begin{frame}{Convolutional Neural Network}
+\begin{frame}{Convolutional Neural Network (1)}
     \begin{block}{Datenvorverarbeitung}
         \begin{itemize}
-            \item Tokenisierung mittels Byte Pair Encoding (cl100kbase)
+            \item Textrepr\"asentation mittels Byte Pair Encoding (\texttt{cl100k\_base})
 
-            \includestandalone[width=12cm]{figures/tokenization}
+            \item Einheitliche Textl\"ange: gegebenenfalls Padtokens erg\"anzen
 
-            \textcolor{red}{Tokens to number}
-    
-            \item Konvertierung in Tensor f\"ur pytorch Datensatz 
+            \item Embedding Layer: ein Embeddingvektor pro Token
         \end{itemize}
     \end{block}
-\end{frame}
 
-\begin{frame}{Convolutional Neural Network}
-    \begin{block}{Faltung}
+    \pause
+
+    \begin{block}{Hyperparameter}
         \begin{itemize}
-            \item Embedding Layer
-        
-            \item \textcolor{red}{Bild von 1d Faltung auf Embedding Layer}
-
-            \item Pooling Layer
-        \end{itemize}
-    \end{block}
-\end{frame}
-
-\begin{frame}{Convolutional Neural Network}
-    \begin{block}{Training/Optimierung}
-        \begin{itemize}
-            \item Viele Hyperparameter
+            \item Modellparameter (Auswahl)
             \begin{itemize}
-                \item Tokenizer
+                \item Tokenizer, Embedding Dimension
 
-                \item Embedding Dimension
+                \item Anzahl Faltungs-Layer, Filtergr\"o{\ss}en
 
-                \item Anzahl Conv Layers
-
-                \item FFN
-            \end{itemize}
-            
-            \item GridSearch
-        \end{itemize}
-    \end{block}
-\end{frame}
-
-\subsection{5.Ansatz}
-\begin{frame}
-    \textcolor{red}{DELETE?}
-    \begin{block}{Ideen 5. Ansatz}
-        \begin{itemize}
-            \item Graph der Beziehungen der Daten untereinander Darstellt
-            \item Imitierung der Embeddings durch Gram-Schmidt-Verfahren
-                  \begin{itemize}
-                      \item Erste Versuche bereits gemacht
-                  \end{itemize}
-            \item Vortrainierte Embeddings, als Eingabe f\"ur andere Methoden des maschiniellen Lernens verwenden.
-        \end{itemize}
-    \end{block}
-\end{frame}
-
-\section{Ausblick}
-\begin{frame}{Ausblick}
-    \begin{block}{Ausblick}
-        \begin{itemize}
-            \item Hyperparameter-Optimierung
-
-            \item Datensatz erweitern
-            \begin{itemize}
-                \item Wikipedia-Dump
-                
-                \item Datenaugmentation
-                \begin{itemize}
-                    \item W\"orter durch Synonyme ersetzen
-
-                    \item Artikel durch LLMs umschreiben lassen
-
-                    \item Artikel zwischen mehreren Sprachen hin und her \"ubersetzen lassen
-                \end{itemize}
-                
-                \item Transfer Learning (wissenschaftliche Paper)
+                \item Feed Forward Neural Network
             \end{itemize}
 
-            \item Vortrainierte Modelle verwenden
+            \item Trainingsparameter
+            \begin{itemize}
+                \item Learning Rate
+
+                \item Batch Size
+
+                \item Anzahl Epochen
+            \end{itemize}
         \end{itemize}
     \end{block}
 \end{frame}
 
-\section{Zusammenfassung}
+\begin{frame}{Convolutional Neural Network (2)}
+    \begin{block}{Ergebnisse}
+        \begin{figure}
+            \centering
+            \includegraphics[width=6.8cm]{figures/evaluation_cnnb.png} 
+        \end{figure} 
+    \end{block}
+\end{frame}
+
+\section{Zusammenfassung und Ausblick}
 \begin{frame}
-    \textcolor{red}{DELETE?}
-    \begin{block}{Zusammenfassung}
+    \begin{block}{Zusammenfassung und Ausblick}
         \begin{itemize}
             \item Gemachte Arbeit
-                  \begin{itemize}
-                      \item 3 Klassische Verfahren implementiert
-                      \item CNN implementiert
-                      \item Erste Auswertungen gemacht
-                      \item F\"unfter Ansatz: erste Ideen gesammelt und Experimente gemacht
-                  \end{itemize}
-            \item Probleme
-                  \begin{itemize}
-                      \item Ungleiche Verteilung der Daten
-                  \end{itemize}
+            \begin{itemize}
+                \item Drei klassische und ein Deep Learning Verfahren implementiert
+                
+                \item F\"unfter Ansatz: erste Ideen gesammelt und Experimente gemacht
+            \end{itemize}
+
+            \pause
+            
+            \item Problem: ungleiche Verteilung der Label
+
+            \pause
+        
             \item N\"achste Schritte
-                  \begin{itemize}
-                      \item Parameter der Klassischen Verfahren Anpassen
-                      \item Parameter des CNN anpassen
-                      \item Weitere Ideen f\"ur f\"unften Ansatz finden/erg\"anzen
-                            ausdenken bzw. weiter testen
-                      \item Weitere Datens\"atze finden bzw. Vorbereiten
-                  \end{itemize}
+            \begin{itemize}
+                \item Datensatz erweitern
+                \begin{itemize}
+                    \item Wikipedia-Dump
+                    
+                    \item Datenaugmentation (Synonyme ersetzen, \"Ubersetzungen, LLMs)
+                    
+                    \item Transfer Learning (wissenschaftliche Paper)
+                \end{itemize}
+    
+                \item Hyperparameter-Optimierung
+    
+                \item Vortrainierte Modelle verwenden
+            \end{itemize}
         \end{itemize}
     \end{block}
-\end{frame}
 
+    \pause
+
+    Vielen Dank!
+\end{frame}
 \end{document}

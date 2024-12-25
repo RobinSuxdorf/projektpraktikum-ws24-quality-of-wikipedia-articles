@@ -6,8 +6,19 @@ import logging
 import yaml
 import joblib
 import pandas as pd
+from enum import StrEnum
+from src.models import Model
 
 logger = logging.getLogger(__name__)
+
+CONFIGS_DIR = "configs"
+DATA_DIR = "data/intermediary"
+
+
+class DataType(StrEnum):
+    DATA = "data"
+    FEATURES = "features"
+    MODEL = "model"
 
 
 def get_argument_parser() -> argparse.ArgumentParser:
@@ -19,7 +30,7 @@ def get_argument_parser() -> argparse.ArgumentParser:
     """
     parser = argparse.ArgumentParser(
         description="Load promotional and non-promotional data.",
-        epilog="""Example usage: python main.py -c just-load""",
+        epilog="Example usage: python main.py -c just-load",
     )
     parser.add_argument(
         "-c",
@@ -41,30 +52,30 @@ def load_config(config_name: str) -> dict:
     Returns:
         dict: Configuration dictionary.
     """
-    config_path = os.path.join("configs", f"{config_name}.yaml")
+    config_path = os.path.join(CONFIGS_DIR, f"{config_name}.yaml")
+    logger.info(f"Loading config from {config_path}.")
     with open(config_path, "r") as file:
         config = yaml.safe_load(file)
     return config
 
 
-def save_to_file(data, step_config: dict) -> None:
+def save_to_file(data: any, filename: str) -> None:
     """
     Save data to a file based on the provided configuration.
 
     Args:
-        data: Data to be saved.
-        step_config (dict): Configuration dictionary for the current step.
+        data (any): Data to be saved.
+        filename (str): Name of the file to save data to.
     """
-    filename = step_config.get("save")
     if filename and filename.lower() != "false":
-        directory = "data/intermediary"
-        file_path = os.path.join(directory, filename)
+        file_path = os.path.join(DATA_DIR, filename)
+        os.makedirs(DATA_DIR, exist_ok=True)
 
-        os.makedirs(directory, exist_ok=True)
-
-        if file_path.endswith(".csv"):
+        if isinstance(data, pd.DataFrame):
             data.to_csv(file_path, index=False)
-        elif file_path.endswith(".png"):
+        elif isinstance(data, Model):
+            data.save(file_path)
+        elif hasattr(data, "savefig"):
             data.savefig(file_path)
         else:
             joblib.dump(data, file_path)
@@ -72,20 +83,30 @@ def save_to_file(data, step_config: dict) -> None:
         logger.info(f"Data saved to {file_path}.")
 
 
-def load_from_file(filename: str):
+def load_from_file(filename: str, data_type: str) -> any:
     """
-    Load data from a file based on the provided filename.
+    Load data from a file based on the provided configuration.
 
     Args:
         filename (str): Name of the file to load data from.
+        data_type (str): Type of data being loaded.
 
     Returns:
-        DataFrame or other: Loaded data.
+        any: Loaded data.
     """
-    directory = "data/intermediary"
-    file_path = os.path.join(directory, filename)
+    if filename and filename.lower() != "false":
+        file_path = os.path.join(DATA_DIR, filename)
 
-    if file_path.endswith(".csv"):
-        return pd.read_csv(file_path)
-    elif file_path.endswith(".pkl"):
-        return joblib.load(file_path)
+        if data_type == DataType.DATA:
+            return pd.read_csv(file_path)
+        elif data_type == DataType.FEATURES:
+            return joblib.load(file_path)
+        elif data_type == DataType.MODEL:
+            model = joblib.load(file_path)
+            if isinstance(model, Model):
+                model.load(file_path)
+            return model
+        else:
+            logger.error(
+                f"Invalid data type '{data_type}'. Supported types: {[dt for dt in DataType]}."
+            )

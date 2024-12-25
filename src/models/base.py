@@ -1,6 +1,7 @@
 # src/models/base.py
 
 from abc import ABC, abstractmethod
+import joblib
 
 
 class Model(ABC):
@@ -10,7 +11,7 @@ class Model(ABC):
     """
 
     @abstractmethod
-    def fit(self, features, labels):
+    def fit(self, features: any, labels: any) -> None:
         """
         Fit the model to the training data.
 
@@ -21,7 +22,7 @@ class Model(ABC):
         pass
 
     @abstractmethod
-    def predict(self, features):
+    def predict(self, features: any) -> any:
         """
         Make predictions using the fitted model.
 
@@ -30,5 +31,23 @@ class Model(ABC):
 
         Returns:
             array-like: Predicted labels corresponding to the input features.
+        """
+        pass
+
+    def save(self, file_name: str) -> None:
+        """
+        Save the model to a file.
+
+        Args:
+            file_name (str): Path to the file where the model should be saved.
+        """
+        joblib.dump(self, file_name)
+
+    def load(self, file_name: str) -> None:
+        """
+        Load a model from a file.
+
+        Args:
+            file_name (str): Path to the file where the model is saved.
         """
         pass

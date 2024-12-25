@@ -3,8 +3,14 @@
 import logging
 import pandas as pd
 from typing import Literal
+from enum import StrEnum
 
 logger = logging.getLogger(__name__)
+
+
+class Usecase(StrEnum):
+    BINARY = "binary"
+    MULTILABEL = "multilabel"
 
 
 def load_data(
@@ -20,43 +26,38 @@ def load_data(
     Returns:
         pd.DataFrame: A pandas DataFrame containing the loaded text data and corresponding labels.
     """
-    if usecase == "binary":
-        good_file_path = data_loader_config.get("good_file")
-        promo_file_path = data_loader_config.get("promo_file")
-        nrows = data_loader_config.get("nrows", None)
-        shuffle = data_loader_config.get("shuffle")
+    logger.info(f"Loading data with {data_loader_config}")
 
-        logger.info("Loading non-promotional and promotional data.")
+    promo_file_path = data_loader_config.get("promo_file")
+    nrows = data_loader_config.get("nrows", None)
+    shuffle = data_loader_config.get("shuffle")
+
+    if usecase == Usecase.BINARY:
+        good_file_path = data_loader_config.get("good_file")
+
+        logger.info(
+            "Loading non-promotional and promotional data for binary classification."
+        )
         good_df = pd.read_csv(good_file_path, nrows=nrows)
         promo_df = pd.read_csv(promo_file_path, nrows=nrows)
 
-        logger.info("Assigning binary labels to the data.")
         good_df["label"] = 0
         promo_df["label"] = 1
 
         df = pd.concat([good_df, promo_df], axis=0, ignore_index=True)
-
-        if shuffle:
-            logger.info("Shuffling the combined data.")
-            df = df.sample(frac=1).reset_index(drop=True)
-
-        logger.info("Data loading for binary classification complete.")
-        return df[["text", "label"]]
-
-    elif usecase == "multilabel":
-        promo_file_path = data_loader_config.get("promo_file")
-        nrows = data_loader_config.get("nrows", None)
-        shuffle = data_loader_config.get("shuffle")
-
+        df = df[["text", "label"]]
+    elif usecase == Usecase.MULTILABEL:
         logger.info("Loading promotional data for multilabel classification.")
         promo_df = pd.read_csv(promo_file_path, nrows=nrows)
 
-        logger.info("Dropping unnecessary columns.")
-        promo_df.drop(columns=["url"], inplace=True)
+        df = promo_df.drop(columns=["url"])
+    else:
+        logger.error(
+            f"Invalid model type '{usecase}'. Supported types: {[uc for uc in Usecase]}."
+        )
 
-        if shuffle:
-            logger.info("Shuffling the promotional data.")
-            promo_df = promo_df.sample(frac=1).reset_index(drop=True)
+    if shuffle:
+        logger.info("Shuffling the data.")
+        df = df.sample(frac=1).reset_index(drop=True)
 
-        logger.info("Data loading for multilabel classification complete.")
-        return promo_df
+    return df
