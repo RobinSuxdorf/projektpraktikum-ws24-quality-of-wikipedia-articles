@@ -12,6 +12,8 @@ from .support_vector_machine import (
     MultilabelSupportVectorMachine,
 )
 
+from .cnn import CNN
+
 __all__ = [
     "Model",
     "NaiveBayes",
@@ -22,4 +24,5 @@ __all__ = [
     "MultilabelLinearSupportVectorMachine",
     "SupportVectorMachine",
     "MultilabelSupportVectorMachine",
+    "CNN"
 ]

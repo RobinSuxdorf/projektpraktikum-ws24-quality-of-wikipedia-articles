@@ -2,9 +2,9 @@ from .base import Model
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
+import os
 
-
-class CNN(Model, nn.Module):
+class CNN(nn.Module):
     def __init__(
         self,
         vocab_size: int,
@@ -35,8 +35,39 @@ class CNN(Model, nn.Module):
 
         return torch.sigmoid(x)
 
-    def fit(self, features, labels):
+class CNNModel(Model):
+    def __init__(
+        self,
+        vocab_size: int,
+        embedding_dim: int,
+        num_filters: int,
+        filter_sizes: list[int],
+        num_classes: int,
+        dropout: float = 0.5
+    ) -> None:
+        self._model = CNN(
+            vocab_size,
+            embedding_dim,
+            num_filters,
+            filter_sizes,
+            num_classes,
+            dropout
+        )
+        self._device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+        self._model.to(self._device)
+        self._criterion = nn.BCELoss()
+        self._optimizer = None
+
+    def fit(self, features: any, labels: any) -> None:
         pass
 
-    def predict(self, features):
+    def predict(self, features: any) -> any:
         pass
+
+    def save(self, file_name: str) -> None:
+        torch.save(self._model.state_dict(), file_name)
+
+    def load(self, file_name: str) -> None:
+        if not os.path.exists(file_name):
+            raise FileNotFoundError(f"Model file '{file_name}' does not exist.")
+        self._model.load_state_dict(torch.load(file_name, map_location=self._device))
