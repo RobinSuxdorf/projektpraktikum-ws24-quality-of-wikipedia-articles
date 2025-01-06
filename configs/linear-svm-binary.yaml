@@ -2,7 +2,6 @@
 
 usecase: "binary"
 
-start_step: "data_loader"
 # start_step: "features"
 # load:
 #   data_file: "preprocessed_data_linear_svm_b.csv"

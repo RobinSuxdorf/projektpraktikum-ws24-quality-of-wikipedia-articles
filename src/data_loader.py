@@ -1,8 +1,8 @@
 # src/data_loader.py
 
 import logging
-import pandas as pd
 from typing import Literal
+import pandas as pd
 from enum import StrEnum
 
 logger = logging.getLogger(__name__)

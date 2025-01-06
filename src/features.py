@@ -1,9 +1,9 @@
 # src/features.py
 
 import logging
+from enum import StrEnum
 import pandas as pd
 from sklearn.feature_extraction.text import CountVectorizer, TfidfVectorizer
-from enum import StrEnum
 
 logger = logging.getLogger(__name__)
 

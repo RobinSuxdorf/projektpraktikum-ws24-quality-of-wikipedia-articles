@@ -1,12 +1,12 @@
 # src/utils.py
 
 import argparse
-import os
 import logging
-import yaml
+import os
+from enum import IntEnum, StrEnum
 import joblib
 import pandas as pd
-from enum import StrEnum
+import yaml
 from src.models import Model
 
 logger = logging.getLogger(__name__)
@@ -19,6 +19,27 @@ class DataType(StrEnum):
     DATA = "data"
     FEATURES = "features"
     MODEL = "model"
+
+
+class PipelineStep(IntEnum):
+    DATA_LOADER = 0
+    PREPROCESSING = 1
+    FEATURES = 2
+    MODEL = 3
+    EVALUATION = 4
+
+    def from_string(step_name: str):
+        step_name = step_name.upper()
+        if step_name == "DATA_LOADER":
+            return PipelineStep.DATA_LOADER
+        elif step_name == "PREPROCESSING":
+            return PipelineStep.PREPROCESSING
+        elif step_name == "FEATURES":
+            return PipelineStep.FEATURES
+        elif step_name == "MODEL":
+            return PipelineStep.MODEL
+        elif step_name == "EVALUATION":
+            return PipelineStep.EVALUATION
 
 
 def get_argument_parser() -> argparse.ArgumentParser:
