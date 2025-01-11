@@ -70,11 +70,19 @@ Im Kick-Off Meeting wurde Robin Suxdorf als Teamleiter und Kommunikationskanal z
 Während des gesamten Praktikums schreibt Alexander Kunze fortlaufend den Praktikumsbericht weiter.
 -Weitere Themen: Präsentation, Vorträge, usw. 
 \section{Teaminterne Organisation}
-Im Rahmen des Kick-Offs wurde beschlossen, dass Discord (bereitgestellt über Alexander Kunze und Github (bereitgestellt von Robin Suxdorf) als Kollaborationsplattformen dienen. Ein wöchentlicher Jour-Fixe sichert den regelmäßigen Austausch. Jeder Teilnehmer verantwortet die Weiterentwicklung seiner Methode. Das bedeutet, er entwickelt die Methode weiter, gibt zum Jour-Fixe ein Update zum Stand und teilt mit, wenn es Herausforderungen gibt. Das Team unterstützt dabei jeden Leiter und gibt Feedback bei jeder Statusvorstellung. 
+%Ich würde noch anmerken dass jedes Thema einen Leiter gekriegt hat.
+Im Rahmen des Kick-Offs wurde beschlossen, dass Discord (bereitgestellt über Alexander Kunze und Github (bereitgestellt von Robin Suxdorf) als Kollaborationsplattformen dienen. Ein wöchentlicher Jour-Fixe sichert den regelmäßigen Austausch. Jeder Teilnehmer verantwortet die Weiterentwicklung seiner Methode. Das bedeutet, er entwickelt die Methode weiter, gibt zum Jour-Fixe ein Update zum Stand und teilt mit, wenn es Herausforderungen gibt. Das Team unterstützt dabei jeden Leiter und gibt Feedback bei jeder Statusvorstellung.
+\subsection{Verwendete Programmiersprache}
+Damit ein guter Vergleich der Methoden stattfinden konnte, musste sich das Team auf eine Programmiersprache einigen. Dabei wurde Python gewählt. Die Wahl wurde getroffen, weil Python einige Programmbibliotheken hat, die sich für die im Projektpraktikum gestellten Aufgaben, gut eignen. Die Bibliotheken, die besonders zu dieser Entscheidung beigetragen haben, waren Scikit Learn \cite{skicitLearnRef}, welches besonders bei den klassischen Verfahren anwendung fand und Pytorch \cite{pytorchRef}, welches hauptsächlich bei den Ansätzen mit Neuronalen Netzen anwendung fand.
+
+\subsection{Verwendete Tools und Techniken}
+Damit die Zusammenarbeit funktionieren konnte, musste sich das Team auf eine einheitliche Vorgehensweise einigen. Darüber hinaus mussten einige Schritte durgeführt werden, die notwendig waren, um die Verfahren des maschiniellen Lernens durchführen zu können. Die Aufgabenstellung ist ein Teilgebiet des Natural Language Processing. Aus diesem Grund, mussten die Daten erst so aufbereitet werden, dass der Computer mit ihnen Berechnungen machen konnte. Die Methoden, die dafür Anwendung fand werden genauer in \textbf{Referenz ergänzen} erläutert. Weitere Vorverarbeitungsschritte waren die Bereinigung der Datensätze, um sie optimal vorzubereiten. Genauere Details werden in \textbf{Referenz ergänzen}angesprochen. Für die Erweiterung des Datensatzes wurde ein weiterer Datensatz hinzugezogen. Ausserdem wurden die Daten Augmentiert, worüber in \textbf{referenz ergänzen} mehr ergänzt wird. Anschliessend wurden die Maschiniellen Verfahren angewandt, die in \textbf{Referenz ergänzen} genauer beschrieben werden. Danach wurden die Daten mit verschiedenen Metriken analysiert, die in \textbf{Referenz ergänzen} genauer erläutert werden.
+
 
 \section{Datensatz und Problemstellung}
+Bevor die Modellbildung starten konnte, mussten zunächst die Bedingungen geklärt werden. D.h. der Datensatz musste Analysiert werden und eine entsprechende Problemstellung identifiziert werden. Im folgenden wird zunächst der ursprüngliche Datensatz beschrieben und anschliessend erklärt wie dieser in Laufe des Projekts ausgebaut und ergänzt wird. Danach wird daraus abgeleitete Problemstellung erläutert.
 
-\subsection{Datensatz}
+\subsection{Ursprünglicher Datensatz}
 Die Datensätze stammen von Kaggle: \url{https://www.kaggle.com/datasets/urbanbricks/wikipedia-promotional-articles}. Ein Datensatz enthält Wikipedia-Artikel, die als \emph{promotional} (also werbend) klassifiziert sind. Dabei sind folgende Label vergeben:
 \begin{itemize}
     \item advert – „Dieser Artikel enthält Inhalte, die wie eine Werbeanzeige verfasst sind.“
@@ -84,10 +92,34 @@ Die Datensätze stammen von Kaggle: \url{https://www.kaggle.com/datasets/urbanbr
 \item resume – „Dieser biografische Artikel ist wie ein Lebenslauf geschrieben.“
 \end{itemize}
 Der zweite Datensatz enthält Wikipedia Artikel die \emph{nicht-promotional} klassifiziert sind.
+\\ \\
+Die beiden Datensätze wurden zusammen verwendet, um die gesamte Datenbasis zu bilden. Insgesamt ergab das \textbf{Anzahl Datensätze einfügen} Daten. Die Label dieser Daten war wie folgt:
+
+\\
+\textbf{2 Bilder einfügen: 1. Bild einzelne Label, 2. Bild Kombination der Label}
+\\
+
+
+
+\subsection{Probleme des ursprünglichen Datensatzes}
+Wie man anhand des Diagrammes \textbf{Auf Bild referenzieren} sehen kann, sind die Daten ungleich Verteilt. Daten mit dem Label \textit{good} nehmen laut \textbf{Quelle einfügen} nur 0.59\% aller Wikipediaartikel ein. Allerdings sieht man anhand der Grafik, dass sie im Vergleich zu \textbf{Prozentsatz berechnen}. Zum einen führt das zu einem Verhältnis, dass nicht der Realität entspricht, zum anderen kann das die Ergebnisse der trainierten Modelle verschlechtern.
+
+
+
+\subsection{Weitere Daten}
+Um ein gutes Modell zu erstellen, welches auf Maschiniellem Lernen basiert, braucht man ensprechende Datensätze. Wie in Abschnitt \textbf{Referenz einfügen} besprochen worden ist, ist der ursprüngliche Datensatz nicht ausreichend, um entsprechende Modelle zu trainieren. Aus diesem Grund wurden verschiedene Methoden ausprobiert und verwendet, um den ursprünglichen Datensatz zu erweitern.
+
+
+
+
+\subsubsection{Datensatzerweiterung durch Wikimedia Dump}
+Die naheliegenste Methode zur Erweiterung eines Datensatzes, ist das Hinzuziehen neuer Daten. Aus diesem Grund wurde der Wikimedia Dump \textbf{Quelle hinzufügen} hinzugezogen. Dieser Datensatz ist ein offizieller Datensatz von Wikipedia, in dem Artikel enthalten sind, die durch Wikipedia rausgefiltert worden sind. Dadurch konnten \textbf{Anzahl ergänzen} Datensätze hinzugezogen werden. Diese waren \textit{promotional} Datensätze. In Abschnitt \textbf{Referenz ergänzen} wird erklärt, wie die Datensätze eingelesen worden sind und in das richtige Format gebracht worden sind.
+
+\subsubsection{Augmentierung der Daten}
+Da es nicht sicher ist, ob der Wikimedia Dump das Problem volkommen lösen kann, wurde neben dem Hinzuziehen weiterer Daten auch versucht die Daten zu Augmentieren. Dabei sollten besonders untervetretene Klassen mehr Repräsentanten kriegen. Dabei wurden verschiedene Methoden ausprobiert, um die Daten zu Augmentieren. Diese Methoden werden in \textbf{Referenz ergänzen} vorgestellt.
 
 \subsection{Problemdefinition}
-
-Das Ziel dieses Projekts ist die Entwicklung von Modellen zur automatisierten Klassifikation von Wikipedia-Artikeln als \emph{promotional} (werblich) oder \emph{nicht-promotional}. Wikipedia strebt nach objektiven und neutralen Inhalten; daher ist die Identifizierung von Artikeln mit werbenden Charakter von großer Bedeutung, um die sachliche Qualität der Plattform zu gewährleisten.
+Das Ziel dieses Projekts ist die Entwicklung von Modellen zur automatisierten Klassifikation von Wikipedia-Artikeln als \emph{promotional} (werblich) oder \emph{nicht-promotional}. Dabei wird ebenfalls klassifiziert, wie ein Artikel Promotional ist, also z.B. ob er eine Werbung, ein PR-Artikel usw. ist. Wikipedia strebt nach objektiven und neutralen Inhalten; daher ist die Identifizierung von Artikeln mit werbenden Charakter von großer Bedeutung, um die sachliche Qualität der Plattform zu gewährleisten.
 
 \subsection{Zielsetzung}
 
@@ -96,10 +128,48 @@ Die Hauptziele des Projekts sind:
 \begin{itemize} \item Entwicklung von drei klassischen maschinellen Lernmodellen und einem Deep-Learning-Modell zur Klassifikation von Wikipedia-Artikeln. \item Vergleich der Modelle anhand von Leistungsmetriken wie Genauigkeit, Präzision, Recall und F1-Score. \item Identifikation des Modells mit der besten Leistung für die gegebene Aufgabe. \end{itemize}
 
 \section{Ansätze}
-Blubb
+
+%https://shelf.io/blog/18-effective-nlp-algorithms-you-need-to-know/
+Nachdem die passende Problemstellung festgestellt worden ist, war die nächste Aufgabe die passenden Ansätze zu auszuwählen. Dabei wurden im Rahmen des Projektpraktikum drei klassische Lernverfahren verwendet und ein Deep Learning Ansatz. Aufbauend auf diesen wurde ein 5. Ansatz konzipiert, der als Ziel hatte, die Schwächen der vorherigen Ansätze zu beheben. Im folgenden werden diese 5 Ansätze vorgestellt und anschliessend wird erklärt welche weiteren Techniken, besonders in Bezug auf Datenvorarbeitung und Datensatzergänzung verwendet worden sind.
+
+\subsection{Support Vector Machine}
+Der erste der drei klassischen Ansätze sollten Support Vector Machines (SVM) sein. 
+
+
+
+\subsection{Logistische Regression}
+Als nächstes wurde die Logistische Regression betrachtet.
+
+\subsection{Bayes-Klassifikator}
+Anschliessend wurde der Bayes Klassifikator betrachtet.
+
+\subsection{Convolutional Neural Network}
+Als Deep Learning Verfahren wurden Convolutional Neural Networks (CNN) verwendet. Zunächst war die Idee ein Neuronales Netz mit Rückkoppelung zu verwenden. Da das aber zu schlechten Ergebnissen führte wurden versuche mit einem Convolutional Neural Network gestartet. Diese hatten einen grösseren Erfolg, was dazu geführt hat, dass diese weiter als Ansatz verwendet worden sind.
+
+\subsection{Fünfter Ansatz}
+
+
+\subsection{Datenaugmentierung}
+
+\subsection{Transfer Learning und Vortrainierte Embeddings}
+
+https://arxiv.org/pdf/1301.3781 Falls wir Word2Vec verwenden.
+
+https://nlp.stanford.edu/pubs/glove.pdf falls wir GloVe verwenden.
+
+
+https://arxiv.org/pdf/1607.04606 falls wir Fast Text verwenden.
+
+https://arxiv.org/pdf/1802.05365 Falls wir Elmo verwenden wollen. Ich finde das sehr interessant.
+
+
+https://arxiv.org/pdf/1810.04805 Falls wir Bert verwenden wollen. Berts Vorteile liegen auch stark darin dass es genau auf dem Wikipedia Corpus trainiert worden ist.
 
 \section{Experimente}
-Blubb
+
+Um die Datensätze sauber miteinander vergleichen zu können, kamen verschiedene Metriken zu Anwendung
+
+
 \subsection{Evaluationsmetriken}
 \begin{enumerate}
     \item 
@@ -155,10 +225,14 @@ Sei $D = \{(x^{(1)}, y^{(1)}), \dots, (x^{(m)}, y^{(m)})\}$ ein Datensatz und $c
 \end{enumerate}
 
 \section{Ausblick}
-Blubb
+Nachdem alle Experminente durchgeführt und evaluiert worden sind, werden die gesammelten Erfahrungen festgehalten.
+
+\subsection{Erfolglose Versuche}
+
+\subsection{Ausbaumöglichkeiten}
 
 \section{Zusammenfassung und Fazit}
-Blubb
+Das Ziel dieser Arbeit waren die Untersuchung von Modellen zu Analyse der Qualität von Wikipediaartikeln.
 % References
 \addreferences
 
