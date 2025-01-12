@@ -1,7 +1,9 @@
+from collections import Counter
 import logging
 import bz2
 import csv
 import re
+import time
 import xml.etree.ElementTree as ET
 from typing import List
 
@@ -11,17 +13,17 @@ class WikipediaDump:
         self.dump_path = dump_path
         self.index_path = index_path
 
-        self.good_article_re = re.compile(r"\{\{Good article\}\}")
-        self.featured_article_re = re.compile(r"\{\{Featured article\}\}")
+        self.good_article_re = re.compile(r"\{\{(g|G)ood article\}\}")
+        self.featured_article_re = re.compile(r"\{\{(f|F)eatured article\}\}")
 
         self.advert_re = re.compile(
-            r"\{\{(Promotional|Ad|Advertising|Advertisement|Promotion|Promo|Promotional section|Advert section|promotion-inline)(\|[^\}]*)?\}\}"
+            r"\{\{((p|P)romotional|(p|P)romotional tone|(A|a)d|(A|a)dvert|(A|a)dvertising|(A|a)dvertisement|(p|P)romotion|(p|P)romo|(p|P)romotional section|(A|a)dvert section|(p|P)romotion-inline)(\|[^\}]*)?\}\}"
         )
-        self.coi_re = re.compile(r"\{\{COI(\|[^\}]*)?\}\}")
-        self.fanpov_re = re.compile(r"\{\{Fan POV(\|[^\}]*)?\}\}")
-        self.pr_re = re.compile(r"\{\{Cleanup press release(\|[^\}]*)?\}\}")
+        self.coi_re = re.compile(r"\{\{(c|C)OI(\|[^\}]*)?\}\}")
+        self.fanpov_re = re.compile(r"\{\{(f|F)an POV(\|[^\}]*)?\}\}")
+        self.pr_re = re.compile(r"\{\{(c|C)leanup press release(\|[^\}]*)?\}\}")
         self.resume_re = re.compile(
-            r"\{\{(Resume-like|Like resume|Cleanup resume)(\|[^\}]*)?\}\}"
+            r"\{\{((r|R)esume-like|(r|R)esume like|(l|L)ike resume|(c|C)leanup resume)(\|[^\}]*)?\}\}"
         )
 
     def write_to_csv(
@@ -61,33 +63,43 @@ class WikipediaDump:
         self, num_pages, dump_file, good_writer, promotional_writer, neutral_writer
     ):
         offsets = self._read_offsets()
-        good_writer.writerow(["text"])
-        promotional_writer.writerow(["text", "advert", "coi", "fanpov", "pr", "resume"])
-        neutral_writer.writerow(["text"])
+        good_writer.writerow(["id", "title", "text"])
+        promotional_writer.writerow(
+            ["id", "title", "text", "advert", "coi", "fanpov", "pr", "resume"]
+        )
+        neutral_writer.writerow(["id", "title", "text"])
         total_offsets = len(offsets)
         pages_processed = 0
+        cnt = Counter()
+        start = time.monotonic_ns()
         for i, offset in enumerate(offsets):
+            start_offset = time.monotonic_ns()
             if num_pages > 0 and pages_processed >= num_pages:
                 break
             dump_file.seek(offset)
             next_offset = offsets[i + 1] if i + 1 < len(offsets) else None
             chunk_size = next_offset - offset if next_offset else None
-            logging.info(
-                "Processing offset %d/%d (pages processed: %d)",
-                i + 1,
-                total_offsets,
-                pages_processed,
-            )
             compressed_data = dump_file.read(chunk_size)
             decompressed_data = bz2.decompress(compressed_data)
             root = self._parse_xml(decompressed_data)
             for page in root.findall(".//page"):
+                type = self._process_page(
+                    page, good_writer, promotional_writer, neutral_writer
+                )
+                cnt[type] += 1
                 pages_processed += 1
                 if num_pages > 0 and pages_processed >= num_pages:
                     break
-                self._process_page(
-                    page, good_writer, promotional_writer, neutral_writer
-                )
+            end_offset = time.monotonic_ns()
+            logging.info(
+                "Offset %d/%d finished in %d ns, avg %d ns (pages: %d, %s)",
+                i + 1,
+                total_offsets,
+                end_offset - start_offset,
+                (end_offset - start) / (i + 1),
+                pages_processed,
+                cnt,
+            )
 
     def _read_offsets(self) -> List[int]:
         offsets = set()
@@ -98,40 +110,70 @@ class WikipediaDump:
                 offsets.add(offset)
         logging.info("Number of unique offsets read: %d", len(offsets))
         return sorted(offsets)
+        # return sorted(offsets)[-10:]  # Return only the last 10 offsets for testing
 
     def _parse_xml(self, decompressed_data: bytes) -> ET.Element:
-        wrapped_data = [
-            "<root>",
-            decompressed_data.decode("utf-8", errors="replace"),
-            "</root>",
-        ]
-        return ET.fromstringlist(wrapped_data)
+        decoded = decompressed_data.decode("utf-8", errors="replace")
+        if decoded.startswith("<mediawiki"):
+            wrapped_data = [
+                decoded,
+                "</mediawiki>",
+            ]
+        elif decoded.endswith("</mediawiki>"):
+            wrapped_data = [
+                "<mediawiki>",
+                decoded,
+            ]
+        else:
+            wrapped_data = [
+                "<mediawiki>",
+                decoded,
+                "</mediawiki>",
+            ]
+        try:
+            return ET.fromstringlist(wrapped_data)
+        except ET.ParseError as e:
+            logging.error(f"Error parsing XML: {e}")
+            print(wrapped_data[1])
+            raise e
 
     def _process_page(
         self, page: ET.Element, good_writer, promotional_writer, neutral_writer
-    ):
-        text_elem = page.find(".//revision/text")
+    ) -> str:
+        id_elem = page.find(".//id")
+        id = id_elem.text if id_elem is not None else None
+
         title_elem = page.find(".//title")
-        if (
-            text_elem is not None
-            and text_elem.text is not None
-            and title_elem is not None
-            and title_elem.text is not None
-        ):
-            self._process_text(
-                title_elem.text,
-                text_elem.text,
+        if title_elem is not None and title_elem.text is not None:
+            title = title_elem.text
+        else:
+            title = "missing_title"
+
+        text_elem = page.find(".//revision/text")
+        if text_elem is not None and text_elem.text is not None:
+            text = text_elem.text
+        else:
+            text = "missing_text"
+
+        if id is not None:
+            return self._process_text(
+                id,
+                title,
+                text,
                 good_writer,
                 promotional_writer,
                 neutral_writer,
             )
+        else:
+            logging.warning("Skipping page with missing title or text")
+            return "skipped"
 
     def _process_text(
-        self, title, text, good_writer, promotional_writer, neutral_writer
-    ):
+        self, id, title, text, good_writer, promotional_writer, neutral_writer
+    ) -> str:
         if text.startswith("#REDIRECT [["):
-            logging.info("skipping redirect: %s", title)
-            return
+            logging.debug("%d - skipping redirect: %s", id, title)
+            return "skipped"
 
         text = text.replace("\n", " ").replace("\r", " ")
 
@@ -171,11 +213,13 @@ class WikipediaDump:
             or resume_article
         )
         if good_article or featured_article:
-            logging.info("good: %s", title)
-            good_writer.writerow([text])
+            logging.debug("%d - good: %s", id, title)
+            good_writer.writerow([id, title, text])
+            return "good"
         elif promotional:
-            logging.info(
-                "promotional (advert: %s, coi: %s, fanpov: %s, pr: %s, resume: %s): %s",
+            logging.debug(
+                "%d - promotional (advert: %s, coi: %s, fanpov: %s, pr: %s, resume: %s): %s",
+                id,
                 advert_article,
                 coi_article,
                 fanpov_article,
@@ -185,6 +229,8 @@ class WikipediaDump:
             )
             promotional_writer.writerow(
                 [
+                    id,
+                    title,
                     text,
                     advert_article,
                     coi_article,
@@ -193,6 +239,8 @@ class WikipediaDump:
                     resume_article,
                 ]
             )
+            return "promotional"
         else:
-            logging.info("neutral: %s", title)
-            neutral_writer.writerow([text])
+            logging.debug("%d - neutral: %s", id, title)
+            neutral_writer.writerow([id, title, text])
+            return "neutral"
