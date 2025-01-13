@@ -1,10 +1,10 @@
-# configs/naive-bayes-multilabel.yaml
+# configs/glove-test.yaml
 
 usecase: "multilabel"
-# start_step: "evaluation"
-# load:
-#   data_file: "preprocessed_data_nbm.csv"
-#   features_file: "features_nbm.pkl"
+start_step: "features"
+load:
+  data_file: "preprocessed_data_nbm.csv"
+#   features_file: "features_glove.pkl"
 #   model_file: "naive_bayes_multilabel.pkl"
 
 data_loader:
@@ -22,24 +22,19 @@ preprocessing:
   save: "preprocessed_data_nbm.csv"
 
 features:
-  type: tfidf
-  ngram_range: [1, 1]
-  max_df: 1.0
-  min_df: 0.01
-  max_features: 10_000
-  sublinear_tf: true
-  save: "features_nbm.pkl"
+  type: glove
+  model_name: "glove-wiki-gigaword-100"
+  save: "features_glove.pkl"
 
 model:
   type: naive_bayes
   test_size: 0.2
   random_state: 42
-  grid_search: true
-  param_grid:
-    alpha: [0.01, 0.1, 0.5, 1.0, 1.5, 2.0]
-    fit_prior: [true, false]
+  grid_search: false
+  alpha: 0.01
+  fit_prior: false
   oversampling: true
-  save: "naive_bayes_multilabel.pkl"
+  save: "nb_glove.pkl"
 
 evaluation:
-  save: "evaluation_nbm.png"
+  save: "evaluation_glove.png"
