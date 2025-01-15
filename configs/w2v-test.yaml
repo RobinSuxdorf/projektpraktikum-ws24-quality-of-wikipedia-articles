@@ -23,13 +23,14 @@ preprocessing:
 
 features:
   type: word2vec
+  workers: 32
   vector_size: 100
-  min_count: 5
   window: 5
-  workers: 20
+  min_count: 5
   sg: 0
   hs: 0
   negative: 5
+  alpha: 0.025
   epochs: 1
   save: "features_w2v.pkl"
 

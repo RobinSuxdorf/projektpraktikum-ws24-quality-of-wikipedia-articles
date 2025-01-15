@@ -5,8 +5,8 @@ from enum import StrEnum
 import pandas as pd
 from sklearn.feature_extraction.text import CountVectorizer, TfidfVectorizer
 from gensim.models import Word2Vec
-import numpy as np
 import gensim.downloader as api
+import numpy as np
 
 logger = logging.getLogger(__name__)
 
@@ -18,25 +18,27 @@ class FeatureType(StrEnum):
     GLOVE = "glove"
 
 
-class Word2Vec_c:
+class Word2VecVectorizer:
     def __init__(
         self,
-        vector_size,
-        min_count,
-        window,
         workers,
+        vector_size,
+        window,
+        min_count,
         sg,
         hs,
         negative,
+        alpha,
         epochs,
     ):
-        self.vector_size = vector_size
-        self.min_count = min_count
-        self.window = window
         self.workers = workers
+        self.vector_size = vector_size
+        self.window = window
+        self.min_count = min_count
         self.sg = sg
         self.hs = hs
         self.negative = negative
+        self.alpha = alpha
         self.epochs = epochs
         self.model = None
 
@@ -44,22 +46,23 @@ class Word2Vec_c:
         tokenized_texts = [text.split() for text in text_series]
         self.model = Word2Vec(
             tokenized_texts,
-            vector_size=self.vector_size,
-            min_count=self.min_count,
-            window=self.window,
             workers=self.workers,
+            vector_size=self.vector_size,
+            window=self.window,
+            min_count=self.min_count,
             sg=self.sg,
             hs=self.hs,
             negative=self.negative,
-        )
-        self.model.train(
-            tokenized_texts, total_examples=len(tokenized_texts), epochs=self.epochs
+            alpha=self.alpha,
+            epochs=self.epochs,
         )
         vectors = []
         for tokens in tokenized_texts:
             word_vecs = [self.model.wv[t] for t in tokens if t in self.model.wv]
             if word_vecs:
-                vectors.append(sum(word_vecs) / len(word_vecs))
+                mean_vector = sum(word_vecs) / len(word_vecs)
+                mean_vector[mean_vector < 0] = 0  # Ensure non-negative values
+                vectors.append(mean_vector)
             else:
                 vectors.append([0] * self.vector_size)
         return vectors
@@ -76,7 +79,9 @@ class GloVe:
             tokens = text.split()
             token_embs = [self.embeddings[t] for t in tokens if t in self.embeddings]
             if token_embs:
-                vectors.append(np.mean(token_embs, axis=0).tolist())
+                mean_vector = np.mean(token_embs, axis=0)
+                mean_vector[mean_vector < 0] = 0  # Ensure non-negative values
+                vectors.append(mean_vector.tolist())
             else:
                 vectors.append([0.0] * self.embedding_dim)
         return vectors
@@ -117,14 +122,15 @@ def get_features(text_series: pd.Series, features_config: dict):
         )
     elif feature_type == FeatureType.WORD2VEC:
         logger.info("Using a Word2Vec vectorizer.")
-        vectorizer = Word2Vec_c(
-            vector_size=features_config.get("vector_size"),
-            min_count=features_config.get("min_count"),
-            window=features_config.get("window"),
+        vectorizer = Word2VecVectorizer(
             workers=features_config.get("workers"),
+            vector_size=features_config.get("vector_size"),
+            window=features_config.get("window"),
+            min_count=features_config.get("min_count"),
             sg=features_config.get("sg"),
             hs=features_config.get("hs"),
             negative=features_config.get("negative"),
+            alpha=features_config.get("alpha"),
             epochs=features_config.get("epochs"),
         )
     elif feature_type == FeatureType.GLOVE:
