@@ -21,6 +21,7 @@ def main():
         good_path="data/wp/good.csv",
         promotional_path="data/wp/promotional.csv",
         neutral_path="data/wp/neutral.csv",
+        skipped_path="data/wp/skipped.csv",
         num_pages=-1,
     )
 

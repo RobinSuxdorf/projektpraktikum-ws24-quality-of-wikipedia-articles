@@ -2,10 +2,11 @@ from collections import Counter
 import logging
 import bz2
 import csv
-import re
 import time
 import xml.etree.ElementTree as ET
 from typing import List
+
+from src.wp.page_categories import PageCategories
 
 
 class WikipediaDump:
@@ -13,24 +14,12 @@ class WikipediaDump:
         self.dump_path = dump_path
         self.index_path = index_path
 
-        self.good_article_re = re.compile(r"\{\{(g|G)ood article\}\}")
-        self.featured_article_re = re.compile(r"\{\{(f|F)eatured article\}\}")
-
-        self.advert_re = re.compile(
-            r"\{\{((p|P)romotional|(p|P)romotional tone|(A|a)d|(A|a)dvert|(A|a)dvertising|(A|a)dvertisement|(p|P)romotion|(p|P)romo|(p|P)romotional section|(A|a)dvert section|(p|P)romotion-inline)(\|[^\}]*)?\}\}"
-        )
-        self.coi_re = re.compile(r"\{\{(c|C)OI(\|[^\}]*)?\}\}")
-        self.fanpov_re = re.compile(r"\{\{(f|F)an POV(\|[^\}]*)?\}\}")
-        self.pr_re = re.compile(r"\{\{(c|C)leanup press release(\|[^\}]*)?\}\}")
-        self.resume_re = re.compile(
-            r"\{\{((r|R)esume-like|(r|R)esume like|(l|L)ike resume|(c|C)leanup resume)(\|[^\}]*)?\}\}"
-        )
-
     def write_to_csv(
         self,
         good_path: str,
         promotional_path: str,
         neutral_path: str,
+        skipped_path: str,
         num_pages: int = -1,
     ):
         logging.info(
@@ -39,10 +28,11 @@ class WikipediaDump:
             self.index_path,
         )
         logging.info(
-            "Output - good: %s, promotional: %s, neutral: %s (pages: %d)",
+            "Output - good: %s, promotional: %s, neutral: %s, skipped: %s (pages: %d)",
             good_path,
             promotional_path,
             neutral_path,
+            skipped_path,
             num_pages,
         )
         with open(self.dump_path, "rb") as dump_file, open(
@@ -51,16 +41,30 @@ class WikipediaDump:
             promotional_path, "w", newline="", encoding="utf-8"
         ) as promotional_file, open(
             neutral_path, "w", newline="", encoding="utf-8"
-        ) as neutral_file:
+        ) as neutral_file, open(
+            skipped_path, "w", newline="", encoding="utf-8"
+        ) as skipped_file:
             good_writer = csv.writer(good_file)
             promotional_writer = csv.writer(promotional_file)
             neutral_writer = csv.writer(neutral_file)
+            skipped_writer = csv.writer(skipped_file)
             self._write_to_csv(
-                num_pages, dump_file, good_writer, promotional_writer, neutral_writer
+                num_pages,
+                dump_file,
+                good_writer,
+                promotional_writer,
+                neutral_writer,
+                skipped_writer,
             )
 
     def _write_to_csv(
-        self, num_pages, dump_file, good_writer, promotional_writer, neutral_writer
+        self,
+        num_pages,
+        dump_file,
+        good_writer,
+        promotional_writer,
+        neutral_writer,
+        skipped_writer,
     ):
         offsets = self._read_offsets()
         good_writer.writerow(["id", "title", "text"])
@@ -68,6 +72,7 @@ class WikipediaDump:
             ["id", "title", "text", "advert", "coi", "fanpov", "pr", "resume"]
         )
         neutral_writer.writerow(["id", "title", "text"])
+        skipped_writer.writerow(["id", "title", "reason"])
         total_offsets = len(offsets)
         pages_processed = 0
         cnt = Counter()
@@ -84,7 +89,11 @@ class WikipediaDump:
             root = self._parse_xml(decompressed_data)
             for page in root.findall(".//page"):
                 type = self._process_page(
-                    page, good_writer, promotional_writer, neutral_writer
+                    page,
+                    good_writer,
+                    promotional_writer,
+                    neutral_writer,
+                    skipped_writer,
                 )
                 cnt[type] += 1
                 pages_processed += 1
@@ -138,7 +147,12 @@ class WikipediaDump:
             raise e
 
     def _process_page(
-        self, page: ET.Element, good_writer, promotional_writer, neutral_writer
+        self,
+        page: ET.Element,
+        good_writer,
+        promotional_writer,
+        neutral_writer,
+        skipped_writer,
     ) -> str:
         id_elem = page.find(".//id")
         id = id_elem.text if id_elem is not None else None
@@ -155,64 +169,54 @@ class WikipediaDump:
         else:
             text = "missing_text"
 
-        if id is not None:
-            return self._process_text(
-                id,
-                title,
-                text,
-                good_writer,
-                promotional_writer,
-                neutral_writer,
-            )
-        else:
-            logging.warning("Skipping page with missing title or text")
-            return "skipped"
+        return self._process_text(
+            id,
+            title,
+            text,
+            good_writer,
+            promotional_writer,
+            neutral_writer,
+            skipped_writer,
+        )
 
     def _process_text(
-        self, id, title, text, good_writer, promotional_writer, neutral_writer
+        self,
+        id,
+        title,
+        text,
+        good_writer,
+        promotional_writer,
+        neutral_writer,
+        skipped_writer,
     ) -> str:
-        if text.startswith("#REDIRECT [["):
+        categories = PageCategories.categorize(id, title, text)
+        if categories.skip_missing_id:
+            logging.debug("%d - skipping missing ID: %s", 0, title)
+            skipped_writer.writerow([0, title, "missing_id"])
+            return "skipped"
+        if categories.skip_namespace:
+            logging.debug("%d - skipping special namespace: %s", id, title)
+            skipped_writer.writerow([id, title, "namespace"])
+            return "skipped"
+        if categories.skip_redirect:
             logging.debug("%d - skipping redirect: %s", id, title)
+            skipped_writer.writerow([id, title, "redirect"])
+            return "skipped"
+        if categories.skip_disambiguation:
+            logging.debug("%d - skipping disambiguation: %s", id, title)
+            skipped_writer.writerow([id, title, "disambiguation"])
             return "skipped"
 
         text = text.replace("\n", " ").replace("\r", " ")
 
-        good_replaced = self.good_article_re.subn("", text)
-        text = good_replaced[0]
-        good_article = bool(good_replaced[1])
-
-        featured_replaced = self.featured_article_re.subn("", text)
-        text = featured_replaced[0]
-        featured_article = bool(featured_replaced[1])
-
-        advert_replaced = self.advert_re.subn("", text)
-        text = advert_replaced[0]
-        advert_article = bool(advert_replaced[1])
-
-        coi_replaced = self.coi_re.subn("", text)
-        text = coi_replaced[0]
-        coi_article = bool(coi_replaced[1])
-
-        fanpov_replaced = self.fanpov_re.subn("", text)
-        text = fanpov_replaced[0]
-        fanpov_article = bool(fanpov_replaced[1])
-
-        pr_replaced = self.pr_re.subn("", text)
-        text = pr_replaced[0]
-        pr_article = bool(pr_replaced[1])
-
-        resume_replaced = self.resume_re.subn("", text)
-        text = resume_replaced[0]
-        resume_article = bool(resume_replaced[1])
-
         promotional = bool(
-            advert_article
-            or coi_article
-            or fanpov_article
-            or pr_article
-            or resume_article
+            categories.advert
+            or categories.coi
+            or categories.fanpov
+            or categories.pr
+            or categories.resume
         )
-        if good_article or featured_article:
+        if categories.good or categories.featured:
             logging.debug("%d - good: %s", id, title)
             good_writer.writerow([id, title, text])
             return "good"
@@ -220,11 +224,11 @@ class WikipediaDump:
             logging.debug(
                 "%d - promotional (advert: %s, coi: %s, fanpov: %s, pr: %s, resume: %s): %s",
                 id,
-                advert_article,
-                coi_article,
-                fanpov_article,
-                pr_article,
-                resume_article,
+                categories.advert,
+                categories.coi,
+                categories.fanpov,
+                categories.pr,
+                categories.resume,
                 title,
             )
             promotional_writer.writerow(
@@ -232,11 +236,11 @@ class WikipediaDump:
                     id,
                     title,
                     text,
-                    advert_article,
-                    coi_article,
-                    fanpov_article,
-                    pr_article,
-                    resume_article,
+                    int(categories.advert),
+                    int(categories.coi),
+                    int(categories.fanpov),
+                    int(categories.pr),
+                    int(categories.resume),
                 ]
             )
             return "promotional"
