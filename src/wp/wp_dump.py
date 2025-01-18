@@ -6,7 +6,7 @@ import time
 import xml.etree.ElementTree as ET
 from typing import List
 
-from src.wp.page_categories import PageCategories
+from src.wp.categorized_page import CategorizedPage
 
 
 class WikipediaDump:
@@ -169,82 +169,72 @@ class WikipediaDump:
         else:
             text = "missing_text"
 
-        return self._process_text(
-            id,
-            title,
-            text,
+        page = CategorizedPage.categorize(id, title, text)
+        return self._process_page_categories(
+            page,
             good_writer,
             promotional_writer,
             neutral_writer,
             skipped_writer,
         )
 
-    def _process_text(
+    def _process_page_categories(
         self,
-        id,
-        title,
-        text,
+        page,
         good_writer,
         promotional_writer,
         neutral_writer,
         skipped_writer,
     ) -> str:
-        categories = PageCategories.categorize(id, title, text)
-        if categories.skip_missing_id:
-            logging.debug("%d - skipping missing ID: %s", 0, title)
-            skipped_writer.writerow([0, title, "missing_id"])
+        if page.skip_missing_id:
+            logging.debug("%d - skipping missing ID: %s", 0, page.title)
+            skipped_writer.writerow([0, page.title, "missing_id"])
             return "skipped"
-        if categories.skip_namespace:
-            logging.debug("%d - skipping special namespace: %s", id, title)
-            skipped_writer.writerow([id, title, "namespace"])
+        if page.skip_namespace:
+            logging.debug("%d - skipping special namespace: %s", page.id, page.title)
+            skipped_writer.writerow([page.id, page.title, "namespace"])
             return "skipped"
-        if categories.skip_redirect:
-            logging.debug("%d - skipping redirect: %s", id, title)
-            skipped_writer.writerow([id, title, "redirect"])
+        if page.skip_redirect:
+            logging.debug("%d - skipping redirect: %s", page.id, page.title)
+            skipped_writer.writerow([page.id, page.title, "redirect"])
             return "skipped"
-        if categories.skip_disambiguation:
-            logging.debug("%d - skipping disambiguation: %s", id, title)
-            skipped_writer.writerow([id, title, "disambiguation"])
+        if page.skip_disambiguation:
+            logging.debug("%d - skipping disambiguation: %s", page.id, page.title)
+            skipped_writer.writerow([page.id, page.title, "disambiguation"])
             return "skipped"
-
-        text = text.replace("\n", " ").replace("\r", " ")
 
         promotional = bool(
-            categories.advert
-            or categories.coi
-            or categories.fanpov
-            or categories.pr
-            or categories.resume
+            page.advert or page.coi or page.fanpov or page.pr or page.resume
         )
-        if categories.good or categories.featured:
-            logging.debug("%d - good: %s", id, title)
-            good_writer.writerow([id, title, text])
+        if page.good or page.featured:
+            logging.debug("%d - good: %s", page.id, page.title)
+            good_writer.writerow([page.id, page.title, page.text])
             return "good"
         elif promotional:
             logging.debug(
                 "%d - promotional (advert: %s, coi: %s, fanpov: %s, pr: %s, resume: %s): %s",
-                id,
-                categories.advert,
-                categories.coi,
-                categories.fanpov,
-                categories.pr,
-                categories.resume,
-                title,
+                page.id,
+                page.advert,
+                page.coi,
+                page.fanpov,
+                page.pr,
+                page.resume,
+                page.title,
             )
             promotional_writer.writerow(
                 [
-                    id,
-                    title,
-                    text,
-                    int(categories.advert),
-                    int(categories.coi),
-                    int(categories.fanpov),
-                    int(categories.pr),
-                    int(categories.resume),
+                    page.id,
+                    page.title,
+                    page.text,
+                    int(page.advert),
+                    int(page.coi),
+                    int(page.fanpov),
+                    int(page.pr),
+                    int(page.resume),
                 ]
             )
             return "promotional"
         else:
-            logging.debug("%d - neutral: %s", id, title)
-            neutral_writer.writerow([id, title, text])
+            logging.debug("%d - neutral: %s", page.id, page.title)
+            neutral_writer.writerow([page.id, page.title, page.text])
             return "neutral"

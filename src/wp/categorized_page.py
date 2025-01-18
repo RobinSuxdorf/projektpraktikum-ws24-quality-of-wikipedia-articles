@@ -3,7 +3,10 @@ from dataclasses import dataclass
 
 
 @dataclass
-class PageCategories:
+class CategorizedPage:
+    id: int = None
+    title: str = ""
+    text: str = ""
     good: bool = False
     featured: bool = False
     advert: bool = False
@@ -38,11 +41,15 @@ class PageCategories:
         return any(string_lower.startswith(prefix.lower()) for prefix in prefixes)
 
     @classmethod
-    def categorize(cls, id: int, title: str, text: str) -> "PageCategories":
-        categories = cls()
+    def categorize(cls, id: int, title: str, text: str) -> "CategorizedPage":
+        result = cls()
+        result.id = id
+        result.title = title
+        result.text = text.replace("\n", " ").replace("\r", " ")
+
         if id is None:
-            categories.skip_missing_id = True
-            return categories
+            result.skip_missing_id = True
+            return result
 
         if cls._starts_with_any(
             title,
@@ -61,43 +68,43 @@ class PageCategories:
                 "Module:",
             },
         ):
-            categories.skip_namespace = True
-            return categories
+            result.skip_namespace = True
+            return result
 
-        if cls._starts_with_any(text, {"#REDIRECT"}):
-            categories.skip_redirect = True
-            return categories
+        if cls._starts_with_any(result.text, {"#REDIRECT"}):
+            result.skip_redirect = True
+            return result
 
-        if cls.disambiguation_re.search(text):
-            categories.skip_disambiguation = True
-            return categories
+        if cls.disambiguation_re.search(result.text):
+            result.skip_disambiguation = True
+            return result
 
-        good_replaced = cls.good_article_re.subn("", text)
-        text = good_replaced[0]
-        categories.good = good_replaced[1] > 0
+        good_replaced = cls.good_article_re.subn("", result.text)
+        result.text = good_replaced[0]
+        result.good = good_replaced[1] > 0
 
-        featured_replaced = cls.featured_article_re.subn("", text)
-        text = featured_replaced[0]
-        categories.featured = featured_replaced[1] > 0
+        featured_replaced = cls.featured_article_re.subn("", result.text)
+        result.text = featured_replaced[0]
+        result.featured = featured_replaced[1] > 0
 
-        advert_replaced = cls.advert_re.subn("", text)
-        text = advert_replaced[0]
-        categories.advert = advert_replaced[1] > 0
+        advert_replaced = cls.advert_re.subn("", result.text)
+        result.text = advert_replaced[0]
+        result.advert = advert_replaced[1] > 0
 
-        coi_replaced = cls.coi_re.subn("", text)
-        text = coi_replaced[0]
-        categories.coi = coi_replaced[1] > 0
+        coi_replaced = cls.coi_re.subn("", result.text)
+        result.text = coi_replaced[0]
+        result.coi = coi_replaced[1] > 0
 
-        fanpov_replaced = cls.fanpov_re.subn("", text)
-        text = fanpov_replaced[0]
-        categories.fanpov = fanpov_replaced[1] > 0
+        fanpov_replaced = cls.fanpov_re.subn("", result.text)
+        result.text = fanpov_replaced[0]
+        result.fanpov = fanpov_replaced[1] > 0
 
-        pr_replaced = cls.pr_re.subn("", text)
-        text = pr_replaced[0]
-        categories.pr = pr_replaced[1] > 0
+        pr_replaced = cls.pr_re.subn("", result.text)
+        result.text = pr_replaced[0]
+        result.pr = pr_replaced[1] > 0
 
-        resume_replaced = cls.resume_re.subn("", text)
-        text = resume_replaced[0]
-        categories.resume = resume_replaced[1] > 0
+        resume_replaced = cls.resume_re.subn("", result.text)
+        result.text = resume_replaced[0]
+        result.resume = resume_replaced[1] > 0
 
-        return categories
+        return result
