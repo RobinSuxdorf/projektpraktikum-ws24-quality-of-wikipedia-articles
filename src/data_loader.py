@@ -34,17 +34,21 @@ def load_data(
 
     if usecase == Usecase.BINARY:
         good_file_path = data_loader_config.get("good_file")
+        neutral_file_path = data_loader_config.get("neutral_file")
 
         logger.info(
             "Loading non-promotional and promotional data for binary classification."
         )
         good_df = pd.read_csv(good_file_path, nrows=nrows)
-        promo_df = pd.read_csv(promo_file_path, nrows=nrows)
-
         good_df["label"] = 0
+        promo_df = pd.read_csv(promo_file_path, nrows=nrows)
         promo_df["label"] = 1
-
         df = pd.concat([good_df, promo_df], axis=0, ignore_index=True)
+        if neutral_file_path:
+            neutral_df = pd.read_csv(neutral_file_path, nrows=nrows)
+            neutral_df["label"] = 2
+            df = pd.concat([df, neutral_df], axis=0, ignore_index=True)
+
         df = df[["text", "label"]]
     elif usecase == Usecase.MULTILABEL:
         logger.info("Loading promotional data for multilabel classification.")

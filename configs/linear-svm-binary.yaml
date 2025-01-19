@@ -10,10 +10,13 @@ start_step: "data_loader"
 #   model_file: "linear_svm_b.pkl"
 
 data_loader:
+  # good_file: "data/wp/good_sample.csv"
+  # promo_file: "data/wp/promotional_sample.csv"
+  # neutral_file: "data/wp/neutral_sample.csv"
   good_file: "data/raw/good.csv"
   promo_file: "data/raw/promotional.csv"
   shuffle: true
-  save: "loaded_data_linear_svm.csv"
+  save: "loaded_data_linear_svm_b.csv"
 
 preprocessing:
   remove_non_word: true
