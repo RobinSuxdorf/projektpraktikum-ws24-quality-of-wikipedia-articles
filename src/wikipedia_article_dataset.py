@@ -40,9 +40,6 @@ class WikipediaArticleDataset(Dataset):
             "cuda" if torch.cuda.is_available() else "cpu"
         )
 
-        print(self._articles)
-        print(self._labels)
-
     def __len__(self) -> int:
         """
         Returns the length of the dataset.

@@ -1,0 +1,12 @@
+start_step: "data_loader"
+load:
+  data_file: ""
+  features_file: ""
+  model_file: ""
+
+data_loader:
+  good_file: "/Users/robinsuxdorf/Documents/Uni/FernUni Hagen/4. Semester/Projektpraktikum/github/good.csv"
+  promo_file: "/Users/robinsuxdorf/Documents/Uni/FernUni Hagen/4. Semester/Projektpraktikum/github/promotional.csv"
+  # nrows: 1000
+  shuffle: true
+  save: "false"
