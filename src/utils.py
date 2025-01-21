@@ -95,14 +95,12 @@ def save_to_file(data: any, filename: str) -> None:
 
         if isinstance(data, pd.DataFrame):
             data.to_csv(file_path, index=False)
-        elif isinstance(data, Model):
-            data.save(file_path)
-        elif isinstance(data, Vectorizer):
+        elif isinstance(data, Model) or isinstance(data, Vectorizer):
             data.save(file_path)
         elif hasattr(data, "savefig"):
             data.savefig(file_path)
         else:
-            joblib.dump(data, file_path)
+            logger.error(f"Unsupported data type for saving: {type(data)}")
 
         logger.info(f"Data saved to {file_path}.")
 
