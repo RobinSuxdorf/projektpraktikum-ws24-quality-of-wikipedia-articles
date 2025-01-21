@@ -1,4 +1,4 @@
-# configs/naïve-bayes-multilabel.yaml
+# configs/naive-bayes-multilabel.yaml
 
 usecase: "multilabel"
 # start_step: "evaluation"
