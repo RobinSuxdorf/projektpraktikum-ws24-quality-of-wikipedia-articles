@@ -8,6 +8,7 @@ import joblib
 import pandas as pd
 import yaml
 from src.models import Model
+from src.vectorizer import Vectorizer
 
 logger = logging.getLogger(__name__)
 
@@ -96,6 +97,8 @@ def save_to_file(data: any, filename: str) -> None:
             data.to_csv(file_path, index=False)
         elif isinstance(data, Model):
             data.save(file_path)
+        elif isinstance(data, Vectorizer):
+            data.save(file_path)
         elif hasattr(data, "savefig"):
             data.savefig(file_path)
         else:
@@ -121,7 +124,10 @@ def load_from_file(filename: str, data_type: str) -> any:
         if data_type == DataType.DATA:
             return pd.read_csv(file_path)
         elif data_type == DataType.FEATURES:
-            return joblib.load(file_path)
+            vectorizer = joblib.load(file_path)
+            if isinstance(vectorizer, Vectorizer):
+                vectorizer.load(file_path)
+            return vectorizer
         elif data_type == DataType.MODEL:
             model = joblib.load(file_path)
             if isinstance(model, Model):
