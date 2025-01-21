@@ -120,7 +120,7 @@ def load_from_file(filename: str, data_type: str) -> any:
 
         if data_type == DataType.DATA:
             return pd.read_csv(file_path)
-        if data_type == DataType.FEATURES:
+        elif data_type == DataType.FEATURES:
             return joblib.load(file_path)
         elif data_type == DataType.MODEL:
             model = joblib.load(file_path)
