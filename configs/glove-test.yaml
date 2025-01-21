@@ -5,7 +5,7 @@ start_step: "features"
 load:
   data_file: "preprocessed_data_nbm.csv"
 #   features_file: "features_glove.pkl"
-#   model_file: "naive_bayes_multilabel.pkl"
+#   model_file: "nb_glove.pkl"
 
 data_loader:
   promo_file: "data/raw/promotional.csv"

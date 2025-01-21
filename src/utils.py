@@ -8,7 +8,6 @@ import joblib
 import pandas as pd
 import yaml
 from src.models import Model
-from src.vectorizer import Vectorizer
 
 logger = logging.getLogger(__name__)
 
@@ -95,12 +94,12 @@ def save_to_file(data: any, filename: str) -> None:
 
         if isinstance(data, pd.DataFrame):
             data.to_csv(file_path, index=False)
-        elif isinstance(data, Model) or isinstance(data, Vectorizer):
+        elif isinstance(data, Model):
             data.save(file_path)
         elif hasattr(data, "savefig"):
             data.savefig(file_path)
         else:
-            logger.error(f"Unsupported data type for saving: {type(data)}")
+            joblib.dump(data, file_path)
 
         logger.info(f"Data saved to {file_path}.")
 
@@ -121,11 +120,13 @@ def load_from_file(filename: str, data_type: str) -> any:
 
         if data_type == DataType.DATA:
             return pd.read_csv(file_path)
-        elif data_type in [DataType.FEATURES, DataType.MODEL]:
-            data = joblib.load(file_path)
-            if isinstance(data, Model) or isinstance(data, Vectorizer):
-                data.load(file_path)
-            return data
+        if data_type == DataType.FEATURES:
+            return joblib.load(file_path)
+        elif data_type == DataType.MODEL:
+            model = joblib.load(file_path)
+            if isinstance(model, Model):
+                model.load(file_path)
+            return model
         else:
             logger.error(
                 f"Invalid data type '{data_type}'. Supported types: {[dt for dt in DataType]}."

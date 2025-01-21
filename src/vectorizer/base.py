@@ -2,7 +2,6 @@
 
 from abc import ABC, abstractmethod
 import pandas as pd
-import joblib
 
 
 class Vectorizer(ABC):
@@ -18,23 +17,5 @@ class Vectorizer(ABC):
 
         Args:
             text_series (pd.Series): Series containing text data.
-        """
-        pass
-
-    def save(self, file_name: str) -> None:
-        """
-        Save the vectorizer to a file.
-
-        Args:
-            file_name (str): Path to the file where the vectorizer should be saved.
-        """
-        joblib.dump(self, file_name)
-
-    def load(self, file_name: str) -> None:
-        """
-        Load a vectorizer from a file.
-
-        Args:
-            file_name (str): Path to the file where the vectorizer is saved.
         """
         pass

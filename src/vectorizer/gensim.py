@@ -59,7 +59,10 @@ class GloVe_Vectorizer(Vectorizer):
     """
 
     def __init__(self, features_config):
-        self._vectorizer = api.load(features_config.get("model"))
+        model_name = features_config.get("model_name")
+        logger.info(f"Loading GloVe model: {model_name}")
+        self._vectorizer = api.load(model_name)
+        logger.info(f"Successfully loaded GloVe model: {model_name}")
 
     def fit_transform(self, text_series):
         vectors = []
