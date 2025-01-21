@@ -121,16 +121,11 @@ def load_from_file(filename: str, data_type: str) -> any:
 
         if data_type == DataType.DATA:
             return pd.read_csv(file_path)
-        elif data_type == DataType.FEATURES:
-            vectorizer = joblib.load(file_path)
-            if isinstance(vectorizer, Vectorizer):
-                vectorizer.load(file_path)
-            return vectorizer
-        elif data_type == DataType.MODEL:
-            model = joblib.load(file_path)
-            if isinstance(model, Model):
-                model.load(file_path)
-            return model
+        elif data_type in [DataType.FEATURES, DataType.MODEL]:
+            data = joblib.load(file_path)
+            if isinstance(data, Model) or isinstance(data, Vectorizer):
+                data.load(file_path)
+            return data
         else:
             logger.error(
                 f"Invalid data type '{data_type}'. Supported types: {[dt for dt in DataType]}."
