@@ -1,0 +1,48 @@
+# configs/w2v-test.yaml
+
+usecase: "multilabel"
+start_step: "features"
+load:
+  data_file: "preprocessed_data_nbm.csv"
+#   features_file: "features_w2v.pkl"
+#   model_file: "nb_w2v.pkl"
+
+data_loader:
+  promo_file: "data/raw/promotional.csv"
+  shuffle: false
+  save: "loaded_data_nbm.csv"
+
+preprocessing:
+  remove_non_word: true
+  convert_lowercase: true
+  remove_stopwords: true
+  apply_stemming: false
+  remove_numbers: false
+  remove_whitespace: true
+  save: "preprocessed_data_nbm.csv"
+
+features:
+  type: word2vec
+  workers: 32
+  vector_size: 100
+  window: 5
+  min_count: 5
+  sg: 0
+  hs: 0
+  negative: 5
+  alpha: 0.025
+  epochs: 1
+  save: "features_w2v.pkl"
+
+model:
+  type: naive_bayes
+  test_size: 0.2
+  random_state: 42
+  grid_search: false
+  alpha: 0.01
+  fit_prior: false
+  oversampling: true
+  save: "nb_w2v.pkl"
+
+evaluation:
+  save: "evaluation_w2v.png"

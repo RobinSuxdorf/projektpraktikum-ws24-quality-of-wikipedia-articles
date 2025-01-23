@@ -1,7 +1,6 @@
 # configs/naive-bayes-binary.yaml
 
 usecase: "binary"
-start_step: "data_loader"
 # start_step: "evaluation"
 # load:
 #   data_file: "preprocessed_data_nbb.csv"

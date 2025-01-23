@@ -1,8 +1,8 @@
 # src/train.py
 
 import logging
-from sklearn.model_selection import train_test_split
 from enum import StrEnum
+from sklearn.model_selection import train_test_split
 from src.models import (
     Model,
     NaiveBayes,
