@@ -4,6 +4,11 @@ from dataclasses import dataclass
 
 @dataclass
 class CategorizedPage:
+    """
+    Represents a categorized Wikipedia page with various attributes indicating
+    the type and quality of the page content.
+    """
+
     id: int = None
     title: str = ""
     text: str = ""
@@ -36,12 +41,33 @@ class CategorizedPage:
 
     @staticmethod
     def _starts_with_any(string: str, prefixes: set) -> bool:
+        """
+        Checks if the given string starts with any of the specified prefixes ignoring case.
+
+        Args:
+            string (str): The string to check.
+            prefixes (set): A set of prefixes to check against.
+
+        Returns:
+            bool: True if the string starts with any of the prefixes, False otherwise.
+        """
         max_len = max(len(prefix) for prefix in prefixes)
         string_lower = string[:max_len].lower()
         return any(string_lower.startswith(prefix.lower()) for prefix in prefixes)
 
     @classmethod
     def categorize(cls, id: int, title: str, text: str) -> "CategorizedPage":
+        """
+        Categorizes a Wikipedia page based on its content.
+
+        Args:
+            id (int): The ID of the page.
+            title (str): The title of the page.
+            text (str): The text content of the page.
+
+        Returns:
+            CategorizedPage: An instance of CategorizedPage with categorized attributes.
+        """
         result = cls()
         result.id = id
         result.title = title

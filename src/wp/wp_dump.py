@@ -1,4 +1,5 @@
 from collections import Counter
+from io import BufferedReader
 import logging
 import bz2
 import csv
@@ -10,7 +11,18 @@ from src.wp.categorized_page import CategorizedPage
 
 
 class WikipediaDump:
+    """
+    A class to split a Wikipedia dump file in categorized pages.
+    """
+
     def __init__(self, dump_path: str, index_path: str):
+        """
+        Initializes the WikipediaDump with paths to the dump and index files.
+
+        Args:
+            dump_path (str): Path to the Wikipedia dump file.
+            index_path (str): Path to the index file.
+        """
         self.dump_path = dump_path
         self.index_path = index_path
 
@@ -21,7 +33,17 @@ class WikipediaDump:
         neutral_path: str,
         skipped_path: str,
         num_pages: int = -1,
-    ):
+    ) -> None:
+        """
+        Writes categorized pages to CSV files.
+
+        Args:
+            good_path (str): Path to the CSV file for good articles.
+            promotional_path (str): Path to the CSV file for promotional articles.
+            neutral_path (str): Path to the CSV file for neutral articles.
+            skipped_path (str): Path to the CSV file for skipped articles.
+            num_pages (int, optional): Number of pages to process. Defaults to -1 (process all pages).
+        """
         logging.info(
             "Input - WP dump: %s, index: %s",
             self.dump_path,
@@ -59,13 +81,24 @@ class WikipediaDump:
 
     def _write_to_csv(
         self,
-        num_pages,
-        dump_file,
+        num_pages: int,
+        dump_file: BufferedReader,
         good_writer,
         promotional_writer,
         neutral_writer,
         skipped_writer,
-    ):
+    ) -> None:
+        """
+        Processes the dump file and writes categorized pages to CSV writers.
+
+        Args:
+            num_pages (int): Number of pages to process.
+            dump_file (BufferedReader): The dump file object.
+            good_writer (csv.writer): CSV writer for good articles.
+            promotional_writer (csv.writer): CSV writer for promotional articles.
+            neutral_writer (csv.writer): CSV writer for neutral articles.
+            skipped_writer (csv.writer): CSV writer for skipped articles.
+        """
         offsets = self._read_offsets()
         good_writer.writerow(["id", "title", "text"])
         promotional_writer.writerow(
@@ -111,6 +144,12 @@ class WikipediaDump:
             )
 
     def _read_offsets(self) -> List[int]:
+        """
+        Reads and returns a sorted list of offsets from the index file.
+
+        Returns:
+            List[int]: Sorted list of offsets.
+        """
         offsets = set()
         with bz2.open(self.index_path, "rt", encoding="utf-8") as index_file:
             for line in index_file:
@@ -119,9 +158,17 @@ class WikipediaDump:
                 offsets.add(offset)
         logging.info("Number of unique offsets read: %d", len(offsets))
         return sorted(offsets)
-        # return sorted(offsets)[-10:]  # Return only the last 10 offsets for testing
 
     def _parse_xml(self, decompressed_data: bytes) -> ET.Element:
+        """
+        Parses the decompressed XML data and returns the root element.
+
+        Args:
+            decompressed_data (bytes): Decompressed XML data.
+
+        Returns:
+            ET.Element: Root element of the parsed XML.
+        """
         decoded = decompressed_data.decode("utf-8", errors="replace")
         if decoded.startswith("<mediawiki"):
             wrapped_data = [
@@ -154,6 +201,19 @@ class WikipediaDump:
         neutral_writer,
         skipped_writer,
     ) -> str:
+        """
+        Processes a single page element and writes it to the appropriate CSV writer.
+
+        Args:
+            page (ET.Element): The page element to process.
+            good_writer (csv.writer): CSV writer for good articles.
+            promotional_writer (csv.writer): CSV writer for promotional articles.
+            neutral_writer (csv.writer): CSV writer for neutral articles.
+            skipped_writer (csv.writer): CSV writer for skipped articles.
+
+        Returns:
+            str: The category of the processed page ("good", "promotional", "neutral", or "skipped").
+        """
         id_elem = page.find(".//id")
         id = id_elem.text if id_elem is not None else None
 
@@ -180,12 +240,25 @@ class WikipediaDump:
 
     def _process_page_categories(
         self,
-        page,
+        page: CategorizedPage,
         good_writer,
         promotional_writer,
         neutral_writer,
         skipped_writer,
     ) -> str:
+        """
+        Writes the categorized page to the appropriate CSV writer based on its attributes.
+
+        Args:
+            page (CategorizedPage): The categorized page.
+            good_writer (csv.writer): CSV writer for good articles.
+            promotional_writer (csv.writer): CSV writer for promotional articles.
+            neutral_writer (csv.writer): CSV writer for neutral articles.
+            skipped_writer (csv.writer): CSV writer for skipped articles.
+
+        Returns:
+            str: The category of the processed page ("good", "promotional", "neutral", or "skipped").
+        """
         if page.skip_missing_id:
             logging.debug("%d - skipping missing ID: %s", 0, page.title)
             skipped_writer.writerow([0, page.title, "missing_id"])
