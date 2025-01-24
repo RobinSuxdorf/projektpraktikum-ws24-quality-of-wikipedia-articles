@@ -1,5 +1,8 @@
 from .data_loader import load_data
-from .wikipedia_article_dataset import WikipediaArticleDataset
+from .wikipedia_article_dataset import (
+    text_to_tensor,
+     WikipediaArticleDataset
+)
 from .preprocessing import preprocess_text_series
 from .features import get_features
 from .train import train_model

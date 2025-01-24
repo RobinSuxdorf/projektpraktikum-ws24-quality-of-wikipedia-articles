@@ -4,7 +4,7 @@ import torch.nn as nn
 import torch.nn.functional as F
 from torch.utils.data.dataloader import DataLoader
 import torch.optim as optim
-from src.wikipedia_article_dataset import WikipediaArticleDataset
+from src.wikipedia_article_dataset import text_to_tensor, WikipediaArticleDataset
 import tiktoken
 import os
 
@@ -112,7 +112,17 @@ class CNNModel(Model):
             print(f"Epoch: {i}, loss: {avg_loss}")
 
     def predict(self, features: any) -> any:
-        pass
+        tensors = [text_to_tensor(article, self._tokenizer.encode, self._max_length, self._device) for article in features]
+        input_batch = torch.stack(tensors)
+
+        self._model.eval()
+
+        with torch.no_grad():
+            predictions = self._model(input_batch)
+
+        predicted_classes = torch.argmax(predictions, dim=1)
+
+        return predicted_classes.cpu().tolist()
 
     def save(self, file_name: str) -> None:
         torch.save(self._model.state_dict(), file_name)
