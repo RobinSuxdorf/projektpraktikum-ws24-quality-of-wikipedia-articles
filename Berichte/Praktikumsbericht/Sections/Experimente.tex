@@ -1,0 +1,58 @@
+\section{Experimente}
+
+Um die Datensätze miteinander vergleichen zu können, kamen verschiedene Metriken zu Anwendung
+
+
+\subsection{Evaluationsmetriken}
+\begin{enumerate}
+    \item 
+Sei $D = \{(x^{(1)}, y^{(1)}), \dots, (x^{(m)}, y^{(m)})\}$ ein Datensatz und $clf: \mathbb{R}^n \to \{0, 1\}$ ein (binärer) Klassifikator. Das \textbf{Genauigkeitsmaß} $acc$ von $clf$ bezüglich $D$ ist definiert durch
+\begin{equation}
+    acc(D, clf) = \frac{1}{m} \sum_{i=1}^{m} \left(1 - \left|y^{(i)} - clf(x^{(i)})\right|\right)
+\end{equation}
+    
+\item 
+Wir definieren
+
+\begin{equation}
+    TP(D, clf) = |\{i \mid y^{(i)} = 1, clf(x^{(i)}) = 1\}|
+\end{equation}
+\begin{equation}
+    TN(D, clf) = |\{i \mid y^{(i)} = 0, clf(x^{(i)}) = 0\}|
+\end{equation}
+\begin{equation}
+    FP(D, clf) = |\{i \mid y^{(i)} = 0, clf(x^{(i)}) = 1\}|
+\end{equation}
+\begin{equation}
+    FN(D, clf) = |\{i \mid y^{(i)} = 1, clf(x^{(i)}) = 0\}|
+\end{equation}
+
+Die \textit{Konfusionsmatrix} von $clf$ bzgl. $D$ stellt die vier oben genannten Werte tabellarisch wie folgt dar:
+
+\[
+\begin{array}{|c|c|c|}
+\hline
+ & y = 1 & y = 0 \\
+\hline
+clf = 1 & TP(D, clf) & FP(D, clf) \\
+clf = 0 & FN(D, clf) & TN(D, clf) \\
+\hline
+\end{array}
+\]
+\item
+Sei $D = \{(x^{(1)}, y^{(1)}), \dots, (x^{(m)}, y^{(m)})\}$ ein Datensatz und $clf: \mathbb{R}^n \to \{0, 1\}$ ein ~(binärer) Klassifikator. Definiere
+\begin{itemize}
+    \item \textbf{Präzision:}
+    \begin{equation}
+    \text{prec}(D, clf) = \frac{TP(D, clf)}{TP(D, clf) + FP(D, clf)}
+     \end{equation}
+    \item \textbf{Recall:}
+ \begin{equation}
+    \text{rec}(D, clf) = \frac{TP(D, clf)}{TP(D, clf) + FN(D, clf)}
+    \end{equation}
+    \item \textbf{F1:}
+    \begin{equation}
+    \text{F1}(D, clf) = \frac{2 \cdot \text{prec}(D, clf) \cdot \text{rec}(D, clf)}{\text{prec}(D, clf) + \text{rec}(D, clf)}
+    \end{equation}
+\end{itemize}
+\end{enumerate}
