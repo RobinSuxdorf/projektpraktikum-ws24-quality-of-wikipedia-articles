@@ -4,6 +4,7 @@ import logging
 from typing import Literal
 import pandas as pd
 from enum import StrEnum
+import numpy as np
 
 logger = logging.getLogger(__name__)
 
@@ -63,5 +64,17 @@ def load_data(
     if shuffle:
         logger.info("Shuffling the data.")
         df = df.sample(frac=1).reset_index(drop=True)
+
+    label_change_frac = data_loader_config.get("label_change_frac", 0)
+    if label_change_frac > 0:
+        logger.info(f"Randomly changing labels for {label_change_frac * 100}% of the data.")
+        num_rows_to_change = int(len(df) * label_change_frac)
+        rows_to_change = np.random.choice(df.index, num_rows_to_change, replace=False)
+        
+        possible_labels = [0, 1, 2] if neutral_file_path else [0, 1]
+        for row in rows_to_change:
+            current_label = df.loc[row, "label"]
+            new_label = np.random.choice([label for label in possible_labels if label != current_label])
+            df.loc[row, "label"] = new_label
 
     return df

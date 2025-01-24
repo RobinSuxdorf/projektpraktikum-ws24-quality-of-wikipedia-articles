@@ -14,6 +14,7 @@ data_loader:
   # neutral_file: "data/wp/neutral_sample.csv"
   good_file: "data/raw/good.csv"
   promo_file: "data/raw/promotional.csv"
+  label_change_frac: 0.0
   shuffle: true
   save: "loaded_data_linear_svm_b.csv"
 
