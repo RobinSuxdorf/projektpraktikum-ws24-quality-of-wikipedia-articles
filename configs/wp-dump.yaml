@@ -1,0 +1,21 @@
+input:
+  dump: "data/wp/enwiki-20241020-pages-articles-multistream.xml.bz2"
+  index: "data/wp/enwiki-20241020-pages-articles-multistream-index.txt.bz2"
+
+output:
+  good: "data/wp/good.csv"
+  promotional: "data/wp/promotional.csv"
+  neutral: "data/wp/neutral.csv"
+  skipped: "data/wp/skipped.csv"
+  num_pages: -1
+
+sample:
+  - input: "data/wp/good.csv"
+    output: "data/wp/good_sample.csv"
+    sample_size: 30_000
+  - input: "data/wp/promotional.csv"
+    output: "data/wp/promotional_sample.csv"
+    sample_size: 30_000
+  - input: "data/wp/neutral.csv"
+    output: "data/wp/neutral_sample.csv"
+    sample_size: 30_000
