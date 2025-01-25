@@ -1,9 +1,15 @@
 # src/features.py
 
 import logging
-import pandas as pd
-from sklearn.feature_extraction.text import CountVectorizer, TfidfVectorizer
 from enum import StrEnum
+import pandas as pd
+from src.vectorizer import (
+    Tfidf_Vectorizer,
+    Count_Vectorizer,
+    BagOfWords_Vectorizer,
+    Word2Vec_Vectorizer,
+    GloVe_Vectorizer,
+)
 
 logger = logging.getLogger(__name__)
 
@@ -11,6 +17,9 @@ logger = logging.getLogger(__name__)
 class FeatureType(StrEnum):
     TFIDF = "tfidf"
     COUNT = "count"
+    BAGOFWORDS = "bagofwords"
+    WORD2VEC = "word2vec"
+    GLOVE = "glove"
 
 
 def get_features(text_series: pd.Series, features_config: dict):
@@ -27,29 +36,22 @@ def get_features(text_series: pd.Series, features_config: dict):
     logger.info(f"Getting features with {features_config}.")
 
     feature_type = features_config.get("type")
-    ngram_range = tuple(features_config.get("ngram_range"))
-    max_df = features_config.get("max_df")
-    min_df = features_config.get("min_df")
-    max_features = features_config.get("max_features")
 
     if feature_type == FeatureType.TFIDF:
         logger.info("Using a TF-IDF vectorizer.")
-        sublinear_tf = features_config.get("sublinear_tf")
-        vectorizer = TfidfVectorizer(
-            ngram_range=ngram_range,
-            max_df=max_df,
-            min_df=min_df,
-            max_features=max_features,
-            sublinear_tf=sublinear_tf,
-        )
+        vectorizer = Tfidf_Vectorizer(features_config)
     elif feature_type == FeatureType.COUNT:
         logger.info("Using a Count vectorizer.")
-        vectorizer = CountVectorizer(
-            ngram_range=ngram_range,
-            max_df=max_df,
-            min_df=min_df,
-            max_features=max_features,
-        )
+        vectorizer = Count_Vectorizer(features_config)
+    elif feature_type == FeatureType.BAGOFWORDS:
+        logger.info("Using a Bag of Words vectorizer.")
+        vectorizer = BagOfWords_Vectorizer(features_config)
+    elif feature_type == FeatureType.WORD2VEC:
+        logger.info("Using a Word2Vec vectorizer.")
+        vectorizer = Word2Vec_Vectorizer(features_config)
+    elif feature_type == FeatureType.GLOVE:
+        logger.info("Using a GloVe vectorizer.")
+        vectorizer = GloVe_Vectorizer(features_config)
     else:
         logger.error(
             f"Invalid feature extraction type '{feature_type}'. Supported types: {[ft for ft in FeatureType]}."

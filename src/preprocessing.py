@@ -1,11 +1,11 @@
 # src/preprocessing.py
 
 import logging
+import re
 import pandas as pd
 import nltk
 from nltk.corpus import stopwords
 from nltk.stem import PorterStemmer
-import re
 
 logger = logging.getLogger(__name__)
 

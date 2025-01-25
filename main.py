@@ -1,15 +1,16 @@
 import logging
 import sys
 from src import (
-    get_argument_parser,
-    load_data,
-    preprocess_text_series,
-    get_features,
-    train_model,
+    PipelineStep,
     evaluate_model,
+    get_argument_parser,
+    get_features,
     load_config,
-    save_to_file,
+    load_data,
     load_from_file,
+    preprocess_text_series,
+    save_to_file,
+    train_model,
 )
 
 logging.basicConfig(
@@ -29,7 +30,7 @@ def run_pipeline(config: dict) -> None:
         config (dict): Configuration dictionary.
     """
     usecase = config.get("usecase")
-    start_step = config.get("start_step")
+    start_step = PipelineStep.from_string(config.get("start_step", "data_loader"))
     load_config = config.get("load", {})
     data_file = load_config.get("data_file", "")
     features_file = load_config.get("features_file", "")
@@ -44,14 +45,14 @@ def run_pipeline(config: dict) -> None:
         logger.info(f"Loading model from file: {model_file}")
         model = load_from_file(model_file, "model")
 
-    if start_step == "data_loader":
+    if start_step <= PipelineStep.DATA_LOADER:
         data_loader_config = config.get("data_loader")
         data = load_data(data_loader_config, usecase)
         save_to_file(data, data_loader_config["save"])
     else:
         logger.info("Skipping data loading step.")
 
-    if start_step in ["data_loader", "preprocessing"]:
+    if start_step <= PipelineStep.PREPROCESSING:
         preprocessing_config = config.get("preprocessing")
         data["cleaned_text"] = preprocess_text_series(
             data["text"], preprocessing_config
@@ -61,7 +62,7 @@ def run_pipeline(config: dict) -> None:
     else:
         logger.info("Skipping text data preprocessing step.")
 
-    if start_step in ["data_loader", "preprocessing", "features"]:
+    if start_step <= PipelineStep.FEATURES:
         features_config = config.get("features")
         features = get_features(data["cleaned_text"], features_config)
         save_to_file(features, features_config["save"])
@@ -70,16 +71,17 @@ def run_pipeline(config: dict) -> None:
 
     labels = data.drop(columns=["cleaned_text"])
 
-    if start_step in ["data_loader", "preprocessing", "features", "model"]:
+    if start_step <= PipelineStep.MODEL:
         model_config = config.get("model")
         model = train_model(features, labels, model_config)
         save_to_file(model, model_config["save"])
     else:
         logger.info("Skipping model training step.")
 
-    evaluation_config = config.get("evaluation")
-    figure = evaluate_model(model, features, labels)
-    save_to_file(figure, evaluation_config["save"])
+    if start_step <= PipelineStep.EVALUATION:
+        evaluation_config = config.get("evaluation")
+        figure = evaluate_model(model, features, labels)
+        save_to_file(figure, evaluation_config["save"])
 
 
 def main() -> None:

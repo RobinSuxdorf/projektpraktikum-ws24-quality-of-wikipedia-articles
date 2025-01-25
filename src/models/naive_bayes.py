@@ -1,11 +1,11 @@
 # src/models/naive_bayes.py
 
 import logging
-from sklearn.naive_bayes import MultinomialNB
-from sklearn.multiclass import OneVsRestClassifier
-from imblearn.pipeline import Pipeline
-from imblearn.over_sampling import RandomOverSampler
 from sklearn.model_selection import GridSearchCV
+from sklearn.multiclass import OneVsRestClassifier
+from sklearn.naive_bayes import MultinomialNB
+from imblearn.over_sampling import RandomOverSampler
+from imblearn.pipeline import Pipeline
 from .base import Model
 
 logger = logging.getLogger(__name__)
