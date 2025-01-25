@@ -8,6 +8,8 @@ import xml.etree.ElementTree as ET
 
 from src.wp.categorized_page import CategorizedPage
 
+logger = logging.getLogger(__name__)
+
 
 class WikipediaDump:
     """
@@ -43,12 +45,12 @@ class WikipediaDump:
             skipped_path (str): Path to the CSV file for skipped articles.
             num_pages (int, optional): Number of pages to process. Defaults to -1 (process all pages).
         """
-        logging.info(
+        logger.info(
             "Input - WP dump: %s, index: %s",
             self.dump_path,
             self.index_path,
         )
-        logging.info(
+        logger.info(
             "Output - good: %s, promotional: %s, neutral: %s, skipped: %s (pages: %d)",
             good_path,
             promotional_path,
@@ -132,7 +134,7 @@ class WikipediaDump:
                 if num_pages > 0 and pages_processed >= num_pages:
                     break
             end_offset = time.monotonic_ns()
-            logging.info(
+            logger.info(
                 "Offset %d/%d finished in %d ns, avg %d ns (pages: %d, %s)",
                 i + 1,
                 total_offsets,
@@ -155,7 +157,7 @@ class WikipediaDump:
                 parts = line.split(":")
                 offset = int(parts[0])
                 offsets.add(offset)
-        logging.info("Number of unique offsets read: %d", len(offsets))
+        logger.info("Number of unique offsets read: %d", len(offsets))
         return sorted(offsets)
 
     def _parse_xml(self, decompressed_data: bytes) -> ET.Element:
@@ -188,7 +190,7 @@ class WikipediaDump:
         try:
             return ET.fromstringlist(wrapped_data)
         except ET.ParseError as e:
-            logging.error(f"Error parsing XML: {e}")
+            logger.error(f"Error parsing XML: {e}")
             print(wrapped_data[1])
             raise e
 
@@ -259,19 +261,19 @@ class WikipediaDump:
             str: The category of the processed page ("good", "promotional", "neutral", or "skipped").
         """
         if page.skip_missing_id:
-            logging.debug("%d - skipping missing ID: %s", 0, page.title)
+            logger.debug("%d - skipping missing ID: %s", 0, page.title)
             skipped_writer.writerow([0, page.title, "missing_id"])
             return "skipped"
         if page.skip_namespace:
-            logging.debug("%d - skipping special namespace: %s", page.id, page.title)
+            logger.debug("%d - skipping special namespace: %s", page.id, page.title)
             skipped_writer.writerow([page.id, page.title, "namespace"])
             return "skipped"
         if page.skip_redirect:
-            logging.debug("%d - skipping redirect: %s", page.id, page.title)
+            logger.debug("%d - skipping redirect: %s", page.id, page.title)
             skipped_writer.writerow([page.id, page.title, "redirect"])
             return "skipped"
         if page.skip_disambiguation:
-            logging.debug("%d - skipping disambiguation: %s", page.id, page.title)
+            logger.debug("%d - skipping disambiguation: %s", page.id, page.title)
             skipped_writer.writerow([page.id, page.title, "disambiguation"])
             return "skipped"
 
@@ -279,11 +281,11 @@ class WikipediaDump:
             page.advert or page.coi or page.fanpov or page.pr or page.resume
         )
         if page.good or page.featured:
-            logging.debug("%d - good: %s", page.id, page.title)
+            logger.debug("%d - good: %s", page.id, page.title)
             good_writer.writerow([page.id, page.title, page.text])
             return "good"
         elif promotional:
-            logging.debug(
+            logger.debug(
                 "%d - promotional (advert: %s, coi: %s, fanpov: %s, pr: %s, resume: %s): %s",
                 page.id,
                 page.advert,
@@ -307,6 +309,6 @@ class WikipediaDump:
             )
             return "promotional"
         else:
-            logging.debug("%d - neutral: %s", page.id, page.title)
+            logger.debug("%d - neutral: %s", page.id, page.title)
             neutral_writer.writerow([page.id, page.title, page.text])
             return "neutral"

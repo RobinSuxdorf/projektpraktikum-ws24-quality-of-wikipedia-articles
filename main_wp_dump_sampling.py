@@ -1,11 +1,18 @@
 import logging
+import sys
 import random
+from src import (
+    get_argument_parser,
+    load_config,
+)
 
 logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
     handlers=[logging.FileHandler("app.log"), logging.StreamHandler()],
 )
+
+logger = logging.getLogger(__name__)
 
 
 def write_sample(input_path: str, output_path: str, sample_size: int) -> None:
@@ -17,13 +24,13 @@ def write_sample(input_path: str, output_path: str, sample_size: int) -> None:
         output_path (str): The path to the output file.
         sample_size (int): The number of lines to sample.
     """
-    logging.info(
+    logger.info(
         f"Starting to write sample from {input_path} to {output_path} with sample size {sample_size}"
     )
     sampled_lines = reservoir_sampling(input_path, sample_size)
     with open(output_path, mode="w", newline="", encoding="utf-8") as output_file:
         output_file.writelines(sampled_lines)
-    logging.info(f"Finished writing sample to {output_path}")
+    logger.info(f"Finished writing sample to {output_path}")
 
 
 def reservoir_sampling(file_path: str, sample_size: int) -> list[str]:
@@ -37,7 +44,7 @@ def reservoir_sampling(file_path: str, sample_size: int) -> list[str]:
     Returns:
         list[str]: A list of sampled lines.
     """
-    logging.info(
+    logger.info(
         f"Starting reservoir sampling on {file_path} with sample size {sample_size}"
     )
     sample = []
@@ -54,18 +61,41 @@ def reservoir_sampling(file_path: str, sample_size: int) -> list[str]:
                 if j < sample_size:
                     sample[j + 1] = line  # +1 to account for the header
             if i % 10_000 == 0:
-                logging.info(f"Processed {i} lines")
-    logging.info(f"Finished reservoir sampling on {file_path}")
+                logger.info(f"Processed {i} lines")
+    logger.info(f"Finished reservoir sampling on {file_path}")
     return sample
+
+
+def run_sampling(config: dict) -> None:
+    """
+    Run the sampling process for multiple input files.
+
+    Args:
+        config (dict): Configuration dictionary.
+    """
+    for sample_config in config.get("sample", []):
+        write_sample(
+            sample_config["input"],
+            sample_config["output"],
+            sample_config["sample_size"],
+        )
 
 
 def main() -> None:
     """
     Main function to write samples from multiple input files to output files.
     """
-    write_sample("data/wp/good.csv", "data/wp/good_sample.csv", 30_000)
-    write_sample("data/wp/promotional.csv", "data/wp/promotional_sample.csv", 30_000)
-    write_sample("data/wp/neutral.csv", "data/wp/neutral_sample.csv", 30_000)
+    parser = get_argument_parser()
+    args = parser.parse_args()
+    try:
+        config = load_config(args.config)
+        run_sampling(config)
+        logger.info("Exiting with return code 0")
+        sys.exit(0)
+    except Exception as e:
+        logger.error(f"An error occurred: {e}", exc_info=True)
+        logger.info("Exiting with return code 1")
+        sys.exit(1)
 
 
 if __name__ == "__main__":

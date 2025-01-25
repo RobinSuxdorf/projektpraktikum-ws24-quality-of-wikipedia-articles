@@ -68,16 +68,17 @@ Logs are saved to app.log and also printed to the console.
 
 ## Convert Wikipedia Dump
 
-- Download from https://dumps.wikimedia.org/enwiki/:
-  - `enwiki-yyyymmdd-pages-articles-multistream.xml.bz2` (about 20 GB)
-  - `enwiki-yyyymmdd-pages-articles-multistream-index.txt.bz2` (about 250 MB)
-- Run `main_wp_dump_convert.py` to split the dump into 4 CSV files:
-  - `wp/good.csv`
-  - `wp/promotional.csv`
-  - `wp/neutral.csv`
-  - `wp/skipped.csv`
-- Run `main_wp_dump_sampling.py` to extract samples with an equal number of entries:
-  - `wp/good_sample.csv`
-  - `wp/promotional_sample.csv`
-  - `wp/neutral_sample.csv`
-- **TODO** arguments/config to pass file names
+Download from https://dumps.wikimedia.org/enwiki/:
+- `enwiki-yyyymmdd-pages-articles-multistream.xml.bz2` (about 20 GB)
+- `enwiki-yyyymmdd-pages-articles-multistream-index.txt.bz2` (about 250 MB)
+
+To split the dump into 4 CSV files (good, promo, neutral, skipped) run:
+```sh
+python main_wp_dump_convert.py -c <config-name>
+```
+
+To extract samples from the CSV files run:
+```sh
+python main_wp_dump_sampling.py -c <config-name>
+```
+
