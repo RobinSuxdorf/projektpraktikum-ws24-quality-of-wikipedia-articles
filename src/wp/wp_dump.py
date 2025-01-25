@@ -5,7 +5,6 @@ import bz2
 import csv
 import time
 import xml.etree.ElementTree as ET
-from typing import List
 
 from src.wp.categorized_page import CategorizedPage
 
@@ -143,12 +142,12 @@ class WikipediaDump:
                 cnt,
             )
 
-    def _read_offsets(self) -> List[int]:
+    def _read_offsets(self) -> list[int]:
         """
         Reads and returns a sorted list of offsets from the index file.
 
         Returns:
-            List[int]: Sorted list of offsets.
+            list[int]: Sorted list of offsets.
         """
         offsets = set()
         with bz2.open(self.index_path, "rt", encoding="utf-8") as index_file:

@@ -1,6 +1,5 @@
 import logging
 import random
-from typing import List
 
 logging.basicConfig(
     level=logging.INFO,
@@ -27,7 +26,7 @@ def write_sample(input_path: str, output_path: str, sample_size: int) -> None:
     logging.info(f"Finished writing sample to {output_path}")
 
 
-def reservoir_sampling(file_path: str, sample_size: int) -> List[str]:
+def reservoir_sampling(file_path: str, sample_size: int) -> list[str]:
     """
     Performs reservoir sampling on the input file and returns a sample of lines.
 
@@ -36,7 +35,7 @@ def reservoir_sampling(file_path: str, sample_size: int) -> List[str]:
         sample_size (int): The number of lines to sample.
 
     Returns:
-        List[str]: A list of sampled lines.
+        list[str]: A list of sampled lines.
     """
     logging.info(
         f"Starting reservoir sampling on {file_path} with sample size {sample_size}"
