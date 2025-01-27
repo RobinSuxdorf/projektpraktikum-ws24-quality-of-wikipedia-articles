@@ -2,7 +2,6 @@
 
 import logging
 from enum import StrEnum
-from sklearn.model_selection import train_test_split
 from src.models import (
     Model,
     NaiveBayes,
@@ -21,13 +20,13 @@ class ModelType(StrEnum):
     LINEAR_SVM = "linear_svm"
 
 
-def train_model(features, labels, model_config: dict) -> Model:
+def train_model(x_train, y_train, model_config: dict) -> Model:
     """
     Train a machine learning model based on the provided configuration.
 
     Args:
-        features (array-like): Input features for training the model.
-        labels (array-like): Target labels corresponding to the input features.
+        x_train (array-like): Input features for training the model.
+        y_train (array-like): Target labels corresponding to the input features.
         model_config (dict): Configuration dictionary for the model.
 
     Returns:
@@ -37,12 +36,6 @@ def train_model(features, labels, model_config: dict) -> Model:
 
     model_type = model_config.get("type")
     grid_search = model_config.get("grid_search")
-    test_size = model_config.get("test_size")
-    random_state = model_config.get("random_state", None)
-
-    x_train, _, y_train, _ = train_test_split(
-        features, labels, test_size=test_size, random_state=random_state
-    )
 
     binary_classification = True if y_train.shape[1] == 1 else False
     if binary_classification:

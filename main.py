@@ -1,5 +1,6 @@
 import logging
 import sys
+from sklearn.model_selection import train_test_split
 from src import (
     PipelineStep,
     evaluate_model,
@@ -71,16 +72,23 @@ def run_pipeline(config: dict) -> None:
 
     labels = data.drop(columns=["cleaned_text"])
 
+    model_config = config.get("model")
+    x_train, x_test, y_train, y_test = train_test_split(
+        features,
+        labels,
+        test_size=model_config.get("test_size", 0.2),
+        random_state=model_config.get("random_state", None),
+    )
+
     if start_step <= PipelineStep.MODEL:
-        model_config = config.get("model")
-        model = train_model(features, labels, model_config)
+        model = train_model(x_train, y_train, model_config)
         save_to_file(model, model_config["save"])
     else:
         logger.info("Skipping model training step.")
 
     if start_step <= PipelineStep.EVALUATION:
         evaluation_config = config.get("evaluation")
-        figure = evaluate_model(model, features, labels)
+        figure = evaluate_model(model, x_test, y_test)
         save_to_file(figure, evaluation_config["save"])
 
 
