@@ -10,6 +10,8 @@ from src.models import (
     MultilabelNaiveBayesGridSearch,
     LinearSupportVectorMachine,
     MultilabelLinearSupportVectorMachine,
+    SupportVectorMachine,
+    MultilabelSupportVectorMachine,
     Logistic_Regression,
     MultilabelLogisticRegression,
 )
@@ -20,6 +22,7 @@ logger = logging.getLogger(__name__)
 class ModelType(StrEnum):
     NAIVE_BAYES = "naive_bayes"
     LINEAR_SVM = "linear_svm"
+    SVM = "svm"
     LOGISTIC_REGRESSION = "logistic_regression"
 
 
@@ -65,6 +68,13 @@ def train_model(x_train, y_train, model_config: dict) -> Model:
         else:
             logger.info("Training a multilabel SVM model.")
             model = MultilabelLinearSupportVectorMachine(model_config)
+    elif model_type == ModelType.SVM:
+        if binary_classification:
+            logger.info("Training a binary SVM model.")
+            model = SupportVectorMachine(model_config)
+        else:
+            logger.info("Training a multilabel SVM model.")
+            model = LinearSupportVectorMachine(model_config)
     elif model_type == ModelType.LOGISTIC_REGRESSION:
         if binary_classification:
             logger.info("Training a Logistic Regression model.")
