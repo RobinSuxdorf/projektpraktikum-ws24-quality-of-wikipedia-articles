@@ -1,11 +1,7 @@
 # configs/log-reg-binary.yaml
 
 usecase: "binary"
-start_step: "model"
-load:
-  data_file: "preprocessed_data_lrb.csv"
-  features_file: "features_lrb.pkl"
-  # model_file: "naive_bayes_binary.pkl"
+# start_step: "evaluation"
 
 data_loader:
   good_file: "data/raw/good.csv"
@@ -43,3 +39,17 @@ model:
 
 evaluation:
   save: "evaluation_lrb.png"
+# 2025-01-29 23:00:45,707 - src.evaluation - INFO - Accuracy: 94.96%
+# 2025-01-29 23:00:45,713 - src.evaluation - INFO - Classification Report:
+#               precision    recall  f1-score   support
+#
+#            0       0.95      0.96      0.96      6044
+#            1       0.95      0.94      0.94      4780
+#
+#     accuracy                           0.95     10824
+#    macro avg       0.95      0.95      0.95     10824
+# weighted avg       0.95      0.95      0.95     10824
+#
+# 2025-01-29 23:00:45,714 - src.evaluation - INFO - Confusion Matrix:
+# [[5803  241]
+#  [ 305 4475]]

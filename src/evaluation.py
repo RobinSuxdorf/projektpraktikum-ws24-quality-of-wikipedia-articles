@@ -31,8 +31,11 @@ def evaluate_model(model: Model, x_test, y_test) -> plt.Figure:
     logger.info(f"Classification Report:\n{report}")
 
     # Create and log confusion matrix
-    conf_matrix = confusion_matrix(y_test, y_pred)
-    logger.info(f"Confusion Matrix:\n{conf_matrix}")
+    try:
+        conf_matrix = confusion_matrix(y_test, y_pred)
+        logger.info(f"Confusion Matrix:\n{conf_matrix}")
+    except Exception as e:
+        logger.error(f"Error creating confusion matrix: {e}")
 
     report = classification_report(y_test, y_pred, output_dict=True, zero_division=0)
     labels = [label for label in report if label.isdigit()]

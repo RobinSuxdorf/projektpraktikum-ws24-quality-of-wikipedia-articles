@@ -1,11 +1,7 @@
-# configs/naive-bayes-binary.yaml
+# configs/naive-bayes-binary-wp.yaml
 
 usecase: "binary"
 # start_step: "evaluation"
-# load:
-#   data_file: "wp_nbb.csv"
-#   features_file: "features_wp_nbb.pkl"
-#   model_file: "wp_nbb.pkl"
 
 data_loader:
   good_file: "data/wp/good_sample.csv"

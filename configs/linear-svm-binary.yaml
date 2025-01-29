@@ -1,8 +1,7 @@
 # configs/linear-svm-binary.yaml
 
 usecase: "binary"
-
-start_step: "model"
+# start_step: "evaluation"
 
 data_loader:
   # good_file: "data/wp/good_sample.csv"
@@ -42,3 +41,17 @@ model:
 
 evaluation:
   save: "evaluation_linear_svm_b.png"
+# 2025-01-29 23:02:16,352 - src.evaluation - INFO - Accuracy: 96.58%
+# 2025-01-29 23:02:16,358 - src.evaluation - INFO - Classification Report:
+#               precision    recall  f1-score   support
+#
+#            0       0.97      0.97      0.97      6044
+#            1       0.96      0.96      0.96      4780
+#
+#     accuracy                           0.97     10824
+#    macro avg       0.97      0.96      0.97     10824
+# weighted avg       0.97      0.97      0.97     10824
+#
+# 2025-01-29 23:02:16,360 - src.evaluation - INFO - Confusion Matrix:
+# [[5877  167]
+#  [ 203 4577]]

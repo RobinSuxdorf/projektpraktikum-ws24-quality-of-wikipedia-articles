@@ -1,11 +1,7 @@
-# configs/log-reg-binary.yaml
+# configs/log-reg-multilabel.yaml
 
 usecase: "multilabel"
-start_step: "model"
-load:
-  data_file: "preprocessed_data_lrm.csv"
-  features_file: "features_lrm.pkl"
-#   model_file: "log_reg_multilabel.pkl"
+# start_step: "evaluation"
 
 data_loader:
   promo_file: "data/raw/promotional.csv"
@@ -43,3 +39,17 @@ model:
 
 evaluation:
   save: "evaluation_lrm.png"
+# 2025-01-29 22:59:11,802 - src.evaluation - INFO - Accuracy: 72.46%
+# 2025-01-29 22:59:11,808 - src.evaluation - INFO - Classification Report:
+#               precision    recall  f1-score   support
+#
+#            0       0.85      0.96      0.90      3792
+#            1       0.00      0.00      0.00       401
+#            2       0.64      0.18      0.28       292
+#            3       0.00      0.00      0.00       308
+#            4       0.66      0.37      0.47       439
+#
+#    micro avg       0.84      0.73      0.78      5232
+#    macro avg       0.43      0.30      0.33      5232
+# weighted avg       0.71      0.73      0.71      5232
+#  samples avg       0.80      0.77      0.78      5232
