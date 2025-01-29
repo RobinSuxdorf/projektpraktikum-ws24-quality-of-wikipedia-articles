@@ -2,11 +2,7 @@
 
 usecase: "binary"
 
-# start_step: "features"
-# load:
-#   data_file: "preprocessed_data_linear_svm_b.csv"
-#   features_file: "features_linear_svm_b.pkl"
-#   model_file: "linear_svm_b.pkl"
+start_step: "model"
 
 data_loader:
   # good_file: "data/wp/good_sample.csv"
@@ -15,8 +11,8 @@ data_loader:
   good_file: "data/raw/good.csv"
   promo_file: "data/raw/promotional.csv"
   label_change_frac: 0.0
-  shuffle: true
-  save: "loaded_data_linear_svm_b.csv"
+  shuffle: false
+  save: "loaded_data.csv"
 
 preprocessing:
   remove_non_word: true
@@ -25,7 +21,7 @@ preprocessing:
   apply_stemming: false
   remove_numbers: false
   remove_whitespace: true
-  save: "preprocessed_data_linear_svm_b.csv"
+  save: "preprocessed_data.csv"
 
 features:
   type: tfidf
@@ -34,7 +30,7 @@ features:
   min_df: 0.001
   max_features: 10_000
   sublinear_tf: true
-  save: "features_linear_svm_b.pkl"
+  save: "features.pkl"
 
 model:
   type: linear_svm
