@@ -1,12 +1,7 @@
 # configs/linear-svm-binary.yaml
 
 usecase: "binary"
-
-# start_step: "features"
-# load:
-#   data_file: "preprocessed_data_linear_svm_b.csv"
-#   features_file: "features_linear_svm_b.pkl"
-#   model_file: "linear_svm_b.pkl"
+# start_step: "evaluation"
 
 data_loader:
   # good_file: "data/wp/good_sample.csv"
@@ -15,8 +10,8 @@ data_loader:
   good_file: "data/raw/good.csv"
   promo_file: "data/raw/promotional.csv"
   label_change_frac: 0.0
-  shuffle: true
-  save: "loaded_data_linear_svm_b.csv"
+  shuffle: false
+  save: "loaded_data.csv"
 
 preprocessing:
   remove_non_word: true
@@ -25,7 +20,7 @@ preprocessing:
   apply_stemming: false
   remove_numbers: false
   remove_whitespace: true
-  save: "preprocessed_data_linear_svm_b.csv"
+  save: "preprocessed_data.csv"
 
 features:
   type: tfidf
@@ -34,7 +29,7 @@ features:
   min_df: 0.001
   max_features: 10_000
   sublinear_tf: true
-  save: "features_linear_svm_b.pkl"
+  save: "features.pkl"
 
 model:
   type: linear_svm
@@ -46,3 +41,17 @@ model:
 
 evaluation:
   save: "evaluation_linear_svm_b.png"
+# 2025-01-29 23:02:16,352 - src.evaluation - INFO - Accuracy: 96.58%
+# 2025-01-29 23:02:16,358 - src.evaluation - INFO - Classification Report:
+#               precision    recall  f1-score   support
+#
+#            0       0.97      0.97      0.97      6044
+#            1       0.96      0.96      0.96      4780
+#
+#     accuracy                           0.97     10824
+#    macro avg       0.97      0.96      0.97     10824
+# weighted avg       0.97      0.97      0.97     10824
+#
+# 2025-01-29 23:02:16,360 - src.evaluation - INFO - Confusion Matrix:
+# [[5877  167]
+#  [ 203 4577]]

@@ -1,11 +1,7 @@
 # configs/glove-test.yaml
 
 usecase: "multilabel"
-start_step: "features"
-load:
-  data_file: "preprocessed_data_nbm.csv"
-#   features_file: "features_glove.pkl"
-#   model_file: "nb_glove.pkl"
+# start_step: "evaluation"
 
 data_loader:
   promo_file: "data/raw/promotional.csv"
@@ -38,3 +34,17 @@ model:
 
 evaluation:
   save: "evaluation_glove.png"
+# 2025-01-29 22:53:09,007 - src.evaluation - INFO - Accuracy: 90.91%
+# 2025-01-29 22:53:09,012 - src.evaluation - INFO - Classification Report:
+#               precision    recall  f1-score   support
+#
+#            0       0.90      0.94      0.92      6044
+#            1       0.92      0.87      0.89      4780
+#
+#     accuracy                           0.91     10824
+#    macro avg       0.91      0.91      0.91     10824
+# weighted avg       0.91      0.91      0.91     10824
+#
+# 2025-01-29 22:53:09,013 - src.evaluation - INFO - Confusion Matrix:
+# [[5664  380]
+#  [ 604 4176]]
