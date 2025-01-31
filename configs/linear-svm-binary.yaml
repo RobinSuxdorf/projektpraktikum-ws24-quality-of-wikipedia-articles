@@ -11,7 +11,7 @@ data_loader:
   promo_file: "data/raw/promotional.csv"
   label_change_frac: 0.0
   shuffle: false
-  save: "loaded_data.csv"
+  save: "loaded_data_binary.csv"
 
 preprocessing:
   remove_non_word: true
@@ -20,7 +20,7 @@ preprocessing:
   apply_stemming: false
   remove_numbers: false
   remove_whitespace: true
-  save: "preprocessed_data.csv"
+  save: "preprocessed_data_binary.csv"
 
 features:
   type: tfidf
@@ -29,7 +29,7 @@ features:
   min_df: 0.001
   max_features: 10_000
   sublinear_tf: true
-  save: "features.pkl"
+  save: "features_binary.pkl"
 
 model:
   type: linear_svm
@@ -37,10 +37,10 @@ model:
   random_state: 42
   grid_search: false
   C: 1.0
-  save: "linear_svm_b.pkl"
+  save: "linear_svm_binary.pkl"
 
 evaluation:
-  save: "evaluation_linear_svm_b.png"
+  save: "evaluation_linear_svm_binary.png"
 # 2025-01-29 23:02:16,352 - src.evaluation - INFO - Accuracy: 96.58%
 # 2025-01-29 23:02:16,358 - src.evaluation - INFO - Classification Report:
 #               precision    recall  f1-score   support
