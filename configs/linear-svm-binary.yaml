@@ -1,7 +1,7 @@
 # configs/linear-svm-binary.yaml
 
 usecase: "binary"
-start_step: "model"
+start_step: "evaluation"
 
 data_loader:
   good_file: "data/raw/good.csv"

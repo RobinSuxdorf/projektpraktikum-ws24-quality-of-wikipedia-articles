@@ -1,7 +1,7 @@
 # configs/linear-svm-wp-binary.yaml
 
 usecase: "binary"
-# start_step: "evaluation"
+start_step: "evaluation"
 
 data_loader:
   good_file: "data/wp/good_sample.csv"

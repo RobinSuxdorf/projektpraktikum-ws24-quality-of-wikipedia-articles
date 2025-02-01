@@ -1,7 +1,7 @@
 # configs/linear-svm-wp-multilabel.yaml
 
 usecase: "multilabel"
-# start_step: "evaluation"
+start_step: "evaluation"
 
 data_loader:
   promo_file: "data/wp/promotional_sample.csv"
