@@ -7,6 +7,7 @@ from .naive_bayes import (
 )
 from .support_vector_machine import (
     LinearSupportVectorMachine,
+    LinearSupportVectorMachineGridSearch,
     MultilabelLinearSupportVectorMachine,
     SupportVectorMachine,
     MultilabelSupportVectorMachine,
@@ -20,6 +21,7 @@ __all__ = [
     "MultilabelNaiveBayes",
     "MultilabelNaiveBayesGridSearch",
     "LinearSupportVectorMachine",
+    "LinearSupportVectorMachineGridSearch",
     "MultilabelLinearSupportVectorMachine",
     "SupportVectorMachine",
     "MultilabelSupportVectorMachine",

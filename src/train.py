@@ -9,6 +9,7 @@ from src.models import (
     MultilabelNaiveBayes,
     MultilabelNaiveBayesGridSearch,
     LinearSupportVectorMachine,
+    LinearSupportVectorMachineGridSearch,
     MultilabelLinearSupportVectorMachine,
     SupportVectorMachine,
     MultilabelSupportVectorMachine,
@@ -63,8 +64,12 @@ def train_model(x_train, y_train, model_config: dict) -> Model:
             model = MultilabelNaiveBayes(model_config)
     elif model_type == ModelType.LINEAR_SVM:
         if binary_classification:
-            logger.info("Training a binary SVM model.")
-            model = LinearSupportVectorMachine(model_config)
+            if grid_search:
+                logger.info("Training a binary Linear SVM model with grid search.")
+                model = LinearSupportVectorMachineGridSearch(model_config)
+            else:
+                logger.info("Training a binary Linear SVM model.")
+                model = LinearSupportVectorMachine(model_config)
         else:
             logger.info("Training a multilabel SVM model.")
             model = MultilabelLinearSupportVectorMachine(model_config)
