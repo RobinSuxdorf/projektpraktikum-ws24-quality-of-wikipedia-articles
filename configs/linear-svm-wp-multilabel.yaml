@@ -1,0 +1,69 @@
+# configs/linear-svm-wp-multilabel.yaml
+
+usecase: "multilabel"
+# start_step: "evaluation"
+
+data_loader:
+  promo_file: "data/wp/promotional_sample.csv"
+  label_change_frac: 0.0
+  shuffle: false
+  save: "loaded_data_wp_multilabel.csv"
+
+preprocessing:
+  remove_non_word: true
+  convert_lowercase: true
+  remove_stopwords: true
+  apply_stemming: false
+  remove_numbers: false
+  remove_whitespace: true
+  save: "preprocessed_data_wp_multilabel.csv"
+
+features:
+  type: tfidf
+  ngram_range: [1, 1]
+  max_df: 0.9
+  min_df: 0.001
+  max_features: 10_000
+  sublinear_tf: true
+  save: "features_wp_multilabel.pkl"
+
+model:
+  type: linear_svm
+  test_size: 0.2
+  random_state: 42
+  grid_search: false
+  C: 1.0
+  save: "linear_svm_wp_multilabel.pkl"
+
+evaluation:
+  save: "evaluation_linear_svm_wp_multilabel.png"
+# 2025-02-01 01:02:11,101 - src.evaluation - INFO - Accuracy: 48.68%
+# 2025-02-01 01:02:11,110 - src.evaluation - INFO - Classification Report:
+#               precision    recall  f1-score   support
+# 
+#            0       0.71      0.72      0.71      3104
+#            1       0.54      0.49      0.51      2321
+#            2       0.86      0.15      0.25        82
+#            3       0.00      0.00      0.00        94
+#            4       0.52      0.40      0.45       712
+# 
+#    micro avg       0.63      0.58      0.60      6313
+#    macro avg       0.53      0.35      0.39      6313
+# weighted avg       0.62      0.58      0.59      6313
+#  samples avg       0.56      0.59      0.56      6313
+# 
+# 2025-02-01 01:02:11,115 - src.evaluation - INFO - Confusion Matrix:
+# [[[2004  892]
+#   [ 884 2220]]
+# 
+#  [[2702  977]
+#   [1186 1135]]
+# 
+#  [[5916    2]
+#   [  70   12]]
+# 
+#  [[5906    0]
+#   [  94    0]]
+# 
+#  [[5020  268]
+#   [ 425  287]]]

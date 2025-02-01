@@ -4,10 +4,6 @@ usecase: "multilabel"
 # start_step: "evaluation"
 
 data_loader:
-  # good_file: "data/wp/good_sample.csv"
-  # promo_file: "data/wp/promotional_sample.csv"
-  # neutral_file: "data/wp/neutral_sample.csv"
-  good_file: "data/raw/good.csv"
   promo_file: "data/raw/promotional.csv"
   label_change_frac: 0.0
   shuffle: false

@@ -55,7 +55,7 @@ def load_data(
         logger.info("Loading promotional data for multilabel classification.")
         promo_df = pd.read_csv(promo_file_path, nrows=nrows)
 
-        df = promo_df.drop(columns=["url"])
+        df = promo_df.drop(columns=["url", "id", "title"], errors='ignore')
     else:
         logger.error(
             f"Invalid model type '{usecase}'. Supported types: {[uc for uc in Usecase]}."
