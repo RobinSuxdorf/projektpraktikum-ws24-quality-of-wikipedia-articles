@@ -1,4 +1,4 @@
-# configs/svm-binary.yaml
+# configs/svm-rbf-binary.yaml
 
 usecase: "binary"
 start_step: "evaluation"
@@ -34,22 +34,22 @@ model:
   random_state: 42
   grid_search: false
   C: 1.0
-  kernel: "linear"
-  save: "svm_binary.pkl"
+  kernel: "rbf"
+  save: "svm_rbf_binary.pkl"
 
 evaluation:
-  save: "evaluation_svm_binary.png"
-# 2025-02-01 11:38:30,132 - src.evaluation - INFO - Accuracy: 96.66%
-# 2025-02-01 11:38:30,151 - src.evaluation - INFO - Classification Report:
+  save: "evaluation_svm_rbf_binary.png"
+# 2025-02-01 14:35:48,652 - src.evaluation - INFO - Accuracy: 96.82%
+# 2025-02-01 14:35:48,660 - src.evaluation - INFO - Classification Report:
 #               precision    recall  f1-score   support
 # 
-#            0       0.97      0.97      0.97      6044
+#            0       0.97      0.98      0.97      6044
 #            1       0.97      0.96      0.96      4780
 # 
 #     accuracy                           0.97     10824
 #    macro avg       0.97      0.97      0.97     10824
 # weighted avg       0.97      0.97      0.97     10824
 # 
-# 2025-02-01 11:38:30,155 - src.evaluation - INFO - Confusion Matrix:
-# [[5891  153]
-#  [ 209 4571]]
+# 2025-02-01 14:35:48,663 - src.evaluation - INFO - Confusion Matrix:
+# [[5901  143]
+#  [ 201 4579]]
