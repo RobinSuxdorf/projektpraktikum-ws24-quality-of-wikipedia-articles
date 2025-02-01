@@ -74,7 +74,7 @@ def train_model(x_train, y_train, model_config: dict) -> Model:
             model = SupportVectorMachine(model_config)
         else:
             logger.info("Training a multilabel SVM model.")
-            model = LinearSupportVectorMachine(model_config)
+            model = MultilabelSupportVectorMachine(model_config)
     elif model_type == ModelType.LOGISTIC_REGRESSION:
         if binary_classification:
             logger.info("Training a Logistic Regression model.")
