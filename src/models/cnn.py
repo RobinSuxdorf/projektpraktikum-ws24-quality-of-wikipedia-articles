@@ -28,14 +28,15 @@ class CNN(nn.Module):
         self.dropout = nn.Dropout(dropout)
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:
-        x = self.embedding(x)
-        x = x.permute(0, 2, 1)
+        # x: (batch_size, sequence_length)
+        x = self.embedding(x) # (batch_size, sequence_length, embedding_dim)
+        x = x.permute(0, 2, 1) # (batch_size, embedding_dim, sequence_length)
 
-        conv_x = [F.relu(conv(x)).max(dim=2)[0] for conv in self.convs]
-        x = torch.cat(conv_x, dim=1)
+        conv_x = [F.relu(conv(x)).max(dim=2)[0] for conv in self.convs] # list of (batch_size, num_filters)
+        x = torch.cat(conv_x, dim=1) # (batch_size, num_filters * len(filter_sizes))
 
         x = self.dropout(x)
-        x = self.fc(x)
+        x = self.fc(x) # (batch_size, num_classes)
 
         return torch.sigmoid(x)
 
