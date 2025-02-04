@@ -1,1 +1,29 @@
-SVM
+Die Support Vector Machine (SVM) ist ein überwacht lernendes Verfahren zur Klassifikation, das darauf abzielt, eine optimale Entscheidungsgrenze (Hyperebene) zwischen den Klassen zu finden. Das Verfahren eignet sich besonders gut zur Textkategorisierung, da es mit der dabei auftretenden hohen Dimensionalität und dünnbesetzten Vektoren umgehen kann und da viele Textkategorisierungen linear separierbar sind (https://link.springer.com/chapter/10.1007/BFb0026683).
+
+Im Rahmen des Projekts wurden verschiedene Varianten der SVM getestet:
+
+\begin{itemize}
+    \item Linear SVM: Implementierung mit \textit{LinearSVC} aus \textit{scikit-learn}, welche besonders effizient für große Textdatensätze ist.
+    \item Kernel SVM: Implementierung mit \textit{SVC}, wobei die Kernelfunktionen \textit{linear}, \textit{rbf} und \textit{sigmoid} untersucht wurden.
+\end{itemize}
+
+Da die Metriken bei allen Varianten ähnliche Ergebnisse lieferten, wurde für die weiteren Experimente \textit{LinearSVC} gewählt, da es wesentlich schneller trainiert und evaluiert werden kann. Um optimale Parameter zu finden, wurde GridSearchCV zur Hyper\-parameter-Optimierung eingesetzt.
+
+Die SVM wurde als Option in die bestehende Machine-Learning-Pipeline integriert. Über eine Konfigurationsdatei kann gesteuert werden, ob \textit{LinearSVC} oder \textit{SVC} mit verschiedenen Kernelfunktionen verwendet werden soll. Grid Search ist ebenfalls über die Konfiguration aktivierbar.
+
+Die SVM wurde mit Wikipedia-Texten trainiert, die aus zwei Quellen stammen:
+\begin{itemize}
+    \item Ein Kaggle-Datensatz, der Artikel in den Kategorien \textit{good} und \textit{promotional} enthält. Letztere sind zusätzlich mit den Labels \textit{advert}, \textit{coi}, \textit{fanpov}, \textit{pr} und \textit{resume} annotiert.
+    \item Ein Wikipedia-Dump, der zusätzlich Artikel der Kategorie \textit{neutral} enthält, also Texte, die weder \textit{good} noch \textit{promotional} sind.
+\end{itemize}
+
+Als Feature-Extraktionsmethode wurde TF-IDF (Term Frequency-Inverse Document Frequency) verwendet, um relevante Features für die Klassifikation herauszuarbeiten.
+
+Zur Bewertung der SVM wurden die Metriken Accuracy, Precision, Recall und F1-Score herangezogen. Die genaueren Ergebnisse finden sich im Anhang, die wichtigsten Resultate sind jedoch:
+
+\begin{itemize}
+    \item 96.66\% Accuracy bei Kaggle-Daten mit zwei Klassen (\textit{good}/\textit{promo})
+    \item 89.01\% Accuracy beim Wikipedia-Dump mit drei Klassen (\textit{good}/\textit{promo}/\textit{neutral})
+\end{itemize}
+
+Die Multilabel-Klassifikation innerhalb der Kategorie \textit{promo} ergab insgesamt sehr schlechte Werte, da viele dieser Label nur in wenigen Artikeln vorkamen.
