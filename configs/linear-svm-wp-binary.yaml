@@ -55,3 +55,17 @@ evaluation:
 # [[5708   82  152]
 #  [ 110 5323  627]
 #  [ 312  696 4990]]
+
+
+# Ohne neutral:
+
+# 2025-02-02 18:44:27,156 - src.evaluation - INFO - Accuracy: 98.36%
+# 2025-02-02 18:44:27,165 - src.evaluation - INFO - Classification Report:
+#               precision    recall  f1-score   support
+
+#            0       0.98      0.99      0.98      5909
+#            1       0.99      0.98      0.98      6091
+
+#     accuracy                           0.98     12000
+#    macro avg       0.98      0.98      0.98     12000
+# weighted avg       0.98      0.98      0.98     12000
