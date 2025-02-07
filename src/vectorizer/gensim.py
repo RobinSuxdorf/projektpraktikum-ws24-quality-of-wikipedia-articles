@@ -46,7 +46,10 @@ class Word2Vec_Vectorizer(Vectorizer):
             ]
             if word_vecs:
                 mean_vector = sum(word_vecs) / len(word_vecs)
-                mean_vector[mean_vector < 0] = 0  # Ensure non-negative values
+                # shift values to be non-negative
+                min_val = np.min(mean_vector)
+                if min_val < 0:
+                    mean_vector = mean_vector - min_val
                 vectors.append(mean_vector)
             else:
                 vectors.append([0] * self.vector_size)
@@ -71,7 +74,10 @@ class GloVe_Vectorizer(Vectorizer):
             token_embs = [self._vectorizer[t] for t in tokens if t in self._vectorizer]
             if token_embs:
                 mean_vector = np.mean(token_embs, axis=0)
-                mean_vector[mean_vector < 0] = 0  # Ensure non-negative values
+                # shift values to be non-negative
+                min_val = np.min(mean_vector)
+                if min_val < 0:
+                    mean_vector = mean_vector - min_val
                 vectors.append(mean_vector.tolist())
             else:
                 vectors.append([0.0] * self._vectorizer.vector_size)

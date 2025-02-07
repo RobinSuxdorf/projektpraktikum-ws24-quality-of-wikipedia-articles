@@ -1,5 +1,4 @@
 \subsubsection{Projektstruktur}
-
 Zu Beginn des Projekts arbeiteten alle Teilnehmenden explorativ in Jupyter Notebooks, um ein grundlegendes Verständnis der Daten zu entwickeln und erste Modellierungsansätze zu testen. Um konsistente Datenverarbeitung und vergleichbare Ergebnisse zu gewährleisten, wurde eine einheitliche Machine-Learning-Pipeline entwickelt.
 
 Diese Pipeline standardisiert die wesentlichen Schritte - von der Datenverarbeitung über die Modellierung bis hin zur Evaluation - und besteht aus den folgenden modularen Komponenten:
@@ -17,7 +16,14 @@ Diese Komponenten sind in einer Python-Bibliothek (\texttt{src/}) implementiert,
 Die einheitliche Struktur erleichtert die Weiterentwicklung und Wartung des Codes, da alle Pipeline-Schritte klar getrennt sind. Für detaillierte Implementierungsinformationen und Konfigurationsdetails wird auf das GitHub-Repository verwiesen.
 
 \subsubsection{Vectorizer}
-Implementierung verschiedener Vectorizer, um die Textdaten in ein Format zu bringen, das von den Modellen verarbeitet werden kann.
+Um die Textdaten in ein für die Modelle verarbeitbares Format zu bringen, wurden verschiedene Vectorizer implementiert. Diese umfassen:
 
-\subsubsection{Naive Bayes}
-Implementierung des Naive Bayes-Klassifikators.
+\begin{itemize}
+    \item \textbf{TF-IDF Vectorizer} - Verwendet den TF-IDF-Ansatz, um die Wichtigkeit von Wörtern in Dokumenten zu gewichten.
+    \item \textbf{Count Vectorizer} - Zählt die Häufigkeit von Wörtern in den Textdaten.
+    \item \textbf{Bag of Words Vectorizer} - Eine spezielle Form des Count Vectorizers, die binäre Werte verwendet, um die Präsenz von Wörtern anzuzeigen.
+    \item \textbf{Word2Vec Vectorizer} - Nutzt das Word2Vec-Modell, um Wörter in kontinuierliche Vektoren zu transformieren.
+    \item \textbf{GloVe Vectorizer} - Verwendet vortrainierte GloVe-Modelle, um Wörter in Vektoren zu transformieren.
+\end{itemize}
+
+Diese Vectorizer sind in der Python-Bibliothek (\texttt{src/vectorizer/}) implementiert und können flexibel in der Pipeline eingesetzt werden, um die besten Ergebnisse für verschiedene Anwendungsfälle zu erzielen.
