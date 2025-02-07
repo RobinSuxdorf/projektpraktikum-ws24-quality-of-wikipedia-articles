@@ -2,7 +2,6 @@
 
 import logging
 from enum import StrEnum
-from sklearn.model_selection import train_test_split
 from src.models import (
     Model,
     NaiveBayes,
@@ -10,7 +9,12 @@ from src.models import (
     MultilabelNaiveBayes,
     MultilabelNaiveBayesGridSearch,
     LinearSupportVectorMachine,
+    LinearSupportVectorMachineGridSearch,
     MultilabelLinearSupportVectorMachine,
+    SupportVectorMachine,
+    MultilabelSupportVectorMachine,
+    Logistic_Regression,
+    MultilabelLogisticRegression,
 )
 
 logger = logging.getLogger(__name__)
@@ -19,15 +23,17 @@ logger = logging.getLogger(__name__)
 class ModelType(StrEnum):
     NAIVE_BAYES = "naive_bayes"
     LINEAR_SVM = "linear_svm"
+    SVM = "svm"
+    LOGISTIC_REGRESSION = "logistic_regression"
 
 
-def train_model(features, labels, model_config: dict) -> Model:
+def train_model(x_train, y_train, model_config: dict) -> Model:
     """
     Train a machine learning model based on the provided configuration.
 
     Args:
-        features (array-like): Input features for training the model.
-        labels (array-like): Target labels corresponding to the input features.
+        x_train (array-like): Input features for training the model.
+        y_train (array-like): Target labels corresponding to the input features.
         model_config (dict): Configuration dictionary for the model.
 
     Returns:
@@ -37,12 +43,6 @@ def train_model(features, labels, model_config: dict) -> Model:
 
     model_type = model_config.get("type")
     grid_search = model_config.get("grid_search")
-    test_size = model_config.get("test_size")
-    random_state = model_config.get("random_state", None)
-
-    x_train, _, y_train, _ = train_test_split(
-        features, labels, test_size=test_size, random_state=random_state
-    )
 
     binary_classification = True if y_train.shape[1] == 1 else False
     if binary_classification:
@@ -64,11 +64,29 @@ def train_model(features, labels, model_config: dict) -> Model:
             model = MultilabelNaiveBayes(model_config)
     elif model_type == ModelType.LINEAR_SVM:
         if binary_classification:
-            logger.info("Training a binary SVM model.")
-            model = LinearSupportVectorMachine(model_config)
+            if grid_search:
+                logger.info("Training a binary Linear SVM model with grid search.")
+                model = LinearSupportVectorMachineGridSearch(model_config)
+            else:
+                logger.info("Training a binary Linear SVM model.")
+                model = LinearSupportVectorMachine(model_config)
         else:
             logger.info("Training a multilabel SVM model.")
             model = MultilabelLinearSupportVectorMachine(model_config)
+    elif model_type == ModelType.SVM:
+        if binary_classification:
+            logger.info("Training a binary SVM model.")
+            model = SupportVectorMachine(model_config)
+        else:
+            logger.info("Training a multilabel SVM model.")
+            model = MultilabelSupportVectorMachine(model_config)
+    elif model_type == ModelType.LOGISTIC_REGRESSION:
+        if binary_classification:
+            logger.info("Training a Logistic Regression model.")
+            model = Logistic_Regression(model_config)
+        else:
+            logger.info("Training a multilabel Logistic Regression model.")
+            model = MultilabelLogisticRegression(model_config)
     else:
         logger.error(
             f"Invalid model type '{model_type}'. Supported types: {[mt for mt in ModelType]}."

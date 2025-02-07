@@ -7,10 +7,12 @@ from .naive_bayes import (
 )
 from .support_vector_machine import (
     LinearSupportVectorMachine,
+    LinearSupportVectorMachineGridSearch,
     MultilabelLinearSupportVectorMachine,
     SupportVectorMachine,
     MultilabelSupportVectorMachine,
 )
+from .logistic_regression import Logistic_Regression, MultilabelLogisticRegression
 
 __all__ = [
     "Model",
@@ -19,7 +21,10 @@ __all__ = [
     "MultilabelNaiveBayes",
     "MultilabelNaiveBayesGridSearch",
     "LinearSupportVectorMachine",
+    "LinearSupportVectorMachineGridSearch",
     "MultilabelLinearSupportVectorMachine",
     "SupportVectorMachine",
     "MultilabelSupportVectorMachine",
+    "Logistic_Regression",
+    "MultilabelLogisticRegression",
 ]

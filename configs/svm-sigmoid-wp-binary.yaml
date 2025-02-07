@@ -1,0 +1,67 @@
+# configs/svm-sigmoid-binary.yaml
+
+usecase: "binary"
+start_step: "evaluation"
+
+data_loader:
+  good_file: "data/wp/good_sample.csv"
+  promo_file: "data/wp/promotional_sample.csv"
+  neutral_file: "data/wp/neutral_sample.csv"
+  label_change_frac: 0.0
+  shuffle: false
+  save: "loaded_data_wp_binary.csv"
+
+preprocessing:
+  remove_non_word: true
+  convert_lowercase: true
+  remove_stopwords: true
+  apply_stemming: false
+  remove_numbers: false
+  remove_whitespace: true
+  save: "preprocessed_data_wp_binary.csv"
+
+features:
+  type: tfidf
+  ngram_range: [1, 1]
+  max_df: 0.9
+  min_df: 0.001
+  max_features: 10_000
+  sublinear_tf: true
+  save: "features_wp_binary.pkl"
+
+model:
+  type: svm
+  test_size: 0.2
+  random_state: 42
+  grid_search: false
+  C: 1.0
+  kernel: "sigmoid"
+  save: "svm_sigmoid_wp_binary.pkl"
+
+evaluation:
+  save: "evaluation_svm_sigmoid_wp_binary.png"
+
+# 2025-02-01 14:55:35,184 - src.train - INFO - Training a binary SVM model.
+# 2025-02-01 17:28:40,151 - src.train - INFO - Model training complete.
+# 2025-02-01 17:28:40,213 - src.utils - INFO - Data saved to data/intermediary\svm_sigmoid_wp_binary.pkl.
+# 2025-02-01 17:28:40,214 - src.evaluation - INFO - Evaluating the model.
+# 2025-02-01 17:45:26,637 - src.evaluation - INFO - Accuracy: 89.67%
+# 2025-02-01 17:45:26,651 - src.evaluation - INFO - Classification Report:
+#               precision    recall  f1-score   support
+
+#            0       0.93      0.96      0.95      5942
+#            1       0.88      0.89      0.89      6060
+#            2       0.88      0.84      0.86      5998
+
+#     accuracy                           0.90     18000
+#    macro avg       0.90      0.90      0.90     18000
+# weighted avg       0.90      0.90      0.90     18000
+
+# 2025-02-01 17:45:26,655 - src.evaluation - INFO - Confusion Matrix:
+# [[5732   69  141]
+#  [ 128 5398  534]
+#  [ 327  660 5011]]
+# 2025-02-01 17:45:26,923 - src.evaluation - INFO - Evaluation finished.
+# 2025-02-01 17:45:26,984 - src.utils - INFO - Data saved to data/intermediary\evaluation_svm_sigmoid_wp_binary.png.
+# 2025-02-01 17:45:29,694 - __main__ - INFO - Pipeline completed.
+# 2025-02-01 17:45:29,695 - __main__ - INFO - Exiting with return code 0

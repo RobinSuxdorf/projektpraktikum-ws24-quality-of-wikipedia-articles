@@ -1,4 +1,4 @@
-# configs/naive-bayes-multilabel.yaml
+# configs/w2v-test.yaml
 
 usecase: "multilabel"
 # start_step: "evaluation"
@@ -18,27 +18,30 @@ preprocessing:
   save: "preprocessed_data_nbm.csv"
 
 features:
-  type: tfidf
-  ngram_range: [1, 1]
-  max_df: 1.0
-  min_df: 0.01
-  max_features: 10_000
-  sublinear_tf: true
-  save: "features_nbm.pkl"
+  type: word2vec
+  workers: 32
+  vector_size: 100
+  window: 5
+  min_count: 5
+  sg: 0
+  hs: 0
+  negative: 5
+  alpha: 0.025
+  epochs: 1
+  save: "features_w2v.pkl"
 
 model:
   type: naive_bayes
   test_size: 0.2
   random_state: 42
-  grid_search: true
-  param_grid:
-    alpha: [0.01, 0.1, 0.5, 1.0, 1.5, 2.0]
-    fit_prior: [true, false]
+  grid_search: false
+  alpha: 0.01
+  fit_prior: false
   oversampling: true
-  save: "naive_bayes_multilabel.pkl"
+  save: "nb_w2v.pkl"
 
 evaluation:
-  save: "evaluation_nbm.png"
+  save: "evaluation_w2v.png"
 # 2025-01-29 22:56:13,096 - src.evaluation - INFO - Accuracy: 36.22%
 # 2025-01-29 22:56:13,102 - src.evaluation - INFO - Classification Report:
 #               precision    recall  f1-score   support

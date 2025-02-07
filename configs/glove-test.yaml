@@ -1,0 +1,50 @@
+# configs/glove-test.yaml
+
+usecase: "multilabel"
+# start_step: "evaluation"
+
+data_loader:
+  promo_file: "data/raw/promotional.csv"
+  shuffle: false
+  save: "loaded_data_nbm.csv"
+
+preprocessing:
+  remove_non_word: true
+  convert_lowercase: true
+  remove_stopwords: true
+  apply_stemming: false
+  remove_numbers: false
+  remove_whitespace: true
+  save: "preprocessed_data_nbm.csv"
+
+features:
+  type: glove
+  model_name: "glove-wiki-gigaword-100"
+  save: "features_glove.pkl"
+
+model:
+  type: naive_bayes
+  test_size: 0.2
+  random_state: 42
+  grid_search: false
+  alpha: 0.01
+  fit_prior: false
+  oversampling: true
+  save: "nb_glove.pkl"
+
+evaluation:
+  save: "evaluation_glove.png"
+# 2025-01-29 22:53:09,007 - src.evaluation - INFO - Accuracy: 90.91%
+# 2025-01-29 22:53:09,012 - src.evaluation - INFO - Classification Report:
+#               precision    recall  f1-score   support
+#
+#            0       0.90      0.94      0.92      6044
+#            1       0.92      0.87      0.89      4780
+#
+#     accuracy                           0.91     10824
+#    macro avg       0.91      0.91      0.91     10824
+# weighted avg       0.91      0.91      0.91     10824
+#
+# 2025-01-29 22:53:09,013 - src.evaluation - INFO - Confusion Matrix:
+# [[5664  380]
+#  [ 604 4176]]
