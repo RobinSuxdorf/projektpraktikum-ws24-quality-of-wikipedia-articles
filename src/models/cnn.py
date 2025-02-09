@@ -223,8 +223,10 @@ class MultilabelCNNModel(Model):
         return predictions.cpu().tolist()
 
     def save(self, file_name: str) -> None:
-        pass
+        torch.save(self._model.state_dict(), file_name)
 
     def load(self, file_name: str) -> None:
-        pass
+        if not os.path.exists(file_name):
+            raise FileNotFoundError(f"Model file '{file_name}' does not exist.")
+        self._model.load_state_dict(torch.load(file_name, map_location=self._device))
 
