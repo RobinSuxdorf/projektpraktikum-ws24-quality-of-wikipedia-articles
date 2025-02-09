@@ -38,7 +38,7 @@ class CNN(nn.Module):
         x = self.dropout(x)
         x = self.fc(x) # (batch_size, num_classes)
 
-        return torch.sigmoid(x)
+        return x
 
 class CNNModel(Model):
     def __init__(
@@ -132,3 +132,21 @@ class CNNModel(Model):
         if not os.path.exists(file_name):
             raise FileNotFoundError(f"Model file '{file_name}' does not exist.")
         self._model.load_state_dict(torch.load(file_name, map_location=self._device))
+
+
+class MultilabelCNNModel(Model):
+    def __init__(self) -> None:
+        pass
+
+    def fit(self, features: any, labels: any) -> None:
+        pass
+
+    def predict(self, features: any) -> any:
+        pass
+
+    def save(self, file_name: str) -> None:
+        pass
+
+    def load(self, file_name: str) -> None:
+        pass
+
