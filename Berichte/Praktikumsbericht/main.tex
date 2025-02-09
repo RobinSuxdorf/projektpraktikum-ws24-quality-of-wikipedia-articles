@@ -96,7 +96,19 @@ Die Hauptziele des Projekts sind:
 \begin{itemize} \item Entwicklung von drei klassischen maschinellen Lernmodellen und einem Deep-Learning-Modell zur Klassifikation von Wikipedia-Artikeln. \item Vergleich der Modelle anhand von Leistungsmetriken wie Genauigkeit, Präzision, Recall und F1-Score. \item Identifikation des Modells mit der besten Leistung für die gegebene Aufgabe. \end{itemize}
 
 \section{Ansätze}
-Blubb
+\subsection{Logistische Regression}
+\subsubsection{Binäre Klassifikation}
+Um Artikel als \textit{„good“} oder \textit{„promotional“} zu kategorisieren, wurde eine logistische Regression mit L1-Regularisierung eingesetzt, um eine robuste Modellierung und Merkmalsselektion zu ermöglichen. Zunächst wurde der gegebene Datensatz gemäß der eingesetzten Pipeline vorverarbeitet. Zur numerischen Darstellung der Texte wurde eine \textit{TF-IDF-Vektorisierung} angewandt. Hierbei wurden verschiedene Konfigurationen getestet, darunter unterschiedliche \textit{ngram}-Bereiche und eine Begrenzung der maximalen Merkmalsanzahl. Die Daten wurden anschließend in Trainings- und Testmengen aufgeteilt.\\
+Das Modell wurde mit einer logistischen Regression mit L1-Regularisierung trainiert. Um die optimale Hyperparameter-Kombination zu finden, wurde ein \textit{GridSearchCV}-Verfahren mit Kreuzvalidierung eingesetzt. Hierbei wurden verschiedene Werte für den Regularisierungsparameter \(C\) sowie unterschiedliche \textit{ngram}-Bereiche getestet. \\
+Das trainierte Modell wurde mit Metriken wie \textit{Precision}, \textit{Recall} und \textit{F1-Score} bewertet. Um weitere Einsichten in die Artikelstruktur zu gewinnen, wurden zusätzliche Analysen durchgeführt, darunter eine Untersuchung der Häufigkeit von Sub-Labels sowie eine statistische Analyse der Wortanzahl in den Artikeln.\\
+Die Ergebnisse zeigten, dass der Ansatz zuverlässig zwischen \textit{good}- und \textit{promotional}-Artikeln unterscheiden konnte. Zudem konnten durch die L1-Regularisierung irrelevante Merkmale entfernt werden, wodurch das Modell interpretierbarer wurde.
+\subsubsection{Erweiterung durch Multilabel-Klassifikation und Datenaugmentation}
+Zusätzlich zur binären Klassifikation wurde das Problem als \textit{Multilabel-Klassifikation} betrachtet. Dabei wurde jedem Artikel eine oder mehrere Kategorien aus der Menge \textit{advert}, \textit{coi}, \textit{fanpov}, \textit{pr} und \textit{resume} zugewiesen. \\
+Zunächst wurde der Datensatz geladen und mittels \textit{TF-IDF-Vektorisierung} in numerische Features umgewandelt. Da ein Artikel mehrere Labels gleichzeitig besitzen kann, wurde ein \textit{One-vs-Rest}-Ansatz mit L1-regularisierter logistischer Regression verwendet. Das Modell wurde mit einer \textit{Train-Test-Split}-Aufteilung trainiert und mit \textit{Precision}, \textit{Recall} und \textit{F1-Score} bewertet.\\
+Da einige Klassen unterrepräsentiert waren, wurde eine Datenaugmentation durchgeführt. Dabei wurden für Artikel mit seltenen Labels durch eine \textit{Synonym-Ersetzung} neue Sätze generiert. Hierbei wurde für zufällig ausgewählte Wörter in den Texten ein Synonym aus dem \textit{WordNet}-Lexikon ersetzt. Diese augmentierten Texte wurden in den Datensatz integriert, um die Klassifikationsleistung für unterrepräsentierte Labels zu verbessern.\\
+Nach der Augmentierung wurde das Modell erneut trainiert und evaluiert. Der Vergleich der Klassifikationsberichte zeigte, dass die Verwendung der erweiterten Datenbasis zu einer Erhöhung der \textit{F1-Score} führte.\\
+Die durchgeführten Schritte führten zum Teil zu einer verbesserten Klassifikationsleistung, insbesondere für seltene Labels. Das Modell wurde anschließend in die Pipeline des Projektes eingefügt.
+
 
 \section{Experimente}
 Blubb

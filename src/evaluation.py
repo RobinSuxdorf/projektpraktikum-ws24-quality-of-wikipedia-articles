@@ -2,7 +2,13 @@
 
 import logging
 import matplotlib.pyplot as plt
-from sklearn.metrics import accuracy_score, classification_report
+from sklearn.metrics import (
+    accuracy_score,
+    classification_report,
+    confusion_matrix,
+    multilabel_confusion_matrix,
+)
+from sklearn.utils.multiclass import is_multilabel
 from src.models import Model
 
 logger = logging.getLogger(__name__)
@@ -29,6 +35,14 @@ def evaluate_model(model: Model, x_test, y_test) -> plt.Figure:
     logger.info(f"Accuracy: {accuracy:.2%}")
     report = classification_report(y_test, y_pred, zero_division=0)
     logger.info(f"Classification Report:\n{report}")
+
+    # Create and log confusion matrix
+    if is_multilabel(y_test):
+        conf_matrix = multilabel_confusion_matrix(y_test, y_pred)
+        logger.info(f"Confusion Matrix:\n{conf_matrix}")
+    else:
+        conf_matrix = confusion_matrix(y_test, y_pred)
+        logger.info(f"Confusion Matrix:\n{conf_matrix}")
 
     report = classification_report(y_test, y_pred, output_dict=True, zero_division=0)
     labels = [label for label in report if label.isdigit()]
