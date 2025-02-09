@@ -135,14 +135,92 @@ class CNNModel(Model):
 
 
 class MultilabelCNNModel(Model):
-    def __init__(self) -> None:
-        pass
+    def __init__(
+        self,
+        embedding_dim: int,
+        num_filters: int,
+        filter_sizes: list[int],
+        max_length: int,
+        dropout: float = 0.5
+    ) -> None:
+        self._tokenizer = tiktoken.get_encoding("cl100k_base")
 
-    def fit(self, features: any, labels: any) -> None:
-        pass
+        self._model = CNN(
+            self._tokenizer.n_vocab,
+            embedding_dim,
+            num_filters,
+            filter_sizes,
+            5,
+            dropout
+        )
+        self._device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+        self._model.to(self._device)
+        self._max_length = max_length
 
-    def predict(self, features: any) -> any:
-        pass
+    def _train_one_epoch(
+        self,
+        model: nn.Module,
+        train_dataloader: DataLoader,
+        criterion: nn.Module,
+        optimizer: optim.Optimizer
+    ) -> float:
+        model.train()
+        total_loss = 0.0
+        for inputs, labels in train_dataloader:
+            # Move data to the correct device.
+            inputs = inputs.to(self._device)
+            labels = labels.to(self._device).float()  # Ensure labels are float for BCEWithLogitsLoss
+            optimizer.zero_grad()
+            logits = model(inputs)
+            loss = criterion(logits, labels)
+            loss.backward()
+            optimizer.step()
+            total_loss += loss.item()
+        return total_loss / len(train_dataloader)
+
+    def fit(
+        self, 
+        articles: list[str], 
+        labels: list[list[int]],
+        learning_rate: float,
+        num_epochs: int, 
+        batch_size: int
+    ) -> None:
+
+        # Create the dataset and dataloader.
+        train_dataset = WikipediaArticleDataset(
+            articles,
+            labels,
+            self._tokenizer.encode,
+            self._max_length,
+            device=self._device
+        )
+        train_dataloader = DataLoader(train_dataset, batch_size=batch_size, shuffle=True)
+
+        # Use BCEWithLogitsLoss for multi-label classification.
+        criterion = nn.BCEWithLogitsLoss()
+        optimizer = optim.Adam(self._model.parameters(), lr=learning_rate)
+
+        for epoch in range(num_epochs):
+            avg_loss = self._train_one_epoch(self._model, train_dataloader, criterion, optimizer)
+            print(f"Epoch {epoch+1}/{num_epochs}, Loss: {avg_loss:.4f}")
+
+    def predict(self, articles: list[str]) -> list[list[int]]:
+
+        # Convert articles to tensors.
+        tensors = [
+            text_to_tensor(article, self._tokenizer.encode, self._max_length, self._device)
+            for article in articles
+        ]
+        input_batch = torch.stack(tensors)
+        self._model.eval()
+        with torch.no_grad():
+            logits = self._model(input_batch)
+            # Apply sigmoid to obtain probabilities.
+            probs = torch.sigmoid(logits)
+            # Threshold the probabilities at 0.5 to get binary predictions.
+            predictions = (probs > 0.5).int()
+        return predictions.cpu().tolist()
 
     def save(self, file_name: str) -> None:
         pass

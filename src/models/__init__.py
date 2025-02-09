@@ -14,7 +14,8 @@ from .support_vector_machine import (
 
 from .cnn import (
     CNN,
-    CNNModel
+    CNNModel,
+    MultilabelCNNModel
 )
 
 __all__ = [
@@ -27,5 +28,6 @@ __all__ = [
     "MultilabelLinearSupportVectorMachine",
     "SupportVectorMachine",
     "MultilabelSupportVectorMachine",
-    "CNN"
+    "CNN",
+    "MultulabelCNNModel",
 ]
