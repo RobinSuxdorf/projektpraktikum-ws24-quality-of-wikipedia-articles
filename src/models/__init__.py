@@ -12,11 +12,7 @@ from .support_vector_machine import (
     MultilabelSupportVectorMachine,
 )
 
-from .cnn import (
-    CNN,
-    CNNModel,
-    MultilabelCNNModel
-)
+from .cnn import CNN, CNNModel, MultilabelCNNModel
 
 __all__ = [
     "Model",

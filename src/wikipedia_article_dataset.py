@@ -3,7 +3,9 @@ import torch
 from torch.utils.data import Dataset
 
 
-def text_to_tensor(text: str, encode: Callable[[str], list[int]], max_length: int, device: torch.device) -> torch.Tensor:
+def text_to_tensor(
+    text: str, encode: Callable[[str], list[int]], max_length: int, device: torch.device
+) -> torch.Tensor:
     """
     Converts a text string into a padded tensor of token indices for model input.
 
@@ -18,14 +20,13 @@ def text_to_tensor(text: str, encode: Callable[[str], list[int]], max_length: in
     """
     encoded_article = encode(text)
 
-    encoded_article = encoded_article[: max_length]
+    encoded_article = encoded_article[:max_length]
 
     if len(encoded_article) < max_length:
         encoded_article += [0] * (max_length - len(encoded_article))
 
-    return torch.tensor(
-        encoded_article, dtype=torch.long, device=device
-    )
+    return torch.tensor(encoded_article, dtype=torch.long, device=device)
+
 
 class WikipediaArticleDataset(Dataset):
     """
@@ -86,7 +87,9 @@ class WikipediaArticleDataset(Dataset):
         article = self._articles[index]
         label = self._labels[index]
 
-        article_tensor = text_to_tensor(article, self._encode, self._max_length, self._device)
+        article_tensor = text_to_tensor(
+            article, self._encode, self._max_length, self._device
+        )
 
         label_tensor = torch.tensor(label, dtype=torch.float, device=self._device)
         return article_tensor, label_tensor
