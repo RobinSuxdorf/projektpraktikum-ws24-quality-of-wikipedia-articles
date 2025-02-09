@@ -2,6 +2,14 @@
 Nachdem alle Experminente durchgeführt und evaluiert worden sind, werden die gesammelten Erfahrungen festgehalten.
 
 \subsection{Erfolglose Versuche}
+Um gute Modelle zu finden, die die Aufgabe lösen konnten, gab es einige Versuche, die zwar vielversprechend schienen, aber in der Praxis keine erfolgreichen Ergebnisse lieferten.
+
+\subsubsection{Gram-Schmidt Verfahren zur Imitierung von Embeddings}
+Ein Gedanke, der bereits früh in der Entwicklung der Modelle auftrat, war es Embeddings zu imitieren und sie so zu erschaffen, dass es nicht notwendig ist, diese zu trainieren. Yang et al. \cite{yang2019zerotraining} hatte eine ähnliche Idee. Die Grundidee ist es, die Sätze aufzuspannen und aufgrund dessen die Ähnlichkeit zu einander zu bestimmen. Im Rahmen des Projektpraktikums wurden daher $n$ von jeder Kategorie $n$ Artikel verwendet, um die Vektoren aufzuspannen. Daraufhin wurden die Skalarprodukte zwischen den restlichen Vektoren und jedem Vektor der Orthogonalbasis bestimmt. Wenn $m$ demnach die Anzahl Kategorien beschreibt, würde das zu Werten der Dimension $m \cdot n$ führen. Diese wurden anschliessend als Eingabe der anderen Modelle verwendet. Das Problem an dieser Lösung war, dass die Resultate schlechter geworden sind, weswegen diese Lösung nicht weiter verfolgt worden ist.
+
+\subsubsection{Klassifizierung einzelner Wörter als Kodierung}
+Da die vier ersten verwendeten Ansätze zu Problemen führten, was die Multiklassenklassifikation angeht und daher der Gedanke aufkam den Kontext von Wörtern miteinzubeziehen, gab es den Gedanken, bereits einzelne Wörter zu klassifizieren und anschliessend so zu kodieren, dass ähnlich klassifizierte Wörter durch naheliegende Werte dargestellt werden. Dabei wurde das Alphabet als Lexikon verwendet und die Wörter mithilfe dieses Lexikons kodiert. Diese Kodierung wurde dann klassifiziert. Das Problem an diesem Versuch, war es dass bereits die klassifizierung der einzelnen Wörter zu schlechten Resultaten führen geführt hat, weswegen dieser Versuch an dieser Stelle nicht weiter verfolgt worden ist.
+
 
 \subsection{Ausbaumöglichkeiten}
 
