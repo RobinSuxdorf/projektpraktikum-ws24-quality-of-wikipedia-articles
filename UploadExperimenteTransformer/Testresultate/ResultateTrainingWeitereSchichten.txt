@@ -1,0 +1,139 @@
+Resultate Binäre Klassifikation
+
+Eine Extra Linear Schicht Resultate:
+Accuracy: 0.912
+Recall: 0.912
+f1_score: 0.912
+matthews_corrcoef: 0.8216667345269578
+
+Drei Extra Lineare Schichten Resultate:
+Accuracy: 0.897
+Recall: 0.897
+f1_score: 0.897
+matthews_corrcoef: 0.79310319821653
+
+Fünf Extra Linear Schicht Resultate
+Accuracy: 0.918
+Recall: 0.918
+f1_score: 0.918
+matthews_corrcoef: 0.8321213312368972
+
+Eine Extra ReLu Schicht Resultate
+Accuracy: 0.909
+Recall: 0.909
+f1_score: 0.909
+matthews_corrcoef: 0.8150010510057437
+
+
+Drei Extra ReLu Schichten Resultate
+Accuracy: 0.559
+Recall: 0.559
+f1_score: 0.559
+matthews_corrcoef: 0.0
+
+Fünf Extra ReLu Schichten Resultate
+Accuracy: 0.929
+Recall: 0.929
+f1_score: 0.929
+matthews_corrcoef: 0.8563476391979769
+
+Eine Extra Sigmoid Schicht Resultate
+Accuracy: 0.92
+Recall: 0.92
+f1_score: 0.92
+matthews_corrcoef: 0.8346645066057069
+
+Drei Extra Sigmoid Schichten Resultate
+Accuracy: 0.904
+Recall: 0.904
+f1_score: 0.904
+matthews_corrcoef: 0.8021543381944706
+
+Fünf Extra Sigmoid Schichten Resultate
+Accuracy: 0.91
+Recall: 0.91
+f1_score: 0.91
+matthews_corrcoef: 0.8166954732422692
+
+
+Multiclass Classification
+
+Eine Extra Lineare Schicht Resultate
+Accuracy: 0.574
+Recall: 0.574
+f1_score: 0.574
+matthews_corrcoef: 0.0
+
+
+Drei Extra Lineare Schichten Resultate
+Accuracy: 0.556
+Recall: 0.556
+f1_score: 0.556
+matthews_corrcoef: 0.0
+
+Fünf Extra Linear Schichten Resultate
+Accuracy: 0.807
+Recall: 0.807
+f1_score: 0.807
+matthews_corrcoef: 0.6435111505890585
+
+Eine Extra ReLu Schicht Resultate
+Accuracy: 0.555
+Recall: 0.555
+f1_score: 0.555
+matthews_corrcoef: 0.0
+
+
+Drei Extra ReLu Schichten Resultate
+Accuracy: 0.537
+Recall: 0.537
+f1_score: 0.537
+matthews_corrcoef: 0.0
+
+
+Fünf Extra ReLu Schichten Resultate
+Accuracy: 0.548
+Recall: 0.548
+f1_score: 0.548
+matthews_corrcoef: 0.0
+
+
+Eine Extra Sigmoid Schicht Resultate
+Accuracy: 0.56
+Recall: 0.56
+f1_score: 0.56
+matthews_corrcoef: 0.0
+
+
+Drei Extra Sigmoid Schichten Resultate
+Accuracy: 0.801
+Recall: 0.801
+f1_score: 0.801
+matthews_corrcoef: 0.6473168986159984
+
+
+
+Fünf Extra Sigmoid Schichten Resultate
+Accuracy: 0.57
+Recall: 0.57
+f1_score: 0.57
+matthews_corrcoef: 0.0
+
+
+
+
+Binäre Klassifikation:
+
+Drei Extra Sigmoid Schichten, the Sigmoid Activativierungsfunktion innerhalb von DistilBERT und grösseres Netz
+Accuracy: 0.918
+Recall: 0.918
+f1_score: 0.918
+matthews_corrcoef: 0.8366187240691165
+
+
+Multiklassenklassifikation:
+Drei Extra Sigmoid Schichten, the Sigmoid Activativierungsfunktion innerhalb von DistilBERT und grösseres Netz
+Accuracy: 0.577
+Recall: 0.577
+f1_score: 0.577
+matthews_corrcoef: 0.0

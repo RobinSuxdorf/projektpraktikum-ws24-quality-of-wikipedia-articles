@@ -1,0 +1,114 @@
+Test Resultate, wenn das Modell selbst geändert worden ist:
+
+Binäre Classification:
+
+Ersetzen der Aktivierungsfunction durch Sigmoid
+Accuracy: 0.917
+Recall: 0.917
+f1_score: 0.917
+matthews_corrcoef: 0.8323807433669617
+
+
+Ersetzen der Aktivierungsfunction durch Sigmoid und grösseres Netz
+Accuracy: 0.934
+Recall: 0.934
+f1_score: 0.934
+matthews_corrcoef: 0.8664089327893649
+
+Ersetzen der Aktivierungsfunction durch ReLu
+Accuracy: 0.939
+Recall: 0.939
+f1_score: 0.939
+matthews_corrcoef: 0.8788886377037142
+
+Ersetzen der Aktivierungsfunction durch ReLu und grösseres Netz
+Accuracy: 0.916
+Recall: 0.916
+f1_score: 0.916
+matthews_corrcoef: 0.8367278169448522
+
+
+Ersetzen der Aktivierungsfunction durch Linear
+Accuracy: 0.907
+Recall: 0.907
+f1_score: 0.907
+matthews_corrcoef: 0.8132670389492823
+
+
+Ersetzen der Aktivierungsfunction durch Linear und grösseres Netz
+Accuracy: 0.931
+Recall: 0.931
+f1_score: 0.931
+matthews_corrcoef: 0.8577368767054312
+
+
+
+Normal DistilBERT
+Accuracy: 0.932
+Recall: 0.932
+f1_score: 0.932
+matthews_corrcoef: 0.8630168869432007
+
+
+Normal DistilBERT bigger net
+Accuracy: 0.939
+Recall: 0.939
+f1_score: 0.939
+matthews_corrcoef: 0.8762957610563106
+
+
+
+
+Multiclass Classification:
+
+
+Ersetzen der Aktivierungsfunction durch Sigmoid
+Accuracy: 0.843
+Recall: 0.843
+f1_score: 0.843
+matthews_corrcoef: 0.7134654076176148
+
+Ersetzen der Aktivierungsfunction durch Sigmoid and bigger net
+Accuracy: 0.812
+Recall: 0.812
+f1_score: 0.812
+matthews_corrcoef: 0.6704072545561295
+
+Ersetzen der Aktivierungsfunction durch ReLu
+Accuracy: 0.828
+Recall: 0.828
+f1_score: 0.828
+matthews_corrcoef: 0.69415029073506
+
+Ersetzen der Aktivierungsfunction durch ReLu and bigger net
+Accuracy: 0.831
+Recall: 0.831
+f1_score: 0.831
+matthews_corrcoef: 0.7049454411442643
+
+
+
+Ersetzen der Aktivierungsfunction durch Linear
+Accuracy: 0.816
+Recall: 0.816
+f1_score: 0.816
+matthews_corrcoef: 0.6832749425340557
+
+Ersetzen der Aktivierungsfunction durch Linear and bigger net
+Accuracy: 0.826
+Recall: 0.826
+f1_score: 0.826
+matthews_corrcoef: 0.6967169026299257
+
+
+Normal DistilBERT
+Accuracy: 0.827
+Recall: 0.827
+f1_score: 0.827
+matthews_corrcoef: 0.6875838141838122
+
+Normal DistilBERT bigger net
+Accuracy: 0.842
+Recall: 0.842
+f1_score: 0.842
+matthews_corrcoef: 0.7083052429971666
