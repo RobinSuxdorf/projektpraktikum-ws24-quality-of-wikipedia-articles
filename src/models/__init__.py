@@ -14,6 +14,8 @@ from .support_vector_machine import (
 )
 from .logistic_regression import Logistic_Regression, MultilabelLogisticRegression
 
+from .cnn import CNNModel, MultilabelCNNModel
+
 __all__ = [
     "Model",
     "NaiveBayes",
@@ -27,4 +29,6 @@ __all__ = [
     "MultilabelSupportVectorMachine",
     "Logistic_Regression",
     "MultilabelLogisticRegression",
+    "CNNModel",
+    "MultilabelCNNModel"
 ]
