@@ -30,6 +30,7 @@ Wie man anhand des Diagramms \textbf{Auf Bild referenzieren} sehen kann, sind di
 Um ein gutes Modell zu erstellen, welches auf Maschinellem Lernen basiert, braucht man entsprechende Datensätze. Wie in Abschnitt \textbf{Referenz einfügen} besprochen worden ist, ist der ursprüngliche Datensatz nicht ausreichend, um entsprechende Modelle zu trainieren. Aus diesem Grund wurden verschiedene Methoden ausprobiert und verwendet, um den ursprünglichen Datensatz zu erweitern.
 
 \subsubsection{Datensatzerweiterung durch Wikipedia-Dump}
+\label{WPDump}
 Die naheliegendste Methode zur Erweiterung eines Datensatzes, ist das Hinzuziehen neuer Daten. Aus diesem Grund wurde der Wikipedia-Dump \textbf{Quelle hinzufügen} hinzugezogen. Dieser Datensatz ist ein offizieller Datensatz von Wikipedia, in dem alle Artikel enthalten sind. Der Dump ist für die verschiedenen Sprachversionen und in Varianten mit oder ohne Historie verfügbar. Hier wurde der Dump der englischsprachigen Wikipedia ohne Historie verwendet, der unter \url{https://dumps.wikimedia.org/enwiki/20241220/} zu finden ist. Er besteht aus zwei Dateien:
 \begin{itemize}
     \item \emph{enwiki-20241020-pages-articles-multistream.xml.bz2} (circa 22 GB komprimiert und 97 GB entpackt): Enthält eine komprimierte XML-Datei mit allen 24.091.931 Seiten und den dazugehörigen Metadaten.
