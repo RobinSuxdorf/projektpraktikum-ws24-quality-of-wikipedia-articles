@@ -22,21 +22,30 @@ Der zweite Datensatz enthielt Artikel, die als Good klassifiziert worden sind. D
 
 
 \subsection{Probleme des ursprünglichen Datensatzes}
-Wie man anhand des Diagrammes \textbf{Auf Bild referenzieren} sehen kann, sind die Daten ungleich Verteilt. Daten mit dem Label \textit{good} nehmen laut \textbf{Quelle einfügen} nur 0.59\% aller Wikipediaartikel ein. Allerdings sieht man anhand der Grafik, dass sie im Vergleich zu \textbf{Prozentsatz berechnen}. Zum einen führt das zu einem Verhältnis, dass nicht der Realität entspricht, zum anderen kann das die Ergebnisse der trainierten Modelle verschlechtern.
+Wie man anhand des Diagramms \textbf{Auf Bild referenzieren} sehen kann, sind die Daten ungleich Verteilt. Daten mit dem Label \textit{good} nehmen laut \textbf{Quelle einfügen} nur 0.59\% aller Wikipediaartikel ein. Allerdings sieht man anhand der Grafik, dass sie im Vergleich zu \textbf{Prozentsatz berechnen}. Zum einen führt das zu einem Verhältnis, dass nicht der Realität entspricht, zum anderen kann das die Ergebnisse der trainierten Modelle verschlechtern.
 
 
 
 \subsection{Weitere Daten}
-Um ein gutes Modell zu erstellen, welches auf Maschiniellem Lernen basiert, braucht man ensprechende Datensätze. Wie in Abschnitt \textbf{Referenz einfügen} besprochen worden ist, ist der ursprüngliche Datensatz nicht ausreichend, um entsprechende Modelle zu trainieren. Aus diesem Grund wurden verschiedene Methoden ausprobiert und verwendet, um den ursprünglichen Datensatz zu erweitern.
+Um ein gutes Modell zu erstellen, welches auf Maschinellem Lernen basiert, braucht man entsprechende Datensätze. Wie in Abschnitt \textbf{Referenz einfügen} besprochen worden ist, ist der ursprüngliche Datensatz nicht ausreichend, um entsprechende Modelle zu trainieren. Aus diesem Grund wurden verschiedene Methoden ausprobiert und verwendet, um den ursprünglichen Datensatz zu erweitern.
 
-
-
-
-\subsubsection{Datensatzerweiterung durch Wikimedia Dump}
-Die naheliegenste Methode zur Erweiterung eines Datensatzes, ist das Hinzuziehen neuer Daten. Aus diesem Grund wurde der Wikimedia Dump \textbf{Quelle hinzufügen} hinzugezogen. Dieser Datensatz ist ein offizieller Datensatz von Wikipedia, in dem Artikel enthalten sind, die durch Wikipedia rausgefiltert worden sind. Dadurch konnten \textbf{Anzahl ergänzen} Datensätze hinzugezogen werden. Diese waren \textit{promotional} Datensätze. In Abschnitt \textbf{Referenz ergänzen} wird erklärt, wie die Datensätze eingelesen worden sind und in das richtige Format gebracht worden sind.
+\subsubsection{Datensatzerweiterung durch Wikipedia-Dump}
+Die naheliegendste Methode zur Erweiterung eines Datensatzes, ist das Hinzuziehen neuer Daten. Aus diesem Grund wurde der Wikipedia-Dump \textbf{Quelle hinzufügen} hinzugezogen. Dieser Datensatz ist ein offizieller Datensatz von Wikipedia, in dem alle Artikel enthalten sind. Der Dump ist für die verschiedenen Sprachversionen und in Varianten mit oder ohne Historie verfügbar. Hier wurde der Dump der englischsprachigen Wikipedia ohne Historie verwendet, der unter \url{https://dumps.wikimedia.org/enwiki/20241220/} zu finden ist. Er besteht aus zwei Dateien:
+\begin{itemize}
+    \item \emph{enwiki-20241020-pages-articles-multistream.xml.bz2} (circa 22 GB komprimiert und 97 GB entpackt): Enthält eine komprimierte XML-Datei mit allen 24.091.931 Seiten und den dazugehörigen Metadaten.
+    \item \emph{enwiki-20241020-pages-articles-multistream-index.txt.bz2} (circa 250 MB komprimiert und 1 GB entpackt): Enthält eine Index-Datei mit 240953 Offsets in der komprimierten XML-Datei zwischen denen jeweils 100 Seiten liegen.
+\end{itemize}
+Mithilfe eines Python-Programms wurden alle Artikel aus dem Dump verarbeitet und in drei Kategorien aufgeteilt: \emph{good}, \emph{promo} und \emph{neutral}. Dabei sind die ersten beiden wie zuvor im Kaggle-Datensatz zu verstehen und \emph{neutral} enthält alle Artikel, die in keine der beiden anderen Kategorien fallen. Außerdem wurden alle Seiten ausgeschlossen, die keine Artikel darstellen, darunter Begriffsklärungsseiten, Umleitungen, Kategorien, Benutzerseiten und weitere Namensräume. Aufgrund der Größe des Dumps konnte dieser nicht komplett in den Arbeitsspeicher geladen werden. Unter Nutzung der in der Index-Datei gespeicherten Offsets wurden daher jeweils einzelne Abschnitte von 100 Seiten entpackt und verarbeitet. Gute Artikel wurden anhand der darin vorhandenen Templates \textit{\{\{\{good article\}\}} und \textit{\{\{\{featured article\}\}} erkannt, bei den werbenden Artikeln waren inklusive Aliasen 21 Templates zu identifizieren. Die erkannten Templates sowie alle Zeilenumbrüche wurden aus dem Artikeltext entfernt, ansonsten wurde er unverändert übernommen. Anhand von Stichproben wurde manuell verifiziert, dass die Artikel korrekt kategorisiert wurden. Insgesamt ergab sich die folgende Aufteilung:
+\begin{itemize}
+    \item \emph{good}: 46.882
+    \item \emph{promo}: 32.633
+    \item \emph{neutral}: 6.611.303
+    \item \emph{skipped}: 17.401.113
+\end{itemize}
+Die kategorisierten Artikel wurden ähnlich dem Kaggle-Datensatz in CSV-Dateien geschrieben, deren Zeilen neben dem Text die Seiten-ID und den Titel enthalten sowie bei \emph{promo} noch die oben genannten Label. Da die Kategorien extrem ungleich verteilt sind (neutrale Artikel etwa um einen Faktor 200 häufiger als werbende), wurde anschließend mittels \textit{Reservoir Sampling} noch eine zufällige Auswahl der Artikel in weitere CSV-Dateien geschrieben, um jeweils gleich viele Samples der drei Kategorien zu erhalten. Auf dieser Auswahl konnten dann wie beim Kaggle-Datensatz die verschiedenen Lernverfahren trainiert werden.
 
 \subsubsection{Augmentierung der Daten}
-Da es nicht sicher ist, ob der Wikimedia Dump das Problem volkommen lösen kann, wurde neben dem Hinzuziehen weiterer Daten auch versucht die Daten zu Augmentieren. Dabei sollten besonders untervetretene Klassen mehr Repräsentanten kriegen. Dabei wurden verschiedene Methoden ausprobiert, um die Daten zu Augmentieren. Diese Methoden werden in \textbf{Referenz ergänzen} vorgestellt.
+Da es nicht sicher ist, ob der Wikimedia Dump das Problem vollkommen lösen kann, wurde neben dem Hinzuziehen weiterer Daten auch versucht die Daten zu Augmentieren. Dabei sollten besonders untervetretene Klassen mehr Repräsentanten kriegen. Dabei wurden verschiedene Methoden ausprobiert, um die Daten zu Augmentieren. Diese Methoden werden in \textbf{Referenz ergänzen} vorgestellt.
 
 \subsection{Problemdefinition}
 Das Ziel dieses Projekts ist die Entwicklung von Modellen zur automatisierten Klassifikation von Wikipedia-Artikeln als \emph{promotional} (werblich) oder \emph{nicht-promotional}. Dabei wird ebenfalls klassifiziert, wie ein Artikel Promotional ist, also z.B. ob er eine Werbung, ein PR-Artikel usw. ist. Wikipedia strebt nach objektiven und neutralen Inhalten; daher ist die Identifizierung von Artikeln mit werbenden Charakter von großer Bedeutung, um die sachliche Qualität der Plattform zu gewährleisten.
