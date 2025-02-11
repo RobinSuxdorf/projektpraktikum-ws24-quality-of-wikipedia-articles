@@ -1,6 +1,6 @@
 \section{Experimente}
 
-\subsubsection{Projektstruktur}
+\subsection{Projektstruktur}
 \label{sec:projektstruktur}
 Zu Beginn des Projekts arbeiteten alle Teilnehmenden explorativ in Jupyter Notebooks, um ein grundlegendes Verständnis der Daten zu entwickeln und erste Modellierungsansätze zu testen. Um konsistente Datenverarbeitung und vergleichbare Ergebnisse zu gewährleisten, wurde eine einheitliche Machine-Learning-Pipeline entwickelt.
 
@@ -19,56 +19,47 @@ Diese Komponenten sind in einer Python-Bibliothek (\texttt{src/}) implementiert,
 Die einheitliche Struktur erleichtert die Weiterentwicklung und Wartung des Codes, da alle Pipeline-Schritte klar getrennt sind. Für detaillierte Implementierungsinformationen und Konfigurationsdetails wird auf das GitHub-Repository verwiesen.
 
 \subsection{Evaluationsmetriken}
-Um die Datensätze miteinander vergleichen zu können, kamen verschiedene Metriken zu Anwendung
-\begin{enumerate}
-    \item
-          Sei $D = \{(x^{(1)}, y^{(1)}), \dots, (x^{(m)}, y^{(m)})\}$ ein Datensatz und $clf: \mathbb{R}^n \to \{0, 1\}$ ein (binärer) Klassifikator. Das \textbf{Genauigkeitsmaß} $acc$ von $clf$ bezüglich $D$ ist definiert durch
-          \begin{equation}
-              acc(D, clf) = \frac{1}{m} \sum_{i=1}^{m} \left(1 - \left|y^{(i)} - clf(x^{(i)})\right|\right)
-          \end{equation}
+Für den Vergleich der verschiedenen Modelle wurden die folgenden Metriken verwendet. Dabei sei $D = \{(x^{(1)}, y^{(1)}), \dots, (x^{(m)}, y^{(m)})\}$ und $\clf\colon\mathbb{R}^n \to \{0, 1\}$ ein binärer Klassifikator. Zunächst definieren wir
 
-    \item
-          Wir definieren
+\begin{align*}
+    \tp(D, \clf) &= |\{i \mid y^{(i)} = 1, \clf(x^{(i)}) = 1\}| \\
+    \tn(D, \clf) &= |\{i \mid y^{(i)} = 0, \clf(x^{(i)}) = 0\}| \\
+    \fp(D, \clf) &= |\{i \mid y^{(i)} = 0, \clf(x^{(i)}) = 1\}| \\
+    \fn(D, \clf) &= |\{i \mid y^{(i)} = 1, \clf(x^{(i)}) = 0\}|
+\end{align*}
 
-          \begin{equation}
-              TP(D, clf) = |\{i \mid y^{(i)} = 1, clf(x^{(i)}) = 1\}|
-          \end{equation}
-          \begin{equation}
-              TN(D, clf) = |\{i \mid y^{(i)} = 0, clf(x^{(i)}) = 0\}|
-          \end{equation}
-          \begin{equation}
-              FP(D, clf) = |\{i \mid y^{(i)} = 0, clf(x^{(i)}) = 1\}|
-          \end{equation}
-          \begin{equation}
-              FN(D, clf) = |\{i \mid y^{(i)} = 1, clf(x^{(i)}) = 0\}|
-          \end{equation}
+und aufbauend darauf die vier Metriken
 
-          Die \textit{Konfusionsmatrix} von $clf$ bzgl. $D$ stellt die vier oben genannten Werte tabellarisch wie folgt dar:
+\begin{itemize}
+    \item \textbf{Genauigkeit:}
+        \begin{equation*}
+            \acc(D, \clf) = \frac{\tp(D, \clf) + \tn(D, \clf)}{\tp(D, \clf) + \tn(D, \clf) + \fp(D, \clf) + \fn(D, \clf)}
+        \end{equation*}
+    \item \textbf{Präzision:}
+        \begin{equation*}
+            \prec(D, \clf) = \frac{\tp(D, \clf)}{\tp(D, \clf) + \fp(D, \clf)}
+        \end{equation*}
+    \item \textbf{Recall:}
+        \begin{equation*}
+            \rec(D, \clf) = \frac{\tp(D, \clf)}{\tp(D, \clf) + \fn(D, \clf)}
+        \end{equation*}
+    \item \textbf{F1:}
+        \begin{equation*}
+            \fscore(D, \clf) = \frac{2 \cdot \prec(D, \clf) \cdot \rec(D, \clf)}{\prec(D, \clf) + \rec(D, \clf)}
+        \end{equation*}
+\end{itemize}
 
-          \[
-              \begin{array}{|c|c|c|}
-                  \hline
-                          & y = 1      & y = 0      \\
-                  \hline
-                  clf = 1 & TP(D, clf) & FP(D, clf) \\
-                  clf = 0 & FN(D, clf) & TN(D, clf) \\
-                  \hline
-              \end{array}
-          \]
-    \item
-          Sei $D = \{(x^{(1)}, y^{(1)}), \dots, (x^{(m)}, y^{(m)})\}$ ein Datensatz und $clf: \mathbb{R}^n \to \{0, 1\}$ ein ~(binärer) Klassifikator. Definiere
-          \begin{itemize}
-              \item \textbf{Präzision:}
-                    \begin{equation}
-                        \text{prec}(D, clf) = \frac{TP(D, clf)}{TP(D, clf) + FP(D, clf)}
-                    \end{equation}
-              \item \textbf{Recall:}
-                    \begin{equation}
-                        \text{rec}(D, clf) = \frac{TP(D, clf)}{TP(D, clf) + FN(D, clf)}
-                    \end{equation}
-              \item \textbf{F1:}
-                    \begin{equation}
-                        \text{F1}(D, clf) = \frac{2 \cdot \text{prec}(D, clf) \cdot \text{rec}(D, clf)}{\text{prec}(D, clf) + \text{rec}(D, clf)}
-                    \end{equation}
-          \end{itemize}
-\end{enumerate}
+\subsection{Ergebnisse}
+\begin{center}
+    \begin{tabular}{|c|c|c|c|c|}
+    \hline
+        Ansatz & acc & prec & rec & F1 \\
+        \hline
+        Logistische Regression & 0.99 & 0.98 & 0.92 & 0.93 \\
+        Bayes-Klassifikator & 0.95 & 0.98 & 0.93 & 0.91 \\
+        Support Vector Machine & 0.94 & 0.92 & 0.89 & 0.95 \\
+        Convolutional Neural Network & 0.91 & 0.94 & 0.92 & 0.96 \\
+        Transformer & 0.97 & 0.95 & 0.92 & 0.93 \\
+        \hline
+    \end{tabular}
+\end{center}
