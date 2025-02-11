@@ -1,21 +1,13 @@
-\subsubsection{Projektstruktur}
-Zu Beginn des Projekts arbeiteten alle Teilnehmenden explorativ in Jupyter Notebooks, um ein grundlegendes Verständnis der Daten zu entwickeln und erste Modellierungsansätze zu testen. Um konsistente Datenverarbeitung und vergleichbare Ergebnisse zu gewährleisten, wurde eine einheitliche Machine-Learning-Pipeline entwickelt.
-
-Diese Pipeline standardisiert die wesentlichen Schritte - von der Datenverarbeitung über die Modellierung bis hin zur Evaluation - und besteht aus den folgenden modularen Komponenten:
-
-\begin{itemize}
-    \item \textbf{DataLoader} - Laden und Zusammenführen der Daten
-    \item \textbf{Preprocessing} - Vorverarbeitung der Textdaten (z.B. Entfernen von Stopwörtern)
-    \item \textbf{Feature Extraction} - Extraktion von Merkmalen (z.B. mittels TF-IDF oder GloVe-Vectorizer)
-    \item \textbf{Model} - Training und Hyperparameter-Optimierung
-    \item \textbf{Evaluator} - Auswertung der Modellergebnisse
-\end{itemize}
-
-Diese Komponenten sind in einer Python-Bibliothek (\texttt{src/}) implementiert, sodass sie sowohl eigenständig als auch in Jupyter Notebooks eingesetzt werden können. Die Pipeline wird über YAML-Konfigurationsdateien gesteuert, die alle relevanten Einstellungen wie Dateipfade, Vorverarbeitungsschritte, Modellparameter und Evaluationskriterien beinhalten. Dadurch ist eine flexible Anpassung an unterschiedliche Use-Cases möglich. Zudem können einzelne Pipeline-Schritte partiell ausgeführt werden - etwa kann die Feature Extraction aus vorherigen Läufen geladen werden, um ausschließlich das Modell mit variierenden Parametern zu trainieren.
-
-Die einheitliche Struktur erleichtert die Weiterentwicklung und Wartung des Codes, da alle Pipeline-Schritte klar getrennt sind. Für detaillierte Implementierungsinformationen und Konfigurationsdetails wird auf das GitHub-Repository verwiesen.
+Recherche zur Na\"{i}ve Bayes Klassifikation und zu Vectorizern \\
+Implementierter Code in \texttt{main.py}, \texttt{src/data\_loader.py}, \texttt{src/preprocessing.py}, \texttt{src/features.py}, \texttt{src/train.py}, \texttt{src/evaluation.py}, \texttt{src/utils.py}, \texttt{src/vectorizer/*} sowie \texttt{src/models/naive\_bayes.py} \\
+Pairprogramming in \texttt{src/models/base.py}, \texttt{src/models/logistic\_regression.py} und \texttt{src/models/support\_vector\_machine.py} \\
+Dokumentation in \texttt{README.md} \\
+Unterst\"{u}tzung bei Merge-Konflikten im Laufe des Projektes \\
+Folien zur Zwischenpr\"{a}sentation zu Datenvorverarbeitung und dem Bayes Klassifikator \\
+Berichtsteile: \ref{sec:Sebastian}, \ref{sec:Bayes-Klassifikator}, \ref{sec:vectorizer}, \ref{sec:projektstruktur}
 
 \subsubsection{Vectorizer}
+\label{sec:vectorizer}
 Um die Textdaten in ein für die Modelle verarbeitbares Format zu bringen, wurden verschiedene Vectorizer implementiert. Diese umfassen:
 
 \begin{itemize}

@@ -21,12 +21,10 @@
     args/.style={circle, minimum size=0.9cm,draw=black, thick,fill=white},
 }
 
-
 %%%% Author and Title Information %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \author{Robin Suxdorf \and Sebastian Bunge \and Johannes Krämer \and Emmanuelle Steenhof \and Alexander Kunze}
 
 \title{Web Science - Die Qualität von Wikipedia-Artikeln}
-
 
 %%%% Abstract %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -34,21 +32,13 @@
 Erstmal nur ein Draft. Inhalte werden weiter abgestimmt. 
 }
 
-% use this if the document is written in english
-%\englishabstract{}
-
-
 \begin{document}
 
 \maketitle % prints title and author information, as well as the abstract 
 
-
 % ===================== Beginning of the actual text section =====================
 
 \section{Einleitung}
-
-
-
 \input{Sections/Einleitung}
 
 \section{Aufgabenverteilung}
@@ -56,6 +46,7 @@ Erstmal nur ein Draft. Inhalte werden weiter abgestimmt.
 \input{Sections/Aufgabenverteilung}
 
 \subsection{Sebastian}
+\label{sec:Sebastian}
 \input{Sections/AnteilSebastian}
 
 \subsection{Johannes}
@@ -80,38 +71,32 @@ Erstmal nur ein Draft. Inhalte werden weiter abgestimmt.
 \label{Datensatz}
 \input{Sections/Datensatz}
 
-
-
 \section{Ansätze}
 \label{Ansätze}
 %https://shelf.io/blog/18-effective-nlp-algorithms-you-need-to-know/
 Nachdem die passende Problemstellung festgestellt worden ist, war die nächste Aufgabe die passenden Ansätze zu auszuwählen. Dabei wurden im Rahmen des Projektpraktikum drei klassische Lernverfahren verwendet und ein Deep Learning Ansatz. Aufbauend auf diesen wurde ein 5. Ansatz konzipiert, der als Ziel hatte, die Schwächen der vorherigen Ansätze zu beheben. Im folgenden werden diese 5 Ansätze vorgestellt und anschliessend wird erklärt welche weiteren Techniken, besonders in Bezug auf Datenvorarbeitung und Datensatzergänzung verwendet worden sind.
 
 \subsection{Bayes-Klassifikator}
-\label{Bayes-Klassifikator}
+\label{sec:Bayes-Klassifikator}
 \input{Sections/BayesKlassifikator}
 
 \subsection{Support Vector Machine}
 \label{SVM}
-\input{Sections/SVM} 
-
-
+\input{Sections/SVM}
 
 \subsection{Logistische Regression}
 \label{Logistische Regression}
-\input{Sections/LogistischeRegression} 
-
-
+\input{Sections/LogistischeRegression}
 
 \subsection{Convolutional Neural Network}
 \label{CNN}
-\input{Sections/CNN} 
+\input{Sections/CNN}
 %Als Deep Learning Verfahren wurden Convolutional Neural Networks (CNN) verwendet. Zunächst war die Idee ein Neuronales Netz mit Rückkoppelung zu verwenden. Da das aber zu schlechten Ergebnissen führte wurden versuche mit einem Convolutional Neural Network gestartet. Diese hatten einen grösseren Erfolg, was dazu geführt hat, dass diese weiter als Ansatz verwendet worden sind.
 
 \subsection{Fünfter Ansatz}
 \label{Transformer}
 
-\input{Sections/EigenerAnsatz} 
+\input{Sections/EigenerAnsatz}
 
 %\subsection{Vortrainierte Transformer Modelle}
 %Für die verwendete Methode wurden Vortrainierte Transformer Modelle verwendet. Dabei wurden verschiedene Transformer betrachtet. 
@@ -124,7 +109,6 @@ Nachdem die passende Problemstellung festgestellt worden ist, war die nächste A
 
 \input{Sections/Ausblick}
 \label{Ausblick}
-
 
 \input{Sections/ZusammenfassungUndFazit}
 
