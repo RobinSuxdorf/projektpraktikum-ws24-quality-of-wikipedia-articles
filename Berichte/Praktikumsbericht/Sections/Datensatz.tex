@@ -1,5 +1,5 @@
 
-Bevor die Modellbildung starten konnte, mussten zunächst die Bedingungen geklärt werden. D.h. der Datensatz musste Analysiert werden und eine entsprechende Problemstellung identifiziert werden. Im folgenden wird zunächst der ursprüngliche Datensatz beschrieben und anschliessend erklärt wie dieser in Laufe des Projekts ausgebaut und ergänzt wird. Danach wird daraus abgeleitete Problemstellung erläutert.
+Bevor die Modellbildung starten konnte, mussten zunächst die Bedingungen geklärt werden. Das bedeutet, dass der Datensatz analysiert werden musste und eine entsprechende Problemstellung identifiziert werden musste. Im Folgenden wird zunächst der ursprüngliche Datensatz beschrieben und anschliessend erklärt, wie dieser in Laufe des Projekts ausgebaut und ergänzt wird. Danach wird die daraus abgeleitete Problemstellung erläutert.
 
 \subsection{Ursprünglicher Datensatz}
 %Erter Satz geändert
@@ -22,7 +22,7 @@ Der zweite Datensatz enthielt Artikel, die als Good klassifiziert worden sind. D
 
 
 \subsection{Probleme des ursprünglichen Datensatzes}
-Wie man anhand des Diagramms \textbf{Auf Bild referenzieren} sehen kann, sind die Daten ungleich Verteilt. Daten mit dem Label \textit{good} nehmen laut \textbf{Quelle einfügen} nur 0.59\% aller Wikipediaartikel ein. Allerdings sieht man anhand der Grafik, dass sie im Vergleich zu \textbf{Prozentsatz berechnen}. Zum einen führt das zu einem Verhältnis, dass nicht der Realität entspricht, zum anderen kann das die Ergebnisse der trainierten Modelle verschlechtern.
+Wie man anhand des Diagramms \textbf{Auf Bild referenzieren} sehen kann, sind die Daten ungleich verteilt. Daten mit dem Label \textit{good} nehmen laut \textbf{Quelle einfügen} nur 0.59\% aller Wikipediaartikel ein. Allerdings sieht man anhand der Grafik, dass sie im Vergleich zu \textbf{Prozentsatz berechnen}. Zum einen führt das zu einem Verhältnis, das nicht der Realität entspricht, zum anderen kann das die Ergebnisse der trainierten Modelle verschlechtern.
 
 
 
@@ -46,10 +46,10 @@ Mithilfe eines Python-Programms wurden alle Artikel aus dem Dump verarbeitet und
 Die kategorisierten Artikel wurden ähnlich dem Kaggle-Datensatz in CSV-Dateien geschrieben, deren Zeilen neben dem Text die Seiten-ID und den Titel enthalten sowie bei \emph{promo} noch die oben genannten Label. Da die Kategorien extrem ungleich verteilt sind (neutrale Artikel etwa um einen Faktor 200 häufiger als werbende), wurde anschließend mittels \textit{Reservoir Sampling} noch eine zufällige Auswahl der Artikel in weitere CSV-Dateien geschrieben, um jeweils gleich viele Samples der drei Kategorien zu erhalten. Auf dieser Auswahl konnten dann wie beim Kaggle-Datensatz die verschiedenen Lernverfahren trainiert werden.
 
 \subsubsection{Augmentierung der Daten}
-Da es nicht sicher ist, ob der Wikimedia Dump das Problem vollkommen lösen kann, wurde neben dem Hinzuziehen weiterer Daten auch versucht die Daten zu Augmentieren. Dabei sollten besonders untervetretene Klassen mehr Repräsentanten kriegen. Dabei wurden verschiedene Methoden ausprobiert, um die Daten zu Augmentieren. Diese Methoden werden in \textbf{Referenz ergänzen} vorgestellt.
+Da es nicht sicher ist, ob der Wikimedia Dump das Problem vollkommen lösen kann, wurde neben dem Hinzuziehen weiterer Daten auch versucht die Daten zu Augmentieren. Dabei sollten besonders untervetretene Klassen mehr Repräsentanten kriegen. Dabei wurden verschiedene Methoden ausprobiert, um die Daten zu augmentieren. Diese Methoden werden in \textbf{Referenz ergänzen} vorgestellt.
 
 \subsection{Problemdefinition}
-Das Ziel dieses Projekts ist die Entwicklung von Modellen zur automatisierten Klassifikation von Wikipedia-Artikeln als \emph{promotional} (werblich) oder \emph{nicht-promotional}. Dabei wird ebenfalls klassifiziert, wie ein Artikel Promotional ist, also z.B. ob er eine Werbung, ein PR-Artikel usw. ist. Wikipedia strebt nach objektiven und neutralen Inhalten; daher ist die Identifizierung von Artikeln mit werbenden Charakter von großer Bedeutung, um die sachliche Qualität der Plattform zu gewährleisten.
+Das Ziel dieses Projekts ist die Entwicklung von Modellen zur automatisierten Klassifikation von Wikipedia-Artikeln als \emph{promotional} (werblich) oder \emph{nicht-promotional}. Dabei wird ebenfalls klassifiziert, wie ein Artikel promotional ist, also z.B. ob er eine Werbung, ein PR-Artikel usw. ist. Wikipedia strebt nach objektiven und neutralen Inhalten; daher ist die Identifizierung von Artikeln mit werbenden Charakter von großer Bedeutung, um die sachliche Qualität der Plattform zu gewährleisten.
 
 \subsection{Zielsetzung}
 
