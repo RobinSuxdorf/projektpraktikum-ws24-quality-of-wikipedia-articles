@@ -126,7 +126,7 @@
 
 % Command for creating bibliography
 \newcommand{\addreferences}{
-    \bibliographystyle{plain}
+    \bibliographystyle{alpha}
     \bibliography{references}
 }
 
