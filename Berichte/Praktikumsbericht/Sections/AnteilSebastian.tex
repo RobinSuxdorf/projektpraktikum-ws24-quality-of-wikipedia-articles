@@ -1,21 +1,4 @@
-Recherche zur Na\"{i}ve Bayes Klassifikation und zu Vectorizern \\
-Implementierter Code in \texttt{main.py}, \texttt{src/data\_loader.py}, \texttt{src/preprocessing.py}, \texttt{src/features.py}, \texttt{src/train.py}, \texttt{src/evaluation.py}, \texttt{src/utils.py}, \texttt{src/vectorizer/*} sowie \texttt{src/models/naive\_bayes.py} \\
-Pairprogramming in \texttt{src/models/base.py}, \texttt{src/models/logistic\_regression.py} und \texttt{src/models/support\_vector\_machine.py} \\
-Dokumentation in \texttt{README.md} \\
-Unterst\"{u}tzung bei Merge-Konflikten im Laufe des Projektes \\
-Folien zur Zwischenpr\"{a}sentation zu Datenvorverarbeitung und dem Bayes Klassifikator \\
-Berichtsteile: \ref{sec:Sebastian}, \ref{sec:Bayes-Klassifikator}, \ref{sec:vectorizer}, \ref{sec:projektstruktur}
+\subsection{Sebastian Bunge}
+\label{sec:sebastian}
 
-\subsubsection{Vectorizer}
-\label{sec:vectorizer}
-Um die Textdaten in ein für die Modelle verarbeitbares Format zu bringen, wurden verschiedene Vectorizer implementiert. Diese umfassen:
-
-\begin{itemize}
-    \item \textbf{TF-IDF Vectorizer} - Verwendet den TF-IDF-Ansatz, um die Wichtigkeit von Wörtern in Dokumenten zu gewichten.
-    \item \textbf{Count Vectorizer} - Zählt die Häufigkeit von Wörtern in den Textdaten.
-    \item \textbf{Bag of Words Vectorizer} - Eine spezielle Form des Count Vectorizers, die binäre Werte verwendet, um die Präsenz von Wörtern anzuzeigen.
-    \item \textbf{Word2Vec Vectorizer} - Nutzt das Word2Vec-Modell, um Wörter in kontinuierliche Vektoren zu transformieren.
-    \item \textbf{GloVe Vectorizer} - Verwendet vortrainierte GloVe-Modelle, um Wörter in Vektoren zu transformieren.
-\end{itemize}
-
-Diese Vectorizer sind in der Python-Bibliothek (\texttt{src/vectorizer/}) implementiert und können flexibel in der Pipeline eingesetzt werden, um die besten Ergebnisse für verschiedene Anwendungsfälle zu erzielen.
+Sebastian Bunge f\"uhrte die Recherche zum Bayes-Klassifikator und zu Vectorizern durch, auf deren Basis er eine modulare Projektstruktur - die sogenannte "Pipeline"\ - konzipierte und implementierte. Er realisierte zentrale Module f\"ur die Datenvorverarbeitung, Feature-Extraktion mittels Vektorraumrepr\"asentation sowie Evaluationsmethoden und entwickelte den Bayes-Klassifikator. Zudem trug er zur Code-Dokumentation (\texttt{README.md}) bei, unterst\"utzte das Team bei der Integration weiterer Ans\"atze in die Pipeline und half bei Merge-Konflikten. Seine vorbereiteten Folien zu "Datenvorverarbeitung"\ und "Bayes-Klassifikator"\ sowie seine Beitr\"age in den Berichtsteilen \ref{sec:sebastian}, \ref{sec:vorverarbeitung}, \ref{sec:vectorizer}, \ref{sec:bayes-klassifikator}, und \ref{sec:projektstruktur} dokumentieren seinen Anteil am Projektpraktikum.

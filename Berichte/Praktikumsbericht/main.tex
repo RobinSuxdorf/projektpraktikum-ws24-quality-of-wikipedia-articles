@@ -10,6 +10,7 @@
 \usepackage{amsthm}                         % Nutzung von Definition
 \usepackage{hyperref}                       % Zeilenumbruch in URL
 \usepackage{xurl}                           % Nach hyperref laden
+\usepackage{microtype}                      % Verbessert den Blocksatz und verhindert overfull \hbox
 
 %%%% optional packages
 \usepackage{tikz}                           % creating graphs and other structures
@@ -34,9 +35,9 @@
 \newcommand{\fscore}{\operatorname{F1}}
 
 %%%% Author and Title Information %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\author{Robin Suxdorf \and Sebastian Bunge \and Johannes Krämer \and Emmanuelle Steenhof \and Alexander Kunze}
+\author{Robin Suxdorf \and Sebastian Bunge \and Johannes Kr\"amer \and Emmanuelle Steenhof \and Alexander Kunze}
 
-\title{Web Science - Die Qualität von Wikipedia-Artikeln}
+\title{Web Science - Die Qualit\"at von Wikipedia-Artikeln}
 
 %%%% Abstract %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -57,11 +58,9 @@ Erstmal nur ein Draft. Inhalte werden weiter abgestimmt.
 \label{Aufgabenverteilung}
 \input{Sections/Aufgabenverteilung}
 
-\subsection{Sebastian Bunge}
-\label{sec:Sebastian}
 \input{Sections/AnteilSebastian}
 
-\subsection{Johannes Krämer}
+\subsection{Johannes Kr\"amer}
 \input{Sections/AnteilJohannes}
 
 \subsection{Alexander Kunze}
@@ -83,13 +82,18 @@ Erstmal nur ein Draft. Inhalte werden weiter abgestimmt.
 \label{Datensatz}
 \input{Sections/Datensatz}
 
-\section{Ansätze}
-\label{Ansätze}
-%https://shelf.io/blog/18-effective-nlp-algorithms-you-need-to-know/
-Nachdem die passende Problemstellung festgestellt worden ist, war die nächste Aufgabe die passenden Ansätze zu auszuwählen. Dabei wurden im Rahmen des Projektpraktikum drei klassische Lernverfahren verwendet und ein Deep Learning Ansatz. Aufbauend auf diesen wurde ein 5. Ansatz konzipiert, der als Ziel hatte, die Schwächen der vorherigen Ansätze zu beheben. Im folgenden werden diese 5 Ansätze vorgestellt und anschliessend wird erklärt welche weiteren Techniken, besonders in Bezug auf Datenvorarbeitung und Datensatzergänzung verwendet worden sind.
+\section{Ans\"atze}
+\label{sec:Ansaetze}
+Nachdem die Problemstellung identifiziert wurde, bestand die n\"achste Aufgabe darin, geeignete Ans\"atze auszuw\"ahlen. Im Rahmen des Projektpraktikums wurden drei klassische Lernverfahren sowie ein Deep-Learning-Ansatz eingesetzt. Aufbauend auf diesen Ans\"atzen wurde ein f\"unfter Ansatz entwickelt, der gezielt die Schw\"achen der vorangegangenen Verfahren beheben sollte. Im Folgenden wird erl\"autert, welche Techniken hinsichtlich der Vorverarbeitung, Augmentation und Repr\"asentation der Daten eingesetzt wurden. Anschließend werden die verwendeten Machine-Learning- und Deep-Learning-Ans\"atze vorgestellt.
 
-\subsection{Bayes-Klassifikator}
-\label{sec:Bayes-Klassifikator}
+\input{Sections/Vorverarbeitung}
+
+\subsection{Augmentation}
+\label{sec:Augmentation}
+% SB: Ich sehe an mehreren Stellen, dass wir die Augmentation erwähnen, an anderen wird sie als Ausblick genannt. Wollen wir dafür hier eine eigene Sektion machen?
+
+\input{Sections/Vectorizer}
+
 \input{Sections/BayesKlassifikator}
 
 \subsection{Support Vector Machine}
@@ -105,9 +109,8 @@ Nachdem die passende Problemstellung festgestellt worden ist, war die nächste A
 \input{Sections/CNN}
 %Als Deep Learning Verfahren wurden Convolutional Neural Networks (CNN) verwendet. Zunächst war die Idee ein Neuronales Netz mit Rückkoppelung zu verwenden. Da das aber zu schlechten Ergebnissen führte wurden versuche mit einem Convolutional Neural Network gestartet. Diese hatten einen grösseren Erfolg, was dazu geführt hat, dass diese weiter als Ansatz verwendet worden sind.
 
-\subsection{Fünfter Ansatz}
+\subsection{F\"unfter Ansatz}
 \label{Transformer}
-
 \input{Sections/EigenerAnsatz}
 
 %\subsection{Vortrainierte Transformer Modelle}
