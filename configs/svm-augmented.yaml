@@ -1,13 +1,13 @@
-# configs/svm-multilabel.yaml
+# configs/svm-augmented.yaml
 
 usecase: "multilabel"
 start_step: "model"
 
 data_loader:
-  promo_file: "data/raw/promotional.csv"
+  promo_file: "data/raw/augmented_promotional.csv"
   label_change_frac: 0.0
   shuffle: false
-  save: "loaded_data_multilabel.csv"
+  save: "loaded_data_augmented.csv"
 
 preprocessing:
   remove_non_word: true
@@ -16,7 +16,7 @@ preprocessing:
   apply_stemming: true
   remove_numbers: false
   remove_whitespace: true
-  save: "preprocessed_data_multilabel.csv"
+  save: "preprocessed_data_augmented.csv"
 
 features:
   type: tfidf
@@ -25,7 +25,7 @@ features:
   min_df: 0.001
   max_features: 10_000
   sublinear_tf: true
-  save: "features_multilabel.pkl"
+  save: "features_augmented.pkl"
 
 model:
   type: svm
@@ -34,7 +34,7 @@ model:
   grid_search: false
   C: 1.0
   kernel: "linear"
-  save: "svm_multilabel.pkl"
+  save: "svm_augmented.pkl"
 
 evaluation:
   save: "evaluation_svm_multilabel.png"
