@@ -38,3 +38,33 @@ model:
 
 evaluation:
   save: "evaluation_svm_multilabel.png"
+# 2025-03-04 12:51:50,865 - src.evaluation - INFO - Accuracy: 72.65%
+# 2025-03-04 12:51:50,877 - src.evaluation - INFO - Classification Report:
+#               precision    recall  f1-score   support
+
+#            0       0.86      0.95      0.90      3792
+#            1       0.00      0.00      0.00       401
+#            2       0.72      0.22      0.34       292
+#            3       0.00      0.00      0.00       308
+#            4       0.70      0.45      0.55       439
+
+#    micro avg       0.85      0.74      0.79      5232
+#    macro avg       0.46      0.32      0.36      5232
+# weighted avg       0.72      0.74      0.72      5232
+#  samples avg       0.81      0.77      0.78      5232
+
+# 2025-03-04 12:51:50,879 - src.evaluation - INFO - Confusion Matrix:
+# [[[ 387  589]
+#   [ 189 3603]]
+
+#  [[4367    0]
+#   [ 401    0]]
+
+#  [[4451   25]
+#   [ 228   64]]
+
+#  [[4460    0]
+#   [ 308    0]]
+
+#  [[4243   86]
+#   [ 241  198]]]
