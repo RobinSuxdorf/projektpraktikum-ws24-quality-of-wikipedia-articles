@@ -40,7 +40,7 @@ class NaiveBayesGridSearch(Model):
         self._model = MultinomialNB()
 
     def fit(self, features, labels):
-        grid_search = GridSearchCV(self._model, self._param_grid)
+        grid_search = GridSearchCV(self._model, self._param_grid, scoring="recall")
         grid_search.fit(features, labels)
         self._model = grid_search.best_estimator_
         logger.info(
@@ -117,7 +117,7 @@ class MultilabelNaiveBayesGridSearch(Model):
             param_grid = {
                 f"estimator__{key}": value for key, value in self._param_grid.items()
             }
-        grid_search = GridSearchCV(self._model, param_grid)
+        grid_search = GridSearchCV(self._model, param_grid, scoring="recall_macro")
         grid_search.fit(features, labels)
         self._model = grid_search.best_estimator_
         if isinstance(self._model.estimator, Pipeline):

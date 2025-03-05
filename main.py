@@ -23,12 +23,15 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 
-def run_pipeline(config: dict) -> None:
+def run_preprocessing_pipeline(config: dict) -> tuple:
     """
-    Run the data processing and model training pipeline for classification.
+    Run the data processing pipeline for classification.
 
     Args:
         config (dict): Configuration dictionary.
+
+    Returns:
+        tuple: Tuple containing the features and labels.
     """
     usecase = config.get("usecase")
     start_step = PipelineStep.from_string(config.get("start_step", "data_loader"))
@@ -65,6 +68,21 @@ def run_pipeline(config: dict) -> None:
 
     labels = data.drop(columns=["cleaned_text"])
 
+    return features, labels
+
+
+def run_model_pipeline(config: dict) -> None:
+    """
+    Run the model training and evaluation pipeline for classification.
+
+    Args:
+        config (dict): Configuration dictionary.
+    """
+
+    start_step = PipelineStep.from_string(config.get("start_step", "data_loader"))
+
+    features, labels = run_preprocessing_pipeline(config)
+
     model_config = config.get("model")
     x_train, x_test, y_train, y_test = train_test_split(
         features,
@@ -95,7 +113,7 @@ def main() -> None:
 
     try:
         config = load_config(args.config)
-        run_pipeline(config)
+        run_model_pipeline(config)
         logger.info("Pipeline completed.")
         logger.info("Exiting with return code 0")
         sys.exit(0)

@@ -1,0 +1,72 @@
+# configs/naive-bayes-augmented.yaml
+
+usecase: "multilabel"
+start_step: "model"
+
+data_loader:
+  promo_file: "data/raw/augmented_promotional.csv"
+  shuffle: false
+  save: "loaded_data_augmented.csv"
+
+preprocessing:
+  remove_non_word: true
+  convert_lowercase: true
+  remove_stopwords: true
+  apply_stemming: true
+  remove_numbers: false
+  remove_whitespace: true
+  save: "preprocessed_data_augmented.csv"
+
+features:
+  type: tfidf
+  ngram_range: [1, 1]
+  max_df: 0.9
+  min_df: 0.001
+  max_features: 10_000
+  sublinear_tf: true
+  save: "features_augmented.pkl"
+
+model:
+  type: naive_bayes
+  test_size: 0.2
+  random_state: 42
+  grid_search: true
+  param_grid:
+    alpha: [0.01, 0.1, 0.5, 1.0, 1.5, 2.0]
+    fit_prior: [true, false]
+  oversampling: false
+  save: "naive_bayes_augmented.pkl"
+
+evaluation:
+  save: "evaluation_nbm.png"
+# 2025-03-03 16:36:20,780 - src.models.naive_bayes - INFO - Trained Multilabel Naive Bayes model parameters: alpha=0.1, fit_prior=False
+# 2025-03-03 16:36:20,840 - src.evaluation - INFO - Accuracy: 31.07%
+# 2025-03-03 16:36:20,848 - src.evaluation - INFO - Classification Report:
+#               precision    recall  f1-score   support
+
+#            0       0.82      0.73      0.77      4591
+#            1       0.29      0.70      0.41      1283
+#            2       0.42      0.85      0.56       879
+#            3       0.26      0.68      0.38       934
+#            4       0.51      0.87      0.65      1291
+
+#    micro avg       0.50      0.75      0.60      8978
+#    macro avg       0.46      0.77      0.55      8978
+# weighted avg       0.61      0.75      0.64      8978
+#  samples avg       0.55      0.76      0.61      8978
+
+# 2025-03-03 16:36:20,851 - src.evaluation - INFO - Confusion Matrix:
+# [[[2227  711]
+#   [1244 3347]]
+
+#  [[4069 2177]
+#   [ 386  897]]
+
+#  [[5602 1048]
+#   [ 133  746]]
+
+#  [[4815 1780]
+#   [ 296  638]]
+
+#  [[5182 1056]
+#   [ 171 1120]]]

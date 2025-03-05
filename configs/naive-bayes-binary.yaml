@@ -1,32 +1,31 @@
 # configs/naive-bayes-binary.yaml
 
 usecase: "binary"
-# start_step: "evaluation"
+start_step: "model"
 
 data_loader:
   good_file: "data/raw/good.csv"
   promo_file: "data/raw/promotional.csv"
   shuffle: false
-  save: "loaded_data_nbb.csv"
+  save: "loaded_data_binary.csv"
 
 preprocessing:
   remove_non_word: true
   convert_lowercase: true
   remove_stopwords: true
-  apply_stemming: false # didn't change kpis
-  remove_numbers: false # removing numbers decreased f1 by 0.01 with max_features 10_000
+  apply_stemming: true
+  remove_numbers: false
   remove_whitespace: true
-  save: "preprocessed_data_nbb.csv"
+  save: "preprocessed_data_binary.csv"
 
 features:
-  type: tfidf # tfidf higher precision and count higher recall by 0.1 each
-  ngram_range: [1, 1] # 1,2 decreased precision by 0.01 and took significantly longer
-  max_df: 0.9 # too low decreased f1 by 0.01
-  # 0.001 and 0.9 increased recall by 0.01
-  min_df: 0.001 # too high decreased f1 significantly
-  max_features: 10_000 # 100_000: 0.88 10_000: 0.88 1_000: 0.86 100:0.77
-  sublinear_tf: true # increased all kpis by 0.01
-  save: "features_nbb.pkl"
+  type: tfidf
+  ngram_range: [1, 1]
+  max_df: 0.9
+  min_df: 0.001
+  max_features: 10_000
+  sublinear_tf: true
+  save: "features_binary.pkl"
 
 model:
   type: naive_bayes
@@ -40,17 +39,18 @@ model:
 
 evaluation:
   save: "evaluation_nbb.png"
-# 2025-01-29 22:53:09,007 - src.evaluation - INFO - Accuracy: 90.91%
-# 2025-01-29 22:53:09,012 - src.evaluation - INFO - Classification Report:
+# 2025-03-03 17:17:32,750 - src.models.naive_bayes - INFO - Trained Naive Bayes model parameters: alpha=2.0, fit_prior=False
+# 2025-03-03 17:17:32,766 - src.evaluation - INFO - Accuracy: 90.88%
+# 2025-03-03 17:17:32,771 - src.evaluation - INFO - Classification Report:
 #               precision    recall  f1-score   support
-#
-#            0       0.90      0.94      0.92      6044
-#            1       0.92      0.87      0.89      4780
-#
+
+#            0       0.91      0.93      0.92      6044
+#            1       0.91      0.88      0.90      4780
+
 #     accuracy                           0.91     10824
 #    macro avg       0.91      0.91      0.91     10824
 # weighted avg       0.91      0.91      0.91     10824
-#
-# 2025-01-29 22:53:09,013 - src.evaluation - INFO - Confusion Matrix:
-# [[5664  380]
-#  [ 604 4176]]
+
+# 2025-03-03 17:17:32,773 - src.evaluation - INFO - Confusion Matrix:
+# [[5607  437]
+#  [ 550 4230]]
