@@ -4,7 +4,7 @@ data_loader:
   good_file: "/Users/robinsuxdorf/Documents/Uni/FernUni Hagen/4. Semester/Projektpraktikum/github/good.csv"
   promo_file: "/Users/robinsuxdorf/Documents/Uni/FernUni Hagen/4. Semester/Projektpraktikum/github/promotional.csv"
   shuffle: false
-  nrows: 25
+  nrows: 250
   save: "loaded_data_binary.csv"
 
 preprocessing:

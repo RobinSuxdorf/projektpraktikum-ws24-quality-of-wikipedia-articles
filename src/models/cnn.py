@@ -1,6 +1,8 @@
 import os
 from collections.abc import Callable
 
+from scipy.sparse import csr_matrix
+
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
@@ -16,49 +18,25 @@ from .base import Model
 class CNN(nn.Module):
     def __init__(
         self,
-        vocab_size: int,
-        embedding_dim: int,
-        num_filters: int,
-        filter_sizes: list[int],
+        input_dim: int,
         num_classes: int,
-        dropout: float = 0.5,
+        dropout: float = 0.5
     ) -> None:
         super().__init__()
-        self.embedding = nn.Embedding(vocab_size, embedding_dim)
-        self.convs = nn.ModuleList(
-            [
-                nn.Conv1d(
-                    in_channels=embedding_dim, out_channels=num_filters, kernel_size=fs
-                )
-                for fs in filter_sizes
-            ]
-        )
-        self.fc = nn.Linear(num_filters * len(filter_sizes), num_classes)
+        self.fc1 = nn.Linear(input_dim, 512)
+        self.fc2 = nn.Linear(512, num_classes)
         self.dropout = nn.Dropout(dropout)
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:
-        # x: (batch_size, sequence_length)
-        x = self.embedding(x)  # (batch_size, sequence_length, embedding_dim)
-        x = x.permute(0, 2, 1)  # (batch_size, embedding_dim, sequence_length)
-
-        conv_x = [
-            F.relu(conv(x)).max(dim=2)[0] for conv in self.convs
-        ]  # list of (batch_size, num_filters)
-        x = torch.cat(conv_x, dim=1)  # (batch_size, num_filters * len(filter_sizes))
-
+        x = F.relu(self.fc1(x))
         x = self.dropout(x)
-        x = self.fc(x)  # (batch_size, num_classes)
-
+        x = self.fc2(x)
         return x
-
 
 class BaseCNNModel(Model):
     def __init__(
         self,
-        embedding_dim: int,
-        num_filters: int,
-        filter_sizes: list[int],
-        max_length: int,
+        input_dim: int,
         num_classes: int,
         dropout: float,
         criterion: nn.Module,
@@ -67,16 +45,12 @@ class BaseCNNModel(Model):
     ) -> None:
         self._tokenizer = tiktoken.get_encoding("cl100k_base")
         self._model = CNN(
-            vocab_size=self._tokenizer.n_vocab,
-            embedding_dim=embedding_dim,
-            num_filters=num_filters,
-            filter_sizes=filter_sizes,
+            input_dim=input_dim,
             num_classes=num_classes,
             dropout=dropout,
         )
         self._device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
         self._model.to(self._device)
-        self._max_length = max_length
         self._criterion = criterion
         self._predict_fn = predict_fn
         self._label_dtype = label_dtype
@@ -103,13 +77,16 @@ class BaseCNNModel(Model):
         return total_loss / len(train_dataloader)
 
     def fit(
-        self, features, labels, learning_rate: float, num_epochs: int, batch_size: int
+        self,
+        features: csr_matrix,
+        labels: list[int],
+        learning_rate: float,
+        num_epochs: int,
+        batch_size: int
     ) -> None:
         train_dataset = WikipediaArticleDataset(
             features,
             labels,
-            self._tokenizer.encode,
-            self._max_length,
             device=self._device,
         )
         train_dataloader = DataLoader(
@@ -124,9 +101,7 @@ class BaseCNNModel(Model):
 
     def predict(self, features) -> list:
         tensors = [
-            text_to_tensor(
-                article, self._tokenizer.encode, self._max_length, self._device
-            )
+            torch.tensor(article.toarray().squeeze(), dtype=torch.float, device=self._device)
             for article in features
         ]
         input_batch = torch.stack(tensors)
@@ -154,17 +129,11 @@ def binary_predict_fn(logits: torch.Tensor) -> torch.Tensor:
 class CNNModel(BaseCNNModel):
     def __init__(
         self,
-        embedding_dim: int,
-        num_filters: int,
-        filter_sizes: list[int],
-        max_length: int,
+        input_dim: int,
         dropout: float = 0.5,
     ) -> None:
         super().__init__(
-            embedding_dim=embedding_dim,
-            num_filters=num_filters,
-            filter_sizes=filter_sizes,
-            max_length=max_length,
+            input_dim=input_dim,
             num_classes=2,
             dropout=dropout,
             criterion=nn.CrossEntropyLoss(),
