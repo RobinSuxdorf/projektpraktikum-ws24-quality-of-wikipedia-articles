@@ -1,4 +1,4 @@
-# configs/svm/svm-augmented.yaml
+# configs/tests/svm-augmented.yaml
 
 usecase: "multilabel"
 start_step: "model"

@@ -1,4 +1,4 @@
-# configs/naive-bayes/naive-bayes-augmented.yaml
+# configs/svm/linear-svm-augmented.yaml
 
 usecase: "multilabel"
 start_step: "model"
@@ -27,14 +27,14 @@ features:
   save: "features_augmented.pkl"
 
 model:
-  type: naive_bayes
+  type: linear_svm
   test_size: 0.2
   random_state: 42
   grid_search: true
   param_grid:
-    alpha: [0.01, 0.1, 0.5, 1.0, 1.5, 2.0, 2.5, 3.0]
-    fit_prior: [true, false]
-  save: "naive_bayes_augmented.pkl"
+    C: [0.1, 1.0, 10.0, 100.0]
+    loss: ["hinge", "squared_hinge"]
+  save: "model_lsvm_augmented.pkl"
 
 evaluation:
-  save: "evaluation_nbm.png"
+  save: "evaluation_lsvm_augmented.png"

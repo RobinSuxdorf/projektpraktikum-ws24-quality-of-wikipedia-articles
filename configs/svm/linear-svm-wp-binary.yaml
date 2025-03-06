@@ -6,8 +6,6 @@ start_step: "model"
 data_loader:
   good_file: "data/wp/good_sample.csv"
   promo_file: "data/wp/promotional_sample.csv"
-  neutral_file: "data/wp/neutral_sample.csv"
-  label_change_frac: 0.0
   shuffle: false
   save: "loaded_data_wp_binary.csv"
 
@@ -33,38 +31,11 @@ model:
   type: linear_svm
   test_size: 0.2
   random_state: 42
-  grid_search: false
-  C: 1.0
-  save: "linear_svm_wp_binary.pkl"
+  grid_search: true
+  param_grid:
+    C: [0.1, 1.0, 10.0, 100.0]
+    loss: ["hinge", "squared_hinge"]
+  save: "model_lsvm_wp_binary.pkl"
 
 evaluation:
-  save: "evaluation_linear_svm_wp_binary.png"
-# 2025-02-01 00:19:14,997 - src.evaluation - INFO - Accuracy: 89.01%
-# 2025-02-01 00:19:15,009 - src.evaluation - INFO - Classification Report:
-#               precision    recall  f1-score   support
-#
-#            0       0.93      0.96      0.95      5942
-#            1       0.87      0.88      0.88      6060
-#            2       0.86      0.83      0.85      5998
-#
-#     accuracy                           0.89     18000
-#    macro avg       0.89      0.89      0.89     18000
-# weighted avg       0.89      0.89      0.89     18000
-#
-# 2025-02-01 00:19:15,014 - src.evaluation - INFO - Confusion Matrix:
-# [[5708   82  152]
-#  [ 110 5323  627]
-#  [ 312  696 4990]]
-
-# Ohne neutral:
-
-# 2025-02-02 18:44:27,156 - src.evaluation - INFO - Accuracy: 98.36%
-# 2025-02-02 18:44:27,165 - src.evaluation - INFO - Classification Report:
-#               precision    recall  f1-score   support
-
-#            0       0.98      0.99      0.98      5909
-#            1       0.99      0.98      0.98      6091
-
-#     accuracy                           0.98     12000
-#    macro avg       0.98      0.98      0.98     12000
-# weighted avg       0.98      0.98      0.98     12000
+  save: "evaluation_lsvm_wp_binary.png"

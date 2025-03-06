@@ -1,13 +1,13 @@
-# configs/naive-bayes/naive-bayes-binary.yaml
+# configs/log-reg/log-reg-wp-binary.yaml
 
 usecase: "binary"
 start_step: "model"
 
 data_loader:
-  good_file: "data/raw/good.csv"
-  promo_file: "data/raw/promotional.csv"
+  good_file: "data/wp/good_sample.csv"
+  promo_file: "data/wp/promotional_sample.csv"
   shuffle: false
-  save: "loaded_data_binary.csv"
+  save: "loaded_data_wp_binary.csv"
 
 preprocessing:
   remove_non_word: true
@@ -16,7 +16,7 @@ preprocessing:
   apply_stemming: true
   remove_numbers: false
   remove_whitespace: true
-  save: "preprocessed_data_binary.csv"
+  save: "preprocessed_data_wp_binary.csv"
 
 features:
   type: tfidf
@@ -25,17 +25,18 @@ features:
   min_df: 0.001
   max_features: 10_000
   sublinear_tf: true
-  save: "features_binary.pkl"
+  save: "features_wp_binary.pkl"
 
 model:
-  type: naive_bayes
+  type: logistic_regression
   test_size: 0.2
   random_state: 42
   grid_search: true
   param_grid:
-    alpha: [0.01, 0.1, 0.5, 1.0, 1.5, 2.0, 2.5, 3.0]
-    fit_prior: [true, false]
-  save: "naive_bayes_binary.pkl"
+    penalty: ["l1", "l2"]
+    solver: ["liblinear", "saga"]
+    max_iter: [500, 1000]
+  save: "model_lr_wp_binary.pkl"
 
 evaluation:
-  save: "evaluation_nbb.png"
+  save: "evaluation_lr_wp_binary.png"

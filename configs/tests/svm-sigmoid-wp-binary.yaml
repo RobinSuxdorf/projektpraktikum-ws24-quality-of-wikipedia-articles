@@ -1,4 +1,4 @@
-# configs/svm/svm-sigmoid-wp-binary.yaml
+# configs/tests/svm-sigmoid-wp-binary.yaml
 
 usecase: "binary"
 start_step: "model"

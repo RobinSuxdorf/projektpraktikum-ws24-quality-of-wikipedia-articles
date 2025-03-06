@@ -1,4 +1,4 @@
-# configs/svm/svm-rbf-wp-binary.yaml
+# configs/tests/svm-rbf-wp-binary.yaml
 
 usecase: "binary"
 start_step: "model"

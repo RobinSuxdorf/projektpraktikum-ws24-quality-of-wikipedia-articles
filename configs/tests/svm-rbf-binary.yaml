@@ -1,4 +1,4 @@
-# configs/svm/svm-sigmoid-binary.yaml
+# configs/tests/svm-rbf-binary.yaml
 
 usecase: "binary"
 start_step: "model"
@@ -34,23 +34,23 @@ model:
   random_state: 42
   grid_search: false
   C: 1.0
-  kernel: "sigmoid"
+  kernel: "rbf"
   gamma: "scale"
-  save: "svm_sigmoid_binary.pkl"
+  save: "svm_rbf_binary.pkl"
 
 evaluation:
-  save: "evaluation_svm_sigmoid_binary.png"
-# 2025-02-01 14:04:11,493 - src.evaluation - INFO - Accuracy: 96.60%
-# 2025-02-01 14:04:11,503 - src.evaluation - INFO - Classification Report:
+  save: "evaluation_svm_rbf_binary.png"
+# 2025-02-01 14:35:48,652 - src.evaluation - INFO - Accuracy: 96.82%
+# 2025-02-01 14:35:48,660 - src.evaluation - INFO - Classification Report:
 #               precision    recall  f1-score   support
 #
-#            0       0.97      0.97      0.97      6044
+#            0       0.97      0.98      0.97      6044
 #            1       0.97      0.96      0.96      4780
 #
 #     accuracy                           0.97     10824
-#    macro avg       0.97      0.96      0.97     10824
+#    macro avg       0.97      0.97      0.97     10824
 # weighted avg       0.97      0.97      0.97     10824
 #
-# 2025-02-01 14:04:11,507 - src.evaluation - INFO - Confusion Matrix:
-# [[5889  155]
-#  [ 213 4567]]
+# 2025-02-01 14:35:48,663 - src.evaluation - INFO - Confusion Matrix:
+# [[5901  143]
+#  [ 201 4579]]
