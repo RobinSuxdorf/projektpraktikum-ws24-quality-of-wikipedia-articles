@@ -1,31 +1,7 @@
-Die Support Vector Machine (SVM) ist ein überwacht lernendes Verfahren zur Klassifikation, das darauf abzielt, eine optimale Entscheidungsgrenze (Hyperebene) zwischen den Klassen zu finden. Das Verfahren eignet sich besonders gut zur Textkategorisierung, da es mit der dabei auftretenden hohen Dimensionalität und dünnbesetzten Vektoren umgehen kann und da viele Textkategorisierungen linear separierbar sind, wie zum Beispiel von Joachims in \cite{textCategorizationWithSVM} beschrieben.
+Die Support Vector Machine (SVM) ist ein überwacht lernendes Verfahren zur Klassifikation, das darauf abzielt, eine optimale Entscheidungsgrenze (Hyperebene) zwischen den Klassen zu finden. Wie zum Beispiel von Joachims in \cite{textCategorizationWithSVM} beschrieben, eignet sich das Verfahren besonders gut zur Textkategorisierung, da es mit der dabei auftretenden hohen Dimensionalität und dünnbesetzten Vektoren umgehen kann und da viele Textkategorisierungen gut linear separierbar sind.
 
-Im Rahmen des Projekts wurden verschiedene Varianten der SVM getestet:
-
-\begin{itemize}
-    \item Linear SVM: Implementierung mit \textit{LinearSVC} aus \textit{scikit-learn}, welche besonders effizient für große Textdatensätze ist.
-    \item Kernel SVM: Implementierung mit \textit{SVC}, wobei die Kernelfunktionen \textit{linear}, \textit{rbf} und \textit{sigmoid} untersucht wurden.
-\end{itemize}
-
-Da die Metriken bei allen Varianten ähnliche Ergebnisse lieferten, wurde für die weiteren Experimente \textit{LinearSVC} gewählt, da es wesentlich schneller trainiert und evaluiert werden kann. Um optimale Parameter zu finden, wurde GridSearchCV zur Hyper\-parameter-Optimierung eingesetzt.
+Im Rahmen des Projekts wurden verschiedene Varianten der SVM getestet: Zunächst die \textit{scikit-learn}-Implementierung \textit{SVC} mit den Kernelfunktionen \textit{linear}, \textit{rbf} und \textit{sigmoid}, wobei auf dem vorliegenden Datensatz der lineare Kernel leicht bessere Ergebnisse lieferte als die Alternativen RBF und Sigmoid. Anschließend wurde die \textit{scikit-learn}-Implementierung \textit{LinearSVC} getestet, welche ausschließlich lineare Kernel unterstützt.  Um möglichst gute Hyper-Parameter zu finden, wurde GridSearchCV zur Optimierung eingesetzt. \textit{LinearSVC} und \textit{SVC} mit linearem Kernel lieferten nahezu identische Ergebnisse, allerdings skalierte \textit{LinearSVC} sehr viel besser und ließ sich auf dem vorliegenden Datensatz in einem Bruchteil der Zeit trainieren, die für \textit{SVC} benötigt wurde. Für die weiteren Auswertungen wurde daher \textit{LinearSVC} gewählt.
 
 Die SVM wurde als Option in die bestehende Machine-Learning-Pipeline integriert. Über eine Konfigurationsdatei kann gesteuert werden, ob \textit{LinearSVC} oder \textit{SVC} mit verschiedenen Kernelfunktionen verwendet werden soll. Grid Search ist ebenfalls über die Konfiguration aktivierbar.
 
-Die SVM wurde mit Wikipedia-Texten trainiert, die aus zwei Quellen stammen:
-\begin{itemize}
-    \item Ein Kaggle-Datensatz, der Artikel in den Kategorien \textit{good} und \textit{promotional} enthält. Letztere sind zusätzlich mit den Labels \textit{advert}, \textit{coi}, \textit{fanpov}, \textit{pr} und \textit{resume} annotiert.
-    \item Ein Wikipedia-Dump, der zusätzlich Artikel der Kategorie \textit{neutral} enthält, also Texte, die weder \textit{good} noch \textit{promotional} sind.
-\end{itemize}
-
-Als Feature-Extraktionsmethode wurde TF-IDF (Term Frequency-Inverse Document Frequency) verwendet, um relevante Features für die Klassifikation herauszuarbeiten.
-
-Zur Bewertung der SVM wurden die Metriken Accuracy, Precision, Recall und F1-Score herangezogen. Die genaueren Ergebnisse finden sich im Anhang, die wichtigsten Resultate sind jedoch:
-
-\begin{itemize}
-    \item 96.66\% Accuracy bei Kaggle-Daten mit zwei Klassen (\textit{good}/\textit{promo})
-    \item 89.01\% Accuracy beim Wikipedia-Dump mit drei Klassen (\textit{good}/\textit{promo}/\textit{neutral})
-\end{itemize}
-
-Die Multilabel-Klassifikation innerhalb der Kategorie \textit{promo} ergab insgesamt sehr schlechte Werte, da viele dieser Label nur in wenigen Artikeln vorkamen.
-
-In ersten Durchläufen wurde eine überraschend hohe Accuracy von >99\% ermittelt. Diese basierte allerdings auf einem Problem im Train-Test-Split und sank nach Behebung des Problems auf die oben genannten Werte. Um darüber hinaus Fehler in der Umsetzung ausschließen zu können, wurde eine Funktion implementiert, um eine zufällig ausgewählten Teilmenge der Daten mit einem falschen Label zu versehen. Hierdurch sank die Accuracy deutlich, zum Beispiel für 10\% fehlerhafte Labels von 96,7\% auf 84,0\%. Dies ist ebenfalls ein Indiz dafür, dass die hohen Metriken durch eine gute lineare Separierbarkeit erklärt werden können.
+In ersten Durchläufen wurde eine überraschend hohe Accuracy von >99\% ermittelt. Diese basierte allerdings auf einem Problem im Train-Test-Split und sank nach Behebung des Problems auf realistische Werte. Um darüber hinaus Fehler in der Umsetzung ausschließen zu können, wurde eine Funktion implementiert, um eine zufällig ausgewählten Teilmenge der Daten mit einem falschen Label zu versehen. Hierdurch sank die Accuracy deutlich, zum Beispiel für 10\% fehlerhafte Labels von 96,7\% auf 84,0\%. Dies ist ebenfalls ein Indiz dafür, dass die hohen Metriken durch eine gute lineare Separierbarkeit erklärt werden können.
