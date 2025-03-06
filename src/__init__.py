@@ -10,7 +10,7 @@ from .utils import (
     load_from_file,
     save_to_file,
 )
-from .wikipedia_article_dataset import text_to_tensor, WikipediaArticleDataset
+from .wikipedia_article_dataset import WikipediaArticleDataset
 
 __all__ = [
     "load_data",
@@ -23,6 +23,5 @@ __all__ = [
     "load_config",
     "load_from_file",
     "save_to_file",
-    "text_to_tensor",
     "WikipediaArticleDataset",
 ]

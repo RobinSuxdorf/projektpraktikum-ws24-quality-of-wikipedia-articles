@@ -9,7 +9,7 @@ from torch.utils.data.dataloader import DataLoader
 
 import tiktoken
 
-from src.wikipedia_article_dataset import text_to_tensor, WikipediaArticleDataset
+from src.wikipedia_article_dataset import WikipediaArticleDataset
 from .base import Model
 
 
