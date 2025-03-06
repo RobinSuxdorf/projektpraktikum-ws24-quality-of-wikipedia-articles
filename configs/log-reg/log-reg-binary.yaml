@@ -1,4 +1,4 @@
-# configs/log-reg-binary.yaml
+# configs/log-reg/log-reg-binary.yaml
 
 usecase: "binary"
 start_step: "model"
@@ -6,6 +6,7 @@ start_step: "model"
 data_loader:
   good_file: "data/raw/good.csv"
   promo_file: "data/raw/promotional.csv"
+  label_change_frac: 0.0
   shuffle: false
   save: "loaded_data_binary.csv"
 

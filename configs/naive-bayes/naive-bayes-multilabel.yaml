@@ -1,4 +1,4 @@
-# configs/naive-bayes-multilabel.yaml
+# configs/naive-bayes/naive-bayes-multilabel.yaml
 
 usecase: "multilabel"
 start_step: "model"
@@ -32,7 +32,7 @@ model:
   random_state: 42
   grid_search: true
   param_grid:
-    alpha: [0.01, 0.1, 0.5, 1.0, 1.5, 2.0]
+    alpha: [0.01, 0.1, 0.5, 1.0, 1.5, 2.0, 2.5, 3.0]
     fit_prior: [true, false]
   oversampling: false
   save: "naive_bayes_multilabel.pkl"

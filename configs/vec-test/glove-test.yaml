@@ -1,4 +1,4 @@
-# configs/glove-test.yaml
+# configs/vec-test/glove-test.yaml
 
 usecase: "multilabel"
 # start_step: "evaluation"

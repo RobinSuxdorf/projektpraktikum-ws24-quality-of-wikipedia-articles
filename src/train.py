@@ -11,10 +11,13 @@ from src.models import (
     LinearSupportVectorMachine,
     LinearSupportVectorMachineGridSearch,
     MultilabelLinearSupportVectorMachine,
+    MultilabelLinearSupportVectorMachineGridSearch,
     SupportVectorMachine,
     MultilabelSupportVectorMachine,
     Logistic_Regression,
+    LogisticRegressionGridSearch,
     MultilabelLogisticRegression,
+    MultilabelLogisticRegressionGridSearch,
 )
 
 logger = logging.getLogger(__name__)
@@ -49,44 +52,39 @@ def train_model(x_train, y_train, model_config: dict) -> Model:
         logger.info("Flatten labels for binary classification.")
         y_train = y_train.values.ravel()
 
-    if model_type == ModelType.NAIVE_BAYES:
-        if binary_classification and grid_search:
-            logger.info("Training a binary Naive Bayes model with grid search.")
-            model = NaiveBayesGridSearch(model_config)
-        elif binary_classification and not grid_search:
-            logger.info("Training a binary Naive Bayes model.")
-            model = NaiveBayes(model_config)
-        elif not binary_classification and grid_search:
-            logger.info("Training a multilabel Naive Bayes model with grid search.")
-            model = MultilabelNaiveBayesGridSearch(model_config)
-        elif not binary_classification and not grid_search:
-            logger.info("Training a multilabel Naive Bayes model.")
-            model = MultilabelNaiveBayes(model_config)
-    elif model_type == ModelType.LINEAR_SVM:
-        if binary_classification:
-            if grid_search:
-                logger.info("Training a binary Linear SVM model with grid search.")
-                model = LinearSupportVectorMachineGridSearch(model_config)
-            else:
-                logger.info("Training a binary Linear SVM model.")
-                model = LinearSupportVectorMachine(model_config)
-        else:
-            logger.info("Training a multilabel SVM model.")
-            model = MultilabelLinearSupportVectorMachine(model_config)
-    elif model_type == ModelType.SVM:
-        if binary_classification:
-            logger.info("Training a binary SVM model.")
-            model = SupportVectorMachine(model_config)
-        else:
-            logger.info("Training a multilabel SVM model.")
-            model = MultilabelSupportVectorMachine(model_config)
-    elif model_type == ModelType.LOGISTIC_REGRESSION:
-        if binary_classification:
-            logger.info("Training a Logistic Regression model.")
-            model = Logistic_Regression(model_config)
-        else:
-            logger.info("Training a multilabel Logistic Regression model.")
-            model = MultilabelLogisticRegression(model_config)
+    model_factory = {
+        (ModelType.NAIVE_BAYES, True, True): NaiveBayesGridSearch,
+        (ModelType.NAIVE_BAYES, True, False): NaiveBayes,
+        (ModelType.NAIVE_BAYES, False, True): MultilabelNaiveBayesGridSearch,
+        (ModelType.NAIVE_BAYES, False, False): MultilabelNaiveBayes,
+        (ModelType.LINEAR_SVM, True, True): LinearSupportVectorMachineGridSearch,
+        (ModelType.LINEAR_SVM, True, False): LinearSupportVectorMachine,
+        (
+            ModelType.LINEAR_SVM,
+            False,
+            True,
+        ): MultilabelLinearSupportVectorMachineGridSearch,
+        (ModelType.LINEAR_SVM, False, False): MultilabelLinearSupportVectorMachine,
+        (ModelType.SVM, True, True): SupportVectorMachine,
+        (ModelType.SVM, True, False): SupportVectorMachine,
+        (ModelType.SVM, False, True): MultilabelSupportVectorMachine,
+        (ModelType.SVM, False, False): MultilabelSupportVectorMachine,
+        (ModelType.LOGISTIC_REGRESSION, True, True): LogisticRegressionGridSearch,
+        (ModelType.LOGISTIC_REGRESSION, True, False): Logistic_Regression,
+        (
+            ModelType.LOGISTIC_REGRESSION,
+            False,
+            True,
+        ): MultilabelLogisticRegressionGridSearch,
+        (ModelType.LOGISTIC_REGRESSION, False, False): MultilabelLogisticRegression,
+    }
+
+    model_class = model_factory.get((model_type, binary_classification, grid_search))
+
+    if model_class:
+        model_name = model_class.__name__
+        logger.info(f"Training a {model_name} model.")
+        model = model_class(model_config)
     else:
         logger.error(
             f"Invalid model type '{model_type}'. Supported types: {[mt for mt in ModelType]}."

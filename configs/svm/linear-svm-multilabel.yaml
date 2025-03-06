@@ -1,4 +1,4 @@
-# configs/linear-svm-multilabel.yaml
+# configs/svm/linear-svm-multilabel.yaml
 
 usecase: "multilabel"
 start_step: "evaluation"
@@ -40,30 +40,30 @@ evaluation:
 # 2025-02-01 00:06:04,798 - src.evaluation - INFO - Accuracy: 69.63%
 # 2025-02-01 00:06:04,807 - src.evaluation - INFO - Classification Report:
 #               precision    recall  f1-score   support
-# 
+#
 #            0       0.86      0.92      0.89      3792
 #            1       0.08      0.01      0.03       401
 #            2       0.59      0.28      0.38       292
 #            3       0.06      0.00      0.01       308
 #            4       0.63      0.46      0.53       439
-# 
+#
 #    micro avg       0.82      0.73      0.77      5232
 #    macro avg       0.45      0.34      0.37      5232
 # weighted avg       0.72      0.73      0.72      5232
 #  samples avg       0.78      0.76      0.76      5232
-# 
+#
 # 2025-02-01 00:06:04,812 - src.evaluation - INFO - Confusion Matrix:
 # [[[ 414  562]
 #   [ 285 3507]]
-# 
+#
 #  [[4301   66]
 #   [ 395    6]]
-# 
+#
 #  [[4419   57]
 #   [ 210   82]]
-# 
+#
 #  [[4444   16]
 #   [ 307    1]]
-# 
+#
 #  [[4211  118]
 #   [ 236  203]]]

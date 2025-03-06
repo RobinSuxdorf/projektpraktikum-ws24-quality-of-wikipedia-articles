@@ -60,7 +60,7 @@ data_loader:
   promo_file: "data/raw/promotional.csv" # Path to the CSV file containing promotional text data.
   neutral_file: "data/raw/neutral.csv" # (optional) Path to the CSV file containing neutral text data.
   nrows: 1000 # (optional) Number of rows to read from each CSV file.
-  shuffle: true # Whether to shuffle the combined dataset.
+  shuffle: false # Whether to shuffle the combined dataset.
   label_change_frac: 0.1 # (optional) Fraction of labels to randomly change.
   save: "loaded_data.csv" # Path to save the loaded data.
 ```
@@ -72,7 +72,7 @@ preprocessing:
   remove_non_word: true # Remove non-word characters.
   convert_lowercase: true # Convert text to lowercase.
   remove_stopwords: true # Remove stopwords.
-  apply_stemming: false # Apply stemming.
+  apply_stemming: true # Apply stemming.
   remove_numbers: false # Remove numbers.
   remove_whitespace: true # Remove leading and trailing whitespace.
   save: "preprocessed_data.csv" # Path to save the preprocessed data.
@@ -88,7 +88,7 @@ features:
   ngram_range: [1, 1] # N-gram range for the vectorizer.
   max_df: 0.9 # Maximum document frequency for the vectorizer.
   min_df: 0.001 # Minimum document frequency for the vectorizer.
-  max_features: 10000 # Maximum number of features for the vectorizer.
+  max_features: 10_000 # Maximum number of features for the vectorizer.
   sublinear_tf: true # Apply sublinear term frequency scaling.
   save: "features_tfidf.pkl" # Path to save the extracted features.
 ```
@@ -101,7 +101,7 @@ features:
   ngram_range: [1, 1] # N-gram range for the vectorizer.
   max_df: 0.9 # Maximum document frequency for the vectorizer.
   min_df: 0.001 # Minimum document frequency for the vectorizer.
-  max_features: 10000 # Maximum number of features for the vectorizer.
+  max_features: 10_000 # Maximum number of features for the vectorizer.
   binary: false # If True, all non-zero term counts are set to 1.
   save: "features_count.pkl" # Path to save the extracted features.
 ```
@@ -114,7 +114,7 @@ features:
   ngram_range: [1, 1] # N-gram range for the vectorizer.
   max_df: 0.9 # Maximum document frequency for the vectorizer.
   min_df: 0.001 # Minimum document frequency for the vectorizer.
-  max_features: 10000 # Maximum number of features for the vectorizer.
+  max_features: 10_000 # Maximum number of features for the vectorizer.
   save: "features_bagofwords.pkl" # Path to save the extracted features.
 ```
 
@@ -182,6 +182,7 @@ model:
   random_state: 42 # (optional) Random state for reproducibility.
   grid_search: false # Whether to perform grid search for hyperparameter tuning.
   C: 1.0 # Regularization parameter for SVM.
+  loss: hinge # Loss function parameter for SVM.
   save: "svm_model.pkl" # Path to save the trained model.
 ```
 

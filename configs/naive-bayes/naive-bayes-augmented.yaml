@@ -1,4 +1,4 @@
-# configs/naive-bayes-augmented.yaml
+# configs/naive-bayes/naive-bayes-augmented.yaml
 
 usecase: "multilabel"
 start_step: "model"

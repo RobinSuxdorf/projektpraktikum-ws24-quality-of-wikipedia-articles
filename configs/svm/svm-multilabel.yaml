@@ -1,10 +1,11 @@
-# configs/log-reg-multilabel.yaml
+# configs/svm/svm-multilabel.yaml
 
 usecase: "multilabel"
 start_step: "model"
 
 data_loader:
   promo_file: "data/raw/promotional.csv"
+  label_change_frac: 0.0
   shuffle: false
   save: "loaded_data_multilabel.csv"
 
@@ -27,45 +28,44 @@ features:
   save: "features_multilabel.pkl"
 
 model:
-  type: logistic_regression
+  type: svm
   test_size: 0.2
   random_state: 42
   grid_search: false
-  penalty: "l1"
-  solver: "liblinear"
-  max_iter: 500
-  oversampling: false
-  save: "log_reg_multilabel.pkl"
+  C: 1.0
+  kernel: "linear"
+  gamma: "scale"
+  save: "svm_multilabel.pkl"
 
 evaluation:
-  save: "evaluation_lrm.png"
-# 2025-03-03 16:05:34,957 - src.evaluation - INFO - Accuracy: 72.59%
-# 2025-03-03 16:05:34,966 - src.evaluation - INFO - Classification Report:
+  save: "evaluation_svm_multilabel.png"
+# 2025-03-04 12:51:50,865 - src.evaluation - INFO - Accuracy: 72.65%
+# 2025-03-04 12:51:50,877 - src.evaluation - INFO - Classification Report:
 #               precision    recall  f1-score   support
 
 #            0       0.86      0.95      0.90      3792
 #            1       0.00      0.00      0.00       401
-#            2       0.70      0.25      0.37       292
+#            2       0.72      0.22      0.34       292
 #            3       0.00      0.00      0.00       308
-#            4       0.67      0.39      0.49       439
+#            4       0.70      0.45      0.55       439
 
-#    micro avg       0.84      0.74      0.79      5232
-#    macro avg       0.44      0.32      0.35      5232
+#    micro avg       0.85      0.74      0.79      5232
+#    macro avg       0.46      0.32      0.36      5232
 # weighted avg       0.72      0.74      0.72      5232
-#  samples avg       0.80      0.77      0.78      5232
+#  samples avg       0.81      0.77      0.78      5232
 
-# 2025-03-03 16:05:34,969 - src.evaluation - INFO - Confusion Matrix:
-# [[[ 374  602]
-#   [ 179 3613]]
+# 2025-03-04 12:51:50,879 - src.evaluation - INFO - Confusion Matrix:
+# [[[ 387  589]
+#   [ 189 3603]]
 
 #  [[4367    0]
 #   [ 401    0]]
 
-#  [[4444   32]
-#   [ 219   73]]
+#  [[4451   25]
+#   [ 228   64]]
 
 #  [[4460    0]
 #   [ 308    0]]
 
-#  [[4246   83]
-#   [ 269  170]]]
+#  [[4243   86]
+#   [ 241  198]]]

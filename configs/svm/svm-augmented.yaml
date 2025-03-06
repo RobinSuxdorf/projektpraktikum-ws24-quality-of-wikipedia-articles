@@ -1,4 +1,4 @@
-# configs/svm-augmented.yaml
+# configs/svm/svm-augmented.yaml
 
 usecase: "multilabel"
 start_step: "model"
@@ -34,6 +34,7 @@ model:
   grid_search: false
   C: 1.0
   kernel: "linear"
+  gamma: "scale"
   save: "svm_augmented.pkl"
 
 evaluation:

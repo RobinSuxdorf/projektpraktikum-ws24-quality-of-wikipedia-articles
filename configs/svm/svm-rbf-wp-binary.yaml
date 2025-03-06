@@ -1,7 +1,7 @@
-# configs/svm-rbf-binary.yaml
+# configs/svm/svm-rbf-wp-binary.yaml
 
 usecase: "binary"
-start_step: "evaluation"
+start_step: "model"
 
 data_loader:
   good_file: "data/wp/good_sample.csv"
@@ -36,11 +36,11 @@ model:
   grid_search: false
   C: 1.0
   kernel: "rbf"
+  gamma: "scale"
   save: "svm_rbf_wp_binary.pkl"
 
 evaluation:
   save: "evaluation_svm_rbf_wp_binary.png"
-
 # 2025-02-01 14:55:42,281 - src.train - INFO - Training a binary SVM model.
 # 2025-02-01 19:19:40,295 - src.train - INFO - Model training complete.
 # 2025-02-01 19:19:40,385 - src.utils - INFO - Data saved to data/intermediary\svm_rbf_wp_binary.pkl.

@@ -1,7 +1,7 @@
-# configs/linear-svm-wp-binary.yaml
+# configs/svm/inear-svm-wp-binary.yaml
 
 usecase: "binary"
-start_step: "evaluation"
+start_step: "model"
 
 data_loader:
   good_file: "data/wp/good_sample.csv"
@@ -42,20 +42,19 @@ evaluation:
 # 2025-02-01 00:19:14,997 - src.evaluation - INFO - Accuracy: 89.01%
 # 2025-02-01 00:19:15,009 - src.evaluation - INFO - Classification Report:
 #               precision    recall  f1-score   support
-# 
+#
 #            0       0.93      0.96      0.95      5942
 #            1       0.87      0.88      0.88      6060
 #            2       0.86      0.83      0.85      5998
-# 
+#
 #     accuracy                           0.89     18000
 #    macro avg       0.89      0.89      0.89     18000
 # weighted avg       0.89      0.89      0.89     18000
-# 
+#
 # 2025-02-01 00:19:15,014 - src.evaluation - INFO - Confusion Matrix:
 # [[5708   82  152]
 #  [ 110 5323  627]
 #  [ 312  696 4990]]
-
 
 # Ohne neutral:
 

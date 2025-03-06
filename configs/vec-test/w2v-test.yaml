@@ -1,4 +1,4 @@
-# configs/w2v-test.yaml
+# configs/vec-test/w2v-test.yaml
 
 usecase: "multilabel"
 # start_step: "evaluation"
