@@ -40,3 +40,18 @@ model:
 
 evaluation:
   save: "evaluation_lr_wp_binary.png"
+# 2025-03-07 06:37:33,061 - src.models.logistic_regression - INFO - Trained LogisticRegression model with {'max_iter': 1000, 'penalty': 'l1', 'solver': 'liblinear'}
+# 2025-03-07 06:37:33,073 - src.evaluation - INFO - Accuracy: 97.96%
+# 2025-03-07 06:37:33,079 - src.evaluation - INFO - Classification Report:
+#               precision    recall  f1-score   support
+
+#            0       0.98      0.98      0.98      5909
+#            1       0.98      0.98      0.98      6091
+
+#     accuracy                           0.98     12000
+#    macro avg       0.98      0.98      0.98     12000
+# weighted avg       0.98      0.98      0.98     12000
+
+# 2025-03-07 06:37:33,081 - src.evaluation - INFO - Confusion Matrix:
+# [[5810   99]
+#  [ 146 5945]]

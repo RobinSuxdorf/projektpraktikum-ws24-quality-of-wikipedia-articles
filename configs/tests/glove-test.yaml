@@ -1,7 +1,7 @@
 # configs/tests/glove-test.yaml
 
 usecase: "multilabel"
-# start_step: "evaluation"
+# start_step: "model"
 
 data_loader:
   promo_file: "data/raw/promotional.csv"
@@ -29,7 +29,6 @@ model:
   grid_search: false
   alpha: 0.01
   fit_prior: false
-  oversampling: true
   save: "nb_glove.pkl"
 
 evaluation:

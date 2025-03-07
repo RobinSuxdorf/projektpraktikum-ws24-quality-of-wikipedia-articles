@@ -1,7 +1,7 @@
 # configs/svm/linear-svm-multilabel.yaml
 
 usecase: "multilabel"
-start_step: "evaluation"
+start_step: "model"
 
 data_loader:
   promo_file: "data/raw/promotional.csv"
@@ -38,3 +38,34 @@ model:
 
 evaluation:
   save: "evaluation_lsvm_multilabel.png"
+# 2025-03-07 07:34:49,852 - src.models.support_vector_machine - INFO - Trained LinearSVC model with {'estimator__C': 100.0, 'estimator__loss': 'hinge'}
+# 2025-03-07 07:34:49,861 - src.evaluation - INFO - Accuracy: 52.06%
+# 2025-03-07 07:34:49,867 - src.evaluation - INFO - Classification Report:
+#               precision    recall  f1-score   support
+
+#            0       0.85      0.82      0.84      3792
+#            1       0.09      0.14      0.11       401
+#            2       0.43      0.35      0.38       292
+#            3       0.08      0.09      0.09       308
+#            4       0.46      0.47      0.47       439
+
+#    micro avg       0.66      0.67      0.67      5232
+#    macro avg       0.38      0.38      0.38      5232
+# weighted avg       0.69      0.67      0.68      5232
+#  samples avg       0.65      0.70      0.66      5232
+
+# 2025-03-07 07:34:49,869 - src.evaluation - INFO - Confusion Matrix:
+# [[[ 437  539]
+#   [ 666 3126]]
+
+#  [[3811  556]
+#   [ 345   56]]
+
+#  [[4344  132]
+#   [ 191  101]]
+
+#  [[4116  344]
+#   [ 279   29]]
+
+#  [[4089  240]
+#   [ 232  207]]]

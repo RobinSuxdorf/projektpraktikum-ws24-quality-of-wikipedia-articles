@@ -38,3 +38,34 @@ model:
 
 evaluation:
   save: "evaluation_lsvm_wp_multilabel.png"
+# 2025-03-07 01:00:01,630 - src.models.support_vector_machine - INFO - Trained LinearSVC model with {'estimator__C': 10.0, 'estimator__loss': 'hinge'}
+# 2025-03-07 01:00:01,653 - src.evaluation - INFO - Accuracy: 43.65%
+# 2025-03-07 01:00:01,659 - src.evaluation - INFO - Classification Report:
+#               precision    recall  f1-score   support
+
+#            0       0.68      0.69      0.69      3031
+#            1       0.52      0.49      0.51      2380
+#            2       0.46      0.20      0.28       117
+#            3       0.00      0.00      0.00       113
+#            4       0.45      0.45      0.45       717
+
+#    micro avg       0.59      0.57      0.58      6358
+#    macro avg       0.42      0.37      0.38      6358
+# weighted avg       0.58      0.57      0.57      6358
+#  samples avg       0.54      0.58      0.54      6358
+
+# 2025-03-07 01:00:01,663 - src.evaluation - INFO - Confusion Matrix:
+# [[[1980  989]
+#   [ 927 2104]]
+
+#  [[2558 1062]
+#   [1214 1166]]
+
+#  [[5856   27]
+#   [  94   23]]
+
+#  [[5872   15]
+#   [ 113    0]]
+
+#  [[4879  404]
+#   [ 391  326]]]

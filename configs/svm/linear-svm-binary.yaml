@@ -39,3 +39,18 @@ model:
 
 evaluation:
   save: "evaluation_lsvm_binary.png"
+# 2025-03-07 07:30:41,995 - src.models.support_vector_machine - INFO - Trained LinearSVC model with {'C': 1.0, 'loss': 'hinge'}
+# 2025-03-07 07:30:42,002 - src.evaluation - INFO - Accuracy: 96.61%
+# 2025-03-07 07:30:42,008 - src.evaluation - INFO - Classification Report:
+#               precision    recall  f1-score   support
+
+#            0       0.96      0.98      0.97      6044
+#            1       0.97      0.95      0.96      4780
+
+#     accuracy                           0.97     10824
+#    macro avg       0.97      0.96      0.97     10824
+# weighted avg       0.97      0.97      0.97     10824
+
+# 2025-03-07 07:30:42,010 - src.evaluation - INFO - Confusion Matrix:
+# [[5893  151]
+#  [ 216 4564]]
