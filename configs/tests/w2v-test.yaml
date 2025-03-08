@@ -1,21 +1,22 @@
 # configs/tests/w2v-test.yaml
 
-usecase: "multilabel"
-# start_step: "model"
+usecase: "binary"
+start_step: "features"
 
 data_loader:
+  good_file: "data/raw/good.csv"
   promo_file: "data/raw/promotional.csv"
   shuffle: false
-  save: "loaded_data_nbm.csv"
+  save: "loaded_data_binary.csv"
 
 preprocessing:
   remove_non_word: true
   convert_lowercase: true
   remove_stopwords: true
-  apply_stemming: false
+  apply_stemming: true
   remove_numbers: false
   remove_whitespace: true
-  save: "preprocessed_data_nbm.csv"
+  save: "preprocessed_data_binary.csv"
 
 features:
   type: word2vec
@@ -28,30 +29,32 @@ features:
   negative: 5
   alpha: 0.025
   epochs: 1
-  save: "features_w2v.pkl"
+  save: "features_w2v_binary.pkl"
 
 model:
   type: naive_bayes
   test_size: 0.2
   random_state: 42
-  grid_search: false
-  alpha: 0.01
-  fit_prior: false
-  save: "nb_w2v.pkl"
+  grid_search: true
+  param_grid:
+    alpha: [0.01, 0.1, 0.5, 1.0, 1.5, 2.0, 2.5, 3.0]
+    fit_prior: [true, false]
+  save: "model_nb_w2v_binary.pkl"
 
 evaluation:
-  save: "evaluation_w2v.png"
-# 2025-01-29 22:56:13,096 - src.evaluation - INFO - Accuracy: 36.22%
-# 2025-01-29 22:56:13,102 - src.evaluation - INFO - Classification Report:
+  save: "evaluation_nb_w2v_binary.png"
+# 2025-03-08 08:33:21,473 - src.models.naive_bayes - INFO - Trained Naive Bayes model with {'alpha': 0.1, 'fit_prior': True}
+# 2025-03-08 08:33:21,482 - src.evaluation - INFO - Accuracy: 85.21%
+# 2025-03-08 08:33:21,487 - src.evaluation - INFO - Classification Report:
 #               precision    recall  f1-score   support
-#
-#            0       0.92      0.75      0.83      3773
-#            1       0.13      0.59      0.21       430
-#            2       0.25      0.85      0.39       296
-#            3       0.10      0.50      0.17       332
-#            4       0.33      0.85      0.47       415
-#
-#    micro avg       0.44      0.73      0.55      5246
-#    macro avg       0.35      0.71      0.41      5246
-# weighted avg       0.72      0.73      0.68      5246
-#  samples avg       0.55      0.74      0.60      5246
+
+#            0       0.86      0.87      0.87      6044
+#            1       0.84      0.82      0.83      4780
+
+#     accuracy                           0.85     10824
+#    macro avg       0.85      0.85      0.85     10824
+# weighted avg       0.85      0.85      0.85     10824
+
+# 2025-03-08 08:33:21,489 - src.evaluation - INFO - Confusion Matrix:
+# [[5283  761]
+#  [ 840 3940]]
