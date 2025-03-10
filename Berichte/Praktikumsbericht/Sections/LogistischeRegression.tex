@@ -1,3 +1,5 @@
+\subsection{Logistische Regression}
+\label{Logistische Regression}
 \subsubsection{Binäre Klassifikation}
 Um Artikel als \textit{„good“} oder \textit{„promotional“} zu kategorisieren, wurde eine logistische Regression mit L1-Regularisierung eingesetzt, um eine robuste Modellierung und Merkmalsselektion zu ermöglichen. Zunächst wurde der gegebene Datensatz gemäß der eingesetzten Pipeline vorverarbeitet. Zur numerischen Darstellung der Texte wurde eine \textit{TF-IDF-Vektorisierung} angewandt. Hierbei wurden verschiedene Konfigurationen getestet, darunter unterschiedliche \textit{ngram}-Bereiche und eine Begrenzung der maximalen Merkmalsanzahl. Die Daten wurden anschließend in Trainings- und Testmengen aufgeteilt.\\
 Das Modell wurde mit einer logistischen Regression mit L1-Regularisierung trainiert. Um die optimale Hyperparameter-Kombination zu finden, wurde ein \textit{GridSearchCV}-Verfahren mit Kreuzvalidierung eingesetzt. Hierbei wurden verschiedene Werte für den Regularisierungsparameter \(C\) sowie unterschiedliche \textit{ngram}-Bereiche getestet. \\

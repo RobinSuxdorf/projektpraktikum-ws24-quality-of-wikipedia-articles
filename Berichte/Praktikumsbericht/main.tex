@@ -35,9 +35,9 @@
 \newcommand{\fscore}{\operatorname{F1}}
 
 %%%% Author and Title Information %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\author{Robin Suxdorf \and Sebastian Bunge \and Johannes Kr\"amer \and Emmanuelle Steenhof \and Alexander Kunze}
+\author{Robin Suxdorf \and Sebastian Bunge \and Johannes Krämer \and Emmanuelle Steenhof \and Alexander Kunze}
 
-\title{Web Science - Die Qualit\"at von Wikipedia-Artikeln}
+\title{Web Science - Die Qualität von Wikipedia-Artikeln}
 
 %%%% Abstract %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -60,7 +60,7 @@ Erstmal nur ein Draft. Inhalte werden weiter abgestimmt.
 
 \input{Sections/AnteilSebastian}
 
-\subsection{Johannes Kr\"amer}
+\subsection{Johannes Krämer}
 \input{Sections/AnteilJohannes}
 
 \subsection{Alexander Kunze}
@@ -82,28 +82,24 @@ Erstmal nur ein Draft. Inhalte werden weiter abgestimmt.
 \label{Datensatz}
 \input{Sections/Datensatz}
 
-\section{Ans\"atze}
+\section{Ansätze}
 \label{sec:Ansaetze}
-Nachdem die Problemstellung identifiziert wurde, bestand die n\"achste Aufgabe darin, geeignete Ans\"atze auszuw\"ahlen. Im Rahmen des Projektpraktikums wurden drei klassische Lernverfahren sowie ein Deep-Learning-Ansatz eingesetzt. Aufbauend auf diesen Ans\"atzen wurde ein f\"unfter Ansatz entwickelt, der gezielt die Schw\"achen der vorangegangenen Verfahren beheben sollte. Im Folgenden wird erl\"autert, welche Techniken hinsichtlich der Vorverarbeitung und Repr\"asentation der Daten eingesetzt wurden. Anschließend werden die verwendeten Machine-Learning- und Deep-Learning-Ans\"atze vorgestellt.
+Nachdem die Problemstellung identifiziert wurde, bestand die nächste Aufgabe darin, geeignete Ansätze auszuwählen. Im Rahmen des Projektpraktikums wurden drei klassische Lernverfahren sowie ein Deep-Learning-Ansatz eingesetzt. Aufbauend auf diesen Ansätzen wurde ein fünfter Ansatz entwickelt, der gezielt die Schwächen der vorangegangenen Verfahren beheben sollte. Im Folgenden wird erläutert, welche Techniken hinsichtlich der Vorverarbeitung und Repräsentation der Daten eingesetzt wurden. Anschließend werden die verwendeten Machine-Learning- und Deep-Learning-Ansätze vorgestellt.
 
 \input{Sections/Vorverarbeitung}
 
+\input{Sections/LogistischeRegression}
+
 \input{Sections/BayesKlassifikator}
 
-\subsection{Support Vector Machine}
-\label{SVM}
 \input{Sections/SVM}
-
-\subsection{Logistische Regression}
-\label{Logistische Regression}
-\input{Sections/LogistischeRegression}
 
 \subsection{Convolutional Neural Network}
 \label{CNN}
 \input{Sections/CNN}
 %Als Deep Learning Verfahren wurden Convolutional Neural Networks (CNN) verwendet. Zunächst war die Idee ein Neuronales Netz mit Rückkoppelung zu verwenden. Da das aber zu schlechten Ergebnissen führte wurden versuche mit einem Convolutional Neural Network gestartet. Diese hatten einen grösseren Erfolg, was dazu geführt hat, dass diese weiter als Ansatz verwendet worden sind.
 
-\subsection{F\"unfter Ansatz}
+\subsection{Fünfter Ansatz}
 \label{Transformer}
 \input{Sections/EigenerAnsatz}
 
