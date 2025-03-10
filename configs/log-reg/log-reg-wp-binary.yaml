@@ -6,6 +6,7 @@ start_step: "model"
 data_loader:
   good_file: "data/wp/good_sample.csv"
   promo_file: "data/wp/promotional_sample.csv"
+  neutral_file: "data/wp/neutral_sample.csv"
   shuffle: false
   save: "loaded_data_wp_binary.csv"
 
@@ -40,18 +41,20 @@ model:
 
 evaluation:
   save: "evaluation_lr_wp_binary.png"
-# 2025-03-07 06:37:33,061 - src.models.logistic_regression - INFO - Trained LogisticRegression model with {'max_iter': 1000, 'penalty': 'l1', 'solver': 'liblinear'}
-# 2025-03-07 06:37:33,073 - src.evaluation - INFO - Accuracy: 97.96%
-# 2025-03-07 06:37:33,079 - src.evaluation - INFO - Classification Report:
+# 2025-03-10 21:42:46,790 - src.models.logistic_regression - INFO - Trained LogisticRegression model with {'max_iter': 500, 'penalty': 'l1', 'solver': 'saga'}
+# 2025-03-10 21:42:46,819 - src.evaluation - INFO - Accuracy: 89.65%
+# 2025-03-10 21:42:46,825 - src.evaluation - INFO - Classification Report:
 #               precision    recall  f1-score   support
 
-#            0       0.98      0.98      0.98      5909
-#            1       0.98      0.98      0.98      6091
+#            0       0.93      0.96      0.94      5942
+#            1       0.89      0.89      0.89      6060
+#            2       0.87      0.84      0.86      5998
 
-#     accuracy                           0.98     12000
-#    macro avg       0.98      0.98      0.98     12000
-# weighted avg       0.98      0.98      0.98     12000
+#     accuracy                           0.90     18000
+#    macro avg       0.90      0.90      0.90     18000
+# weighted avg       0.90      0.90      0.90     18000
 
-# 2025-03-07 06:37:33,081 - src.evaluation - INFO - Confusion Matrix:
-# [[5810   99]
-#  [ 146 5945]]
+# 2025-03-10 21:42:46,827 - src.evaluation - INFO - Confusion Matrix:
+# [[5733   59  150]
+#  [ 116 5369  575]
+#  [ 348  615 5035]]

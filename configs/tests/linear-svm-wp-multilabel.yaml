@@ -1,4 +1,4 @@
-# configs/svm/linear-svm-wp-multilabel.yaml
+# configs/tests/linear-svm-wp-multilabel.yaml
 
 usecase: "multilabel"
 start_step: "model"

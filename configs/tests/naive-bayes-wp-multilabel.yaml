@@ -1,4 +1,4 @@
-# configs/naive-bayes/naive-bayes-wp-multilabel.yaml
+# configs/tests/naive-bayes-wp-multilabel.yaml
 
 uusecase: "multilabel"
 start_step: "model"

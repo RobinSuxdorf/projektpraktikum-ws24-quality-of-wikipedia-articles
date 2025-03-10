@@ -1,4 +1,4 @@
-# configs/log-reg/log-reg-wp-multilabel.yaml
+# configs/tests/log-reg-wp-multilabel.yaml
 
 uusecase: "multilabel"
 start_step: "model"

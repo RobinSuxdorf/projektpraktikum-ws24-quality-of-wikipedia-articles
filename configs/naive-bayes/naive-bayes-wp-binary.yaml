@@ -6,6 +6,7 @@ start_step: "model"
 data_loader:
   good_file: "data/wp/good_sample.csv"
   promo_file: "data/wp/promotional_sample.csv"
+  neutral_file: "data/wp/neutral_sample.csv"
   shuffle: false
   save: "loaded_data_wp_binary.csv"
 
@@ -39,18 +40,20 @@ model:
 
 evaluation:
   save: "evaluation_nb_wp_binary.png"
-# 2025-03-07 00:35:10,265 - src.models.naive_bayes - INFO - Trained Naive Bayes model with {'alpha': 0.5, 'fit_prior': False}
-# 2025-03-07 00:35:10,289 - src.evaluation - INFO - Accuracy: 93.27%
-# 2025-03-07 00:35:10,295 - src.evaluation - INFO - Classification Report:
+# 2025-03-10 20:41:47,264 - src.models.naive_bayes - INFO - Trained Naive Bayes model with {'alpha': 2.5, 'fit_prior': True}
+# 2025-03-10 20:41:47,308 - src.evaluation - INFO - Accuracy: 79.51%
+# 2025-03-10 20:41:47,315 - src.evaluation - INFO - Classification Report:
 #               precision    recall  f1-score   support
 
-#            0       0.92      0.95      0.93      5909
-#            1       0.95      0.92      0.93      6091
+#            0       0.79      0.86      0.82      5942
+#            1       0.80      0.86      0.83      6060
+#            2       0.80      0.66      0.72      5998
 
-#     accuracy                           0.93     12000
-#    macro avg       0.93      0.93      0.93     12000
-# weighted avg       0.93      0.93      0.93     12000
+#     accuracy                           0.80     18000
+#    macro avg       0.80      0.80      0.79     18000
+# weighted avg       0.80      0.80      0.79     18000
 
-# 2025-03-07 00:35:10,297 - src.evaluation - INFO - Confusion Matrix:
-# [[5592  317]
-#  [ 491 5600]]
+# 2025-03-10 20:41:47,317 - src.evaluation - INFO - Confusion Matrix:
+# [[5136  300  506]
+#  [ 368 5223  469]
+#  [1012 1033 3953]]
