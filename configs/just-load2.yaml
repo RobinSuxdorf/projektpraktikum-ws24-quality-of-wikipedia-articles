@@ -1,4 +1,4 @@
-usecase: "binary"
+usecase: "multilabel"
 
 data_loader:
   good_file: "/Users/robinsuxdorf/Documents/Uni/FernUni Hagen/4. Semester/Projektpraktikum/github/good.csv"

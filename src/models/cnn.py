@@ -150,17 +150,11 @@ def multilabel_predict_fn(logits: torch.Tensor) -> torch.Tensor:
 class MultilabelCNNModel(BaseCNNModel):
     def __init__(
         self,
-        embedding_dim: int,
-        num_filters: int,
-        filter_sizes: list[int],
-        max_length: int,
+        input_dim: int,
         dropout: float = 0.5,
     ) -> None:
         super().__init__(
-            embedding_dim=embedding_dim,
-            num_filters=num_filters,
-            filter_sizes=filter_sizes,
-            max_length=max_length,
+            input_dim=input_dim,
             num_classes=5,
             dropout=dropout,
             criterion=nn.BCEWithLogitsLoss(),
