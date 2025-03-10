@@ -15,17 +15,16 @@ from src.wikipedia_article_dataset import WikipediaArticleDataset
 from .base import Model
 
 
-class CNN(nn.Module):
+class NeuralNetwork(nn.Module):
     def __init__(
         self,
         input_dim: int,
-        num_classes: int,
-        dropout: float = 0.5
+        num_classes: int
     ) -> None:
         super().__init__()
         self.fc1 = nn.Linear(input_dim, 512)
         self.fc2 = nn.Linear(512, num_classes)
-        self.dropout = nn.Dropout(dropout)
+        self.dropout = nn.Dropout(0.5)
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:
         x = F.relu(self.fc1(x))
@@ -33,21 +32,19 @@ class CNN(nn.Module):
         x = self.fc2(x)
         return x
 
-class BaseCNNModel(Model):
+class BaseNeuralNetworkModel(Model):
     def __init__(
         self,
         input_dim: int,
         num_classes: int,
-        dropout: float,
         criterion: nn.Module,
         predict_fn: Callable[[torch.Tensor], torch.Tensor],
         label_dtype: torch.dtype,
     ) -> None:
         self._tokenizer = tiktoken.get_encoding("cl100k_base")
-        self._model = CNN(
+        self._model = NeuralNetwork(
             input_dim=input_dim,
-            num_classes=num_classes,
-            dropout=dropout,
+            num_classes=num_classes
         )
         self._device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
         self._model.to(self._device)
@@ -126,16 +123,14 @@ def binary_predict_fn(logits: torch.Tensor) -> torch.Tensor:
     return torch.argmax(logits, dim=1)
 
 
-class CNNModel(BaseCNNModel):
+class BinaryNeuralNetworkModel(BaseNeuralNetworkModel):
     def __init__(
         self,
-        input_dim: int,
-        dropout: float = 0.5,
+        input_dim: int
     ) -> None:
         super().__init__(
             input_dim=input_dim,
             num_classes=2,
-            dropout=dropout,
             criterion=nn.CrossEntropyLoss(),
             predict_fn=binary_predict_fn,
             label_dtype=torch.long,
@@ -147,16 +142,14 @@ def multilabel_predict_fn(logits: torch.Tensor) -> torch.Tensor:
     return (probs > 0.5).int()
 
 
-class MultilabelCNNModel(BaseCNNModel):
+class MultilabelNeuralNetworkModel(BaseNeuralNetworkModel):
     def __init__(
         self,
-        input_dim: int,
-        dropout: float = 0.5,
+        input_dim: int
     ) -> None:
         super().__init__(
             input_dim=input_dim,
             num_classes=5,
-            dropout=dropout,
             criterion=nn.BCEWithLogitsLoss(),
             predict_fn=multilabel_predict_fn,
             label_dtype=torch.float,

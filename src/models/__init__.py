@@ -14,7 +14,7 @@ from .support_vector_machine import (
 )
 from .logistic_regression import Logistic_Regression, MultilabelLogisticRegression
 
-from .cnn import CNNModel, MultilabelCNNModel
+from .deep_learning import BinaryNeuralNetworkModel, MultilabelNeuralNetworkModel
 
 __all__ = [
     "Model",
@@ -29,6 +29,6 @@ __all__ = [
     "MultilabelSupportVectorMachine",
     "Logistic_Regression",
     "MultilabelLogisticRegression",
-    "CNNModel",
-    "MultilabelCNNModel"
+    "BinaryNeuralNetworkModel",
+    "MultilabelNeuralNetworkModel"
 ]
