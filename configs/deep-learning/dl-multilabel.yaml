@@ -1,8 +1,8 @@
 usecase: "multilabel"
 
 data_loader:
-  good_file: "/Users/robinsuxdorf/Documents/Uni/FernUni Hagen/4. Semester/Projektpraktikum/github/good.csv"
-  promo_file: "/Users/robinsuxdorf/Documents/Uni/FernUni Hagen/4. Semester/Projektpraktikum/github/promotional.csv"
+  good_file: "data/raw/good.csv"
+  promo_file: "data/raw/promotional.csv"
   shuffle: false
   nrows: 1000
   save: "loaded_data_binary.csv"
