@@ -1,4 +1,4 @@
-# configs/naive-bayes-augmented.yaml
+# configs/naive-bayes/naive-bayes-augmented.yaml
 
 usecase: "multilabel"
 start_step: "model"
@@ -32,16 +32,15 @@ model:
   random_state: 42
   grid_search: true
   param_grid:
-    alpha: [0.01, 0.1, 0.5, 1.0, 1.5, 2.0]
+    alpha: [0.01, 0.1, 0.5, 1.0, 1.5, 2.0, 2.5, 3.0]
     fit_prior: [true, false]
-  oversampling: false
-  save: "naive_bayes_augmented.pkl"
+  save: "model_nb_augmented.pkl"
 
 evaluation:
-  save: "evaluation_nbm.png"
-# 2025-03-03 16:36:20,780 - src.models.naive_bayes - INFO - Trained Multilabel Naive Bayes model parameters: alpha=0.1, fit_prior=False
-# 2025-03-03 16:36:20,840 - src.evaluation - INFO - Accuracy: 31.07%
-# 2025-03-03 16:36:20,848 - src.evaluation - INFO - Classification Report:
+  save: "evaluation_nb_augmented.png"
+# 2025-03-07 00:46:05,800 - src.models.naive_bayes - INFO - Trained Naive Bayes model with {'estimator__alpha': 0.1, 'estimator__fit_prior': False}
+# 2025-03-07 00:46:05,838 - src.evaluation - INFO - Accuracy: 31.07%
+# 2025-03-07 00:46:05,845 - src.evaluation - INFO - Classification Report:
 #               precision    recall  f1-score   support
 
 #            0       0.82      0.73      0.77      4591
@@ -55,7 +54,7 @@ evaluation:
 # weighted avg       0.61      0.75      0.64      8978
 #  samples avg       0.55      0.76      0.61      8978
 
-# 2025-03-03 16:36:20,851 - src.evaluation - INFO - Confusion Matrix:
+# 2025-03-07 00:46:05,847 - src.evaluation - INFO - Confusion Matrix:
 # [[[2227  711]
 #   [1244 3347]]
 

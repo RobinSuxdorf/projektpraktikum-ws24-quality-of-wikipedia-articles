@@ -78,7 +78,6 @@ def run_model_pipeline(config: dict) -> None:
     Args:
         config (dict): Configuration dictionary.
     """
-
     start_step = PipelineStep.from_string(config.get("start_step", "data_loader"))
 
     features, labels = run_preprocessing_pipeline(config)

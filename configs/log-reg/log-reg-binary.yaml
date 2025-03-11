@@ -1,4 +1,4 @@
-# configs/log-reg-binary.yaml
+# configs/log-reg/log-reg-binary.yaml
 
 usecase: "binary"
 start_step: "model"
@@ -31,25 +31,27 @@ model:
   type: logistic_regression
   test_size: 0.2
   random_state: 42
-  grid_search: false
-  penalty: "l1"
-  solver: "liblinear"
-  max_iter: 500
-  save: "log_reg_binary.pkl"
+  grid_search: true
+  param_grid:
+    penalty: ["l1", "l2"]
+    solver: ["liblinear", "saga"]
+    max_iter: [500, 1000]
+  save: "model_lr_binary.pkl"
 
 evaluation:
-  save: "evaluation_lrb.png"
-# 2025-03-03 17:16:41,752 - src.evaluation - INFO - Accuracy: 96.00%
-# 2025-03-03 17:16:41,758 - src.evaluation - INFO - Classification Report:
+  save: "evaluation_lr_binary.png"
+# 2025-03-06 23:11:02,890 - src.models.logistic_regression - INFO - Trained LogisticRegression model with {'max_iter': 500, 'penalty': 'l2', 'solver': 'liblinear'}
+# 2025-03-06 23:11:02,898 - src.evaluation - INFO - Accuracy: 96.17%
+# 2025-03-06 23:11:02,903 - src.evaluation - INFO - Classification Report:
 #               precision    recall  f1-score   support
 
-#            0       0.96      0.97      0.96      6044
-#            1       0.96      0.95      0.95      4780
+#            0       0.96      0.97      0.97      6044
+#            1       0.96      0.95      0.96      4780
 
 #     accuracy                           0.96     10824
 #    macro avg       0.96      0.96      0.96     10824
 # weighted avg       0.96      0.96      0.96     10824
 
-# 2025-03-03 17:16:41,760 - src.evaluation - INFO - Confusion Matrix:
-# [[5860  184]
-#  [ 249 4531]]
+# 2025-03-06 23:11:02,905 - src.evaluation - INFO - Confusion Matrix:
+# [[5879  165]
+#  [ 250 4530]]

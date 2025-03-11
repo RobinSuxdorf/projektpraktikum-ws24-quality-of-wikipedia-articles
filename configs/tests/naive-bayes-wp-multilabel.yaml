@@ -1,0 +1,71 @@
+# configs/tests/naive-bayes-wp-multilabel.yaml
+
+uusecase: "multilabel"
+start_step: "model"
+
+data_loader:
+  promo_file: "data/wp/promotional_sample.csv"
+  shuffle: false
+  save: "loaded_data_wp_multilabel.csv"
+
+preprocessing:
+  remove_non_word: true
+  convert_lowercase: true
+  remove_stopwords: true
+  apply_stemming: true
+  remove_numbers: false
+  remove_whitespace: true
+  save: "preprocessed_data_wp_multilabel.csv"
+
+features:
+  type: tfidf
+  ngram_range: [1, 1]
+  max_df: 0.9
+  min_df: 0.001
+  max_features: 10_000
+  sublinear_tf: true
+  save: "features_wp_multilabel.pkl"
+
+model:
+  type: naive_bayes
+  test_size: 0.2
+  random_state: 42
+  grid_search: true
+  param_grid:
+    alpha: [0.01, 0.1, 0.5, 1.0, 1.5, 2.0, 2.5, 3.0]
+    fit_prior: [true, false]
+  save: "model_nb_wp_multilabel.pkl"
+
+evaluation:
+  save: "evaluation_nb_wp_multilabel.png"
+# 2025-03-07 06:15:16,291 - src.models.naive_bayes - INFO - Trained Naive Bayes model with {'estimator__alpha': 0.1, 'estimator__fit_prior': False}
+# 2025-03-07 06:15:16,338 - src.evaluation - INFO - Accuracy: 30.78%
+# 2025-03-07 06:15:16,345 - src.evaluation - INFO - Classification Report:
+#               precision    recall  f1-score   support
+
+#            0       0.72      0.71      0.71      3031
+#            1       0.51      0.59      0.55      2380
+#            2       0.08      0.81      0.15       117
+#            3       0.03      0.20      0.05       113
+#            4       0.33      0.78      0.47       717
+
+#    micro avg       0.45      0.66      0.54      6358
+#    macro avg       0.33      0.62      0.39      6358
+# weighted avg       0.57      0.66      0.60      6358
+#  samples avg       0.51      0.67      0.56      6358
+
+# 2025-03-07 06:15:16,347 - src.evaluation - INFO - Confusion Matrix:
+# [[[2140  829]
+#   [ 892 2139]]
+
+#  [[2241 1379]
+#   [ 969 1411]]
+
+#  [[4824 1059]
+#   [  22   95]]
+
+#  [[5090  797]
+#   [  90   23]]
+
+#  [[4172 1111]
+#   [ 158  559]]]

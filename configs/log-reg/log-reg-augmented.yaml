@@ -1,4 +1,4 @@
-# configs/log-reg-augmented.yaml
+# configs/log-reg/log-reg-augmented.yaml
 
 usecase: "multilabel"
 start_step: "model"
@@ -30,17 +30,18 @@ model:
   type: logistic_regression
   test_size: 0.2
   random_state: 42
-  grid_search: false
-  penalty: "l1"
-  solver: "liblinear"
-  max_iter: 500
-  oversampling: false
-  save: "log_reg_augmented.pkl"
+  grid_search: true
+  param_grid:
+    penalty: ["l1", "l2"]
+    solver: ["liblinear", "saga"]
+    max_iter: [500, 1000]
+  save: "model_lr_augmented.pkl"
 
 evaluation:
-  save: "evaluation_lrma.png"
-# 2025-03-03 16:10:58,132 - src.evaluation - INFO - Accuracy: 55.51%
-# 2025-03-03 16:10:58,143 - src.evaluation - INFO - Classification Report:
+  save: "evaluation_lr_augmented.png"
+# 2025-03-06 23:19:23,993 - src.models.logistic_regression - INFO - Trained LogisticRegression model with {'estimator__max_iter': 500, 'estimator__penalty': 'l1', 'estimator__solver': 'liblinear'}
+# 2025-03-06 23:19:24,011 - src.evaluation - INFO - Accuracy: 55.51%
+# 2025-03-06 23:19:24,018 - src.evaluation - INFO - Classification Report:
 #               precision    recall  f1-score   support
 
 #            0       0.83      0.87      0.85      4591
@@ -54,11 +55,11 @@ evaluation:
 # weighted avg       0.76      0.61      0.63      8978
 #  samples avg       0.69      0.65      0.66      8978
 
-# 2025-03-03 16:10:58,146 - src.evaluation - INFO - Confusion Matrix:
+# 2025-03-06 23:19:24,020 - src.evaluation - INFO - Confusion Matrix:
 # [[[2098  840]
 #   [ 610 3981]]
 
-#  [[6135  111]
+#  [[6136  110]
 #   [1129  154]]
 
 #  [[6516  134]

@@ -1,3 +1,5 @@
+# src/wp/categorized_page.py
+
 import re
 from dataclasses import dataclass
 

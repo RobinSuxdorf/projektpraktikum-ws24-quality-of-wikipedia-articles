@@ -1,0 +1,71 @@
+# configs/svm/linear-svm-augmented.yaml
+
+usecase: "multilabel"
+start_step: "model"
+
+data_loader:
+  promo_file: "data/raw/augmented_promotional.csv"
+  shuffle: false
+  save: "loaded_data_augmented.csv"
+
+preprocessing:
+  remove_non_word: true
+  convert_lowercase: true
+  remove_stopwords: true
+  apply_stemming: true
+  remove_numbers: false
+  remove_whitespace: true
+  save: "preprocessed_data_augmented.csv"
+
+features:
+  type: tfidf
+  ngram_range: [1, 1]
+  max_df: 0.9
+  min_df: 0.001
+  max_features: 10_000
+  sublinear_tf: true
+  save: "features_augmented.pkl"
+
+model:
+  type: linear_svm
+  test_size: 0.2
+  random_state: 42
+  grid_search: true
+  param_grid:
+    C: [0.1, 1.0, 10.0, 100.0]
+    loss: ["hinge", "squared_hinge"]
+  save: "model_lsvm_augmented.pkl"
+
+evaluation:
+  save: "evaluation_lsvm_augmented.png"
+# 2025-03-07 06:49:06,890 - src.models.support_vector_machine - INFO - Trained LinearSVC model with {'estimator__C': 100.0, 'estimator__loss': 'hinge'}
+# 2025-03-07 06:49:06,904 - src.evaluation - INFO - Accuracy: 72.09%
+# 2025-03-07 06:49:06,911 - src.evaluation - INFO - Classification Report:
+#               precision    recall  f1-score   support
+
+#            0       0.93      0.83      0.87      4591
+#            1       0.65      0.89      0.75      1283
+#            2       0.85      0.98      0.91       879
+#            3       0.69      0.92      0.79       934
+#            4       0.84      0.97      0.90      1291
+
+#    micro avg       0.82      0.88      0.85      8978
+#    macro avg       0.79      0.92      0.85      8978
+# weighted avg       0.84      0.88      0.86      8978
+#  samples avg       0.82      0.87      0.83      8978
+
+# 2025-03-07 06:49:06,913 - src.evaluation - INFO - Confusion Matrix:
+# [[[2633  305]
+#   [ 797 3794]]
+
+#  [[5635  611]
+#   [ 136 1147]]
+
+#  [[6500  150]
+#   [  14  865]]
+
+#  [[6217  378]
+#   [  75  859]]
+
+#  [[6003  235]
+#   [  43 1248]]]

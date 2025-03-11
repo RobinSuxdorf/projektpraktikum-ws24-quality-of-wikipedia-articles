@@ -1,4 +1,4 @@
-# configs/naive-bayes-binary.yaml
+# configs/naive-bayes/naive-bayes-binary.yaml
 
 usecase: "binary"
 start_step: "model"
@@ -33,15 +33,15 @@ model:
   random_state: 42
   grid_search: true
   param_grid:
-    alpha: [0.01, 0.1, 0.5, 1.0, 1.5, 2.0]
+    alpha: [0.01, 0.1, 0.5, 1.0, 1.5, 2.0, 2.5, 3.0]
     fit_prior: [true, false]
-  save: "naive_bayes_binary.pkl"
+  save: "model_nb_binary.pkl"
 
 evaluation:
-  save: "evaluation_nbb.png"
-# 2025-03-03 17:17:32,750 - src.models.naive_bayes - INFO - Trained Naive Bayes model parameters: alpha=2.0, fit_prior=False
-# 2025-03-03 17:17:32,766 - src.evaluation - INFO - Accuracy: 90.88%
-# 2025-03-03 17:17:32,771 - src.evaluation - INFO - Classification Report:
+  save: "evaluation_nb_binary.png"
+# 2025-03-07 00:46:31,970 - src.models.naive_bayes - INFO - Trained Naive Bayes model with {'alpha': 1.5, 'fit_prior': False}
+# 2025-03-07 00:46:31,987 - src.evaluation - INFO - Accuracy: 90.85%
+# 2025-03-07 00:46:31,994 - src.evaluation - INFO - Classification Report:
 #               precision    recall  f1-score   support
 
 #            0       0.91      0.93      0.92      6044
@@ -51,6 +51,6 @@ evaluation:
 #    macro avg       0.91      0.91      0.91     10824
 # weighted avg       0.91      0.91      0.91     10824
 
-# 2025-03-03 17:17:32,773 - src.evaluation - INFO - Confusion Matrix:
-# [[5607  437]
-#  [ 550 4230]]
+# 2025-03-07 00:46:31,996 - src.evaluation - INFO - Confusion Matrix:
+# [[5613  431]
+#  [ 559 4221]]
