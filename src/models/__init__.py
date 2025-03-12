@@ -20,6 +20,8 @@ from .logistic_regression import (
     MultilabelLogisticRegressionGridSearch,
 )
 
+from .deep_learning import BinaryNeuralNetworkModel, MultilabelNeuralNetworkModel
+
 __all__ = [
     "Model",
     "NaiveBayes",
@@ -36,4 +38,6 @@ __all__ = [
     "LogisticRegressionGridSearch",
     "MultilabelLogisticRegression",
     "MultilabelLogisticRegressionGridSearch",
+    "BinaryNeuralNetworkModel", 
+    "MultilabelNeuralNetworkModel"
 ]
