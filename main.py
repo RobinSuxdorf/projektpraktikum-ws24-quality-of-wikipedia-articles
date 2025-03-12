@@ -1,5 +1,6 @@
 import logging
 import sys
+import pandas as pd
 from sklearn.model_selection import train_test_split
 from src import (
     PipelineStep,
@@ -81,14 +82,31 @@ def run_model_pipeline(config: dict) -> None:
     start_step = PipelineStep.from_string(config.get("start_step", "data_loader"))
 
     features, labels = run_preprocessing_pipeline(config)
+    evaluation_config = config.get("evaluation")
+
+    if evaluation_config.get("test_data"):
+        logger.info(f"Loading test data from file: {evaluation_config['test_data']}")
+        test_data = pd.read_csv(evaluation_config["test_data"])
+        test_data = test_data.drop(columns=["url", "id", "title"], errors="ignore")
+        preprocessing_config = config.get("preprocessing")
+        test_data["cleaned_text"] = preprocess_text_series(
+            test_data["text"], preprocessing_config
+        )
+        test_data = test_data.drop(columns=["text"])
+        x_test = get_features(test_data["cleaned_text"], config.get("features"))
+        y_test = test_data.drop(columns=["cleaned_text"])
+        x_train = features
+        y_train = labels
+    else:
+        model_config = config.get("model")
+        x_train, x_test, y_train, y_test = train_test_split(
+            features,
+            labels,
+            test_size=model_config.get("test_size", 0.2),
+            random_state=model_config.get("random_state", None),
+        )
 
     model_config = config.get("model")
-    x_train, x_test, y_train, y_test = train_test_split(
-        features,
-        labels,
-        test_size=model_config.get("test_size", 0.2),
-        random_state=model_config.get("random_state", None),
-    )
     model_file = model_config["save"]
     if start_step <= PipelineStep.MODEL:
         model = train_model(x_train, y_train, model_config)
@@ -98,7 +116,6 @@ def run_model_pipeline(config: dict) -> None:
         model = load_from_file(model_file, "model")
 
     if start_step <= PipelineStep.EVALUATION:
-        evaluation_config = config.get("evaluation")
         figure = evaluate_model(model, x_test, y_test)
         save_to_file(figure, evaluation_config["save"])
 
