@@ -85,32 +85,32 @@ class ModelPerformanceVisualizer:
 if __name__ == "__main__":
     sample_data = {
         "Logistic Regression": {
-            "Kaggle Binary": 0.96,
-            "Wikimedia Multiclass": 0.90,
+            # "Kaggle Binary": 0.96,
+            # "Wikimedia Multiclass": 0.90,
             "Kaggle Multilabel": 0.32,
             "Augmented Multilabel": 0.15,
         },
         "Naive Bayes": {
-            "Kaggle Binary": 0.91,
-            "Wikimedia Multiclass": 0.80,
+            # "Kaggle Binary": 0.91,
+            # "Wikimedia Multiclass": 0.80,
             "Kaggle Multilabel": 0.65,
             "Augmented Multilabel": 0.13,
         },
         "Linear SVM": {
-            "Kaggle Binary": 0.96,
-            "Wikimedia Multiclass": 0.90,
+            # "Kaggle Binary": 0.96,
+            # "Wikimedia Multiclass": 0.90,
             "Kaggle Multilabel": 0.38,
             "Augmented Multilabel": 0.25,
         },
-        "CNN": {
-            "Kaggle Binary": 0.50,
-            "Wikimedia Multiclass": 0.33,
+        "Deep Learning": {
+            # "Kaggle Binary": 0.50,
+            # "Wikimedia Multiclass": 0.33,
             "Kaggle Multilabel": 0.20,
             "Augmented Multilabel": 0.20,
         },
         "Transformer": {
-            "Kaggle Binary": 0.50,
-            "Wikimedia Multiclass": 0.33,
+            # "Kaggle Binary": 0.50,
+            # "Wikimedia Multiclass": 0.33,
             "Kaggle Multilabel": 0.20,
             "Augmented Multilabel": 0.20,
         },
