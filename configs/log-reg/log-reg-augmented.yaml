@@ -38,35 +38,36 @@ model:
   save: "model_lr_augmented.pkl"
 
 evaluation:
+  test_data: "data/raw/promotional.csv"
   save: "evaluation_lr_augmented.png"
-# 2025-03-06 23:19:23,993 - src.models.logistic_regression - INFO - Trained LogisticRegression model with {'estimator__max_iter': 500, 'estimator__penalty': 'l1', 'estimator__solver': 'liblinear'}
-# 2025-03-06 23:19:24,011 - src.evaluation - INFO - Accuracy: 55.51%
-# 2025-03-06 23:19:24,018 - src.evaluation - INFO - Classification Report:
+# 2025-03-12 22:44:27,599 - src.models.logistic_regression - INFO - Trained LogisticRegression model with {'estimator__max_iter': 500, 'estimator__penalty': 'l2', 'estimator__solver': 'liblinear'}
+# 2025-03-12 22:44:27,642 - src.evaluation - INFO - Accuracy: 52.99%
+# 2025-03-12 22:44:27,653 - src.evaluation - INFO - Classification Report:
 #               precision    recall  f1-score   support
 
-#            0       0.83      0.87      0.85      4591
-#            1       0.58      0.12      0.20      1283
-#            2       0.78      0.53      0.63       879
-#            3       0.68      0.05      0.10       934
-#            4       0.75      0.64      0.69      1291
+#            0       0.80      0.75      0.77     18911
+#            1       0.25      0.00      0.00      2142
+#            2       0.00      0.00      0.00      1496
+#            3       0.00      0.00      0.00      1516
+#            4       0.44      0.00      0.00      2198
 
-#    micro avg       0.80      0.61      0.69      8978
-#    macro avg       0.72      0.44      0.49      8978
-# weighted avg       0.76      0.61      0.63      8978
-#  samples avg       0.69      0.65      0.66      8978
+#    micro avg       0.80      0.54      0.64     26263
+#    macro avg       0.30      0.15      0.15     26263
+# weighted avg       0.63      0.54      0.56     26263
+#  samples avg       0.59      0.56      0.57     26263
 
-# 2025-03-06 23:19:24,020 - src.evaluation - INFO - Confusion Matrix:
-# [[[2098  840]
-#   [ 610 3981]]
+# 2025-03-12 22:44:27,658 - src.evaluation - INFO - Confusion Matrix:
+# [[[ 1297  3629]
+#   [ 4791 14120]]
 
-#  [[6136  110]
-#   [1129  154]]
+#  [[21692     3]
+#   [ 2141     1]]
 
-#  [[6516  134]
-#   [ 411  468]]
+#  [[22341     0]
+#   [ 1496     0]]
 
-#  [[6572   23]
-#   [ 885   49]]
+#  [[22320     1]
+#   [ 1516     0]]
 
-#  [[5960  278]
-#   [ 464  827]]]
+#  [[21634     5]
+#   [ 2194     4]]]

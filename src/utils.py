@@ -73,7 +73,10 @@ def load_config(config_name: str) -> dict:
     Returns:
         dict: Configuration dictionary.
     """
-    config_path = os.path.join(CONFIGS_DIR, f"{config_name}.yaml")
+    if config_name.endswith(".yaml"):
+        config_path = os.path.join(CONFIGS_DIR, config_name)
+    else:
+        config_path = os.path.join(CONFIGS_DIR, f"{config_name}.yaml")
     logger.info(f"Loading config from {config_path}.")
     with open(config_path, "r") as file:
         config = yaml.safe_load(file)
