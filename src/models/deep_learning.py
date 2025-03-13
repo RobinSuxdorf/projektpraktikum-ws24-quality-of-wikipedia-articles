@@ -126,12 +126,11 @@ def binary_predict_fn(logits: torch.Tensor) -> torch.Tensor:
 class BinaryNeuralNetworkModel(BaseNeuralNetworkModel):
     def __init__(
         self,
-        input_dim: int,
-        num_classes: int = 2
+        input_dim: int
     ) -> None:
         super().__init__(
             input_dim=input_dim,
-            num_classes=num_classes,
+            num_classes=2,
             criterion=nn.CrossEntropyLoss(),
             predict_fn=binary_predict_fn,
             label_dtype=torch.long,
@@ -154,4 +153,20 @@ class MultilabelNeuralNetworkModel(BaseNeuralNetworkModel):
             criterion=nn.BCEWithLogitsLoss(),
             predict_fn=multilabel_predict_fn,
             label_dtype=torch.float,
+        )
+
+def multiclass_predict_fn(logits: torch.Tensor) -> torch.Tensor:
+    return torch.argmax(logits, dim=1)
+
+class MulticlassNeuralNetworkModel(BaseNeuralNetworkModel):
+    def __init__(
+        self,
+        input_dim: int
+    ) -> None:
+        super().__init__(
+            input_dim=input_dim,
+            num_classes=3,
+            criterion=nn.CrossEntropyLoss(),
+            predict_fn=multiclass_predict_fn,
+            label_dtype=torch.long,
         )
