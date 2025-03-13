@@ -37,35 +37,36 @@ model:
   save: "model_lsvm_augmented.pkl"
 
 evaluation:
+  test_data: "data/raw/promotional.csv"
   save: "evaluation_lsvm_augmented.png"
-# 2025-03-07 06:49:06,890 - src.models.support_vector_machine - INFO - Trained LinearSVC model with {'estimator__C': 100.0, 'estimator__loss': 'hinge'}
-# 2025-03-07 06:49:06,904 - src.evaluation - INFO - Accuracy: 72.09%
-# 2025-03-07 06:49:06,911 - src.evaluation - INFO - Classification Report:
+# 2025-03-12 22:50:42,296 - src.models.support_vector_machine - INFO - Trained LinearSVC model with {'estimator__C': 100.0, 'estimator__loss': 'hinge'}
+# 2025-03-12 22:50:42,339 - src.evaluation - INFO - Accuracy: 24.88%
+# 2025-03-12 22:50:42,353 - src.evaluation - INFO - Classification Report:
 #               precision    recall  f1-score   support
 
-#            0       0.93      0.83      0.87      4591
-#            1       0.65      0.89      0.75      1283
-#            2       0.85      0.98      0.91       879
-#            3       0.69      0.92      0.79       934
-#            4       0.84      0.97      0.90      1291
+#            0       0.79      0.55      0.65     18911
+#            1       0.10      0.19      0.13      2142
+#            2       0.07      0.09      0.08      1496
+#            3       0.06      0.15      0.09      1516
+#            4       0.10      0.26      0.14      2198
 
-#    micro avg       0.82      0.88      0.85      8978
-#    macro avg       0.79      0.92      0.85      8978
-# weighted avg       0.84      0.88      0.86      8978
-#  samples avg       0.82      0.87      0.83      8978
+#    micro avg       0.41      0.45      0.43     26263
+#    macro avg       0.23      0.25      0.22     26263
+# weighted avg       0.60      0.45      0.50     26263
+#  samples avg       0.38      0.46      0.40     26263
 
-# 2025-03-07 06:49:06,913 - src.evaluation - INFO - Confusion Matrix:
-# [[[2633  305]
-#   [ 797 3794]]
+# 2025-03-12 22:50:42,358 - src.evaluation - INFO - Confusion Matrix:
+# [[[ 2248  2678]
+#   [ 8532 10379]]
 
-#  [[5635  611]
-#   [ 136 1147]]
+#  [[17799  3896]
+#   [ 1728   414]]
 
-#  [[6500  150]
-#   [  14  865]]
+#  [[20626  1715]
+#   [ 1362   134]]
 
-#  [[6217  378]
-#   [  75  859]]
+#  [[18914  3407]
+#   [ 1292   224]]
 
-#  [[6003  235]
-#   [  43 1248]]]
+#  [[16564  5075]
+#   [ 1634   564]]]
