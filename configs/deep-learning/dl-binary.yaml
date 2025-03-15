@@ -24,3 +24,19 @@ features:
   max_features: 10_000
   sublinear_tf: true
   save: "features_binary.pkl"
+
+# 2025-03-15 22:44:15,364 - src.evaluation - INFO - Evaluating the model.
+# 2025-03-15 22:44:17,759 - src.evaluation - INFO - Accuracy: 96.06%
+# 2025-03-15 22:44:17,794 - src.evaluation - INFO - Classification Report:
+#               precision    recall  f1-score   support
+
+#            0       0.97      0.96      0.96      6044
+#            1       0.95      0.96      0.96      4780
+
+#     accuracy                           0.96     10824
+#    macro avg       0.96      0.96      0.96     10824
+# weighted avg       0.96      0.96      0.96     10824
+
+# 2025-03-15 22:44:17,803 - src.evaluation - INFO - Confusion Matrix:
+# [[5811  233]
+#  [ 194 4586]]
