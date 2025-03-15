@@ -144,25 +144,23 @@ University of Hagen, Germany}
 
 \begin{frame}{Easy Data Augmentation (EDA)}
     \begin{block}{Ziel und Methode}
-        \begin{itemize} 
-            \item Idee: Die Anwendung von Easy Data Augmentation (EDA), um durch augmentierte Daten die Anzahl der unterrepräsentierten Labels zu vergrößern.  
+        \begin{itemize}
+            \item Idee: Die Anwendung von Easy Data Augmentation (EDA), um durch augmentierte Daten die Anzahl der unterrepräsentierten Labels zu vergrößern.
         \end{itemize}
     \end{block}
 
     \begin{block}{Umsetzung}
         \begin{itemize}
-            \item Es wurden neue Texte aus den Originaltexten erstellt indem Synonyme hinzugefügt, zufällig Wortreihenfolgen getauscht und zufällig Wörter eingefügt bzw. gelöscht worden sind. 
+            \item Es wurden neue Texte aus den Originaltexten erstellt indem Synonyme hinzugefügt, zufällig Wortreihenfolgen getauscht und zufällig Wörter eingefügt bzw. gelöscht worden sind.
         \end{itemize}
     \end{block}
 
-    \begin{block}{Ergebnisse}
+    \begin{alertblock}{Ergebnisse}
         \begin{itemize}
-            \item Auf dem augmentierten Datensatz trainierte Modelle verbesserten sich signifikant, wenn auf den augmentierten Daten getestet worden ist. Das augmentierte Modell schnitt aber deutlich schlechter ab, wenn auf dem Originalsatz getestet worden ist. Damit zeigt sich der Verdacht von Overfitting. $\to$ \textbf{Ansatz verworfen}.  
+            \item Auf dem augmentierten Datensatz trainierte Modelle verbesserten sich signifikant, wenn auf den augmentierten Daten getestet worden ist. Das augmentierte Modell schnitt aber deutlich schlechter ab, wenn auf dem Originalsatz getestet worden ist. Damit zeigt sich der Verdacht von Overfitting. $\to$ \textbf{Ansatz verworfen}.
         \end{itemize}
-    \end{block}
+    \end{alertblock}
 \end{frame}
-
-
 
 \section{Ansätze}
 
@@ -185,14 +183,14 @@ University of Hagen, Germany}
 \subsection{Klassische Verfahren}
 
 \begin{frame}{Klassische Verfahren}
-\begin{block}{Logistische Regression}
-     \begin{itemize}
+    \begin{block}{Logistische Regression}
+        \begin{itemize}
             \item Diskriminativer Klassifikator, der Entscheidungsgrenzen direkt modelliert
             \item Schätzt die Wahrscheinlichkeiten von Klassen basierend auf einer linearen Entscheidungsfunktion
             \item Geeignet für Textklassifikation mit hochdimensionalen Feature-Vektoren
             \item Vorteile:
                   \begin{itemize}
-                      \item Lineare Zeitkomplexität O(nd) 
+                      \item Lineare Zeitkomplexität O(nd) % SB: Sicher? Logreg hatte mit Abstand das längste Training der drei klassischen Modelle
                       \item Einfach Implementation
                       \item Schnell in der Berechnung.
                   \end{itemize}
@@ -204,9 +202,8 @@ University of Hagen, Germany}
                             % Wird verwendet, um die Klassenverteilung aus den Trainingsdaten zu schätzen bevor man irgendwelche Features sieht. Wenn False wird gleiche Klassenwahrscheinlichkeit angenommen
                   \end{itemize}
         \end{itemize}
-\end{block} 
+    \end{block}
 \end{frame}
-
 
 \begin{frame}{Klassische Verfahren}
     \begin{block}{Multinomialer Naive Bayes-Klassifikator}
