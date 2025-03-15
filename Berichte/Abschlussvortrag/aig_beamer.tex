@@ -196,6 +196,7 @@ University of Hagen, Germany}
                 \item promotional: 32.633
                 \item neutral: 6.611.303
             \end{itemize}
+            \item Stark unausgeglichen, Reduktion durch Undersampling.
         \end{itemize}
     \end{block}
 \end{frame}
@@ -351,8 +352,21 @@ University of Hagen, Germany}
 \end{frame}
 
 \begin{frame}{Klassische Verfahren}
-    Support Vector Machine
+    \begin{block}{Support Vector Machine (SVM)}
+        \begin{itemize}
+            \item Nutzt den Konzept des maximalen Margins, um eine robuste Trennlinie zu finden
+            \item Kann mit Kernelfunktionen erweitert werden, um nicht-lineare Trennungen zu ermöglichen
+            \item Geeignet für hochdimensionale Datenräume, insbesondere für Textklassifikation
+            \item Parameter:
+                  \begin{itemize}
+                      \item \texttt{C}: Regularisierungsparameter zur Steuerung des Trade-offs zwischen Maximierung des Margins und Minimierung von Fehlklassifikationen
+                      \item \texttt{kernel}: Auswahl der Kernel-Funktion (z.B. linear, RBF, polynomial)
+                      \item Kernel-spezifische Parameter
+                  \end{itemize}
+        \end{itemize}
+    \end{block}
 \end{frame}
+
 
 \begin{frame}
     \begin{block}{Gemeinsamkeiten}
