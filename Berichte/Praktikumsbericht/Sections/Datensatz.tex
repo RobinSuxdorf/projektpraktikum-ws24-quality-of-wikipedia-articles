@@ -6,7 +6,7 @@ Im Rahmen des Praktikums wurde zuerst der Datensatz analysiert. Im Folgenden wir
 \subsection{Ursprünglicher Datensatz}
 \label{UrsprunglicherDatensatz}
 %Erter Satz geändert
-Als Basis wurde ein Datensatz verwendet, welcher  verschiedene Wikipedia-Artikel enthält \cite{UrsprungDatensatz}. Der Datensatz wurde in zwei Dateien unterteilt. Die erste Datei enthielt gute Artikel und die zweite enthielt %\emph{promotional} (
+Als Basis wurde ein Datensatz verwendet, welcher  verschiedene Wikipedia-Artikel enthält \cite{urbanbricks_wikipedia}. Der Datensatz wurde in zwei Dateien unterteilt. Die erste Datei enthielt gute Artikel und die zweite enthielt %\emph{promotional} (
 Werbeartikel und wurde noch weiter unterteilt. Dabei sind folgende Label vergeben: "advert" (Werbeanzeigen), "coi" (enge Verbindung des Autors zum Artikel), fanpov (Potentieller Artikel eines Fans), PR  (Presseartikel), resume (Lebenslauf)
 %\begin{itemize}
 %    \item advert – „Dieser Artikel enthält Inhalte, die wie eine Werbeanzeige verfasst sind.“
@@ -56,10 +56,11 @@ Da es nicht sicher ist, ob der Wikimedia Dump das Problem vollkommen lösen kann
 
 \subsection{Problemdefinition}
 \label{Problemdefinition}
-Das Ziel dieses Projekts ist die Entwicklung von Modellen zur automatisierten Klassifikation von Wikipedia-Artikeln als \emph{promotional} (werblich) oder \emph{nicht-promotional}. Dabei gab es eine Unterteilung in drei Problemarten. 
-\begin{itemize} \item Die Verwendung des ursprünglichen Datensatzes zur binären Klassifizierung
-\item Die Verwendung des Wikipedia Dump Datensatzes zur Muultiklassenklassifizierung zwischen guten Artikeln, neutralen Artikeln und Werbenden Artikeln
-\item Eine Multilabelklassifizierung, welche gute von werbenden Artikeln unterscheidet und in den werbenden Artikeln zwischen den verschiedenen Arten (advert, coi, fanpov, pr, resume) unterscheiden kann. 
+Das Ziel dieses Projekts ist die Entwicklung von Modellen zur automatisierten Klassifikation von Wikipedia-Artikeln als \emph{promotional} (werblich) oder \emph{nicht-promotional}. Dabei gab es eine Unterteilung in drei Problemarten.
+\begin{itemize}
+    \item Die Verwendung des ursprünglichen Datensatzes zur binären Klassifizierung
+    \item Die Verwendung des Wikipedia Dump Datensatzes zur Muultiklassenklassifizierung zwischen guten Artikeln, neutralen Artikeln und Werbenden Artikeln
+    \item Eine Multilabelklassifizierung, welche in den werbenden Artikeln zwischen den verschiedenen Arten (advert, coi, fanpov, pr, resume) unterscheiden kann.
 \end{itemize}
 %Dabei wird ebenfalls klassifiziert, wie ein Artikel promotional ist, also z.B. ob er eine Werbung, ein PR-Artikel usw. ist. Wikipedia strebt nach objektiven und neutralen Inhalten; daher ist die Identifizierung von Artikeln mit werbenden Charakter von großer Bedeutung, um die sachliche Qualität der Plattform zu gewährleisten.
 
