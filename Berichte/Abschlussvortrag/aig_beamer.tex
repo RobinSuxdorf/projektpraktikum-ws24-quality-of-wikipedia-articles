@@ -81,24 +81,42 @@ University of Hagen, Germany}
 
 \end{frame}
 
-\subsection{Datenvorverarbeitung}
+\subsection{Vorverarbeitung}
 
-\begin{frame}{Datenvorverarbeitung}
-    \begin{block}{Datenvorverarbeitung}
-        % Kopiert von Zwischenpräsentation wird angepasst von Sebastian
+\begin{frame}{Vorverarbeitung}
+    \begin{block}{Datensatzvorverarbeitung}
         \begin{itemize}
-            \item Entfernung von Sonderzeichen und Kleinbuchstabierung
-            \item Entfernung von führenden und folgenden Leerzeichen
-            \item Optional Stopwörter und Zahlen entfernen
+            \item Extrahieren von Labeln aus Metadaten
+            \item Reduzieren auf Artikeltext und Label
+            \item Zusammenführen mehrerer Dateien in ein DataFrame
         \end{itemize}
     \end{block}
+    \begin{block}{Textvorverarbeitung}
+        \begin{itemize}
+            \item Entfernen von Sonder- und Interpunktionszeichen
+            \item Umwandeln in Kleinbuchstaben
+            \item Entfernen von Stoppwörtern
+            \item Umwandeln mit Stemming (PorterStemmer)
+            \item Zahlen bleiben erhalten
+        \end{itemize}
+    \end{block}
+\end{frame}
+
+\begin{frame}{Vorverarbeitung}
+    \begin{exampleblock}{Textvorverarbeitung Artikel 39582}
+        \begin{tabularx}{\textwidth}{>{\raggedright\arraybackslash}X >{\raggedright\arraybackslash}X}
+            \textbf{Original} & \textbf{Verarbeitete Version}                                                                                                                                                                                                 \\ \hline
+            The Human Research Program HRP was created in October 2005 at Johnson Space Center JSC in response to NASA's desire to move human research project management away from headquarters to JSC and to focus its research investment on investigating and mitigating the highest risks to astronaut health and performance in support of exploration missions...
+                              &
+            human research program hrp creat octob 2005 johnson space center jsc respons nasa desir move human research project manag away headquart jsc focu research invest investig mitig highest risk astronaut health perform support explor mission ... \\
+        \end{tabularx}
+    \end{exampleblock}
 \end{frame}
 
 \subsection{Vektorisierung}
 
 \begin{frame}{Vektorisierung}
     \begin{block}{Vektorisierung}
-        % Kopiert von Zwischenpräsentation wird angepasst von Sebastian
         Textrepräsentation mittels TF-IDF-Vektorisierung:
         \begin{itemize}
             \item Maximale Anzahl von Features
