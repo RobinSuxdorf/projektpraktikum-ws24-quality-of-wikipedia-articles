@@ -18,7 +18,7 @@ class BaseNeuralNetworkModel(Model):
         neural_network: nn.Module,
         criterion: nn.Module,
         predict_fn: Callable[[torch.Tensor], torch.Tensor],
-        label_dtype: torch.dtype
+        label_dtype: torch.dtype,
     ) -> None:
         self._model = neural_network
         self._device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
@@ -54,7 +54,7 @@ class BaseNeuralNetworkModel(Model):
         labels: list[int],
         learning_rate: float,
         num_epochs: int,
-        batch_size: int
+        batch_size: int,
     ) -> None:
         train_dataset = WikipediaArticleDataset(
             features,
@@ -73,7 +73,9 @@ class BaseNeuralNetworkModel(Model):
 
     def predict(self, features) -> list:
         tensors = [
-            torch.tensor(article.toarray().squeeze(), dtype=torch.float, device=self._device)
+            torch.tensor(
+                article.toarray().squeeze(), dtype=torch.float, device=self._device
+            )
             for article in features
         ]
         input_batch = torch.stack(tensors)

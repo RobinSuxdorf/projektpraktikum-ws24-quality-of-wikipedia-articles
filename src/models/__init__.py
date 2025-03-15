@@ -35,5 +35,5 @@ __all__ = [
     "Logistic_Regression",
     "LogisticRegressionGridSearch",
     "MultilabelLogisticRegression",
-    "MultilabelLogisticRegressionGridSearch"
+    "MultilabelLogisticRegressionGridSearch",
 ]

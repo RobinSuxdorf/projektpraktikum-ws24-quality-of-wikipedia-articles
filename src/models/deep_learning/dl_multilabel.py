@@ -6,11 +6,7 @@ from .base import BaseNeuralNetworkModel
 
 
 class NeuralNetwork(nn.Module):
-    def __init__(
-        self,
-        input_dim: int,
-        num_classes: int
-    ) -> None:
+    def __init__(self, input_dim: int, num_classes: int) -> None:
         super().__init__()
         self.fc1 = nn.Linear(input_dim, 512)
         self.fc2 = nn.Linear(512, num_classes)
@@ -27,11 +23,9 @@ def multilabel_predict_fn(logits: torch.Tensor) -> torch.Tensor:
     probs = torch.sigmoid(logits)
     return (probs > 0.5).int()
 
+
 class MultilabelNeuralNetworkModel(BaseNeuralNetworkModel):
-    def __init__(
-        self,
-        input_dim: int
-    ) -> None:
+    def __init__(self, input_dim: int) -> None:
         super().__init__(
             NeuralNetwork(input_dim, 5),
             criterion=nn.BCEWithLogitsLoss(),

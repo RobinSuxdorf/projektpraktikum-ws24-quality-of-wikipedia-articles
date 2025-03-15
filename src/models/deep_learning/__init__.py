@@ -5,7 +5,7 @@ from .dl_wp_binary import MulticlassNeuralNetworkModel
 
 __all__ = [
     "BaseNeuralNetworkModel",
-    "BinaryNeuralNetworkModel", 
+    "BinaryNeuralNetworkModel",
     "MultilabelNeuralNetworkModel",
-    "MulticlassNeuralNetworkModel"
+    "MulticlassNeuralNetworkModel",
 ]

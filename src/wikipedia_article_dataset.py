@@ -2,6 +2,7 @@ import torch
 from torch.utils.data import Dataset
 from scipy.sparse import csr_matrix
 
+
 class WikipediaArticleDataset(Dataset):
     """
     A PyTorch Dataset for handling Wikipedia articles and their corresponding labels.
@@ -55,7 +56,7 @@ class WikipediaArticleDataset(Dataset):
         article = self._articles[index].toarray().squeeze()
         article_tensor = torch.tensor(article, dtype=torch.float, device=self._device)
 
-        label = self._labels[index]  
+        label = self._labels[index]
         label_tensor = torch.tensor(label, dtype=torch.float, device=self._device)
 
         return article_tensor, label_tensor
