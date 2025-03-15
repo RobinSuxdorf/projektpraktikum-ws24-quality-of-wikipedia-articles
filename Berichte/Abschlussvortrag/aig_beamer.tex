@@ -102,6 +102,7 @@ University of Hagen, Germany}
     \end{block}
 \end{frame}
 
+% Kandidat für Appendix
 \begin{frame}{Vorverarbeitung}
     \begin{exampleblock}{Textvorverarbeitung Artikel 39582}
         \begin{tabularx}{\textwidth}{>{\raggedright\arraybackslash}X >{\raggedright\arraybackslash}X}
@@ -113,18 +114,22 @@ University of Hagen, Germany}
     \end{exampleblock}
 \end{frame}
 
-\subsection{Vektorisierung}
-
-\begin{frame}{Vektorisierung}
-    \begin{block}{Vektorisierung}
-        Textrepräsentation mittels TF-IDF-Vektorisierung:
+\begin{frame}{Vorverarbeitung}
+    \begin{block}{Getestete Vektorisierer}
         \begin{itemize}
-            \item Maximale Anzahl von Features
-            \item n-Gramm-Bereich
-            \item Minimale Dokumentenfrequenz (\texttt{min\_df})
-            \item Maximale Dokumentenfrequenz (\texttt{max\_df})
+            \item \textbf{Count-Vektorisierer:} Zählt absolute Wortvorkommen (Bag-of-Words)
+            \item \textbf{TF-IDF-Vektorisierer:} Gewichtet nach Häufigkeit und Dokumentrelevanz
+            \item \textbf{Word2Vec:} Erstellt kontinuierliche semantische Vektoren
+            \item \textbf{GloVe:} Nutzt globale Wortkookkurrenzstatistiken
         \end{itemize}
     \end{block}
+
+    \begin{exampleblock}{Auswahl: TF-IDF-Vektorisierer}
+        \begin{itemize}
+            \item Besten Ergebnisse bei klassischen ML-Verfahren
+            \item Deutlich geringere Laufzeit als Word2Vec und GloVe
+        \end{itemize}
+    \end{exampleblock}
 \end{frame}
 
 \section{Ansätze}
@@ -152,7 +157,31 @@ University of Hagen, Germany}
 \end{frame}
 
 \begin{frame}{Klassische Verfahren}
-    Bayes-Klassifikator
+    \begin{block}{Multinomialer Naive Bayes-Klassifikator}
+        \begin{itemize}
+            \item Probabilistischer Klassifikator, der auf Bayes'schem Theorem basiert
+            \item Nimmt bedingte Unabhängigkeit zwischen Features an (naive Annahme)
+            \item Geeignet für Textklassifikation mit Wortvorkommen als Features
+            \item Vorteile:
+                  \begin{itemize}
+                      \item Lineare Zeitkomplexität O(nd) % n = Anzahl der Features, d = Anzahl der Klassen
+                            % Mit Abstand der schnelleste Klassifikator gerade beim gesamten Wikipedia-Dump
+                            % Training auf den samples war nach Sekunden abgeschlossen
+                      \item Robust bei hoher Dimensionalität
+                            % Die vektorisierten Features sind hochdimensional
+                            % (Definition hochdimensional?)
+                      \item Native Unterstützung für spärliche Matrizen
+                            % die vektorisierten Features sind spärliche Matrizen
+                  \end{itemize}
+            \item Parameter:
+                  \begin{itemize}
+                      \item \texttt{alpha}: Laplace-Glättung
+                            % Wird verwendet, um Überanpassung zu vermeiden, indem Null-Wahrscheinlichkeiten durch eine kleine positive Konstante ersetzt werden
+                      \item \texttt{fit\_prior}: Lernen der Klassenpriors
+                            % Wird verwendet, um die Klassenverteilung aus den Trainingsdaten zu schätzen bevor man irgendwelche Features sieht. Wenn False wird gleiche Klassenwahrscheinlichkeit angenommen
+                  \end{itemize}
+        \end{itemize}
+    \end{block}
 \end{frame}
 
 \begin{frame}{Klassische Verfahren}

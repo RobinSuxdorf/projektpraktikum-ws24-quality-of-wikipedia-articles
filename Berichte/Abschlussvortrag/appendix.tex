@@ -1,5 +1,13 @@
 \section{Appendix}
 
-\begin{frame}{Ergebnisse Datenaugmentierung}
-    Beispielfolie für Appendix
+\begin{frame}{Vorverarbeitung}
+    \begin{block}{TF-IDF Implementierung (scikit-learn)}
+        \begin{itemize}
+            \item \texttt{ngram\_range: [1, 1]} - Nur Einzelwörter betrachtet
+            \item \texttt{max\_df: 0.9} - Wörter in $>90\%$ der Dokumente ignoriert
+            \item \texttt{min\_df: 0.001} - Wörter in $<0.1\%$ der Dokumente ignoriert
+            \item \texttt{max\_features: 10\_000} - Maximale Vokabulargröße
+            \item \texttt{sublinear\_tf: true} - Sublineare TF-Skalierung ($1+log(tf)$)
+        \end{itemize}
+    \end{block}
 \end{frame}
