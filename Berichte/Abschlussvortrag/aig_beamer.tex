@@ -59,10 +59,7 @@ University of Hagen, Germany}
 \section{Daten}
 
 \begin{frame}{Daten}
-    % Kopiert von Zwischenpräsentation
-    \begin{figure}
-        Daten
-    \end{figure}
+
 \end{frame}
 
 \subsection{Datensatz}
@@ -75,13 +72,13 @@ University of Hagen, Germany}
 \subsection{Problemstellung}
 
 \begin{frame}{Problemstellung}
-    
+
 \end{frame}
 
 \subsection{Weitere Daten}
 
 \begin{frame}{Weitere Daten}
-    
+
 \end{frame}
 
 \subsection{Datenvorverarbeitung}
@@ -130,96 +127,90 @@ University of Hagen, Germany}
     \end{block}
 \end{frame}
 
-\subsection{Bayes-Klassifikator}
+\subsection{Klassische Verfahren}
 
-\begin{frame}{Bayes-Klassifikator}
-    
+\begin{frame}{Klassische Verfahren}
+    Logistische Regression
 \end{frame}
 
-\subsection{Support Vector Machine}
-
-\begin{frame}{Support Vector Machine}
-    
+\begin{frame}{Klassische Verfahren}
+    Naive Bayes Klassifikator
 \end{frame}
 
-\subsection{Logistische Regression}
-
-\begin{frame}{Logistische Regression}
-    
+\begin{frame}{Klassische Verfahren}
+    Support Vector Machine
 \end{frame}
 
-\subsection{CNN}
+\subsection{Deep Learning}
 
-\begin{frame}{CNN}
-    
+\begin{frame}{Deep Learning}
+    CNN
 \end{frame}
 
-\subsection{5. Ansatz}
-
-\begin{frame}
+\begin{frame}{Deep Learning}
     \begin{block}{5. Ansatz}
         Probleme: Schlechte Multilabelklassifizierung der ersten vier Ansätze. \\
         Analyse: Unterscheidung der Promotional aufgrund von Thema: \\
         Ziel:
         Einbezug von Kontext/Bedeutung \\
         Ideen:
-      \begin{itemize}
-      \item Vorverarbeitungsmethode erstellen
-      \item Transformerarchitektur verwenden
-      \end{itemize}      
+        \begin{itemize}
+            \item Vorverarbeitungsmethode erstellen
+            \item Transformerarchitektur verwenden
+        \end{itemize}
     \end{block}
 \end{frame}
 
-\begin{frame}
+\begin{frame}{Deep Learning}
     \begin{block}{Transformerarchitektur}
-     Modellwahl: DistilBERT \\
+        Modellwahl: DistilBERT \\
         Vorteile: Besondere Vorteile von BERT in der Erkennung von Kontext \\
         Architektur:
-\begin{itemize}
-	\item Darstellung: DistilBERT Tokenizer
-     \item Attention: Scaled Dot Product Attention (SDPA)
+        \begin{itemize}
+            \item Darstellung: DistilBERT Tokenizer
+            \item Attention: Scaled Dot Product Attention (SDPA)
             \item Aktivierungsfunktion: $GeLu(x) \approx {0.5 \cdot x \cdot (1+ tanh({\frac{x}{\sqrt{2}}}))} $
-\end{itemize}        
+        \end{itemize}
     \end{block}
 \end{frame}
 
 \section{Zusammenfassung}
 
-\begin{frame}
-\begin{block}{Zusammenfassung}
-Errungenschaften:
-\begin{itemize}
-\item Daten analysiert
-\item Datensatz mit Wikipedia Dump erweitert
-\item Problemstellung erfasst
-\item Datensatz für Mashine Learning Verfahren vorbereitet.
-\item Drei Klassische Modelle implementiert
-\item Zwei Neuronale Methode implementiert
-\item Ergebnisse Evaluiert
-\end{itemize}
-Ergebnisse:
-\begin{itemize}
-\item Datensatz aus Wikipedia Dump erstellt
-\item Pipeline zur Klassifizierung von Wikipediaartikeln implementiert
-\end{itemize}
-\end{block}
+\begin{frame}{Zusammenfassung}
+    \begin{block}{Zusammenfassung}
+        Errungenschaften:
+        \begin{itemize}
+            \item Daten analysiert
+            \item Datensatz mit Wikipedia Dump erweitert
+            \item Problemstellung erfasst
+            \item Datensatz für Mashine Learning Verfahren vorbereitet.
+            \item Drei Klassische Modelle implementiert
+            \item Zwei Neuronale Methode implementiert
+            \item Ergebnisse Evaluiert
+        \end{itemize}
+        Ergebnisse:
+        \begin{itemize}
+            \item Datensatz aus Wikipedia Dump erstellt
+            \item Pipeline zur Klassifizierung von Wikipediaartikeln implementiert
+        \end{itemize}
+    \end{block}
 \end{frame}
 
-\begin{frame}
-\begin{block}{Zusammenfassung}
-Misserfolge
-\begin{itemize}
-\item Datenaugmentierung
-\item Entwicklung von Vorverarbeitung zur Erkennung von Kontext
-\end{itemize}
-Erweiterungsmöglichkeiten:
-\begin{itemize}
-\item Weitere klassische und neuronalen Ansätze implementieren und evaluieren
-\item Ganzen Wikipedia Dump verwenden
-\item Verwendung von SetFit
+\begin{frame}{Zusammenfassung}
+    \begin{block}{Zusammenfassung}
+        Misserfolge
+        \begin{itemize}
+            \item Datenaugmentierung
+            \item Entwicklung von Vorverarbeitung zur Erkennung von Kontext
+        \end{itemize}
+        Erweiterungsmöglichkeiten:
+        \begin{itemize}
+            \item Weitere klassische und neuronalen Ansätze implementieren und evaluieren
+            \item Ganzen Wikipedia Dump verwenden
+            \item Verwendung von SetFit
             \item Verwendung weiterer Modelle des Maschinellen Lernens
-\end{itemize}
-\end{block}
+        \end{itemize}
+    \end{block}
 \end{frame}
 
 \end{document}
