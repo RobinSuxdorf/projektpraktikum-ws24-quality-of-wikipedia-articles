@@ -49,11 +49,39 @@ University of Hagen, Germany}
 \nologo
 
 \begin{frame}{Motivation}
-    (Screenshot guter Artikel)
+    \begin{figure}
+        \centering
+        \includegraphics[width=0.6\linewidth]{figures/wp-screenshot-good.png}
+        \caption{\url{https://en.wikipedia.org/wiki/Addition}}
+        \label{fig:enter-label}
+    \end{figure}
 \end{frame}
 
 \begin{frame}{Motivation}
-    (Screenshot schlechter Artikel)
+    \begin{figure}
+        \centering
+        \includegraphics[width=0.6\linewidth]{figures/wp-screenshot-promo.png}
+        \caption{\url{https://en.wikipedia.org/wiki/Brave_(web_browser)}}
+        \label{fig:enter-label}
+    \end{figure}
+\end{frame}
+
+\begin{frame}{Motivation}
+    \begin{figure}
+        \centering
+        \includegraphics[width=0.6\linewidth]{figures/wp-screenshot-good-source.png}
+        \caption{\url{https://en.wikipedia.org/w/index.php?title=Addition&action=edit}}
+        \label{fig:enter-label}
+    \end{figure}
+\end{frame}
+
+\begin{frame}{Motivation}
+    \begin{figure}
+        \centering
+        \includegraphics[width=0.6\linewidth]{figures/wp-screenshot-promo-source.png}
+        \caption{\url{https://en.wikipedia.org/w/index.php?title=Brave_(web_browser)&action=edit}}
+        \label{fig:enter-label}
+    \end{figure}
 \end{frame}
 
 \section{Daten}
@@ -65,14 +93,75 @@ University of Hagen, Germany}
 \subsection{Datensatz}
 
 \begin{frame}{Datensatz}
-    (Verteilung good/promo)
-    (Verteilung labels)
+    \begin{block}{Kaggle}
+        \begin{itemize}
+            \item Hochgeladen Oktober 2019.
+            \item Enthält alle Artikel der englischen Wikipedia, die zum damaligen Zeitpunkt als "good" bzw. "with a promotional tone" markiert waren.
+            \item Zwei CSV-Dateien: \texttt{good.csv}, \texttt{promotional.csv}.
+            \item \texttt{promotional}-Daten mit jeweils mindestens einem Label versehen: \texttt{advert}, \texttt{coi}, \texttt{fanpov}, \texttt{pr}, \texttt{resume}
+        \end{itemize}
+    \end{block}
+\end{frame}
+
+\begin{frame}{Datensatz}
+    \begin{figure}
+        \centering
+        \includegraphics[width=0.6\linewidth]{figures/kaggle-classes.png}
+        \caption{Kaggle - Wikipedia Promotional Articles (Classes)}
+        \label{fig:enter-label}
+    \end{figure}
+\end{frame}
+
+\begin{frame}{Datensatz}
+    \begin{figure}
+        \centering
+        \includegraphics[width=0.6\linewidth]{figures/kaggle-promo-labels.png}
+        \caption{Kaggle - Wikipedia Promotional Articles (Labels)}
+        \label{fig:enter-label}
+    \end{figure}
 \end{frame}
 
 \subsection{Problemstellung}
 
 \begin{frame}{Problemstellung}
+    \begin{block}{Good articles}
+        \begin{itemize}
+            \item Müssen unter anderem die folgenden Kriterien erfüllen:
+            \begin{itemize}
+                \item gut geschrieben
+                \item korrekte und überprüfbare Informationen
+                \item neutral in der Sichtweise
+                \item verwenden relevante Bilder mit geeigneten Urheberrechtslizenzen
+            \end{itemize}
+            \item Nominierung und Vergabe des Status durch die Community (Good article nomination).
+            \item 0.59\% aller Wikipedia-Artikel
+        \end{itemize}
+    \end{block}
+\end{frame}
 
+\begin{frame}{Problemstellung}
+    \begin{block}{Articles with a promotional tone}
+        \begin{itemize}
+            \item Artikel, die einer Überarbeitung bedürfen:
+            \begin{itemize}
+                \item Werbung
+                \item Interessenkonflikte
+                \item Aus Sicht eines Fans
+                \item Pressemitteilungen
+                \item Wie ein Lebenslauf
+            \end{itemize}
+            \item Entsprechende Hinweise können durch jeden Autoren hinzugefügt oder entfernt werden.
+        \end{itemize}
+    \end{block}
+\end{frame}
+
+\begin{frame}{Problemstellung}
+    \begin{block}{Problemstellung}
+        \begin{itemize}
+            \item Handelt es sich bei einem gegebenen Wikipedia-Artikel um einen guten Artikel, um einen problematischen oder gehört er zu keiner der beiden Klassen?
+            \item Falls der Artikel einer Überarbeitung bedarf, was sind die Gründe dafür?
+        \end{itemize}
+    \end{block}
 \end{frame}
 
 \subsection{Weitere Daten}
