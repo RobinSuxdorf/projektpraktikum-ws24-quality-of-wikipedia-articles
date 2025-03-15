@@ -53,7 +53,6 @@ University of Hagen, Germany}
         \centering
         \includegraphics[width=0.6\linewidth]{figures/wp-screenshot-good.png}
         \caption{\url{https://en.wikipedia.org/wiki/Addition}}
-        \label{fig:enter-label}
     \end{figure}
 \end{frame}
 
@@ -62,7 +61,6 @@ University of Hagen, Germany}
         \centering
         \includegraphics[width=0.6\linewidth]{figures/wp-screenshot-promo.png}
         \caption{\url{https://en.wikipedia.org/wiki/Brave_(web_browser)}}
-        \label{fig:enter-label}
     \end{figure}
 \end{frame}
 
@@ -71,7 +69,6 @@ University of Hagen, Germany}
         \centering
         \includegraphics[width=0.6\linewidth]{figures/wp-screenshot-good-source.png}
         \caption{\url{https://en.wikipedia.org/w/index.php?title=Addition&action=edit}}
-        \label{fig:enter-label}
     \end{figure}
 \end{frame}
 
@@ -80,7 +77,6 @@ University of Hagen, Germany}
         \centering
         \includegraphics[width=0.6\linewidth]{figures/wp-screenshot-promo-source.png}
         \caption{\url{https://en.wikipedia.org/w/index.php?title=Brave_(web_browser)&action=edit}}
-        \label{fig:enter-label}
     \end{figure}
 \end{frame}
 
@@ -119,7 +115,7 @@ University of Hagen, Germany}
                 \item Pressemitteilungen
                 \item Wie ein Lebenslauf
             \end{itemize}
-            \item Entsprechende Hinweise können durch jeden Autoren hinzugefügt oder entfernt werden.
+            \item Entsprechende Templates können durch jeden Autoren zum Artikel hinzugefügt oder entfernt werden.
         \end{itemize}
     \end{block}
 \end{frame}
@@ -136,7 +132,7 @@ University of Hagen, Germany}
 \subsection{Datensatz}
 
 \begin{frame}{Datensatz}
-    \begin{block}{Kaggle}
+    \begin{block}{Kaggle - Wikipedia Promotional Articles}
         \begin{itemize}
             \item Hochgeladen Oktober 2019.
             \item Enthält alle Artikel der englischen Wikipedia, die zum damaligen Zeitpunkt als "good" bzw. "with a promotional tone" markiert waren.
@@ -151,7 +147,6 @@ University of Hagen, Germany}
         \centering
         \includegraphics[width=0.6\linewidth]{figures/kaggle-classes.png}
         \caption{Kaggle - Wikipedia Promotional Articles (Classes)}
-        \label{fig:enter-label}
     \end{figure}
 \end{frame}
 
@@ -160,14 +155,49 @@ University of Hagen, Germany}
         \centering
         \includegraphics[width=0.6\linewidth]{figures/kaggle-promo-labels.png}
         \caption{Kaggle - Wikipedia Promotional Articles (Labels)}
-        \label{fig:enter-label}
     \end{figure}
 \end{frame}
 
 \subsection{Weitere Daten}
 
 \begin{frame}{Weitere Daten}
+    \begin{block}{Einschränkungen des Kaggle-Datensatzes}
+        \begin{itemize}
+            \item Nicht mehr aktuell: Stand 2019.
+            \item Fast 99\% der Artikel sind nicht enthalten, weil sie zu keiner der beiden Klassen gehören.
+        \end{itemize}
+    \end{block}
+\end{frame}
 
+\begin{frame}{Weitere Daten}
+    \begin{block}{Wikipedia-Dump}
+        \begin{itemize}
+            \item Abzüge aller Wikimedia-Datenbanken werden zum Download angeboten.
+            \item Aktualisierung zwei Mal monatlich (Angaben beziehen sich auf Dez. 2024).
+            \item Englischsprachige Wikipedia ohne Historie ca. 22 GB komprimiert, 97 GB entpackt.
+            \item Enthält ca. 24 Mio. Wikipedia-Seiten, darunter ca. 7 Mio. Artikel.
+        \end{itemize}
+    \end{block}
+    \begin{block}{Konvertierung}
+        \begin{itemize}
+            \item Entpacken und Verarbeiten in Blöcken von je 100 Seiten.
+            \item Nicht-Artikel-Seiten erkennen und ausschließen.
+            \item Erkennen der Klassen anhand von Templates im Quelltext.
+        \end{itemize}
+    \end{block}
+\end{frame}
+
+\begin{frame}{Weitere Daten}
+    \begin{block}{Wikipedia-Dump - Verteilung}
+        \begin{itemize}
+            \item Klassen der englischsprachigen Artikel:
+            \begin{itemize}
+                \item good: 46.882
+                \item promotional: 32.633
+                \item neutral: 6.611.303
+            \end{itemize}
+        \end{itemize}
+    \end{block}
 \end{frame}
 
 \subsection{Vorverarbeitung}
