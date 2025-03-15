@@ -115,21 +115,31 @@ University of Hagen, Germany}
 \end{frame}
 
 \begin{frame}{Vorverarbeitung}
-    \begin{block}{Getestete Vektorisierer}
+    \begin{block}{TF-IDF Vektorisierung}
         \begin{itemize}
-            \item \textbf{Count-Vektorisierer:} Zählt absolute Wortvorkommen (Bag-of-Words)
-            \item \textbf{TF-IDF-Vektorisierer:} Gewichtet nach Häufigkeit und Dokumentrelevanz
-            \item \textbf{Word2Vec:} Erstellt kontinuierliche semantische Vektoren
-            \item \textbf{GloVe:} Nutzt globale Wortkookkurrenzstatistiken
+            \item Term Frequency-Inverse Document Frequency (TF-IDF) zur Textvektorisierung
+            \item Bewertet Wichtigkeit eines Wortes in einem Dokument relativ zum Korpus
+            \item Vorteile:
+                  \begin{itemize}
+                      \item Reduziert Einfluss häufiger, aber uninformativer Wörter
+                      \item Hebt diskriminierende Begriffe hervor
+                      \item Erzeugt spärliche Merkmalsvektormatrizen
+                  \end{itemize}
+            \item Parameter:
+                  \begin{itemize}
+                      \item \texttt{ngram\_range: [1, 1]} - Nur Einzelwörter werden betrachtet
+                            % Mehrwort-Ausdrücke (n-grams) werden nicht berücksichtigt
+                      \item \texttt{max\_df: 0.9} - Ignoriert Korpus-spezifische Stopwörter ($>90\%$)
+                            % Entfernt häufige Wörter, die in fast allen Dokumenten vorkommen
+                      \item \texttt{min\_df: 0.001} - Filtert Rauschen und Rechtschreibfehler ($<0.1\%$)
+                            % Entfernt sehr seltene Wörter, reduziert Vokabulargröße und Overfit-Risiko
+                      \item \texttt{max\_features: 10\_000} - Beschränkt die Vokabulargröße auf 10.000
+                            % Verbessert Laufzeiteffizienz und verringert Overfit-Risiko
+                      \item \texttt{sublinear\_tf: true} - Logarithmische TF-Skalierung für lange Dokumente
+                            % Reduziert Verzerrungen durch mehrfach vorkommende Wörter in einem Dokument
+                  \end{itemize}
         \end{itemize}
     \end{block}
-
-    \begin{exampleblock}{Auswahl: TF-IDF-Vektorisierer}
-        \begin{itemize}
-            \item Besten Ergebnisse bei klassischen ML-Verfahren
-            \item Deutlich geringere Laufzeit als Word2Vec und GloVe
-        \end{itemize}
-    \end{exampleblock}
 \end{frame}
 
 \section{Ansätze}
