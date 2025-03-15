@@ -1,11 +1,11 @@
 usecase: "binary"
+start_step: "model"
 
 data_loader:
   good_file: "data/wp/good_sample.csv"
   promo_file: "data/wp/promotional_sample.csv"
   neutral_file: "data/wp/neutral_sample.csv"
   shuffle: false
-  nrows: 100
   save: "loaded_data_wp_binary.csv"
 
 preprocessing:

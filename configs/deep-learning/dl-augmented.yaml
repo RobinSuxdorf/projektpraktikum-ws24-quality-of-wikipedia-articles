@@ -1,9 +1,9 @@
 usecase: "multilabel"
+start_step: "model"
 
 data_loader:
   promo_file: "data/raw/augmented_promotional.csv"
   shuffle: false
-  nrows: 1000
   save: "loaded_data_augmented.csv"
 
 preprocessing:

@@ -1,10 +1,10 @@
 usecase: "binary"
+start_step: "model"
 
 data_loader:
   good_file: "data/raw/good.csv"
   promo_file: "data/raw/promotional.csv"
   shuffle: false
-  nrows: 1000
   save: "loaded_data_binary.csv"
 
 preprocessing:

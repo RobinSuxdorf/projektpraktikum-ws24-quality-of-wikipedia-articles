@@ -1,11 +1,11 @@
 usecase: "multilabel"
+start_step: "model"
 
 data_loader:
   good_file: "data/raw/good.csv"
   promo_file: "data/raw/promotional.csv"
   shuffle: false
-  nrows: 1000
-  save: "loaded_data_binary.csv"
+  save: "loaded_data_multilabel.csv"
 
 preprocessing:
   remove_non_word: true
@@ -14,7 +14,7 @@ preprocessing:
   apply_stemming: true
   remove_numbers: false
   remove_whitespace: true
-  save: "preprocessed_data_binary.csv"
+  save: "preprocessed_data_multilabel.csv"
 
 features:
   type: tfidf
@@ -23,4 +23,4 @@ features:
   min_df: 0.001
   max_features: 10_000
   sublinear_tf: true
-  save: "features_binary.pkl"
+  save: "features_multilabel.pkl"
