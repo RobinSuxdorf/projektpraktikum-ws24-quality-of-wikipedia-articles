@@ -1,52 +1,43 @@
 \section{Experimente}
+% Text?
 
 \subsection{Projektstruktur}
 \label{sec:projektstruktur}
-Zu Beginn des Projekts arbeiteten alle Teilnehmenden explorativ in Jupyter Notebooks, um ein grundlegendes Verständnis der Daten zu entwickeln und erste Modellierungsansätze zu testen. Um konsistente Datenverarbeitung und vergleichbare Ergebnisse zu gewährleisten, wurde eine einheitliche Machine-Learning-Pipeline entwickelt.
+Zu Beginn des Projekts arbeiteten alle Teilnehmenden explorativ in Jupyter Notebooks, um ein grundlegendes Verständnis der Daten zu entwickeln und erste Modellierungsansätze zu testen. Um konsistente Datenverarbeitung und vergleichbare Ergebnisse zu gewährleisten, wurden gemeinsame Methoden und abstrakte Klassen entwickelt und in einer Python-Bibliothek implementiert.
 
-Diese Pipeline standardisiert die wesentlichen Schritte - von der Datenverarbeitung über die Modellierung bis hin zur Evaluation - und besteht aus den folgenden modularen Komponenten:
+Diese Pipeline \texttt{main.py} verwendet gemeinsame Methoden zum Laden, Vorverarbeiten, Extrahieren von Merkmalen, Trainieren von Modellen und Evaluieren von Ergebnissen. Diese Komponenten sind in \texttt{src/} implementiert, sodass sie sowohl in die Pipeline als auch in Jupyter Notebooks importiert werden können. Die Pipeline wird über YAML-Konfigurationsdateien \texttt{configs/} gesteuert, die alle relevanten Einstellungen wie Dateipfade, aktivierte Vorverarbeitungsschritte, Modellparameter und Evaluationskriterien beinhalten. Dadurch ist eine einfache Anpassung zum Testen verschiedener Parameter und Anwendungsfälle möglich. Zudem können einzelne Pipeline-Schritte partiell ausgeführt werden, zum Beispiel können die Vorverarbeitungsschritte aus vorherigen Läufen geladen werden, um ausschließlich das Modell mit variierenden Parametern zu trainieren und so die Laufzeit deutlich zu verringern.
 
-\begin{itemize}
-    \item \textbf{DataLoader} - Laden und Zusammenführen der Daten
-    \item \textbf{Preprocessing} - Vorverarbeitung der Textdaten (z.B. Entfernen von Stopwörtern)
-    \item \textbf{Feature Extraction} - Extraktion von Merkmalen (z.B. mittels TF-IDF oder GloVe-Vectorizer)
-    \item \textbf{Model} - Training und Hyperparameter-Optimierung
-    \item \textbf{Evaluator} - Auswertung der Modellergebnisse
-\end{itemize}
-
-Diese Komponenten sind in einer Python-Bibliothek (\texttt{src/}) implementiert, sodass sie sowohl eigenständig als auch in Jupyter Notebooks eingesetzt werden können. Die Pipeline wird über YAML-Konfigurationsdateien gesteuert, die alle relevanten Einstellungen wie Dateipfade, Vorverarbeitungsschritte, Modellparameter und Evaluationskriterien beinhalten. Dadurch ist eine flexible Anpassung an unterschiedliche Use-Cases möglich. Zudem können einzelne Pipeline-Schritte partiell ausgeführt werden - etwa kann die Feature Extraction aus vorherigen Läufen geladen werden, um ausschließlich das Modell mit variierenden Parametern zu trainieren.
-
-Die einheitliche Struktur erleichtert die Weiterentwicklung und Wartung des Codes, da alle Pipeline-Schritte klar getrennt sind. Für detaillierte Implementierungsinformationen und Konfigurationsdetails wird auf das GitHub-Repository verwiesen.
+Die Modelle wurden als Klassen implementiert, die von einer abstrakten Basisklasse erben. Dadurch wird eine einheitliche Schnittstelle für die Pipeline bereitgestellt, die es ermöglicht, verschiedene Modelle einfach zu vergleichen. Die klassischen maschinellen Lernmethoden können ohne weiteres über Konfigurationsdateien ausgewählt werden. Die Deep Learning Modelle, wie CNNs und Transformer, werden aufgrund ihrer zusätzlichen Komplexität in Jupyter Notebooks mit kleineren Anpassungen ausgeführt und evaluiert, welche aber die gleichen Methoden aus \texttt{src/} verwenden.
 
 \subsection{Evaluationsmetriken}
 Für den Vergleich der verschiedenen Modelle wurden die folgenden Metriken verwendet. Dabei sei $D = \{(x^{(1)}, y^{(1)}), \dots, (x^{(m)}, y^{(m)})\}$ und $\clf\colon\mathbb{R}^n \to \{0, 1\}$ ein binärer Klassifikator. Zunächst definieren wir
 
 \begin{align*}
-    \tp(D, \clf) &= |\{i \mid y^{(i)} = 1, \clf(x^{(i)}) = 1\}| \\
-    \tn(D, \clf) &= |\{i \mid y^{(i)} = 0, \clf(x^{(i)}) = 0\}| \\
-    \fp(D, \clf) &= |\{i \mid y^{(i)} = 0, \clf(x^{(i)}) = 1\}| \\
-    \fn(D, \clf) &= |\{i \mid y^{(i)} = 1, \clf(x^{(i)}) = 0\}|
+    \tp(D, \clf) & = |\{i \mid y^{(i)} = 1, \clf(x^{(i)}) = 1\}| \\
+    \tn(D, \clf) & = |\{i \mid y^{(i)} = 0, \clf(x^{(i)}) = 0\}| \\
+    \fp(D, \clf) & = |\{i \mid y^{(i)} = 0, \clf(x^{(i)}) = 1\}| \\
+    \fn(D, \clf) & = |\{i \mid y^{(i)} = 1, \clf(x^{(i)}) = 0\}|
 \end{align*}
 
 und aufbauend darauf die vier Metriken
 
 \begin{itemize}
     \item \textbf{Genauigkeit:}
-        \begin{equation*}
-            \acc(D, \clf) = \frac{\tp(D, \clf) + \tn(D, \clf)}{\tp(D, \clf) + \tn(D, \clf) + \fp(D, \clf) + \fn(D, \clf)}
-        \end{equation*}
+          \begin{equation*}
+              \acc(D, \clf) = \frac{\tp(D, \clf) + \tn(D, \clf)}{\tp(D, \clf) + \tn(D, \clf) + \fp(D, \clf) + \fn(D, \clf)}
+          \end{equation*}
     \item \textbf{Präzision:}
-        \begin{equation*}
-            \prec(D, \clf) = \frac{\tp(D, \clf)}{\tp(D, \clf) + \fp(D, \clf)}
-        \end{equation*}
+          \begin{equation*}
+              \prec(D, \clf) = \frac{\tp(D, \clf)}{\tp(D, \clf) + \fp(D, \clf)}
+          \end{equation*}
     \item \textbf{Recall:}
-        \begin{equation*}
-            \rec(D, \clf) = \frac{\tp(D, \clf)}{\tp(D, \clf) + \fn(D, \clf)}
-        \end{equation*}
+          \begin{equation*}
+              \rec(D, \clf) = \frac{\tp(D, \clf)}{\tp(D, \clf) + \fn(D, \clf)}
+          \end{equation*}
     \item \textbf{F1:}
-        \begin{equation*}
-            \fscore(D, \clf) = \frac{2 \cdot \prec(D, \clf) \cdot \rec(D, \clf)}{\prec(D, \clf) + \rec(D, \clf)}
-        \end{equation*}
+          \begin{equation*}
+              \fscore(D, \clf) = \frac{2 \cdot \prec(D, \clf) \cdot \rec(D, \clf)}{\prec(D, \clf) + \rec(D, \clf)}
+          \end{equation*}
 \end{itemize}
 Hauptfokus lieft auf der Optimierung des Recalls $\rec(D, \clf)$. \\
 
@@ -58,14 +49,14 @@ Für die Multilabel-Klassifikation betrachten wir den Klassifikator $\clf\colon\
 \subsection{Ergebnisse}
 \begin{center}
     \begin{tabular}{|c|c|c|c|c|}
-    \hline
-        Ansatz & acc & prec & rec & F1 \\
         \hline
-        Logistische Regression & 0.99 & 0.98 & 0.92 & 0.93 \\
-        Bayes-Klassifikator & 0.95 & 0.98 & 0.93 & 0.91 \\
-        Support Vector Machine & 0.94 & 0.92 & 0.89 & 0.95 \\
+        Ansatz                       & acc  & prec & rec  & F1   \\
+        \hline
+        Logistische Regression       & 0.99 & 0.98 & 0.92 & 0.93 \\
+        Bayes-Klassifikator          & 0.95 & 0.98 & 0.93 & 0.91 \\
+        Support Vector Machine       & 0.94 & 0.92 & 0.89 & 0.95 \\
         Convolutional Neural Network & 0.91 & 0.94 & 0.92 & 0.96 \\
-        Transformer & 0.97 & 0.95 & 0.92 & 0.93 \\
+        Transformer                  & 0.97 & 0.95 & 0.92 & 0.93 \\
         \hline
     \end{tabular}
 \end{center}
