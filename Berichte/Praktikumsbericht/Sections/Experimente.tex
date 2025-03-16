@@ -10,38 +10,9 @@ Diese Pipeline \texttt{main.py} verwendet gemeinsame Methoden zum Laden, Vorvera
 Die Modelle wurden als Klassen implementiert, die von einer abstrakten Basisklasse erben. Dadurch wird eine einheitliche Schnittstelle für die Pipeline bereitgestellt, die es ermöglicht, verschiedene Modelle einfach zu vergleichen. Die klassischen maschinellen Lernmethoden können ohne weiteres über Konfigurationsdateien ausgewählt werden. Die Deep Learning Modelle, wie CNNs und Transformer, werden aufgrund ihrer zusätzlichen Komplexität in Jupyter Notebooks mit kleineren Anpassungen ausgeführt und evaluiert, welche aber die gleichen Methoden aus \texttt{src/} verwenden.
 
 \subsection{Evaluationsmetriken}
-Für den Vergleich der verschiedenen Modelle wurden die folgenden Metriken verwendet. Dabei sei $D = \{(x^{(1)}, y^{(1)}), \dots, (x^{(m)}, y^{(m)})\}$ und $\clf\colon\mathbb{R}^n \to \{0, 1\}$ ein binärer Klassifikator. Zunächst definieren wir
+Sei $D$ ein Datensatz. In der binären Klassifikation liegt unser Hauptfokus primär auf der Optimierung des \textbf{Recalls} $\rec(D, \clf)$ und sekundär auf der \textbf{Precision} $\prec(D, \clf)$. Dabei ist $\clf\colon\mathbb{R}^d\to \{0, 1\}$ ein binärer Klassifikator.\\
 
-\begin{align*}
-    \tp(D, \clf) & = |\{i \mid y^{(i)} = 1, \clf(x^{(i)}) = 1\}| \\
-    \tn(D, \clf) & = |\{i \mid y^{(i)} = 0, \clf(x^{(i)}) = 0\}| \\
-    \fp(D, \clf) & = |\{i \mid y^{(i)} = 0, \clf(x^{(i)}) = 1\}| \\
-    \fn(D, \clf) & = |\{i \mid y^{(i)} = 1, \clf(x^{(i)}) = 0\}|
-\end{align*}
-
-und aufbauend darauf die vier Metriken
-
-\begin{itemize}
-    \item \textbf{Genauigkeit:}
-          \begin{equation*}
-              \acc(D, \clf) = \frac{\tp(D, \clf) + \tn(D, \clf)}{\tp(D, \clf) + \tn(D, \clf) + \fp(D, \clf) + \fn(D, \clf)}
-          \end{equation*}
-    \item \textbf{Präzision:}
-          \begin{equation*}
-              \prec(D, \clf) = \frac{\tp(D, \clf)}{\tp(D, \clf) + \fp(D, \clf)}
-          \end{equation*}
-    \item \textbf{Recall:}
-          \begin{equation*}
-              \rec(D, \clf) = \frac{\tp(D, \clf)}{\tp(D, \clf) + \fn(D, \clf)}
-          \end{equation*}
-    \item \textbf{F1:}
-          \begin{equation*}
-              \fscore(D, \clf) = \frac{2 \cdot \prec(D, \clf) \cdot \rec(D, \clf)}{\prec(D, \clf) + \rec(D, \clf)}
-          \end{equation*}
-\end{itemize}
-Hauptfokus lieft auf der Optimierung des Recalls $\rec(D, \clf)$. \\
-
-Für die Multilabel-Klassifikation betrachten wir den Klassifikator $\clf\colon\mathbb{R}^d\to\{0, 1\}^k$, wobei $k$ die Anzahl der verschiedenen Labels ist (in diesem Bericht $k=5$). Komponentenweise können wir $\clf$ auch schreiben als $\clf = (\clf_i)_{1\leq i\leq k}$, wobei $\clf_i\colon\mathbb{R}^d\to\{0, 1\}$ ein binärer Klassifikator ist. Wir definieren den $\textbf{Macro Average Recall}$ von $\clf$ als
+Für die Multilabel-Klassifikation betrachten wir den Klassifikator $\clf\colon\mathbb{R}^d\to\{0, 1\}^k$, wobei $k$ die Anzahl der verschiedenen Labels ist (in diesem Bericht $k=5$). Komponentenweise können wir $\clf$ auch schreiben als $\clf = (\clf_i)_{1\leq i\leq k}$, wobei $\clf_i\colon\mathbb{R}^d\to\{0, 1\}$ ein binärer Klassifikator ist. Wir definieren den \textbf{Macro Average Recall} von $\clf$ als
 \begin{equation*}
     \operatorname{macro\,avg\,rec}(D, \clf) = \frac{1}{k}\sum_{i=1}^k\rec (D, \clf_i).
 \end{equation*}
