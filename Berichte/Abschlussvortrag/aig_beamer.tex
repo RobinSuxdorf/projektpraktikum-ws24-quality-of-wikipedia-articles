@@ -142,14 +142,14 @@ University of Hagen, Germany}
     \begin{block}{Metriken}
         \begin{itemize}
             \item Binäre Klassifikation: Sei $\clf\colon \mathbb{R}^d\to \{0, 1\}$ ein binärer Klassifikator. Dann betrachten wir den \textbf{Recall}
-            \begin{equation*}
-                \rec(D, \clf) = \frac{\tp(D, \clf)}{\tp(D, \clf) + \fn(D, \clf)}.
-            \end{equation*}
+                  \begin{equation*}
+                      \rec(D, \clf) = \frac{\tp(D, \clf)}{\tp(D, \clf) + \fn(D, \clf)}.
+                  \end{equation*}
 
             \item Multilabel Klassifikation: Sei $\clf_i\colon\mathbb{R}^d\to\{0, 1\}$ ein binärer Klassifikator für das Label $i$. Dann betrachten wir den \textbf{Macro average recall}
-            \begin{equation*}
-                \operatorname{macro\,avg\,rec}(D, \clf) = \frac{1}{k}\sum_{i=1}^k\rec (D, \clf_i).
-            \end{equation*}
+                  \begin{equation*}
+                      \operatorname{macro\,avg\,rec}(D, \clf) = \frac{1}{k}\sum_{i=1}^k\rec (D, \clf_i).
+                  \end{equation*}
         \end{itemize}
     \end{block}
 \end{frame}
@@ -394,10 +394,10 @@ University of Hagen, Germany}
 
 
 \begin{frame}
-    \begin{block}{Gemeinsamkeiten}
+    \begin{block}{Gemeinsamkeiten} % SB: Mehr Details? Folie sieht leer aus
         \begin{itemize}
-            \item GridSearchCV von sklearn wurde für eine Hyperparameter-Optimierung nach Recall verwendet
-            \item OneVsRestClassifier von sklearn wurde für Multilabel-Klassifikation verwendet
+            \item GridSearchCV von Scikit-Learn wurde für eine Hyperparameter-Optimierung nach (Macro Average) Recall verwendet
+            \item OneVsRestClassifier von Scikit-Learn wurde für Multilabel-Klassifikation verwendet
         \end{itemize}
     \end{block}
 \end{frame}
@@ -415,9 +415,9 @@ University of Hagen, Germany}
                   \end{itemize}
             \item Dropout (50\%) zur Regularisierung
             \item Verlustfunktion: Cross entropy
-            \begin{equation*}
-                \mathcal{L} = - \left( y \log(\hat{y}) + (1 - y) \log(1 - \hat{y}) \right)
-            \end{equation*}
+                  \begin{equation*}
+                      \mathcal{L} = - \left( y \log(\hat{y}) + (1 - y) \log(1 - \hat{y}) \right)
+                  \end{equation*}
         \end{itemize}
     \end{block}
 \end{frame}
@@ -433,9 +433,9 @@ University of Hagen, Germany}
                   \end{itemize}
             \item Dropout (50\%) zur Regularisierung
             \item Verlustfunktion: Binary Cross Entropy With Logits (BCEWithLogitsLoss)
-            \begin{equation*}
-                \mathcal{L} = - \sum_{i} \left( y_i \log(\hat{y}_i) + (1 - y_i) \log(1 - \hat{y}_i) \right)
-            \end{equation*}
+                  \begin{equation*}
+                      \mathcal{L} = - \sum_{i} \left( y_i \log(\hat{y}_i) + (1 - y_i) \log(1 - \hat{y}_i) \right)
+                  \end{equation*}
             \item Vorhersage: Sigmoid-Aktivierung, Schwellenwert bei 0,5
         \end{itemize}
     \end{block}
