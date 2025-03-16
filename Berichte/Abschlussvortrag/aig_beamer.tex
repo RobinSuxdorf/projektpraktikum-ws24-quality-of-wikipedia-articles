@@ -116,7 +116,7 @@ University of Hagen, Germany}
 \begin{frame}{Problemstellung}
     \begin{block}{Articles with a promotional tone}
         \begin{itemize}
-            \item Artikel, die einer Überarbeitung bedürfen:
+            \item Artikel, die aus folgenden Gründen einer Überarbeitung bedürfen:
                   \begin{itemize}
                       \item Werbung
                       \item Interessenkonflikte
@@ -134,22 +134,6 @@ University of Hagen, Germany}
         \begin{itemize}
             \item Handelt es sich bei einem gegebenen Wikipedia-Artikel um einen guten Artikel, um einen problematischen oder gehört er zu keiner der beiden Klassen?
             \item Falls der Artikel einer Überarbeitung bedarf, was sind die Gründe dafür?
-        \end{itemize}
-    \end{block}
-\end{frame}
-
-\begin{frame}{Metriken}
-    \begin{block}{Metriken}
-        \begin{itemize}
-            \item Binäre Klassifikation: Sei $\clf\colon \mathbb{R}^d\to \{0, 1\}$ ein binärer Klassifikator. Dann betrachten wir den \textbf{Recall}
-                  \begin{equation*}
-                      \rec(D, \clf) = \frac{\tp(D, \clf)}{\tp(D, \clf) + \fn(D, \clf)}.
-                  \end{equation*}
-
-            \item Multilabel Klassifikation: Sei $\clf_i\colon\mathbb{R}^d\to\{0, 1\}$ ein binärer Klassifikator für das Label $i$. Dann betrachten wir den \textbf{Macro average recall}
-                  \begin{equation*}
-                      \operatorname{macro\,avg\,rec}(D, \clf) = \frac{1}{k}\sum_{i=1}^k\rec (D, \clf_i).
-                  \end{equation*}
         \end{itemize}
     \end{block}
 \end{frame}
@@ -205,7 +189,7 @@ University of Hagen, Germany}
             \begin{itemize}
                 \item Entpacken und Verarbeiten in Blöcken von je 100 Seiten.
                 \item Nicht-Artikel-Seiten erkennen und ausschließen.
-                \item Erkennen der Klassen anhand von Templates im Quelltext.
+                \item Erkennen der Klassen und Label anhand von Templates im Quelltext.
             \end{itemize}
         \end{itemize}
     \end{block}
@@ -221,6 +205,22 @@ University of Hagen, Germany}
                       \item neutral: 6.611.303
                   \end{itemize}
             \item Stark unausgeglichen, Reduktion durch Undersampling.
+        \end{itemize}
+    \end{block}
+\end{frame}
+
+\begin{frame}{Metriken}
+    \begin{block}{Metriken}
+        \begin{itemize}
+            \item Binäre Klassifikation: Sei $\clf\colon \mathbb{R}^d\to \{0, 1\}$ ein binärer Klassifikator. Dann betrachten wir den \textbf{Recall}
+                  \begin{equation*}
+                      \rec(D, \clf) = \frac{\tp(D, \clf)}{\tp(D, \clf) + \fn(D, \clf)}.
+                  \end{equation*}
+
+            \item Multilabel Klassifikation: Sei $\clf_i\colon\mathbb{R}^d\to\{0, 1\}$ ein binärer Klassifikator für das Label $i$. Dann betrachten wir den \textbf{Macro average recall}
+                  \begin{equation*}
+                      \operatorname{macro\,avg\,rec}(D, \clf) = \frac{1}{k}\sum_{i=1}^k\rec (D, \clf_i).
+                  \end{equation*}
         \end{itemize}
     \end{block}
 \end{frame}
@@ -330,10 +330,9 @@ University of Hagen, Germany}
     \begin{block}{Logistische Regression}
         \begin{itemize}
             \item Binärer Klassifikator, der Entscheidungsgrenzen direkt modelliert
-            \item Bei Multilabel durch One-Vs-Rest-Klassifikator abgebildet. 
             \item Vorteile:
                 \begin{itemize}
-                    \item Einfach Implementation
+                    \item Einfach zu implementieren.
                     \item Schnell in der Berechnung.
                 \end{itemize}
             \item Parameter:
@@ -341,7 +340,7 @@ University of Hagen, Germany}
                     \item \texttt{Regularisierung}: L1-Regularisierung und L2-Regularisierung
                      % Wird verwendet, um Überanpassung zu vermeiden, indem Null-Wahrscheinlichkeiten durch eine kleine positive Konstante ersetzt werden
                     \item \texttt{Solver}: liblinear und saga
-                    % liblinear ist der Standardsolver, sage ist besonders geeignet für große Datenmengen
+                    % liblinear ist der Standardsolver, saga ist besonders geeignet für große Datenmengen
                 \end{itemize}
         \end{itemize}
     \end{block} 
