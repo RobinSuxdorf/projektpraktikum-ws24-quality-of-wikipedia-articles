@@ -301,7 +301,7 @@ University of Hagen, Germany}
 
     \begin{block}{Ergebnisse}
         \begin{itemize}
-            \item Das augmentierte Modell war signifikant besser, wenn auf den augmentierten Daten getestet worden ist. Es schnitt aber deutlich schlechter ab, wenn auf dem Originalsatz getestet worden ist. Damit zeigt sich der Verdacht von Overfitting. $\to$ \textbf{Ansatz verworfen}.
+            \item Das Modell war signifikant besser, wenn auf den augmentierten Daten getestet worden ist, schnitt bei Tests auf dem Originalsatz aber deutlich schlechter ab. Damit zeigt sich der Verdacht von Overfitting. $\to$ \textbf{Ansatz verworfen}.
         \end{itemize}
     \end{block}
 \end{frame}
@@ -329,7 +329,7 @@ University of Hagen, Germany}
 \begin{frame}{Klassische Verfahren}
     \begin{block}{Logistische Regression}
         \begin{itemize}
-            \item Binärer Klassifikator, der Entscheidungsgrenzen direkt modelliert
+            \item Binärer Klassifikator, der Wahrscheinlichkeiten für Klassen berechnet und eine Entscheidungsgrenze anhand eines Schwellenwerts setzt.
             \item Vorteile:
                 \begin{itemize}
                     \item Einfach zu implementieren.
@@ -339,7 +339,7 @@ University of Hagen, Germany}
                 \begin{itemize}
                     \item \texttt{Regularisierung}: L1-Regularisierung und L2-Regularisierung
                      % Wird verwendet, um Überanpassung zu vermeiden, indem Null-Wahrscheinlichkeiten durch eine kleine positive Konstante ersetzt werden
-                    \item \texttt{Solver}: liblinear und saga
+                    \item \texttt{Solver}: \texttt{liblinear} und \texttt{saga}
                     % liblinear ist der Standardsolver, saga ist besonders geeignet für große Datenmengen
                 \end{itemize}
         \end{itemize}
@@ -349,9 +349,9 @@ University of Hagen, Germany}
 \begin{frame}{Klassische Verfahren}
     \begin{block}{Multinomialer Naive Bayes-Klassifikator}
         \begin{itemize}
-            \item Probabilistischer Klassifikator, der auf Bayes'schem Theorem basiert
-            \item Nimmt bedingte Unabhängigkeit zwischen Features an (naive Annahme)
-            \item Geeignet für Textklassifikation mit Wortvorkommen als Features
+            \item Probabilistischer Klassifikator, der auf dem Bayes-Theorem basiert.
+            \item Nimmt bedingte Unabhängigkeit zwischen Features an (naive Annahme).
+            \item Geeignet für Textklassifikation mit Wortvorkommen als Features.
             \item Vorteile:
                   \begin{itemize}
                       \item Lineare Zeitkomplexität O(nd) % n = Anzahl der Features, d = Anzahl der Samples
@@ -377,14 +377,14 @@ University of Hagen, Germany}
 \begin{frame}{Klassische Verfahren}
     \begin{block}{Support Vector Machine (SVM)}
         \begin{itemize}
-            \item Nutzt das Konzept des maximalen Margins, um eine robuste Trennlinie zu finden
-            \item Kann mit Kernelfunktionen erweitert werden, um nicht-lineare Trennungen zu ermöglichen
-            \item Geeignet für hochdimensionale Datenräume, insbesondere für Textklassifikation
+            \item Nutzt das Konzept des maximalen Margins, um eine möglichst gut trennende Hyperebene zu finden.
+            \item Erweiterbar durch Kernelfunktionen für nicht-lineare Trennungen.
+            \item Leistungsfähig für hochdimensionale Daten, z.B. Textklassifikation, jedoch rechenintensiv bei großen Datensätzen
             \item Parameter:
                   \begin{itemize}
                       \item \texttt{C}: Regularisierungsparameter zur Steuerung des Trade-offs zwischen Maximierung des Margins und Minimierung von Fehlklassifikationen
-                      \item \texttt{kernel}: Auswahl der Kernel-Funktion (z.B. linear, RBF, polynomial)
-                      \item Kernel-spezifische Parameter
+                      \item \texttt{kernel}: Auswahl der Kernel-Funktion (z.B. linear, RBF, polynomial, sigmoid)
+                      \item Kernel-spezifische Parameter (z.B. \texttt{degree} für polynomiale Kernel)
                   \end{itemize}
         \end{itemize}
     \end{block}
@@ -394,8 +394,8 @@ University of Hagen, Germany}
 \begin{frame}
     \begin{block}{Gemeinsamkeiten} % SB: Mehr Details? Folie sieht leer aus
         \begin{itemize}
-            \item GridSearchCV von Scikit-Learn wurde für eine Hyperparameter-Optimierung nach (Macro Average) Recall verwendet
-            \item OneVsRestClassifier von Scikit-Learn wurde für Multilabel-Klassifikation verwendet
+            \item \texttt{GridSearchCV} von Scikit-Learn wurde für eine Hyperparameter-Optimierung nach (Macro Average) Recall verwendet
+            \item \texttt{OneVsRestClassifier} von Scikit-Learn wurde für Multilabel-Klassifikation verwendet
         \end{itemize}
     \end{block}
 \end{frame}
