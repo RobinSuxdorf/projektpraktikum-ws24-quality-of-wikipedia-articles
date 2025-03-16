@@ -288,22 +288,22 @@ University of Hagen, Germany}
 
 \begin{frame}{Easy Data Augmentation (EDA)}
     \begin{block}{Ziel und Methode}
-        \begin{itemize}
+        \begin{itemize} 
             \item Idee: Die Anwendung von Easy Data Augmentation (EDA), um durch augmentierte Daten die Anzahl der unterrepräsentierten Labels zu vergrößern.
         \end{itemize}
     \end{block}
 
     \begin{block}{Umsetzung}
         \begin{itemize}
-            \item Es wurden neue Texte aus den Originaltexten erstellt indem Synonyme hinzugefügt, zufällig Wortreihenfolgen getauscht und zufällig Wörter eingefügt bzw. gelöscht worden sind.
+            \item Es wurden neue Texte aus den Originaltexten erstellt indem Synonyme hinzugefügt, zufällig Wortreihenfolgen getauscht und zufällig Wörter eingefügt bzw. gelöscht worden sind. 
         \end{itemize}
     \end{block}
 
-    \begin{alertblock}{Ergebnisse}
+    \begin{block}{Ergebnisse}
         \begin{itemize}
-            \item Auf dem augmentierten Datensatz trainierte Modelle verbesserten sich signifikant, wenn auf den augmentierten Daten getestet worden ist. Das augmentierte Modell schnitt aber deutlich schlechter ab, wenn auf dem Originalsatz getestet worden ist. Damit zeigt sich der Verdacht von Overfitting. $\to$ \textbf{Ansatz verworfen}.
+            \item Das augmentierte Modell war signifikant besser, wenn auf den augmentierten Daten getestet worden ist. Es schnitt aber deutlich schlechter ab, wenn auf dem Originalsatz getestet worden ist. Damit zeigt sich der Verdacht von Overfitting. $\to$ \textbf{Ansatz verworfen}.
         \end{itemize}
-    \end{alertblock}
+    \end{block}
 \end{frame}
 
 \section{Ansätze}
@@ -329,22 +329,22 @@ University of Hagen, Germany}
 \begin{frame}{Klassische Verfahren}
     \begin{block}{Logistische Regression}
         \begin{itemize}
-            \item Diskriminativer Klassifikator, der Entscheidungsgrenzen direkt modelliert
-            \item Schätzt die Wahrscheinlichkeiten von Klassen basierend auf einer linearen Entscheidungsfunktion
-            \item Geeignet für Textklassifikation mit hochdimensionalen Feature-Vektoren
+            \item Binärer Klassifikator, der Entscheidungsgrenzen direkt modelliert
+            \item Bei Multilabel durch One-Vs-Rest-Klassifikator abgebildet. 
             \item Vorteile:
-                  \begin{itemize}
-                      \item Lineare Zeitkomplexität O(nd) % SB: Sicher? Logreg hatte mit Abstand das längste Training der drei klassischen Modelle
-                      \item Einfach Implementation
-                      \item Schnell in der Berechnung.
-                  \end{itemize}
+                \begin{itemize}
+                    \item Einfach Implementation
+                    \item Schnell in der Berechnung.
+                \end{itemize}
             \item Parameter:
-                  \begin{itemize}
-                      \item \texttt{Regularisierung}: L1-Regularisierung
-                      \item \texttt{OneVsRestClassifier}: Für die Klassifizierung der Multilabeldaten
-                  \end{itemize}
+                \begin{itemize}
+                    \item \texttt{Regularisierung}: L1-Regularisierung und L2-Regularisierung
+                     % Wird verwendet, um Überanpassung zu vermeiden, indem Null-Wahrscheinlichkeiten durch eine kleine positive Konstante ersetzt werden
+                    \item \texttt{Solver}: liblinear und saga
+                    % liblinear ist der Standardsolver, sage ist besonders geeignet für große Datenmengen
+                \end{itemize}
         \end{itemize}
-    \end{block}
+    \end{block} 
 \end{frame}
 
 \begin{frame}{Klassische Verfahren}
