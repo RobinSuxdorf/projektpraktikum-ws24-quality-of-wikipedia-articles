@@ -6,14 +6,14 @@ Im Rahmen des Praktikums wurde zuerst der Datensatz analysiert. Im Folgenden wir
 \subsection{Ursprünglicher Datensatz}
 \label{UrsprunglicherDatensatz}
 %Erter Satz geändert
-Als Basis wurde ein Datensatz verwendet, welcher  verschiedene Wikipedia-Artikel enthält \cite{urbanbricks_wikipedia}. Der Datensatz wurde in zwei Dateien unterteilt. Die erste Datei enthielt gute Artikel und die zweite enthielt %\emph{promotional} (
+Als Basis wurde ein Datensatz verwendet, welcher  verschiedene Wikipedia-Artikel enthält \cite{Urbanbricks2020}. Der Datensatz wurde in zwei Dateien unterteilt. Die erste Datei enthielt gute Artikel und die zweite enthielt %\emph{promotional} (
 Werbeartikel und wurde noch weiter unterteilt. Dabei sind folgende Label vergeben: "advert" (Werbeanzeigen), "coi" (enge Verbindung des Autors zum Artikel), fanpov (Potentieller Artikel eines Fans), PR  (Presseartikel), resume (Lebenslauf)
 %\begin{itemize}
-%    \item advert – „Dieser Artikel enthält Inhalte, die wie eine Werbeanzeige verfasst sind.“
-%\item coi – „Ein Hauptautor dieses Artikels scheint eine enge Verbindung zu seinem Thema zu haben.“
-%\item fanpov – „Dieser Artikel ist möglicherweise aus der Sicht eines Fans geschrieben, statt aus einer neutralen Perspektive.“
-%\item pr – „Dieser Artikel liest sich wie eine Pressemitteilung oder ein Nachrichtenartikel oder basiert weitgehend auf routinemäßiger Berichterstattung oder Sensationslust.“
-%\item resume – „Dieser biografische Artikel ist wie ein Lebenslauf geschrieben.“
+%    \item advert - „Dieser Artikel enthält Inhalte, die wie eine Werbeanzeige verfasst sind.“
+%\item coi - „Ein Hauptautor dieses Artikels scheint eine enge Verbindung zu seinem Thema zu haben.“
+%\item fanpov - „Dieser Artikel ist möglicherweise aus der Sicht eines Fans geschrieben, statt aus einer neutralen Perspektive.“
+%\item pr - „Dieser Artikel liest sich wie eine Pressemitteilung oder ein Nachrichtenartikel oder basiert weitgehend auf routinemäßiger Berichterstattung oder Sensationslust.“
+%\item resume - „Dieser biografische Artikel ist wie ein Lebenslauf geschrieben.“
 %\end{itemize}
 %Der zweite Datensatz enthielt Artikel, die als \emph{good} klassifiziert worden sind. 
 Die beiden oben genannten Datensätze wurden zusammen verwendet, um die gesamte Datenbasis zu bilden. Insgesamt ergab das \textbf{Anzahl Datensätze einfügen} Daten. Die Label dieser Daten war wie folgt verteilt:
@@ -46,7 +46,7 @@ Da die Seiten im Dump in Wiki-Sytax vorliegen, enthalten sie auch alle von den W
 
 Es wurde ein Konverter entwickelt, der zunächst alle Seiten aus dem Dump verarbeitet, die zuvor genannten Nicht-Artikel-Seiten ausschließt und den Rest auf drei Kategorien verteilt: In die erste Kategorie \emph{good} fallen die wie zuvor beschrieben als lesenswert und exzellent gekennzeichneten Artikel; in die zweite Kategorie \emph{promo} die anhand der Templates als werbend erkannten und in die letzte Kategorie \emph{neutral} alle weiteren Artikel. Die zur Kategorisierung genutzten Templates sowie alle Zeilenumbrüche wurden aus dem Artikeltext entfernt, ansonsten wurde er unverändert übernommen. Insgesamt ergab sich die folgende Aufteilung: 46.882 \emph{good}, 32.633 \emph{promo}, 6.611.303 \emph{neutral} und 17.401.113 Nicht-Artikel-Seiten.
 
-Da die Klassen extrem ungleich verteilt sind (neutrale Artikel etwa um einen Faktor 200 häufiger als werbende), wurde anschließend noch eine zufällige Auswahl der Artikel jeder Klasse getroffen. Hierbei kam \textit{Reservoir Sampling} \cite{ReservoirSampling} zum Einsatz, bei dem die Elemente des Datensatzes einzeln gelesen werden, ohne dass deren Anzahl zuvor bekannt sein muss.
+Da die Klassen extrem ungleich verteilt sind (neutrale Artikel etwa um einen Faktor 200 häufiger als werbende), wurde anschließend noch eine zufällige Auswahl der Artikel jeder Klasse getroffen. Hierbei kam \textit{Reservoir Sampling} \cite{Vitter1985} zum Einsatz, bei dem die Elemente des Datensatzes einzeln gelesen werden, ohne dass deren Anzahl zuvor bekannt sein muss.
 
 Um die Daten genau wie den Kaggle-Datensatz verarbeiten zu können, wurden sie in einem kompatiblen Format ebenfalls in CSV-Dateien geschrieben. Die Pipeline wurde so erweitert, dass sie neben der binären Klassifikation auch eine Mehrklassen-Klassifikation inklusive der Klasse \emph{neutral} unterstützt.
 

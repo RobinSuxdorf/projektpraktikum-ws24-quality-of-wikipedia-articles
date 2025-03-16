@@ -1,13 +1,13 @@
 \subsection{Vorverarbeitung und Repräsentation der Daten}
 \label{sec:vorverarbeitung}
 
-Die Textdaten wurden einer parametrisch aktivierbaren Vorverarbeitung unterzogen, um den Einfluss einzelner Bereinigungsschritte auf die Modellleistung evaluieren zu können. Dabei wurden Sonder- und Interpunktionszeichen entfernt, alle Zeichen in Kleinbuchstaben umgewandelt und häufige Stoppwörter eliminiert. Außerdem wurde der Porter-Stemmer \cite{porter_algorithm_2006} zur Reduktion auf Wortstämme verwendet. Zahlen blieben erhalten, um relevante Informationen nicht zu verlieren.
+Die Textdaten wurden einer parametrisch aktivierbaren Vorverarbeitung unterzogen, um den Einfluss einzelner Bereinigungsschritte auf die Modellleistung evaluieren zu können. Dabei wurden Sonder- und Interpunktionszeichen entfernt, alle Zeichen in Kleinbuchstaben umgewandelt und häufige Stoppwörter eliminiert. Außerdem wurde der Porter-Stemmer \cite{Porter2006} zur Reduktion auf Wortstämme verwendet. Zahlen blieben erhalten, um relevante Informationen nicht zu verlieren.
 
-Für die Umwandlung der bereinigten Texte in numerische Repräsentationen wurden verschiedene Vektorisierungsmethoden in Betracht gezogen. Neben der klassischen Count-Vektorisierung beziehungsweise dem Bag-of-Words-Ansatz wurden auch semantische Ansätze wie Word2Vec \cite{mikolov_efficient_2013} und GloVe \cite{pennington_glove_2014} implementiert. Final wurde sich aber für die TF-IDF Vektorisierung entschieden.
+Für die Umwandlung der bereinigten Texte in numerische Repräsentationen wurden verschiedene Vektorisierungsmethoden in Betracht gezogen. Neben der klassischen Count-Vektorisierung beziehungsweise dem Bag-of-Words-Ansatz wurden auch semantische Ansätze wie Word2Vec \cite{Mikolov2013} und GloVe \cite{Pennington2014} implementiert. Final wurde sich aber für die TF-IDF Vektorisierung entschieden.
 
-Mit der TF-IDF-Methode wird jedem Begriff ein Gewicht zugeordnet, das sich aus der Term Frequency (TF) und der Inverse Document Frequency (IDF) zusammensetzt. Die Methode reduziert den Einfluss häufiger, uninformativer Wörter, hebt diskriminierende Begriffe hervor und erzeugt spärliche Merkmalsvektormatrizen. TF-IDF hat sich insbesondere in Anwendungen wie der Textklassifikation, Dokumentenclustering und im Information Retrieval als effektive Methode zur Merkmalsextraktion bewährt \cite{manning_introduction_2008}.
+Mit der TF-IDF-Methode wird jedem Begriff ein Gewicht zugeordnet, das sich aus der Term Frequency (TF) und der Inverse Document Frequency (IDF) zusammensetzt. Die Methode reduziert den Einfluss häufiger, uninformativer Wörter, hebt diskriminierende Begriffe hervor und erzeugt spärliche Merkmalsvektormatrizen. TF-IDF hat sich insbesondere in Anwendungen wie der Textklassifikation, Dokumentenclustering und im Information Retrieval als effektive Methode zur Merkmalsextraktion bewährt \cite{Manning2009}.
 
-Die praktische Umsetzung erfolgte über den \texttt{TfidfVectorizer} von Scikit-Learn \cite{skicitLearnRef}. Final wurde mit den folgenden Parametern gearbeitet:
+Die praktische Umsetzung erfolgte über den \texttt{TfidfVectorizer} von Scikit-Learn \cite{Pedregosa2011}. Final wurde mit den folgenden Parametern gearbeitet:
 \begin{itemize}
     \item \texttt{ngram\_range: [1, 1]} \\ Es werden ausschließlich Einzelwörter betrachtet.
     \item \texttt{max\_df: 0.9} \\ Wörter, die in über 90\% des Korpus vorkommen, werden ignoriert.
