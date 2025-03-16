@@ -15,6 +15,15 @@
 
 \usetheme{aig}                  % Set beamer theme
 
+
+%%% commands
+\newcommand{\clf}{\operatorname{clf}}
+\newcommand{\rec}{\operatorname{rec}}
+\newcommand{\tp}{\operatorname{TP}}
+\newcommand{\tn}{\operatorname{TN}}
+\newcommand{\fp}{\operatorname{FP}}
+\newcommand{\fn}{\operatorname{FN}}
+
 %=========================================================================================================================
 \title{Qualität von Wikipedia-Artikeln}
 \author[Kunze, Bunge, Krämer, Steenhof, Suxdorf]{Alexander Kunze, Sebastian Bunge, Johannes Krämer, Emmanuelle Steenhof, Robin Suxdorf}
@@ -92,12 +101,12 @@ University of Hagen, Germany}
     \begin{block}{Good articles}
         \begin{itemize}
             \item Müssen unter anderem die folgenden Kriterien erfüllen:
-            \begin{itemize}
-                \item gut geschrieben
-                \item korrekte und überprüfbare Informationen
-                \item neutral in der Sichtweise
-                \item verwenden relevante Bilder mit geeigneten Urheberrechtslizenzen
-            \end{itemize}
+                  \begin{itemize}
+                      \item gut geschrieben
+                      \item korrekte und überprüfbare Informationen
+                      \item neutral in der Sichtweise
+                      \item verwenden relevante Bilder mit geeigneten Urheberrechtslizenzen
+                  \end{itemize}
             \item Nominierung und Vergabe des Status durch die Community (Good article nomination).
             \item 0.59\% aller Wikipedia-Artikel
         \end{itemize}
@@ -108,13 +117,13 @@ University of Hagen, Germany}
     \begin{block}{Articles with a promotional tone}
         \begin{itemize}
             \item Artikel, die einer Überarbeitung bedürfen:
-            \begin{itemize}
-                \item Werbung
-                \item Interessenkonflikte
-                \item Aus Sicht eines Fans
-                \item Pressemitteilungen
-                \item Wie ein Lebenslauf
-            \end{itemize}
+                  \begin{itemize}
+                      \item Werbung
+                      \item Interessenkonflikte
+                      \item Aus Sicht eines Fans
+                      \item Pressemitteilungen
+                      \item Wie ein Lebenslauf
+                  \end{itemize}
             \item Entsprechende Templates können durch jeden Autoren zum Artikel hinzugefügt oder entfernt werden.
         \end{itemize}
     \end{block}
@@ -125,6 +134,22 @@ University of Hagen, Germany}
         \begin{itemize}
             \item Handelt es sich bei einem gegebenen Wikipedia-Artikel um einen guten Artikel, um einen problematischen oder gehört er zu keiner der beiden Klassen?
             \item Falls der Artikel einer Überarbeitung bedarf, was sind die Gründe dafür?
+        \end{itemize}
+    \end{block}
+\end{frame}
+
+\begin{frame}{Metriken}
+    \begin{block}{Metriken}
+        \begin{itemize}
+            \item Binäre Klassifikation: Sei $\clf\colon \mathbb{R}^d\to \{0, 1\}$ ein binärer Klassifikator. Dann betrachten wir den \textbf{Recall}
+                  \begin{equation*}
+                      \rec(D, \clf) = \frac{\tp(D, \clf)}{\tp(D, \clf) + \fn(D, \clf)}.
+                  \end{equation*}
+
+            \item Multilabel Klassifikation: Sei $\clf_i\colon\mathbb{R}^d\to\{0, 1\}$ ein binärer Klassifikator für das Label $i$. Dann betrachten wir den \textbf{Macro average recall}
+                  \begin{equation*}
+                      \operatorname{macro\,avg\,rec}(D, \clf) = \frac{1}{k}\sum_{i=1}^k\rec (D, \clf_i).
+                  \end{equation*}
         \end{itemize}
     \end{block}
 \end{frame}
@@ -190,11 +215,11 @@ University of Hagen, Germany}
     \begin{block}{Wikipedia-Dump - Verteilung}
         \begin{itemize}
             \item Klassen der englischsprachigen Artikel:
-            \begin{itemize}
-                \item good: 46.882
-                \item promotional: 32.633
-                \item neutral: 6.611.303
-            \end{itemize}
+                  \begin{itemize}
+                      \item good: 46.882
+                      \item promotional: 32.633
+                      \item neutral: 6.611.303
+                  \end{itemize}
             \item Stark unausgeglichen, Reduktion durch Undersampling.
         \end{itemize}
     \end{block}
@@ -293,7 +318,7 @@ University of Hagen, Germany}
     \end{block}
     \begin{block}{Deep Learning}
         \begin{itemize}
-            \item \yellowhighlight{CNN}
+            \item Künstliches Neuronales Netz
             \item \yellowhighlight{5. Ansatz}
         \end{itemize}
     \end{block}
@@ -330,9 +355,9 @@ University of Hagen, Germany}
             \item Geeignet für Textklassifikation mit Wortvorkommen als Features
             \item Vorteile:
                   \begin{itemize}
-                      \item Lineare Zeitkomplexität O(nd) % n = Anzahl der Features, d = Anzahl der Klassen
+                      \item Lineare Zeitkomplexität O(nd) % n = Anzahl der Features, d = Anzahl der Samples
                             % Mit Abstand der schnelleste Klassifikator gerade beim gesampelten Wikipedia-Dump
-                            % Training auf den samples war nach Sekunden abgeschlossen
+                            % Training auf den Dump-Samples war nach Sekunden abgeschlossen
                       \item Robust bei hoher Dimensionalität
                             % Die vektorisierten Features sind hochdimensional
                             % (Definition hochdimensional?)
@@ -368,18 +393,51 @@ University of Hagen, Germany}
 
 
 \begin{frame}
-    \begin{block}{Gemeinsamkeiten}
+    \begin{block}{Gemeinsamkeiten} % SB: Mehr Details? Folie sieht leer aus
         \begin{itemize}
-            \item GridSearchCV von sklearn wurde für eine Hyperparameter-Optimierung nach Recall verwendet
-            \item OneVsRestClassifier von sklearn wurde für Multilabel-Klassifikation verwendet
+            \item GridSearchCV von Scikit-Learn wurde für eine Hyperparameter-Optimierung nach (Macro Average) Recall verwendet
+            \item OneVsRestClassifier von Scikit-Learn wurde für Multilabel-Klassifikation verwendet
         \end{itemize}
     \end{block}
 \end{frame}
 
 \subsection{Deep Learning}
 
-\begin{frame}{Deep Learning}
-    CNN
+\begin{frame}{Deep-Learning: MLP}
+    \begin{block}{Neuronales Netzwerk zur Klassifikation von Wikipedia-Artikeln}
+        \begin{itemize}
+            \item Mehrschichtiges Perzeptron (MLP) mit zwei voll verbundenen Schichten:
+                  \begin{itemize}
+                      \item Eingabeschicht: \texttt{input\_dim} Merkmale
+                      \item Verborgene Schicht: 512 Neuronen, ReLU-Aktivierung
+                      \item Ausgabeschicht: 2 Neuronen (binäre Klassifikation)
+                  \end{itemize}
+            \item Dropout (50\%) zur Regularisierung
+            \item Verlustfunktion: Cross entropy
+                  \begin{equation*}
+                      \mathcal{L} = - \left( y \log(\hat{y}) + (1 - y) \log(1 - \hat{y}) \right)
+                  \end{equation*}
+        \end{itemize}
+    \end{block}
+\end{frame}
+
+\begin{frame}{Deep-Learning-Ansatz: MLP}
+    \begin{block}{Neuronales Netzwerk für Multi-Topic-Wikipedia-Klassifikation}
+        \begin{itemize}
+            \item Mehrschichtiges Perzeptron (MLP) mit zwei voll verbundenen Schichten:
+                  \begin{itemize}
+                      \item Eingabeschicht: \texttt{input\_dim} Merkmale
+                      \item Verborgene Schicht: 512 Neuronen, ReLU-Aktivierung
+                      \item Ausgabeschicht: 5 Neuronen (Multilabel-Klassifikation)
+                  \end{itemize}
+            \item Dropout (50\%) zur Regularisierung
+            \item Verlustfunktion: Binary Cross Entropy With Logits (BCEWithLogitsLoss)
+                  \begin{equation*}
+                      \mathcal{L} = - \sum_{i} \left( y_i \log(\hat{y}_i) + (1 - y_i) \log(1 - \hat{y}_i) \right)
+                  \end{equation*}
+            \item Vorhersage: Sigmoid-Aktivierung, Schwellenwert bei 0,5
+        \end{itemize}
+    \end{block}
 \end{frame}
 
 \begin{frame}{Deep Learning}
