@@ -407,37 +407,24 @@ University of Hagen, Germany}
         \begin{itemize}
             \item Mehrschichtiges Perzeptron (MLP) mit zwei voll verbundenen Schichten:
                   \begin{itemize}
-                      \item Eingabeschicht: \texttt{input\_dim} Merkmale
+                      \item Eingabeschicht: 10000 Features durch TF-IDF
                       \item Verborgene Schicht: 512 Neuronen, ReLU-Aktivierung
-                      \item Ausgabeschicht: 2 Neuronen (binäre Klassifikation)
+                      \item Ausgabeschicht:
+                      \begin{itemize}
+                          \item 2 Neuronen (binäre Klassifikation)
+                          \item 5 Neuronen (multilabel Klassifikation)
+                          \item 3 Neuronen (multiclass Klassifikation)
+                      \end{itemize}
                   \end{itemize}
             \item Dropout (50\%) zur Regularisierung
-            \item Verlustfunktion: Cross entropy
+            \item Verlustfunktion: Cross Entropy
                   \begin{equation*}
-                      \mathcal{L} = - \left( y \log(\hat{y}) + (1 - y) \log(1 - \hat{y}) \right)
+                      \mathcal{L} = - \sum_{i=1}^{C} y_i \log(\hat{y}_i)
                   \end{equation*}
         \end{itemize}
     \end{block}
 \end{frame}
 
-\begin{frame}{Deep-Learning-Ansatz: MLP}
-    \begin{block}{Neuronales Netzwerk für Multi-Topic-Wikipedia-Klassifikation}
-        \begin{itemize}
-            \item Mehrschichtiges Perzeptron (MLP) mit zwei voll verbundenen Schichten:
-                  \begin{itemize}
-                      \item Eingabeschicht: \texttt{input\_dim} Merkmale
-                      \item Verborgene Schicht: 512 Neuronen, ReLU-Aktivierung
-                      \item Ausgabeschicht: 5 Neuronen (Multilabel-Klassifikation)
-                  \end{itemize}
-            \item Dropout (50\%) zur Regularisierung
-            \item Verlustfunktion: Binary Cross Entropy With Logits (BCEWithLogitsLoss)
-                  \begin{equation*}
-                      \mathcal{L} = - \sum_{i} \left( y_i \log(\hat{y}_i) + (1 - y_i) \log(1 - \hat{y}_i) \right)
-                  \end{equation*}
-            \item Vorhersage: Sigmoid-Aktivierung, Schwellenwert bei 0,5
-        \end{itemize}
-    \end{block}
-\end{frame}
 
 \begin{frame}{Deep Learning}
     \begin{block}{5. Ansatz}
@@ -461,7 +448,7 @@ University of Hagen, Germany}
         \begin{itemize}
             \item Darstellung: DistilBERT Tokenizer
             \item Attention: Scaled Dot Product Attention (SDPA)
-            \item Aktivierungsfunktion: $GeLu(x) \approx {0.5 \cdot x \cdot (1+ tanh({\frac{x}{\sqrt{2}}}))} $
+            \item Aktivierungsfunktion: $\operatorname{GeLu(x)} \approx {0.5 \cdot x \cdot (1+ \tanh({\frac{x}{\sqrt{2}}}))} $
         \end{itemize}
     \end{block}
 \end{frame}
