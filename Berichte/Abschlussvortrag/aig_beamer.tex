@@ -91,10 +91,6 @@ University of Hagen, Germany}
 
 \section{Daten}
 
-\begin{frame}{Daten}
-    % Es sollte etwas zur Einleitung der Section gesagt werden
-\end{frame}
-
 \subsection{Problemstellung}
 
 \begin{frame}{Problemstellung}
@@ -132,8 +128,9 @@ University of Hagen, Germany}
 \begin{frame}{Problemstellung}
     \begin{block}{Problemstellung}
         \begin{itemize}
-            \item Handelt es sich bei einem gegebenen Wikipedia-Artikel um einen guten Artikel, um einen problematischen oder gehört er zu keiner der beiden Klassen?
-            \item Falls der Artikel einer Überarbeitung bedarf, was sind die Gründe dafür?
+            \item \textbf{Binäre Klassifikation}: Gehört ein gegebener Artikel zu den guten Artikeln oder hat er einen werbenden Ton?
+            \item \textbf{Multiclass-Klassifikation}: Gehört er alternativ zu der großen Klasse der Artikel, die weder besonders gut sind, noch einen werbenden Ton haben?
+            \item \textbf{Multilabel-Klassifikation}: Aus welchen Gründen hat ein Artikel einen werbenden Ton?
         \end{itemize}
     \end{block}
 \end{frame}
@@ -145,8 +142,9 @@ University of Hagen, Germany}
         \begin{itemize}
             \item Hochgeladen Oktober 2019.
             \item Enthält alle Artikel der englischen Wikipedia, die zum damaligen Zeitpunkt als "good" bzw. "with a promotional tone" markiert waren.
-            \item Zwei CSV-Dateien: \texttt{good.csv}, \texttt{promotional.csv}.
-            \item \texttt{promotional}-Daten mit jeweils mindestens einem Label versehen: \texttt{advert}, \texttt{coi}, \texttt{fanpov}, \texttt{pr}, \texttt{resume}
+            \item Aufgeteilt auf zwei CSV-Dateien: \texttt{good.csv}, \texttt{promotional.csv}.
+            \item \texttt{good.csv} enthält die Spalten \texttt{text} und \texttt{url}.
+            \item \texttt{promotional.csv} enthält außerdem für jedes mögliche Label eine Spalte: \texttt{advert}, \texttt{coi}, \texttt{fanpov}, \texttt{pr}, \texttt{resume}
         \end{itemize}
     \end{block}
 \end{frame}
@@ -162,7 +160,7 @@ University of Hagen, Germany}
 \begin{frame}{Datensatz}
     \begin{figure}
         \centering
-        \includegraphics[width=0.6\linewidth]{figures/kaggle-promo-labels.png}
+        \includegraphics[width=0.6\linewidth]{figures/kaggle-promo-labels-2.png}
         \caption{Kaggle - Wikipedia Promotional Articles (Labels)}
     \end{figure}
 \end{frame}
@@ -196,7 +194,15 @@ University of Hagen, Germany}
 \end{frame}
 
 \begin{frame}{Weitere Daten}
-    \begin{block}{Wikipedia-Dump - Verteilung}
+    \begin{block}{Wikipedia-Dump - Verteilung}      
+        %\begin{table}
+        %    \centering
+        %    \begin{tabular}{cc}
+        %        good & 46.882 \\
+        %        promotional & 32.633 \\
+        %        neutral & 6.611.303 \\
+        %    \end{tabular}
+        %\end{table}
         \begin{itemize}
             \item Klassen der englischsprachigen Artikel:
                   \begin{itemize}
