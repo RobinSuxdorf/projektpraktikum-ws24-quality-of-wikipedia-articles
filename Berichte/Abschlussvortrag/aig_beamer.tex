@@ -425,74 +425,252 @@ University of Hagen, Germany}
     \end{block}
 \end{frame}
 
-
 \begin{frame}{Deep Learning}
     \begin{block}{5. Ansatz}
-        Probleme: Schlechte Multilabelklassifizierung der ersten vier Ansätze. \\
-        Analyse: Unterscheidung der Promotional aufgrund von Thema: \\
-        Ziel:
+       \begin{itemize}
+       
+    \item Probleme: Schlechte Multilabelklassifizierung der ersten vier Ansätze.
+    \item    Analyse: Unterscheidung der Promotional aufgrund von Thema
+     \item        Ziel:
         Einbezug von Kontext/Bedeutung \\
-        Ideen:
+        \item Ideen:
         \begin{itemize}
             \item Vorverarbeitungsmethode erstellen
             \item Transformerarchitektur verwenden
         \end{itemize}
+        \end{itemize}   
     \end{block}
 \end{frame}
 
 \begin{frame}{Deep Learning}
+%\begin{block}{Arbeitsweise von Transformern}
+\begin{center}
+
+\begin{figure}
+
+
+\includegraphics[scale=1.2]{figures/TransformerArchitektur.eps}
+\caption{Architektur Transformer}
+\end{figure}
+\end{center}
+%\end{block}
+\end{frame}
+
+
+\begin{frame}{Deep Learning}
+%\begin{block}{Arbeitsweise von Transformern}
+\begin{center}
+\begin{figure}
+\includegraphics[scale=0.9]{figures/TransformerAttention.eps}
+\caption{Transformer Attention; Links: Scaled dot product attention; Rechts: Multi-head-Attention}
+\end{figure}
+\end{center}
+%\end{block}
+\end{frame}
+
+
+
+\begin{frame}{Deep Learning}
+\begin{block}{Bidirectional Transformers for Language Understanding (BERT)}
+\begin{itemize}
+\item Vorteil: Besondere Fähigkeit zur Erkennung von Kontext
+\item Transfer Learning:
+\begin{itemize}
+\item Pretraining auf ungelabelten Daten
+\item Fine-Tuning auf gelabelten Daten
+\end{itemize}
+\item Tokenizer: WordPiece Embeddings 
+\item Attention: Bidirectional Cross-Attention
+\end{itemize}
+\end{block}
+\end{frame}
+
+
+\begin{frame}{Deep Learning}
     \begin{block}{Transformerarchitektur}
-        Modellwahl: DistilBERT \\
-        Vorteile: Besondere Vorteile von BERT in der Erkennung von Kontext \\
-        Architektur:
         \begin{itemize}
-            \item Darstellung: DistilBERT Tokenizer
+        \item Modellwahl: DistilBERT \\
+         
+       \item  Architektur:
+        \begin{itemize}
+            \item Darstellung: DistilBERT Tokenizer %Vokabular: 30522 Wörter
+            \item Encoder: 6 Schichten 
+            \item Feedforwardschichten Encoder: 3072 Neuronen
+           % \item Multi-Attention-Heads: 12
+            \item Dropout: 0.2
             \item Attention: Scaled Dot Product Attention (SDPA)
-            \item Aktivierungsfunktion: $\operatorname{GeLu(x)} \approx {0.5 \cdot x \cdot (1+ \tanh({\frac{x}{\sqrt{2}}}))} $
+            \item Aktivierungsfunktion: $GeLu(x) \approx {0.5 \cdot x \cdot (1+ tanh({\frac{x}{\sqrt{2}}}))} $
+           % \item Loss-funktion: Cross Entropy
+            \item Optimizer: AdamW
+        \end{itemize}
         \end{itemize}
     \end{block}
+\end{frame}
+
+
+
+\begin{frame}{Deep Learning}
+    \begin{block}{Strukturelle Eigenschaften}
+       \begin{itemize}
+       
+
+        \item Binäre Klassifikation:
+        \begin{itemize}
+        \item 2 Ausgabe Neuronen
+        \end{itemize}
+        \item Multiklassenklassifikation
+        \begin{itemize}
+        \item 3 Ausgabe Neuronen
+        \item Cross-Attention
+        \end{itemize}
+        \item Multilabel
+        \begin{itemize}
+        \item 5 Ausgabeneuronen
+        \item Cross-Attention
+        \item Advert-Ausgabeneuron versehen mit Sigmoid-Aktivierungsfunktion Schwellwert 0.5
+        \item Coi, Fanpov, PR, Resume mithile von Anomalieerkennung
+               \end{itemize}
+        \end{itemize}
+        
+    \end{block}
+\end{frame}
+
+
+
+\section{Resultate}
+
+\begin{frame}{Metriken}
+    \begin{block}{Metriken}
+        \begin{itemize}
+            \item Binäre Klassifikation: Sei $\clf\colon \mathbb{R}^d\to \{0, 1\}$ ein binärer Klassifikator. Dann betrachten wir die  \textbf{Sensitivität(Recall)}
+                  \begin{equation*}
+                      \rec(D, \clf) = \frac{\tp(D, \clf)}{\tp(D, \clf) + \fn(D, \clf)}.
+                  \end{equation*}
+
+            \item Multilabel Klassifikation: Sei $\clf_i\colon\mathbb{R}^d\to\{0, 1\}$ ein binärer Klassifikator für das Label $i$. Dann betrachten wir den \textbf{macro average recall}
+                  \begin{equation*}
+                      \operatorname{macro\,avg\,rec}(D, \clf) = \frac{1}{k}\sum_{i=1}^k\rec (D, \clf_i).
+                  \end{equation*}
+        \end{itemize}
+    \end{block}
+\end{frame}
+
+\begin{frame}{Sensitivität}
+\begin{center}
+\includegraphics[scale=0.35]{figures/macro_avg_recall_usecases.png}
+\end{center}
+\end{frame}
+
+\begin{frame}{Präzision}
+\begin{center}
+\includegraphics[scale=0.35]{figures/macro_avg_precision_usecases.png}
+\end{center}
+\end{frame}
+
+\begin{frame}{Augmentierte Daten}
+\includegraphics[scale=0.7]{figures/AugmentierteDatenVergleichZusammen.png}
+\end{frame}
+
+
+\begin{frame}{Evaluation}
+\begin{block}{Evaluation}
+\begin{itemize}
+
+\item Binäre Klassifizierung
+\begin{itemize}
+\item Sensitivität: 96 Prozent
+\item Beste Modelle: SVM und Logistische Regression
+
+\end{itemize} 
+\item Multiklassenklassifizierung
+\begin{itemize}
+\item Sensitivität: 90 Prozent
+\item Beste Modelle: SVM und Logistische Regression
+\end{itemize}
+\item Multilabel
+\begin{itemize}
+\item Sensitivität: 66 Prozent
+\item Bestes Modell: Bayes
+\end{itemize}
+
+\end{itemize}
+
+\end{block}
+
+
 \end{frame}
 
 \section{Zusammenfassung}
 
 \begin{frame}{Zusammenfassung}
     \begin{block}{Zusammenfassung}
-        Errungenschaften:
+    \begin{itemize}
+    
+   
+        \item Errungenschaften
         \begin{itemize}
-            \item Daten analysiert
-            \item Datensatz mit Wikipedia Dump erweitert
-            \item Problemstellung erfasst
-            \item Datensatz für Machine Learning Verfahren vorbereitet.
-            \item Drei Klassische Modelle implementiert
-            \item Zwei Neuronale Methode implementiert
-            \item Ergebnisse Evaluiert
+            \item Daten analysiert und erweitert
+            \item Problemstellung erfasst            
+            \item Datensatz für Verfahren des maschiniellen Lernens Verfahren vorbereitet.
+            \item Drei klassische Modelle implementiert
+            \item Zwei neuronale Methoden implementiert
+            \item Ergebnisse evaluiert
         \end{itemize}
-        Ergebnisse:
+       \item Misserfolge
         \begin{itemize}
-            \item Datensatz aus Wikipedia Dump erstellt
-            \item Pipeline zur Klassifizierung von Wikipediaartikeln implementiert
+            \item Datenaugmentierung
+            \item Entwicklung von Vorverarbeitungsmethoden zur Erkennung von Kontext
+            \item Multilabelklassifikation hat noch keinen Industriestandard
+        
+         \end{itemize}
         \end{itemize}
     \end{block}
 \end{frame}
 
 \begin{frame}{Zusammenfassung}
     \begin{block}{Zusammenfassung}
-        Misserfolge
         \begin{itemize}
-            \item Datenaugmentierung
-            \item Entwicklung von Vorverarbeitung zur Erkennung von Kontext
-        \end{itemize}
+        \item Ergebnisse
+        \begin{itemize}
+            \item Datensatz aus Wikipedia Dump erstellt
+            \item Pipeline zur Klassifizierung von Wikipediaartikeln implementiert
+            \item Modelle mit sehr guten Resultaten für Binäre und Dreiklassenklassifizierung entwickelt
+            \end{itemize}
         Erweiterungsmöglichkeiten:
         \begin{itemize}
             \item Weitere klassische und neuronalen Ansätze implementieren und evaluieren
-            \item Ganzen Wikipedia Dump verwenden
+            %\item Ganzen Wikipedia Dump verwenden
             \item Verwendung von SetFit
-            \item Verwendung weiterer Modelle des Maschinellen Lernens
+            \item Nicht-Maschinielle Lernmethoden verwenden
+        \end{itemize}
         \end{itemize}
     \end{block}
+    \nocite{hendrycks2023gaussianerrorlinearunits}
+    \nocite{Sanh2019DistilBERTAD}
+    \nocite{tunstall2022efficientfewshotlearningprompts}
+    \nocite{9783960108535}
+    \nocite{article_comparing_LLMs}
+    \nocite{Attention}
+    \nocite{BERTReference}
+    \nocite{das2024languageagnosticmodelingwikipediaarticles}
+    \nocite{DBLP:journals/corr/BojanowskiGJM16}
+    \nocite{eyheramendy_2003}
+    \nocite{huggingfaceQuelle}
+    \nocite{maron_1961}
+    \nocite{pytorchRef}
+    \nocite{shavarani2020multiclassmultilingualclassificationwikipedia}
+    \nocite{skicitLearnRef}
+    \nocite{textCategorizationWithSVM}
+    \nocite{UrsprungDatensatz}
+    \nocite{yang2019zerotraining}
+    \nocite{yenduri2023generativepretrainedtransformercomprehensive}
+    \nocite{ReservoirSampling}
 \end{frame}
 
+
+\bibliographystyle{plain}
+\bibliography{references.bib}
 \appendix
-\input{appendix.tex}
+%\input{appendix.tex}
 
 \end{document}
