@@ -209,22 +209,6 @@ University of Hagen, Germany}
     \end{block}
 \end{frame}
 
-\begin{frame}{Metriken}
-    \begin{block}{Metriken}
-        \begin{itemize}
-            \item Binäre Klassifikation: Sei $\clf\colon \mathbb{R}^d\to \{0, 1\}$ ein binärer Klassifikator. Dann betrachten wir den \textbf{Recall}
-                  \begin{equation*}
-                      \rec(D, \clf) = \frac{\tp(D, \clf)}{\tp(D, \clf) + \fn(D, \clf)}.
-                  \end{equation*}
-
-            \item Multilabel Klassifikation: Sei $\clf_i\colon\mathbb{R}^d\to\{0, 1\}$ ein binärer Klassifikator für das Label $i$. Dann betrachten wir den \textbf{Macro average recall}
-                  \begin{equation*}
-                      \operatorname{macro\,avg\,rec}(D, \clf) = \frac{1}{k}\sum_{i=1}^k\rec (D, \clf_i).
-                  \end{equation*}
-        \end{itemize}
-    \end{block}
-\end{frame}
-
 \subsection{Vorverarbeitung}
 
 \begin{frame}{Vorverarbeitung}
@@ -319,7 +303,7 @@ University of Hagen, Germany}
     \begin{block}{Deep Learning}
         \begin{itemize}
             \item Künstliches Neuronales Netz
-            \item \yellowhighlight{5. Ansatz}
+            \item Transformer-Ansatz
         \end{itemize}
     \end{block}
 \end{frame}
@@ -335,13 +319,13 @@ University of Hagen, Germany}
                       \item Einfach zu implementieren.
                       \item Schnell in der Berechnung.
                   \end{itemize}
-            \item Parameter:
-                  \begin{itemize}
-                      \item \texttt{Regularisierung}: L1-Regularisierung und L2-Regularisierung
+            %\item Parameter:
+            %      \begin{itemize}
+            %          \item \texttt{Regularisierung}: L1-Regularisierung und L2-Regularisierung
                             % Wird verwendet, um Überanpassung zu vermeiden, indem große Koeffizienten bestraft werden
-                      \item \texttt{Solver}: \texttt{liblinear} und \texttt{saga}
+            %          \item \texttt{Solver}: \texttt{liblinear} und \texttt{saga}
                             % liblinear ist der Standardsolver, saga ist besonders geeignet für große Datenmengen
-                  \end{itemize}
+            %      \end{itemize}
         \end{itemize}
     \end{block}
 \end{frame}
@@ -363,13 +347,13 @@ University of Hagen, Germany}
                       \item Native Unterstützung für spärliche Matrizen
                             % die vektorisierten Features sind spärliche Matrizen
                   \end{itemize}
-            \item Parameter:
-                  \begin{itemize}
-                      \item \texttt{alpha}: Laplace-Glättung
+            %\item Parameter:
+            %      \begin{itemize}
+            %          \item \texttt{alpha}: Laplace-Glättung
                             % Wird verwendet, um Überanpassung zu vermeiden, indem Null-Wahrscheinlichkeiten durch eine kleine positive Konstante ersetzt werden
-                      \item \texttt{fit\_prior}: Lernen der Klassenpriors
+            %          \item \texttt{fit\_prior}: Lernen der Klassenpriors
                             % Wird verwendet, um die Klassenverteilung aus den Trainingsdaten zu schätzen bevor man irgendwelche Features sieht. Wenn False wird gleiche Klassenwahrscheinlichkeit angenommen
-                  \end{itemize}
+            %      \end{itemize}
         \end{itemize}
     \end{block}
 \end{frame}
@@ -379,13 +363,13 @@ University of Hagen, Germany}
         \begin{itemize}
             \item Nutzt das Konzept des maximalen Margins, um eine möglichst gut trennende Hyperebene zu finden.
             \item Erweiterbar durch Kernelfunktionen für nicht-lineare Trennungen.
-            \item Leistungsfähig für hochdimensionale Daten, z.B. Textklassifikation, jedoch rechenintensiv bei großen Datensätzen
-            \item Parameter:
-                  \begin{itemize}
-                      \item \texttt{C}: Regularisierungsparameter zur Steuerung des Trade-offs zwischen Maximierung des Margins und Minimierung von Fehlklassifikationen
-                      \item \texttt{kernel}: Auswahl der Kernel-Funktion (z.B. linear, RBF, polynomial, sigmoid)
-                      \item Kernel-spezifische Parameter (z.B. \texttt{degree} für polynomiale Kernel)
-                  \end{itemize}
+            \item Leistungsfähig für hoch-dimensionale Daten, z.B. Textklassifikation, jedoch rechenintensiv bei großen Datensätzen
+            %\item Parameter:
+            %      \begin{itemize}
+            %          \item \texttt{C}: Regularisierungsparameter zur Steuerung des Trade-offs zwischen Maximierung des Margins und Minimierung von Fehlklassifikationen
+            %          \item \texttt{kernel}: Auswahl der Kernel-Funktion (z.B. linear, RBF, polynomial, sigmoid)
+            %          \item Kernel-spezifische Parameter (z.B. \texttt{degree} für polynomiale Kernel)
+            %      \end{itemize}
         \end{itemize}
     \end{block}
 \end{frame}
@@ -611,7 +595,7 @@ University of Hagen, Germany}
         \begin{itemize}
             \item Daten analysiert und erweitert
             \item Problemstellung erfasst            
-            \item Datensatz für Verfahren des maschiniellen Lernens Verfahren vorbereitet.
+            \item Datensatz für Verfahren des maschinellen Lernens vorbereitet.
             \item Drei klassische Modelle implementiert
             \item Zwei neuronale Methoden implementiert
             \item Ergebnisse evaluiert
@@ -633,7 +617,7 @@ University of Hagen, Germany}
         \item Ergebnisse
         \begin{itemize}
             \item Datensatz aus Wikipedia Dump erstellt
-            \item Pipeline zur Klassifizierung von Wikipediaartikeln implementiert
+            \item Pipeline zur Klassifizierung von Wikipedia-Artikeln implementiert
             \item Modelle mit sehr guten Resultaten für Binäre und Dreiklassenklassifizierung entwickelt
             \end{itemize}
         Erweiterungsmöglichkeiten:
@@ -641,7 +625,7 @@ University of Hagen, Germany}
             \item Weitere klassische und neuronalen Ansätze implementieren und evaluieren
             %\item Ganzen Wikipedia Dump verwenden
             \item Verwendung von SetFit
-            \item Nicht-Maschinielle Lernmethoden verwenden
+            \item Nicht-Maschinelle Lernmethoden verwenden
         \end{itemize}
         \end{itemize}
     \end{block}
