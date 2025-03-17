@@ -90,71 +90,72 @@ if __name__ == "__main__":
     # Macro Average Precision
     precision_data = {
         "Logistic Regression": {
-            "Kaggle Binary": 0.96,
-            "Wikimedia Multiclass": 0.90,
+            # "Kaggle Binary": 0.96,
+            # "Wikimedia Multiclass": 0.90,
             "Kaggle Multilabel": 0.44,
-            # "Augmented Multilabel": 0.30,
+            "Augmented Multilabel": 0.30,
         },
         "Multinominal Naive Bayes": {
-            "Kaggle Binary": 0.91,
-            "Wikimedia Multiclass": 0.80,
+            # "Kaggle Binary": 0.91,
+            # "Wikimedia Multiclass": 0.80,
             "Kaggle Multilabel": 0.34,
-            # "Augmented Multilabel": 0.27,
+            "Augmented Multilabel": 0.27,
         },
         "Linear SVM": {
-            "Kaggle Binary": 0.97,
-            "Wikimedia Multiclass": 0.90,
+            # "Kaggle Binary": 0.97,
+            # "Wikimedia Multiclass": 0.90,
             "Kaggle Multilabel": 0.38,
-            # "Augmented Multilabel": 0.23,
+            "Augmented Multilabel": 0.23,
         },
         "Multi Layer Perceptron": {
-            "Kaggle Binary": 0.96,
-            "Wikimedia Multiclass": 0.89,
+            # "Kaggle Binary": 0.96,
+            # "Wikimedia Multiclass": 0.89,
             "Kaggle Multilabel": 0.43,
-            # "Augmented Multilabel": 0.16,
+            "Augmented Multilabel": 0.16,
         },
         "Transformer": {
-            "Kaggle Binary": 0.95,
-            "Wikimedia Multiclass": 0.86,
-            "Kaggle Multilabel": 0.33,
-            # "Augmented Multilabel": 0.00,
+            # "Kaggle Binary": 0.95,
+            # "Wikimedia Multiclass": 0.86,
+            "Kaggle Multilabel": 0.38,
+            "Augmented Multilabel": 0.42,
         },
     }
     # Macro Average Recall
     recall_data = {
         "Logistic Regression": {
-            "Kaggle Binary": 0.96,
-            "Wikimedia Multiclass": 0.90,
+            # "Kaggle Binary": 0.96,
+            # "Wikimedia Multiclass": 0.90,
             "Kaggle Multilabel": 0.32,
-            # "Augmented Multilabel": 0.15,
+            "Augmented Multilabel": 0.15,
         },
         "Multinominal Naive Bayes": {
-            "Kaggle Binary": 0.91,
-            "Wikimedia Multiclass": 0.80,
+            # "Kaggle Binary": 0.91,
+            # "Wikimedia Multiclass": 0.80,
             "Kaggle Multilabel": 0.65,
-            # "Augmented Multilabel": 0.13,
+            "Augmented Multilabel": 0.13,
         },
         "Linear SVM": {
-            "Kaggle Binary": 0.96,
-            "Wikimedia Multiclass": 0.90,
+            # "Kaggle Binary": 0.96,
+            # "Wikimedia Multiclass": 0.90,
             "Kaggle Multilabel": 0.38,
-            # "Augmented Multilabel": 0.25,
+            "Augmented Multilabel": 0.25,
         },
         "Multi Layer Perceptron": {
-            "Kaggle Binary": 0.96,
-            "Wikimedia Multiclass": 0.89,
+            # "Kaggle Binary": 0.96,
+            # "Wikimedia Multiclass": 0.89,
             "Kaggle Multilabel": 0.35,
-            # "Augmented Multilabel": 0.20,
+            "Augmented Multilabel": 0.20,
         },
         "Transformer": {
-            "Kaggle Binary": 0.95,
-            "Wikimedia Multiclass": 0.86,
-            "Kaggle Multilabel": 0.54,
-            # "Augmented Multilabel": 0.00,
+            # "Kaggle Binary": 0.95,
+            # "Wikimedia Multiclass": 0.86,
+            "Kaggle Multilabel": 0.46,
+            "Augmented Multilabel": 0.50,
         },
     }
 
     visualizer = ModelPerformanceVisualizer()
-    visualizer.set_data(precision_data, "Precision")
-    # visualizer.set_data(recall_data, "Recall")
+    # visualizer.set_data(precision_data, "Precision")
+    visualizer.set_data(recall_data, "Recall")
     visualizer.bar_plot()
+#
