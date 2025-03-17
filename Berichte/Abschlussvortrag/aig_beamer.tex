@@ -186,11 +186,11 @@ University of Hagen, Germany}
             \item Englischsprachige Wikipedia ohne Historie ca. 22 GB komprimiert, 97 GB entpackt.
             \item Enthält ca. 24 Mio. Wikipedia-Seiten, darunter ca. 7 Mio. Artikel.
             \item Konvertierung:
-            \begin{itemize}
-                \item Entpacken und Verarbeiten in Blöcken von je 100 Seiten.
-                \item Nicht-Artikel-Seiten erkennen und ausschließen.
-                \item Erkennen der Klassen und Label anhand von Templates im Quelltext.
-            \end{itemize}
+                  \begin{itemize}
+                      \item Entpacken und Verarbeiten in Blöcken von je 100 Seiten.
+                      \item Nicht-Artikel-Seiten erkennen und ausschließen.
+                      \item Erkennen der Klassen und Label anhand von Templates im Quelltext.
+                  \end{itemize}
         \end{itemize}
     \end{block}
 \end{frame}
@@ -288,14 +288,14 @@ University of Hagen, Germany}
 
 \begin{frame}{Easy Data Augmentation (EDA)}
     \begin{block}{Ziel und Methode}
-        \begin{itemize} 
+        \begin{itemize}
             \item Idee: Die Anwendung von Easy Data Augmentation (EDA), um durch augmentierte Daten die Anzahl der unterrepräsentierten Labels zu vergrößern.
         \end{itemize}
     \end{block}
 
     \begin{block}{Umsetzung}
         \begin{itemize}
-            \item Es wurden neue Texte aus den Originaltexten erstellt indem Synonyme hinzugefügt, zufällig Wortreihenfolgen getauscht und zufällig Wörter eingefügt bzw. gelöscht worden sind. 
+            \item Es wurden neue Texte aus den Originaltexten erstellt indem Synonyme hinzugefügt, zufällig Wortreihenfolgen getauscht und zufällig Wörter eingefügt bzw. gelöscht worden sind.
         \end{itemize}
     \end{block}
 
@@ -331,19 +331,19 @@ University of Hagen, Germany}
         \begin{itemize}
             \item Binärer Klassifikator, der Wahrscheinlichkeiten für Klassen berechnet und eine Entscheidungsgrenze anhand eines Schwellenwerts setzt.
             \item Vorteile:
-                \begin{itemize}
-                    \item Einfach zu implementieren.
-                    \item Schnell in der Berechnung.
-                \end{itemize}
+                  \begin{itemize}
+                      \item Einfach zu implementieren.
+                      \item Schnell in der Berechnung.
+                  \end{itemize}
             \item Parameter:
-                \begin{itemize}
-                    \item \texttt{Regularisierung}: L1-Regularisierung und L2-Regularisierung
-                     % Wird verwendet, um Überanpassung zu vermeiden, indem Null-Wahrscheinlichkeiten durch eine kleine positive Konstante ersetzt werden
-                    \item \texttt{Solver}: \texttt{liblinear} und \texttt{saga}
-                    % liblinear ist der Standardsolver, saga ist besonders geeignet für große Datenmengen
-                \end{itemize}
+                  \begin{itemize}
+                      \item \texttt{Regularisierung}: L1-Regularisierung und L2-Regularisierung
+                            % Wird verwendet, um Überanpassung zu vermeiden, indem große Koeffizienten bestraft werden
+                      \item \texttt{Solver}: \texttt{liblinear} und \texttt{saga}
+                            % liblinear ist der Standardsolver, saga ist besonders geeignet für große Datenmengen
+                  \end{itemize}
         \end{itemize}
-    \end{block} 
+    \end{block}
 \end{frame}
 
 \begin{frame}{Klassische Verfahren}
@@ -394,7 +394,7 @@ University of Hagen, Germany}
 \begin{frame}
     \begin{block}{Gemeinsamkeiten} % SB: Mehr Details? Folie sieht leer aus
         \begin{itemize}
-            \item \texttt{GridSearchCV} von Scikit-Learn wurde für eine Hyperparameter-Optimierung nach (Macro Average) Recall verwendet
+            \item \texttt{GridSearchCV} von Scikit-Learn wurde für eine Hyperparameter-Optimierung verwendet
             \item \texttt{OneVsRestClassifier} von Scikit-Learn wurde für Multilabel-Klassifikation verwendet
         \end{itemize}
     \end{block}
@@ -410,11 +410,11 @@ University of Hagen, Germany}
                       \item Eingabeschicht: 10000 Features durch TF-IDF
                       \item Verborgene Schicht: 512 Neuronen, ReLU-Aktivierung
                       \item Ausgabeschicht:
-                      \begin{itemize}
-                          \item 2 Neuronen (binäre Klassifikation)
-                          \item 5 Neuronen (multilabel Klassifikation)
-                          \item 3 Neuronen (multiclass Klassifikation)
-                      \end{itemize}
+                            \begin{itemize}
+                                \item 2 Neuronen (binäre Klassifikation)
+                                \item 3 Neuronen (multiclass Klassifikation)
+                                \item 5 Neuronen (multilabel Klassifikation)
+                            \end{itemize}
                   \end{itemize}
             \item Dropout (50\%) zur Regularisierung
             \item Verlustfunktion: Cross Entropy
@@ -462,7 +462,7 @@ University of Hagen, Germany}
             \item Daten analysiert
             \item Datensatz mit Wikipedia Dump erweitert
             \item Problemstellung erfasst
-            \item Datensatz für Mashine Learning Verfahren vorbereitet.
+            \item Datensatz für Machine Learning Verfahren vorbereitet.
             \item Drei Klassische Modelle implementiert
             \item Zwei Neuronale Methode implementiert
             \item Ergebnisse Evaluiert
