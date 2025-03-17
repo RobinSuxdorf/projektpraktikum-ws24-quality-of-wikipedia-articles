@@ -483,7 +483,7 @@ University of Hagen, Germany}
            % \item Multi-Attention-Heads: 12
             \item Dropout: 0.2
             \item Attention: Scaled Dot Product Attention (SDPA)
-            \item Aktivierungsfunktion: $GeLu(x) \approx {0.5 \cdot x \cdot (1+ tanh({\frac{x}{\sqrt{2}}}))} $
+            \item Aktivierungsfunktion: $GELU(x) = x \cdot P(X \leq x) = x \cdot \Phi(x) $
            % \item Loss-funktion: Cross Entropy
             \item Optimizer: AdamW
         \end{itemize}
