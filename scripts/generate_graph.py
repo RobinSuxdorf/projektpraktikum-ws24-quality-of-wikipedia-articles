@@ -10,17 +10,19 @@ class ModelPerformanceVisualizer:
         self.colors = sns.color_palette("muted", 5)
         self.fig_size = (12, 8)
 
-    def set_data(self, data: dict):
+    def set_data(self, data: dict, kpi: str):
         """
         Set the performance data for visualization.
 
         Args:
             data (dict): A dictionary containing model performance data.
+            kpi (str): The key performance indicator to visualize.
         """
+        self.kpi = kpi
         rows = []
         for model, usecases in data.items():
-            for usecase, recall in usecases.items():
-                rows.append({"model": model, "usecase": usecase, "recall": recall})
+            for usecase, value in usecases.items():
+                rows.append({"model": model, "usecase": usecase, self.kpi: value})
         self.data = pd.DataFrame(rows)
 
     def bar_plot(self, save_fig=True, show_fig=True):
@@ -38,16 +40,18 @@ class ModelPerformanceVisualizer:
         bars = sns.barplot(
             data=self.data,
             x="usecase",
-            y="recall",
+            y=self.kpi,
             hue="model",
             palette=self.colors,
             ax=ax,
         )
 
         # Customize the plot
-        ax.set_title("Model Performance Comparison (Macro Avg Recall)", fontsize=16)
+        ax.set_title(
+            f"Model Performance Comparison (Macro Avg {self.kpi})", fontsize=16
+        )
         ax.set_xlabel("Use Case", fontsize=14)
-        ax.set_ylabel("Macro Average Recall", fontsize=14)
+        ax.set_ylabel(f"Macro Average {self.kpi}", fontsize=14)
         ax.set_ylim(0, 1.0)
 
         # Add value labels at the bottom of bars with white text
@@ -56,7 +60,7 @@ class ModelPerformanceVisualizer:
                 value = self.data[
                     (self.data["model"] == self.data["model"].unique()[i])
                     & (self.data["usecase"] == self.data["usecase"].unique()[j])
-                ]["recall"].values[0]
+                ][self.kpi].values[0]
                 ax.text(
                     bar.get_x() + bar.get_width() / 2,
                     0.02,  # Position text slightly above bottom
@@ -83,8 +87,41 @@ class ModelPerformanceVisualizer:
 
 
 if __name__ == "__main__":
+    # Macro Average Precision
+    precision_data = {
+        "Logistic Regression": {
+            "Kaggle Binary": 0.96,
+            "Wikimedia Multiclass": 0.90,
+            "Kaggle Multilabel": 0.44,
+            # "Augmented Multilabel": 0.30,
+        },
+        "Multinominal Naive Bayes": {
+            "Kaggle Binary": 0.91,
+            "Wikimedia Multiclass": 0.80,
+            "Kaggle Multilabel": 0.34,
+            # "Augmented Multilabel": 0.27,
+        },
+        "Linear SVM": {
+            "Kaggle Binary": 0.97,
+            "Wikimedia Multiclass": 0.90,
+            "Kaggle Multilabel": 0.38,
+            # "Augmented Multilabel": 0.23,
+        },
+        "Multi Layer Perceptron": {
+            "Kaggle Binary": 0.96,
+            "Wikimedia Multiclass": 0.89,
+            "Kaggle Multilabel": 0.43,
+            # "Augmented Multilabel": 0.16,
+        },
+        "Transformer": {
+            "Kaggle Binary": 0.95,
+            "Wikimedia Multiclass": 0.86,
+            "Kaggle Multilabel": 0.33,
+            # "Augmented Multilabel": 0.00,
+        },
+    }
     # Macro Average Recall
-    sample_data = {
+    recall_data = {
         "Logistic Regression": {
             "Kaggle Binary": 0.96,
             "Wikimedia Multiclass": 0.90,
@@ -118,5 +155,6 @@ if __name__ == "__main__":
     }
 
     visualizer = ModelPerformanceVisualizer()
-    visualizer.set_data(sample_data)
+    visualizer.set_data(precision_data, "Precision")
+    # visualizer.set_data(recall_data, "Recall")
     visualizer.bar_plot()
