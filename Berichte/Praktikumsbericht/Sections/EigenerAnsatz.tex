@@ -17,7 +17,7 @@ $$
 Wordpiece speichert die ermittelteten Wörter anschliessend als Vokabular ab. Zusätzlich gibt es noch Tokens für die speziellen Tokens, die z.B. das Ende eines Textes bezeichnen.
 
 \paragraph{Implementierung}
-Der verwendete Modeltyp ist DistilBERT von Sanh et al. \cite{Sanh2019DistilBERTAD}. Der Vorteil dieses Typen ist, dass er die Genauigkeit von BERT weitgehend behält, aber eine deutlich schnellere Laufzeit hat. Obwohl das Modell mit verschiedenen Einstellungen verwendet worden ist, wurden weitgehend die Standardeinstellungen behalten. Das Modell verwendet die Attention des skalierten Skalarproduktes. Es arbeitet mit einer maximalen Eingabelänge von 512, beinhaltet 6 versteckte Schichten im Encoder von denen die Vorwärtsgerichteten Netze jeweils 3072 Neuronen beinhalten und verwendet als Aktivierungsfunktion die GeLu-funktion \cite{hendrycks2023gaussianerrorlinearunits}:
+Der verwendete Modeltyp ist DistilBERT von Sanh et al. \cite{Sanh2019}. Der Vorteil dieses Typen ist, dass er die Genauigkeit von BERT weitgehend behält, aber eine deutlich schnellere Laufzeit hat. Obwohl das Modell mit verschiedenen Einstellungen verwendet worden ist, wurden weitgehend die Standardeinstellungen behalten. Das Modell verwendet die Attention des skalierten Skalarproduktes. Es arbeitet mit einer maximalen Eingabelänge von 512, beinhaltet 6 versteckte Schichten im Encoder von denen die Vorwärtsgerichteten Netze jeweils 3072 Neuronen beinhalten und verwendet als Aktivierungsfunktion die GeLu-funktion \cite{Hendrycks2016}:
 $$GELU(x) = x \cdot P(X \leq x) = x \cdot \Phi(x) $$
 Der verwendete Optimizer war AdamW und die Loss-funktion war der Cross-Entropy-loss:
 \begin{equation*}
