@@ -194,7 +194,7 @@ University of Hagen, Germany}
 \end{frame}
 
 \begin{frame}{Weitere Daten}
-    \begin{block}{Wikipedia-Dump - Verteilung}      
+    \begin{block}{Wikipedia-Dump - Verteilung}
         %\begin{table}
         %    \centering
         %    \begin{tabular}{cc}
@@ -325,13 +325,13 @@ University of Hagen, Germany}
                       \item Einfach zu implementieren.
                       \item Schnell in der Berechnung.
                   \end{itemize}
-            %\item Parameter:
-            %      \begin{itemize}
-            %          \item \texttt{Regularisierung}: L1-Regularisierung und L2-Regularisierung
-                            % Wird verwendet, um Überanpassung zu vermeiden, indem große Koeffizienten bestraft werden
-            %          \item \texttt{Solver}: \texttt{liblinear} und \texttt{saga}
-                            % liblinear ist der Standardsolver, saga ist besonders geeignet für große Datenmengen
-            %      \end{itemize}
+                  %\item Parameter:
+                  %      \begin{itemize}
+                  %          \item \texttt{Regularisierung}: L1-Regularisierung und L2-Regularisierung
+                  % Wird verwendet, um Überanpassung zu vermeiden, indem große Koeffizienten bestraft werden
+                  %          \item \texttt{Solver}: \texttt{liblinear} und \texttt{saga}
+                  % liblinear ist der Standardsolver, saga ist besonders geeignet für große Datenmengen
+                  %      \end{itemize}
         \end{itemize}
     \end{block}
 \end{frame}
@@ -349,17 +349,16 @@ University of Hagen, Germany}
                             % Training auf den Dump-Samples war nach Sekunden abgeschlossen
                       \item Robust bei hoher Dimensionalität
                             % Die vektorisierten Features sind hochdimensional
-                            % (Definition hochdimensional?)
                       \item Native Unterstützung für spärliche Matrizen
                             % die vektorisierten Features sind spärliche Matrizen
                   \end{itemize}
-            %\item Parameter:
-            %      \begin{itemize}
-            %          \item \texttt{alpha}: Laplace-Glättung
-                            % Wird verwendet, um Überanpassung zu vermeiden, indem Null-Wahrscheinlichkeiten durch eine kleine positive Konstante ersetzt werden
-            %          \item \texttt{fit\_prior}: Lernen der Klassenpriors
-                            % Wird verwendet, um die Klassenverteilung aus den Trainingsdaten zu schätzen bevor man irgendwelche Features sieht. Wenn False wird gleiche Klassenwahrscheinlichkeit angenommen
-            %      \end{itemize}
+                  %\item Parameter:
+                  %      \begin{itemize}
+                  %          \item \texttt{alpha}: Laplace-Glättung
+                  % Wird verwendet, um Überanpassung zu vermeiden, indem Null-Wahrscheinlichkeiten durch eine kleine positive Konstante ersetzt werden
+                  %          \item \texttt{fit\_prior}: Lernen der Klassenpriors
+                  % Wird verwendet, um die Klassenverteilung aus den Trainingsdaten zu schätzen bevor man irgendwelche Features sieht. Wenn False wird gleiche Klassenwahrscheinlichkeit angenommen
+                  %      \end{itemize}
         \end{itemize}
     \end{block}
 \end{frame}
@@ -370,19 +369,19 @@ University of Hagen, Germany}
             \item Nutzt das Konzept des maximalen Margins, um eine möglichst gut trennende Hyperebene zu finden.
             \item Erweiterbar durch Kernelfunktionen für nicht-lineare Trennungen.
             \item Leistungsfähig für hoch-dimensionale Daten, z.B. Textklassifikation, jedoch rechenintensiv bei großen Datensätzen
-            %\item Parameter:
-            %      \begin{itemize}
-            %          \item \texttt{C}: Regularisierungsparameter zur Steuerung des Trade-offs zwischen Maximierung des Margins und Minimierung von Fehlklassifikationen
-            %          \item \texttt{kernel}: Auswahl der Kernel-Funktion (z.B. linear, RBF, polynomial, sigmoid)
-            %          \item Kernel-spezifische Parameter (z.B. \texttt{degree} für polynomiale Kernel)
-            %      \end{itemize}
+                  %\item Parameter:
+                  %      \begin{itemize}
+                  %          \item \texttt{C}: Regularisierungsparameter zur Steuerung des Trade-offs zwischen Maximierung des Margins und Minimierung von Fehlklassifikationen
+                  %          \item \texttt{kernel}: Auswahl der Kernel-Funktion (z.B. linear, RBF, polynomial, sigmoid)
+                  %          \item Kernel-spezifische Parameter (z.B. \texttt{degree} für polynomiale Kernel)
+                  %      \end{itemize}
         \end{itemize}
     \end{block}
 \end{frame}
 
 
 \begin{frame}
-    \begin{block}{Gemeinsamkeiten} % SB: Mehr Details? Folie sieht leer aus
+    \begin{block}{Gemeinsamkeiten}
         \begin{itemize}
             \item \texttt{GridSearchCV} von Scikit-Learn wurde für eine Hyperparameter-Optimierung verwendet
             \item \texttt{OneVsRestClassifier} von Scikit-Learn wurde für Multilabel-Klassifikation verwendet
@@ -392,7 +391,7 @@ University of Hagen, Germany}
 
 \subsection{Deep Learning}
 
-\begin{frame}{Deep-Learning: MLP}
+\begin{frame}{Deep-Learning}
     \begin{block}{Neuronales Netzwerk zur Klassifikation von Wikipedia-Artikeln}
         \begin{itemize}
             \item Mehrschichtiges Perzeptron (MLP) mit zwei voll verbundenen Schichten:
@@ -417,82 +416,77 @@ University of Hagen, Germany}
 
 \begin{frame}{Deep Learning}
     \begin{block}{5. Ansatz}
-       \begin{itemize}
-       
-    \item Probleme: Schlechte Multilabelklassifizierung der ersten vier Ansätze.
-    \item    Analyse: Unterscheidung der Promotional aufgrund von Thema
-     \item        Ziel:
-        Einbezug von Kontext/Bedeutung \\
-        \item Ideen:
         \begin{itemize}
-            \item Vorverarbeitungsmethode erstellen
-            \item Transformerarchitektur verwenden
+            \item Probleme: Schlechte Multilabelklassifizierung der ersten vier Ansätze.
+            \item    Analyse: Unterscheidung der Promotional aufgrund von Thema
+            \item        Ziel:
+                  Einbezug von Kontext/Bedeutung \\
+            \item Ideen:
+                  \begin{itemize}
+                      \item Vorverarbeitungsmethode erstellen
+                      \item Transformerarchitektur verwenden
+                  \end{itemize}
         \end{itemize}
-        \end{itemize}   
     \end{block}
 \end{frame}
 
 \begin{frame}{Deep Learning}
-%\begin{block}{Arbeitsweise von Transformern}
-\begin{center}
-
-\begin{figure}
-
-
-\includegraphics[scale=1.2]{figures/TransformerArchitektur.eps}
-\caption{Architektur Transformer}
-\end{figure}
-\end{center}
-%\end{block}
+    %\begin{block}{Arbeitsweise von Transformern}
+    \begin{center}
+        \begin{figure}
+            \includegraphics[scale=1.2]{figures/TransformerArchitektur.eps}
+            \caption{Architektur Transformer}
+        \end{figure}
+    \end{center}
+    %\end{block}
 \end{frame}
 
 
 \begin{frame}{Deep Learning}
-%\begin{block}{Arbeitsweise von Transformern}
-\begin{center}
-\begin{figure}
-\includegraphics[scale=0.9]{figures/TransformerAttention.eps}
-\caption{Transformer Attention; Links: Scaled dot product attention; Rechts: Multi-head-Attention}
-\end{figure}
-\end{center}
-%\end{block}
+    %\begin{block}{Arbeitsweise von Transformern}
+    \begin{center}
+        \begin{figure}
+            \includegraphics[scale=0.9]{figures/TransformerAttention.eps}
+            \caption{Transformer Attention; Links: Scaled dot product attention; Rechts: Multi-head-Attention}
+        \end{figure}
+    \end{center}
+    %\end{block}
 \end{frame}
 
 
 
 \begin{frame}{Deep Learning}
-\begin{block}{Bidirectional Transformers for Language Understanding (BERT)}
-\begin{itemize}
-\item Vorteil: Besondere Fähigkeit zur Erkennung von Kontext
-\item Transfer Learning:
-\begin{itemize}
-\item Pretraining auf ungelabelten Daten
-\item Fine-Tuning auf gelabelten Daten
-\end{itemize}
-\item Tokenizer: WordPiece Embeddings 
-\item Attention: Bidirectional Cross-Attention
-\end{itemize}
-\end{block}
+    \begin{block}{Bidirectional Transformers for Language Understanding (BERT)}
+        \begin{itemize}
+            \item Vorteil: Besondere Fähigkeit zur Erkennung von Kontext
+            \item Transfer Learning:
+                  \begin{itemize}
+                      \item Pretraining auf ungelabelten Daten
+                      \item Fine-Tuning auf gelabelten Daten
+                  \end{itemize}
+            \item Tokenizer: WordPiece Embeddings
+            \item Attention: Bidirectional Cross-Attention
+        \end{itemize}
+    \end{block}
 \end{frame}
 
 
 \begin{frame}{Deep Learning}
     \begin{block}{Transformerarchitektur}
         \begin{itemize}
-        \item Modellwahl: DistilBERT \\
-         
-       \item  Architektur:
-        \begin{itemize}
-            \item Darstellung: DistilBERT Tokenizer %Vokabular: 30522 Wörter
-            \item Encoder: 6 Schichten 
-            \item Feedforwardschichten Encoder: 3072 Neuronen
-           % \item Multi-Attention-Heads: 12
-            \item Dropout: 0.2
-            \item Attention: Scaled Dot Product Attention (SDPA)
-            \item Aktivierungsfunktion: $GELU(x) = x \cdot P(X \leq x) = x \cdot \Phi(x) $
-           % \item Loss-funktion: Cross Entropy
-            \item Optimizer: AdamW
-        \end{itemize}
+            \item Modellwahl: DistilBERT \\
+            \item  Architektur:
+                  \begin{itemize}
+                      \item Darstellung: DistilBERT Tokenizer %Vokabular: 30522 Wörter
+                      \item Encoder: 6 Schichten
+                      \item Feedforwardschichten Encoder: 3072 Neuronen
+                            % \item Multi-Attention-Heads: 12
+                      \item Dropout: 0.2
+                      \item Attention: Scaled Dot Product Attention (SDPA)
+                      \item Aktivierungsfunktion: $GELU(x) = x \cdot P(X \leq x) = x \cdot \Phi(x) $
+                            % \item Loss-funktion: Cross Entropy
+                      \item Optimizer: AdamW
+                  \end{itemize}
         \end{itemize}
     \end{block}
 \end{frame}
@@ -501,27 +495,25 @@ University of Hagen, Germany}
 
 \begin{frame}{Deep Learning}
     \begin{block}{Strukturelle Eigenschaften}
-       \begin{itemize}
-       
+        \begin{itemize}
+            \item Binäre Klassifikation:
+                  \begin{itemize}
+                      \item 2 Ausgabe Neuronen
+                  \end{itemize}
+            \item Multiklassenklassifikation
+                  \begin{itemize}
+                      \item 3 Ausgabe Neuronen
+                      \item Cross-Attention
+                  \end{itemize}
+            \item Multilabel
+                  \begin{itemize}
+                      \item 5 Ausgabeneuronen
+                      \item Cross-Attention
+                      \item Advert-Ausgabeneuron versehen mit Sigmoid-Aktivierungsfunktion Schwellwert 0.5
+                      \item Coi, Fanpov, PR, Resume mithile von Anomalieerkennung
+                  \end{itemize}
+        \end{itemize}
 
-        \item Binäre Klassifikation:
-        \begin{itemize}
-        \item 2 Ausgabe Neuronen
-        \end{itemize}
-        \item Multiklassenklassifikation
-        \begin{itemize}
-        \item 3 Ausgabe Neuronen
-        \item Cross-Attention
-        \end{itemize}
-        \item Multilabel
-        \begin{itemize}
-        \item 5 Ausgabeneuronen
-        \item Cross-Attention
-        \item Advert-Ausgabeneuron versehen mit Sigmoid-Aktivierungsfunktion Schwellwert 0.5
-        \item Coi, Fanpov, PR, Resume mithile von Anomalieerkennung
-               \end{itemize}
-        \end{itemize}
-        
     \end{block}
 \end{frame}
 
@@ -545,74 +537,64 @@ University of Hagen, Germany}
     \end{block}
 \end{frame}
 
-\begin{frame}{Sensitivität}
-\begin{center}
-\includegraphics[scale=0.35]{figures/macro_avg_recall_usecases.png}
-\end{center}
+\begin{frame}{Resultate: Sensitivität}
+    \begin{center}
+        \includegraphics[scale=0.35]{figures/macro_avg_recall_usecases.png}
+    \end{center}
 \end{frame}
 
-\begin{frame}{Präzision}
-\begin{center}
-\includegraphics[scale=0.35]{figures/macro_avg_precision_usecases.png}
-\end{center}
+\begin{frame}{Resultate: Präzision}
+    \begin{center}
+        \includegraphics[scale=0.35]{figures/macro_avg_precision_usecases.png}
+    \end{center}
 \end{frame}
 
-\begin{frame}{Augmentierte Daten}
-\includegraphics[scale=0.7]{figures/AugmentierteDatenVergleichZusammen.png}
+\begin{frame}{Resultate: Augmentierte Daten}
+    \includegraphics[scale=0.7]{figures/AugmentierteDatenVergleichZusammen.png}
 \end{frame}
 
-
-\begin{frame}{Evaluation}
-\begin{block}{Evaluation}
-\begin{itemize}
-
-\item Binäre Klassifizierung
-\begin{itemize}
-\item Sensitivität: 96 Prozent
-\item Beste Modelle: SVM und Logistische Regression
-
-\end{itemize} 
-\item Multiklassenklassifizierung
-\begin{itemize}
-\item Sensitivität: 90 Prozent
-\item Beste Modelle: SVM und Logistische Regression
-\end{itemize}
-\item Multilabel
-\begin{itemize}
-\item Sensitivität: 66 Prozent
-\item Bestes Modell: Bayes
-\end{itemize}
-
-\end{itemize}
-
-\end{block}
-
-
+\begin{frame}{Resultate}
+    \begin{block}{Evaluation}
+        \begin{itemize}
+            \item Binäre Klassifizierung
+                  \begin{itemize}
+                      \item Sensitivität: 96 Prozent
+                      \item Beste Modelle: SVM und Logistische Regression
+                  \end{itemize}
+            \item Multiklassenklassifizierung
+                  \begin{itemize}
+                      \item Sensitivität: 90 Prozent
+                      \item Beste Modelle: SVM und Logistische Regression
+                  \end{itemize}
+            \item Multilabel
+                  \begin{itemize}
+                      \item Sensitivität: 66 Prozent
+                      \item Bestes Modell: Bayes
+                  \end{itemize}
+        \end{itemize}
+    \end{block}
 \end{frame}
 
 \section{Zusammenfassung}
 
 \begin{frame}{Zusammenfassung}
     \begin{block}{Zusammenfassung}
-    \begin{itemize}
-    
-   
-        \item Errungenschaften
         \begin{itemize}
-            \item Daten analysiert und erweitert
-            \item Problemstellung erfasst            
-            \item Datensatz für Verfahren des maschinellen Lernens vorbereitet.
-            \item Drei klassische Modelle implementiert
-            \item Zwei neuronale Methoden implementiert
-            \item Ergebnisse evaluiert
-        \end{itemize}
-       \item Misserfolge
-        \begin{itemize}
-            \item Datenaugmentierung
-            \item Entwicklung von Vorverarbeitungsmethoden zur Erkennung von Kontext
-            \item Multilabelklassifikation hat noch keinen Industriestandard
-        
-         \end{itemize}
+            \item Errungenschaften
+                  \begin{itemize}
+                      \item Daten analysiert und erweitert
+                      \item Problemstellung erfasst
+                      \item Datensatz für Verfahren des maschinellen Lernens vorbereitet.
+                      \item Drei klassische Modelle implementiert
+                      \item Zwei neuronale Methoden implementiert
+                      \item Ergebnisse evaluiert
+                  \end{itemize}
+            \item Misserfolge
+                  \begin{itemize}
+                      \item Datenaugmentierung
+                      \item Entwicklung von Vorverarbeitungsmethoden zur Erkennung von Kontext
+                      \item Multilabelklassifikation hat noch keinen Industriestandard
+                  \end{itemize}
         \end{itemize}
     \end{block}
 \end{frame}
@@ -620,19 +602,19 @@ University of Hagen, Germany}
 \begin{frame}{Zusammenfassung}
     \begin{block}{Zusammenfassung}
         \begin{itemize}
-        \item Ergebnisse
-        \begin{itemize}
-            \item Datensatz aus Wikipedia Dump erstellt
-            \item Pipeline zur Klassifizierung von Wikipedia-Artikeln implementiert
-            \item Modelle mit sehr guten Resultaten für Binäre und Dreiklassenklassifizierung entwickelt
-            \end{itemize}
-        Erweiterungsmöglichkeiten:
-        \begin{itemize}
-            \item Weitere klassische und neuronalen Ansätze implementieren und evaluieren
-            %\item Ganzen Wikipedia Dump verwenden
-            \item Verwendung von SetFit
-            \item Nicht-Maschinelle Lernmethoden verwenden
-        \end{itemize}
+            \item Ergebnisse
+                  \begin{itemize}
+                      \item Datensatz aus Wikipedia Dump erstellt
+                      \item Pipeline zur Klassifizierung von Wikipedia-Artikeln implementiert
+                      \item Modelle mit sehr guten Resultaten für Binäre und Dreiklassenklassifizierung entwickelt
+                  \end{itemize}
+                  Erweiterungsmöglichkeiten:
+                  \begin{itemize}
+                      \item Weitere klassische und neuronalen Ansätze implementieren und evaluieren
+                            %\item Ganzen Wikipedia Dump verwenden
+                      \item Verwendung von SetFit
+                      \item Nicht-Maschinelle Lernmethoden verwenden
+                  \end{itemize}
         \end{itemize}
     \end{block}
     \nocite{hendrycks2023gaussianerrorlinearunits}
@@ -657,10 +639,9 @@ University of Hagen, Germany}
     \nocite{ReservoirSampling}
 \end{frame}
 
-
 \bibliographystyle{plain}
 \bibliography{references.bib}
 \appendix
-%\input{appendix.tex}
+\input{appendix.tex}
 
 \end{document}
