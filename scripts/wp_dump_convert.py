@@ -1,3 +1,8 @@
+"""Convert a Wikipedia XML dump into CSV files
+
+Author: Johannes Krämer
+"""
+
 import logging
 import sys
 from src.wp import WikipediaDump

@@ -1,3 +1,8 @@
+"""Graph the results of the model performances using bar plots
+
+Author: Sebastian Bunge
+"""
+
 import matplotlib.pyplot as plt
 import seaborn as sns
 import pandas as pd
@@ -30,8 +35,8 @@ class ModelPerformanceVisualizer:
         Generate and display a bar plot of model performance.
 
         Args:
-            save_fig (bool, optional): Whether to save the figure to a file. Defaults to True.
-            show_fig (bool, optional): Whether to display the figure. Defaults to True.
+            save_fig (bool, default: True): Whether to save the figure to a file.
+            show_fig (bool, default: True): Whether to display the figure.
         """
         # Create figure and axis
         fig, ax = plt.subplots(figsize=self.fig_size)
@@ -158,4 +163,3 @@ if __name__ == "__main__":
     visualizer.set_data(precision_data, "Precision")
     # visualizer.set_data(recall_data, "Recall")
     visualizer.bar_plot()
-#

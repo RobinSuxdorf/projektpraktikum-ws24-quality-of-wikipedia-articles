@@ -30,23 +30,15 @@ To install the required packages, run the following command:
 pip install -r requirements.txt
 ```
 
-## Code Formatter
-
-We use Ruff for code formatting. To format the code, run:
-
-```sh
-ruff check .
-```
-
 ## Usage
 
-To run the script, use the following command:
+To run an end-to-end pipeline, use the following command:
 
 ```sh
 python main.py -c <config-name>
 ```
 
-- -c, --config: Name of the YAML configuration file (without the .yaml extension).
+- -c, --config: Name of the YAML configuration file.
 
 ## Configuration
 
@@ -213,31 +205,36 @@ evaluation:
 
 ## Project Structure
 
-- configs/: Contains the YAML configuration files.
-- src/: Contains the source code.
-  - models/: Contains model definitions and training functions.
-    - base.py: Base class for models.
-    - logistic_regression.py: Logistic regression model implementation.
-    - naive_bayes.py: Naive Bayes model implementation.
-    - support_vector_machine.py: SVM model implementation.
-  - vectorizer/: Contains vectorizer implementations.
-    - base.py: Base class for vectorizers.
-    - gensim.py: Gensim vectorizer implementations (Word2Vec, GloVe).
-    - sklearn.py: Scikit-learn vectorizer implementations (TF-IDF, Count, Bag of Words).
-  - wp/: Contains Wikipedia dump processing code.
-    - categorized_page.py: Categorized page class for Wikipedia dump.
-    - wp_dump.py: Wikipedia dump processing class.
-  - data_loader.py: Functions for loading and processing data.
-  - evaluation.py: Functions for evaluating the trained models.
-  - features.py: Functions for extracting features from text data.
-  - preprocessing.py: Functions for preprocessing text data.
-  - train.py: Functions for training models.
-  - utils.py: Utility functions including argument parsing and file validation.
-- main_wp_dump_convert.py: Script to convert Wikipedia dump to CSV files.
-- main_wp_dump_sampling.py: Script to extract samples from CSV files.
-- main.py: Main script to run the project.
-- README.md: Project documentation.
-- requirements.txt: List of required Python packages.
+- Berichte/: LaTeX code for presentations and report associated with the project
+- configs/: YAML configuration files
+- graphics/: Visualizations generated during data analysis and model evaluation
+- scripts/: Auxillary scripts intended to be run directly rather than imported
+  - graph_label_distribution.py: Graph the distribution of the labels in the promotional dataset
+  - graph_results_bar.py: Graph the results of the model performances using bar plots
+  - main_wp_dump_convert.py: Convert a Wikipedia XML dump into CSV files
+  - main_wp_dump_sampling.py: Sample Wikipedia dump with reservoir sampling
+- src/: Main source code of the project
+  - models/: Model definitions and training functions
+    - base.py: Abstract base class for models
+    - logistic_regression.py: Logistic regression model implementation
+    - naive_bayes.py: Naive Bayes model implementation
+    - support_vector_machine.py: SVM model implementation
+  - vectorizer/: Vectorizer implementations
+    - base.py: Abstract base class for vectorizers
+    - gensim.py: Gensim vectorizer implementations (Word2Vec, GloVe)
+    - sklearn.py: Scikit-learn vectorizer implementations (TF-IDF, Count, Bag of Words)
+  - wp/: Wikipedia dump processing code
+    - categorized_page.py: Categorized page class for Wikipedia dump
+    - wp_dump.py: Wikipedia dump processing class
+  - data_loader.py: Functions for loading and processing data
+  - evaluation.py: Functions for evaluating the trained models
+  - features.py: Functions for extracting features from text data
+  - preprocessing.py: Functions for preprocessing text data
+  - train.py: Functions for training models
+  - utils.py: Utility functions
+- main.py: Main script to run the project
+- README.md: Project documentation <-- YOU ARE HERE
+- requirements.txt: List of required Python packages
 
 ## Logging
 
