@@ -1,0 +1,56 @@
+usecase: "multilabel"
+start_step: "model"
+
+data_loader:
+  promo_file: "data/raw/augmented_promotional.csv"
+  shuffle: false
+  save: "loaded_data_augmented.csv"
+
+preprocessing:
+  remove_non_word: true
+  convert_lowercase: true
+  remove_stopwords: true
+  apply_stemming: true
+  remove_numbers: false
+  remove_whitespace: true
+  save: "preprocessed_data_augmented.csv"
+
+features:
+  type: tfidf
+  ngram_range: [1, 1]
+  max_df: 0.9
+  min_df: 0.001
+  max_features: 10_000
+  sublinear_tf: true
+  save: "features_augmented.pkl"
+
+# 2025-03-15 23:41:58,819 - src.evaluation - INFO - Evaluating the model.
+# 2025-03-15 23:41:58,876 - src.evaluation - INFO - Accuracy: 70.50%
+# 2025-03-15 23:41:58,896 - src.evaluation - INFO - Classification Report:
+#               precision    recall  f1-score   support
+
+#            0       0.80      0.99      0.89       158
+#            1       0.00      0.00      0.00        18
+#            2       0.00      0.00      0.00        12
+#            3       0.00      0.00      0.00        22
+#            4       0.00      0.00      0.00        10
+
+#    micro avg       0.80      0.71      0.75       220
+#    macro avg       0.16      0.20      0.18       220
+# weighted avg       0.58      0.71      0.64       220
+#  samples avg       0.78      0.74      0.76       220
+
+# 2025-03-15 23:41:58,902 - src.evaluation - INFO - Confusion Matrix:
+# [[[  4  38]
+#   [  2 156]]
+
+#  [[182   0]
+#   [ 18   0]]
+
+#  [[188   0]
+#   [ 12   0]]
+# ...
+
+#  [[190   0]
+#   [ 10   0]]]
+# 2025-03-15 23:41:59,067 - src.evaluation - INFO - Evaluation finished.
