@@ -5,7 +5,6 @@ This project aims to analyze and classify Wikipedia articles into promotional an
 ## Table of Contents
 
 - [Installation](#installation)
-- [Code Formatter](#code-formatter)
 - [Usage](#usage)
 - [Configuration](#configuration)
   - [Data Loader](#data-loader)
