@@ -1,3 +1,5 @@
+# src/wp/wp_dump.py
+
 from collections import Counter
 from io import BufferedReader
 import logging
@@ -58,15 +60,15 @@ class WikipediaDump:
             skipped_path,
             num_pages,
         )
-        with open(self.dump_path, "rb") as dump_file, open(
-            good_path, "w", newline="", encoding="utf-8"
-        ) as good_file, open(
-            promotional_path, "w", newline="", encoding="utf-8"
-        ) as promotional_file, open(
-            neutral_path, "w", newline="", encoding="utf-8"
-        ) as neutral_file, open(
-            skipped_path, "w", newline="", encoding="utf-8"
-        ) as skipped_file:
+        with (
+            open(self.dump_path, "rb") as dump_file,
+            open(good_path, "w", newline="", encoding="utf-8") as good_file,
+            open(
+                promotional_path, "w", newline="", encoding="utf-8"
+            ) as promotional_file,
+            open(neutral_path, "w", newline="", encoding="utf-8") as neutral_file,
+            open(skipped_path, "w", newline="", encoding="utf-8") as skipped_file,
+        ):
             good_writer = csv.writer(good_file)
             promotional_writer = csv.writer(promotional_file)
             neutral_writer = csv.writer(neutral_file)

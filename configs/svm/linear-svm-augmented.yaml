@@ -1,0 +1,72 @@
+# configs/svm/linear-svm-augmented.yaml
+
+usecase: "multilabel"
+start_step: "model"
+
+data_loader:
+  promo_file: "data/raw/augmented_promotional.csv"
+  shuffle: false
+  save: "loaded_data_augmented.csv"
+
+preprocessing:
+  remove_non_word: true
+  convert_lowercase: true
+  remove_stopwords: true
+  apply_stemming: true
+  remove_numbers: false
+  remove_whitespace: true
+  save: "preprocessed_data_augmented.csv"
+
+features:
+  type: tfidf
+  ngram_range: [1, 1]
+  max_df: 0.9
+  min_df: 0.001
+  max_features: 10_000
+  sublinear_tf: true
+  save: "features_augmented.pkl"
+
+model:
+  type: linear_svm
+  test_size: 0.2
+  random_state: 42
+  grid_search: true
+  param_grid:
+    C: [0.1, 1.0, 10.0, 100.0]
+    loss: ["hinge", "squared_hinge"]
+  save: "model_lsvm_augmented.pkl"
+
+evaluation:
+  test_data: "data/raw/promotional.csv"
+  save: "evaluation_lsvm_augmented.png"
+# 2025-03-12 22:50:42,296 - src.models.support_vector_machine - INFO - Trained LinearSVC model with {'estimator__C': 100.0, 'estimator__loss': 'hinge'}
+# 2025-03-12 22:50:42,339 - src.evaluation - INFO - Accuracy: 24.88%
+# 2025-03-12 22:50:42,353 - src.evaluation - INFO - Classification Report:
+#               precision    recall  f1-score   support
+
+#            0       0.79      0.55      0.65     18911
+#            1       0.10      0.19      0.13      2142
+#            2       0.07      0.09      0.08      1496
+#            3       0.06      0.15      0.09      1516
+#            4       0.10      0.26      0.14      2198
+
+#    micro avg       0.41      0.45      0.43     26263
+#    macro avg       0.23      0.25      0.22     26263
+# weighted avg       0.60      0.45      0.50     26263
+#  samples avg       0.38      0.46      0.40     26263
+
+# 2025-03-12 22:50:42,358 - src.evaluation - INFO - Confusion Matrix:
+# [[[ 2248  2678]
+#   [ 8532 10379]]
+
+#  [[17799  3896]
+#   [ 1728   414]]
+
+#  [[20626  1715]
+#   [ 1362   134]]
+
+#  [[18914  3407]
+#   [ 1292   224]]
+
+#  [[16564  5075]
+#   [ 1634   564]]]

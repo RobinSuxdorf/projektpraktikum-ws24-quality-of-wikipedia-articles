@@ -1,0 +1,72 @@
+# configs/naive-bayes/naive-bayes-augmented.yaml
+
+usecase: "multilabel"
+start_step: "model"
+
+data_loader:
+  promo_file: "data/raw/augmented_promotional.csv"
+  shuffle: false
+  save: "loaded_data_augmented.csv"
+
+preprocessing:
+  remove_non_word: true
+  convert_lowercase: true
+  remove_stopwords: true
+  apply_stemming: true
+  remove_numbers: false
+  remove_whitespace: true
+  save: "preprocessed_data_augmented.csv"
+
+features:
+  type: tfidf
+  ngram_range: [1, 1]
+  max_df: 0.9
+  min_df: 0.001
+  max_features: 10_000
+  sublinear_tf: true
+  save: "features_augmented.pkl"
+
+model:
+  type: naive_bayes
+  test_size: 0.2
+  random_state: 42
+  grid_search: true
+  param_grid:
+    alpha: [0.01, 0.1, 0.5, 1.0, 1.5, 2.0, 2.5, 3.0]
+    fit_prior: [true, false]
+  save: "model_nb_augmented.pkl"
+
+evaluation:
+  test_data: "data/raw/promotional.csv"
+  save: "evaluation_nb_augmented.png"
+# 2025-03-12 22:37:34,738 - src.models.naive_bayes - INFO - Trained Naive Bayes model with {'estimator__alpha': 0.1, 'estimator__fit_prior': False}
+# 2025-03-12 22:37:34,839 - src.evaluation - INFO - Accuracy: 11.62%
+# 2025-03-12 22:37:34,850 - src.evaluation - INFO - Classification Report:
+#               precision    recall  f1-score   support
+
+#            0       0.83      0.15      0.26     18911
+#            1       0.08      0.01      0.02      2142
+#            2       0.09      0.41      0.15      1496
+#            3       0.05      0.04      0.04      1516
+#            4       0.28      0.04      0.07      2198
+
+#    micro avg       0.30      0.14      0.19     26263
+#    macro avg       0.27      0.13      0.11     26263
+# weighted avg       0.63      0.14      0.20     26263
+#  samples avg       0.14      0.15      0.14     26263
+
+# 2025-03-12 22:37:34,854 - src.evaluation - INFO - Confusion Matrix:
+# [[[ 4324   602]
+#   [16044  2867]]
+
+#  [[21379   316]
+#   [ 2113    29]]
+
+#  [[16079  6262]
+#   [  879   617]]
+
+#  [[21243  1078]
+#   [ 1459    57]]
+
+#  [[21411   228]
+#   [ 2109    89]]]

@@ -45,14 +45,17 @@ class Word2Vec_Vectorizer(Vectorizer):
                 self._vectorizer.wv[t] for t in tokens if t in self._vectorizer.wv
             ]
             if word_vecs:
-                mean_vector = sum(word_vecs) / len(word_vecs)
-                # shift values to be non-negative
-                min_val = np.min(mean_vector)
-                if min_val < 0:
-                    mean_vector = mean_vector - min_val
+                mean_vector = np.array(sum(word_vecs) / len(word_vecs))
+                # Normalize using min-max scaling to [0,1] range
+                vec_min = np.min(mean_vector)
+                vec_max = np.max(mean_vector)
+                if vec_max > vec_min:  # Avoid division by zero
+                    mean_vector = (mean_vector - vec_min) / (vec_max - vec_min)
                 vectors.append(mean_vector)
             else:
-                vectors.append([0] * self.vector_size)
+                # Use the average vector of the entire vocabulary as the default vector
+                default_vector = np.mean(self._vectorizer.wv.vectors, axis=0)
+                vectors.append(default_vector)
         return vectors
 
 
@@ -74,11 +77,14 @@ class GloVe_Vectorizer(Vectorizer):
             token_embs = [self._vectorizer[t] for t in tokens if t in self._vectorizer]
             if token_embs:
                 mean_vector = np.mean(token_embs, axis=0)
-                # shift values to be non-negative
-                min_val = np.min(mean_vector)
-                if min_val < 0:
-                    mean_vector = mean_vector - min_val
+                # Normalize using min-max scaling to [0,1] range
+                vec_min = np.min(mean_vector)
+                vec_max = np.max(mean_vector)
+                if vec_max > vec_min:  # Avoid division by zero
+                    mean_vector = (mean_vector - vec_min) / (vec_max - vec_min)
                 vectors.append(mean_vector.tolist())
             else:
-                vectors.append([0.0] * self._vectorizer.vector_size)
+                # Use the average vector of the entire vocabulary as the default vector
+                default_vector = np.mean(self._vectorizer.vectors, axis=0)
+                vectors.append(default_vector.tolist())
         return vectors

@@ -9,10 +9,16 @@ from .support_vector_machine import (
     LinearSupportVectorMachine,
     LinearSupportVectorMachineGridSearch,
     MultilabelLinearSupportVectorMachine,
+    MultilabelLinearSupportVectorMachineGridSearch,
     SupportVectorMachine,
     MultilabelSupportVectorMachine,
 )
-from .logistic_regression import Logistic_Regression, MultilabelLogisticRegression
+from .logistic_regression import (
+    Logistic_Regression,
+    LogisticRegressionGridSearch,
+    MultilabelLogisticRegression,
+    MultilabelLogisticRegressionGridSearch,
+)
 
 __all__ = [
     "Model",
@@ -23,8 +29,11 @@ __all__ = [
     "LinearSupportVectorMachine",
     "LinearSupportVectorMachineGridSearch",
     "MultilabelLinearSupportVectorMachine",
+    "MultilabelLinearSupportVectorMachineGridSearch",
     "SupportVectorMachine",
     "MultilabelSupportVectorMachine",
     "Logistic_Regression",
+    "LogisticRegressionGridSearch",
     "MultilabelLogisticRegression",
+    "MultilabelLogisticRegressionGridSearch",
 ]
