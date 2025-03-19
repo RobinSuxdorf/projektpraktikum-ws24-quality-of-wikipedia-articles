@@ -13,6 +13,10 @@ from src.models.base import Model
 
 
 class BaseNeuralNetworkModel(Model):
+    """
+    A base class for neural network models that provides functionality for training,
+    prediction, saving and loading models.
+    """
     def __init__(
         self,
         neural_network: nn.Module,
@@ -20,6 +24,15 @@ class BaseNeuralNetworkModel(Model):
         predict_fn: Callable[[torch.Tensor], torch.Tensor],
         label_dtype: torch.dtype,
     ) -> None:
+        """
+        Initializes the neural network model.
+
+        Args:
+            neural_network (nn.Module): The neural network model.
+            criterion (nn.Module): The loss function used for training.
+            predict_fn (Callable[[torch.Tensor], torch.Tensor]): Function to process model output into predictions.
+            label_dtype (torch.dtype): Data type for labels.
+        """
         self._model = neural_network
         self._device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
         self._model.to(self._device)
@@ -30,6 +43,16 @@ class BaseNeuralNetworkModel(Model):
     def _train_one_epoch(
         self, train_dataloader: DataLoader, optimizer: optim.Optimizer
     ) -> float:
+        """
+        Trains the model for a single epoch.
+
+        Args:
+            train_dataloader (DataLoader): DataLoader for training data.
+            optimizer (optim.Optimizer): Optimizer used for training.
+
+        Returns:
+            float: Average loss for the epoch.
+        """
         self._model.train()
         total_loss = 0.0
         for inputs, labels in train_dataloader:
@@ -56,6 +79,16 @@ class BaseNeuralNetworkModel(Model):
         num_epochs: int,
         batch_size: int,
     ) -> None:
+        """
+        Trains the neural network model.
+
+        Args:
+            features (csr_matrix): Sparse matrix containing input features.
+            labels (list[int]): List of labels corresponding to input features.
+            learning_rate (float): Learning rate for the optimizer.
+            num_epochs (int): Number of training epochs.
+            batch_size (int): Batch size for training.
+        """
         train_dataset = WikipediaArticleDataset(
             features,
             labels,
@@ -71,7 +104,7 @@ class BaseNeuralNetworkModel(Model):
             avg_loss = self._train_one_epoch(train_dataloader, optimizer)
             print(f"Epoch {epoch+1}/{num_epochs}, Loss: {avg_loss:.4f}")
 
-    def predict(self, features) -> list:
+    def predict(self, features: csr_matrix) -> list:
         tensors = [
             torch.tensor(
                 article.toarray().squeeze(), dtype=torch.float, device=self._device
