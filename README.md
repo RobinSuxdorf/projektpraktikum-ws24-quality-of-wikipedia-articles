@@ -207,6 +207,7 @@ evaluation:
 - Berichte/: LaTeX code for presentations and report associated with the project
 - configs/: YAML configuration files
 - graphics/: Visualizations generated during data analysis and model evaluation
+- notebooks/: Jupyter notebooks for exploratory data analysis, prototyping experiments, and interactive development
 - scripts/: Auxillary scripts intended to be run directly rather than imported
   - graph_label_distribution.py: Graph the distribution of the labels in the promotional dataset
   - graph_results_bar.py: Graph the results of the model performances using bar plots
