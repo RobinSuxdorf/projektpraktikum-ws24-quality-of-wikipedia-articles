@@ -87,6 +87,8 @@ Erstmal nur ein Draft. Inhalte werden weiter abgestimmt.
 \label{sec:Ansaetze}
 Nachdem die Problemstellung identifiziert wurde, bestand die nächste Aufgabe darin, geeignete Ansätze auszuwählen. Im Rahmen des Projektpraktikums wurden drei klassische Lernverfahren sowie ein Deep-Learning-Ansatz eingesetzt. Aufbauend auf diesen Ansätzen wurde ein fünfter Ansatz entwickelt, der gezielt die Schwächen der vorangegangenen Verfahren beheben sollte. Im Folgenden wird erläutert, welche Techniken hinsichtlich der Vorverarbeitung und Repräsentation der Daten eingesetzt wurden. Anschließend werden die verwendeten Machine-Learning- und Deep-Learning-Ansätze vorgestellt.
 
+Die Implementierungen der drei klassischen Lernverfahren sind in der Lage, sowohl binäre Klassifikationen als auch Multiklassenklassifikationen durchzuführen. Für die Multilabelklassifikation wurde in allen drei Fällen ein One-vs-Rest-Ansatz gewählt, bei dem für jedes Label ein separater binärer Klassifikator trainiert wird. Für alle drei Ansätze wurde eine Hyperparameteroptimierung mithilfe von \texttt{GridSearchCV} von Scikit-Learn \cite{Pedregosa2011} durchgeführt. Dieser Ansatz ermittelt mit Hilfe einer Kreuzvalidierung die besten Hyperparameter für die jeweiligen Klassifikatoren. Es wurde nach Macro-Average Recall optimiert. Die Wahl der Metrik wird in \ref{sec:evaluationsmetriken} erläutert.
+
 \input{Sections/Vorverarbeitung}
 
 \input{Sections/LogistischeRegression}
