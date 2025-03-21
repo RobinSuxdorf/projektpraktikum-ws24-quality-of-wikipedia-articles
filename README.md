@@ -207,7 +207,7 @@ evaluation:
 - Berichte/: LaTeX code for presentations and report associated with the project
 - configs/: YAML configuration files
 - graphics/: Visualizations generated during data analysis and model evaluation
-- notebooks/: Jupyter notebooks for exploratory data analysis, prototyping experiments, and interactive development
+- preserved_experiments/: Preserved artifacts from exploratory data analysis, prototyping experiments, and interactive development
 - scripts/: Auxillary scripts intended to be run directly rather than imported
   - graph_label_distribution.py: Graph the distribution of the labels in the promotional dataset
   - graph_results_bar.py: Graph the results of the model performances using bar plots
@@ -232,7 +232,8 @@ evaluation:
   - preprocessing.py: Functions for preprocessing text data
   - train.py: Functions for training models
   - utils.py: Utility functions
-- main.py: Main script to run the project
+- main_deep_learning.ipynb: Main script to run the pipeline for deep learning approach
+- main.py: Main script to run the pipeline for machine learning approaches
 - README.md: Project documentation <-- YOU ARE HERE
 - requirements.txt: List of required Python packages
 
