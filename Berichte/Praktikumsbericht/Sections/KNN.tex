@@ -1,6 +1,6 @@
 \begin{figure}[H]
     \centering
-    \includestandalone[width=.8\textwidth]{figures/knn.tex}
+    \includestandalone[width=.8\textwidth]{figures/knn}
     \caption{Caption}
 \end{figure}
 Die Wikipedia-Artikel werden durch die TF-IDF-Vektorisierung als Vektoren $x\in\mathbb{R}^{10000}$ dargestellt. Das neuronale Netz besteht aus einer versteckte Schicht mit 512 Neuronen, wobei die ReLU-Aktivierungsfunktion verwendet wird. Zudem wird zur Regularisierung Dropout mit einer Wahrscheinlichkeit von $p=0.5$ auf die versteckte Schicht angewendet, wodurch die Ausgabe der Neuronen mit einer Wahrscheinlichkeit von 50\% auf 0 gesetzt werden. Das Netzwerk lässt sich formal wie folgt beschreiben: $W_1\in\mathbb{R}^{512\times 10000}$, $b_1\in\mathbb{R}^{512}$, $W_2\in\mathbb{R}^{K\times 512}$ und $b_2\in\mathbb{R}^{K}$. Dann ist die Ausgabe des neuronalen Netzes gegeben durch
@@ -17,7 +17,7 @@ Das Optimierungsziel für die Multiclass-Klassifikation ist die Minimierung der 
     L = - \sum_{i=1}^{K}y_i\log(\hat{y}_i).
 \end{equation*}
 
-Bei der Multilabel-Klassifikation wird zunächst für ein Label $i$ die Kreuzentropie 
+Bei der Multilabel-Klassifikation wird zunächst für ein Label $i$ die Kreuzentropie
 \begin{equation*}
     l_i = y_i\log (\sigma(\hat{y}_i)) + (1 - y_i)\log (1 - \sigma(\hat{y}_i))
 \end{equation*}
