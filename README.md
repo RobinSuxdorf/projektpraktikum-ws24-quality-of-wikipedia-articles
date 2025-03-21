@@ -21,7 +21,7 @@ This project aims to analyze and classify Wikipedia articles into promotional an
 
 ### Prerequisites
 
-- Python 3.x
+- Python 3.12.x (gensim does not compile in 3.13.x as of 2025-03-21)
 
 To install the required packages, run the following command:
 

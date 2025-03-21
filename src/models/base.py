@@ -43,7 +43,6 @@ class Model(ABC):
         """
         joblib.dump(self, file_name)
 
-    @abstractmethod
     def load(self, file_name: str) -> None:
         """
         Load a model from a file.
