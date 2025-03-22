@@ -1,6 +1,14 @@
 \subsection{Bayes-Klassifikator}
 \label{sec:bayes-klassifikator}
 
-Der Naive-Bayes-Klassifikator ist ein probabilistisches Modell, das auf dem Bayes'schem Theorem basiert und unter der Annahme der bedingten Unabhängigkeit der Merkmale Klassen-Wahrscheinlichkeiten schätzt \cite{Bishop2019}.
+Der Naive-Bayes-Klassifikator, ein auf dem Bayes'schen Theorem basierendes probabilistisches Modell, schätzt unter Annahme bedingter Unabhängigkeit der Merkmale Klassenwahrscheinlichkeiten \cite{Bishop2019}. In der Textklassifikation wird dazu der Multinomial-Naive-Bayes-Klassifikator eingesetzt, der die a-posteriori Wahrscheinlichkeit, dass ein Dokument $d$ zur Klasse $c_j$ gehört, mittels
+\begin{equation*}
+    P(c_j \mid d) \;=\; \frac{P(c_j) \prod_{i=1}^{M} P(w_i \mid c_j)^{\,tf_{i,d}}}{\displaystyle \sum_{c' \in C} P(c') \prod_{i=1}^{M} P(w_i \mid c')^{\,tf_{i,d}}}
+\end{equation*}
+berechnet. Hierbei bezeichnet $M$ die Größe des Vokabulars, $tf_{i,d}$ die Häufigkeit des Terms $w_i$ in $d$, $P(c_j)$ die a-priori Wahrscheinlichkeit der Klasse $c_j$ und $P(w_i \mid c_j)$ die bedingte Wahrscheinlichkeit des Terms $w_i$ in Klasse $c_j$. Schließlich wird $d$ jener Klasse zugewiesen, für die der Score
+\begin{equation*}
+    \hat{c} \;=\; \arg\max_{c \in C}\; P(c) \prod_{i=1}^{M} P(w_i \mid c)^{\,tf_{i,d}}
+\end{equation*}
+maximal ist \cite{Manning2009}.
 
-Es wurde der Multinomial Naive Bayes-Klassifikator \texttt{MultinomialNB} von Scikit-Learn \cite{Pedregosa2011} eingesetzt, da er sich besonders gut für Textklassifizierungsaufgaben eignet. Dabei werden Wortfrequenzen als diskrete Zähldaten mit einer linearen Zeitkomplexität \cite{Manning2009} verarbeitet, welcher trotz der hohen Datenmenge und der hohen Dimensionalität schnell gute Ergebnisse liefert. Zur Optimierung der Klassifikation wurden die Parameter \texttt{alpha} und \texttt{fit\_prior} angepasst. Mit \texttt{alpha} wird mittels Laplace-Glättung sichergestellt, dass auch bei nicht beobachteten Merkmalen keine Null-Wahrscheinlichkeiten entstehen, indem sie durch eine kleine positive Konstante ersetzt werden, während \texttt{fit\_prior} es ermöglicht, die apriorische Klassenverteilung direkt aus den Trainingsdaten zu schätzen bevor Features betrachtet werden, andernfalls wird eine gleiche Klassenwahrscheinlichkeit angenommen.
+Die praktische Umsetzung erfolgte über den \texttt{MultinomialNB} von Scikit-Learn \cite{Pedregosa2011}. Dabei wurden folgende Parametern optimiert: \texttt{alpha} (zur Laplace-Glättung, um bei nicht beobachteten Merkmalen Null-Wahrscheinlichkeiten zu vermeiden) sowie \texttt{fit\_prior} (zur Schätzung der apriorischen Klassenverteilung ohne Merkmalsbetrachtung, andernfalls wird eine gleichmäßige Verteilung angenommen).
