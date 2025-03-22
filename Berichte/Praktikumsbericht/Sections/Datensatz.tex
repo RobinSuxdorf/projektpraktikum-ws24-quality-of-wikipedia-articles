@@ -6,7 +6,7 @@ Im Rahmen des Praktikums wurde zuerst der Datensatz analysiert. Im Folgenden wir
 \subsection{Ursprünglicher Datensatz}
 \label{UrsprunglicherDatensatz}
 %Erter Satz geändert
-Als Basis wurde ein Datensatz verwendet, welcher  verschiedene Wikipedia-Artikel enthält \cite{Urbanbricks2020}. Der Datensatz wurde in zwei Dateien unterteilt. Die erste Datei enthielt gute Artikel und die zweite enthielt %\emph{promotional} (
+Als Basis wurde ein Datensatz verwendet, welcher  54116 Wikipedia-Artikel enthält \cite{Urbanbricks2020}. Der Datensatz wurde in zwei Dateien unterteilt. Die erste Datei enthielt gute Artikel und die zweite enthielt %\emph{promotional} (
 Werbeartikel und wurde noch weiter unterteilt. Dabei sind folgende Label vergeben: advert (Werbeanzeigen), coi (enge Verbindung des Autors zum Artikel), fanpov (Potentieller Artikel eines Fans), PR  (Presseartikel), resume (Lebenslauf)
 %\begin{itemize}
 %    \item advert - „Dieser Artikel enthält Inhalte, die wie eine Werbeanzeige verfasst sind.“
@@ -16,24 +16,19 @@ Werbeartikel und wurde noch weiter unterteilt. Dabei sind folgende Label vergebe
 %\item resume - „Dieser biografische Artikel ist wie ein Lebenslauf geschrieben.“
 %\end{itemize}
 %Der zweite Datensatz enthielt Artikel, die als \emph{good} klassifiziert worden sind. 
-Die beiden oben genannten Datensätze wurden zusammen verwendet, um die gesamte Datenbasis zu bilden. Insgesamt ergab das \textbf{Anzahl Datensätze einfügen} Daten. Die Label dieser Daten war wie folgt verteilt:
-
 
 \textbf{2 Bilder einfügen: 1. Bild einzelne Label, 2. Bild Kombination der Label}
 \\
 
 
 
-\subsection{Probleme des ursprünglichen Datensatzes}
+\subsection{Datensatzerweiterung}
 \label{ProblemeDatensatz}
-Der Datensatz wiess einige Probleme auf. Diese waren zum einen ein unechtes Verhältniss der Daten, weil die guten Artikel viel zu häufig vertreten waren. Ausserdem, gab es unter unterlabels der Promotional-Artikel ungleich verteilte Klassen und überschneidende Klassen. Zudem gab es keine Kategorie für neutrale Artikel, was dazu führen könnte, dass Artikel, die eigentlich in Ordnung sind als werbend klassifiziert werden.
+Der Datensatz wiess einige Probleme auf. Diese waren zum einen ein unechtes Verhältniss der Daten, weil die guten Artikel viel zu häufig vertreten waren. Ausserdem, gab es unter unterlabels der Promotional-Artikel ungleich verteilte und überschneidende Klassen. Zudem gab es keine Kategorie für neutrale Artikel, was dazu führen könnte, dass Artikel, die eigentlich in Ordnung sind als werbend klassifiziert werden.
 %Wie man anhand des Diagramms \textbf{Auf Bild referenzieren} sehen kann, sind die Daten ungleich verteilt. Daten mit dem Label \textit{good} nehmen laut \textbf{Quelle einfügen} nur 0.59\% aller Wikipedia-Artikel ein. Allerdings sieht man anhand der Grafik, dass sie im Vergleich zu \textbf{Prozentsatz berechnen}. Zum einen führt das zu einem Verhältnis, das nicht der Realität entspricht, zum anderen kann das die Ergebnisse der trainierten Modelle verschlechtern.
-
-
-
-\subsection{Weitere Daten}
+%subsection{Weitere Daten}
 %Um ein gutes Modell zu erstellen, welches auf maschinellem Lernen basiert, braucht man entsprechende Datensätze. 
-Um die in Abschnitt \ref{ProblemeDatensatz} besprochenen Probleme lösen zu können, wurden die Daten mithilfe des Wikipedia Dumps \ref{WPDump} um eine neutrale Kategorie erweitert. Ausserdem gab es Versuche untervertretenen Labels durch Datenaugmentierung \ref{dataAugmentation} mehr Vertreter zu geben.
+Um diese Probleme lösen zu können, wurden die Daten mithilfe des Wikipedia Dumps \ref{WPDump} um eine neutrale Kategorie erweitert. Ausserdem gab es Versuche untervertretenen Labels durch Datenaugmentierung \ref{EDA} mehr Vertreter zu geben.
 % besprochen worden ist, ist der ursprüngliche Datensatz nicht ausreichend, um entsprechende Modelle zu trainieren. Aus diesem Grund wurden verschiedene Methoden ausprobiert und verwendet, um den ursprünglichen Datensatz zu erweitern.
 
 \subsubsection{Datensatzerweiterung durch Wikipedia-Dump}
@@ -50,9 +45,9 @@ Da die Klassen extrem ungleich verteilt sind (neutrale Artikel etwa um einen Fak
 
 Um die Daten genau wie den Kaggle-Datensatz verarbeiten zu können, wurden sie in einem kompatiblen Format ebenfalls in CSV-Dateien geschrieben. Die Pipeline wurde so erweitert, dass sie neben der binären Klassifikation auch eine Mehrklassen-Klassifikation inklusive der Klasse \emph{neutral} unterstützt.
 
-\subsubsection{Augmentierung der Daten}
-\label{dataAugmentation}
-Da es nicht sicher ist, ob der Wikimedia Dump das Problem vollkommen lösen kann, wurde neben dem Hinzuziehen weiterer Daten auch versucht die Daten zu augmentieren. Dabei sollten besonders untervetretene Klassen mehr Repräsentanten kriegen. Dabei wurden verschiedene Methoden ausprobiert, um die Daten zu augmentieren. Diese Methoden werden in \textbf{Referenz ergänzen} vorgestellt.
+%\subsubsection{Augmentierung der Daten}
+%\label{dataAugmentation}
+%Da es nicht sicher ist, ob der Wikimedia Dump das Problem vollkommen lösen kann, wurde neben dem Hinzuziehen weiterer Daten auch versucht die Daten zu augmentieren. Dabei sollten besonders untervetretene Klassen mehr Repräsentanten kriegen. Dabei wurden verschiedene Methoden ausprobiert, um die Daten zu augmentieren. Diese Methoden werden in \textbf{Referenz ergänzen} vorgestellt.
 
 \subsection{Problemdefinition}
 \label{Problemdefinition}
