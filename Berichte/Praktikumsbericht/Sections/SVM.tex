@@ -5,7 +5,7 @@ Die Support Vector Machine (SVM) ist ein überwacht lernendes Verfahren zur Klas
 
 Im Rahmen des Projekts wurden verschiedene Varianten der SVM von Scikit-Learn \cite{Pedregosa2011} getestet. Da der lineare Kernel auf den vorliegenden Daten leicht bessere Ergebnisse lieferte als die Alternativen RBF, Sigmoid und Polynomial, konnte die Implementierung \texttt{LinearSVC} eingesetzt werden. Diese unterstützt ausschließlich lineare Kernel, skaliert aber besser mit der Anzahl Wikipedia-Artikel als die Implementierung \texttt{SVC}, welche kompatibel mit weiteren Kernel-Funktionen ist.
 
-\texttt{LinearSVC} basiert auf der Bibliothek \texttt{LIBLINEAR}, die in \cite{fan2008liblinear} beschrieben ist und löst das folgende Optimierungsproblem:
+\texttt{LinearSVC} basiert auf der Bibliothek \texttt{LIBLINEAR}, die in \cite{Fan2008} beschrieben ist und löst das folgende Optimierungsproblem:
 
 \begin{equation*}
   \min_{w,\, b} \frac{1}{2} w^T w + C \sum_{i=1}^{l} \left( \max(0, 1 - y_i (w^T x_i + b)) \right)^2
