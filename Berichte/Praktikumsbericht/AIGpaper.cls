@@ -482,7 +482,6 @@
     \fi
 \fi
 
-\makeabstract
 \ifthesis%
     \cleardoublepage
 \fi
