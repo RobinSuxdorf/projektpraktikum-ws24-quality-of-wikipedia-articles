@@ -1,4 +1,7 @@
-# src/models/support_vector_machine.py
+"""Model class definitions for Support Vector Machine models.
+
+Authors: Johannes Krämer, Sebastian Bunge
+"""
 
 import logging
 from sklearn.model_selection import GridSearchCV

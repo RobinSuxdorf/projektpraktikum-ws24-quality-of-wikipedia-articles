@@ -1,4 +1,7 @@
-# src/data_loader.py
+"""Module for loading data for binary and multilabel classification tasks.
+
+Author: Sebastian Bunge
+"""
 
 import logging
 from typing import Literal
@@ -9,6 +12,7 @@ import numpy as np
 logger = logging.getLogger(__name__)
 
 
+# Define the supported use cases
 class Usecase(StrEnum):
     BINARY = "binary"
     MULTILABEL = "multilabel"
@@ -29,14 +33,17 @@ def load_data(
     """
     logger.info(f"Loading data with {data_loader_config}")
 
+    # Load common configuration parameters
     promo_file_path = data_loader_config.get("promo_file")
     nrows = data_loader_config.get("nrows", None)
     shuffle = data_loader_config.get("shuffle")
 
     if usecase == Usecase.BINARY:
+        # Load additional configuration parameters
         good_file_path = data_loader_config.get("good_file")
         neutral_file_path = data_loader_config.get("neutral_file")
 
+        # Load data and assign labels
         logger.info(
             "Loading non-promotional and promotional data for binary classification."
         )
@@ -44,27 +51,38 @@ def load_data(
         good_df["label"] = 0
         promo_df = pd.read_csv(promo_file_path, nrows=nrows)
         promo_df["label"] = 1
+
+        # Concatenate data
         df = pd.concat([good_df, promo_df], axis=0, ignore_index=True)
+
+        # Add neutral data if available
         if neutral_file_path:
             neutral_df = pd.read_csv(neutral_file_path, nrows=nrows)
             neutral_df["label"] = 2
             df = pd.concat([df, neutral_df], axis=0, ignore_index=True)
 
+        # Select only relevant columns
         df = df[["text", "label"]]
     elif usecase == Usecase.MULTILABEL:
+        # Load data
         logger.info("Loading promotional data for multilabel classification.")
         promo_df = pd.read_csv(promo_file_path, nrows=nrows)
 
+        # Select only relevant columns
         df = promo_df.drop(columns=["url", "id", "title"], errors="ignore")
     else:
         logger.error(
             f"Invalid model type '{usecase}'. Supported types: {[uc for uc in Usecase]}."
         )
 
+    # Optionally shuffle the data
     if shuffle:
         logger.info("Shuffling the data.")
         df = df.sample(frac=1).reset_index(drop=True)
 
+    ##################################################################################
+    # Applies random label flipping on a fraction of the data for simulation of label noise.
+    # Author: Johannes Krämer
     label_change_frac = data_loader_config.get("label_change_frac", 0)
     if label_change_frac > 0:
         logger.info(
@@ -80,5 +98,6 @@ def load_data(
                 [label for label in possible_labels if label != current_label]
             )
             df.loc[row, "label"] = new_label
+    ##################################################################################
 
     return df

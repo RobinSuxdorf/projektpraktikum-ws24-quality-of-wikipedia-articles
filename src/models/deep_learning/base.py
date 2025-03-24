@@ -1,3 +1,8 @@
+"""Base class for neural network models.
+
+Authors: Robin Suxdorf
+"""
+
 import os
 from collections.abc import Callable
 
@@ -17,6 +22,7 @@ class BaseNeuralNetworkModel(Model):
     A base class for neural network models that provides functionality for training,
     prediction, saving and loading models.
     """
+
     def __init__(
         self,
         neural_network: nn.Module,
@@ -102,7 +108,7 @@ class BaseNeuralNetworkModel(Model):
 
         for epoch in range(num_epochs):
             avg_loss = self._train_one_epoch(train_dataloader, optimizer)
-            print(f"Epoch {epoch+1}/{num_epochs}, Loss: {avg_loss:.4f}")
+            print(f"Epoch {epoch + 1}/{num_epochs}, Loss: {avg_loss:.4f}")
 
     def predict(self, features: csr_matrix) -> list:
         tensors = [

@@ -1,3 +1,8 @@
+"""Module for handling the Wikipedia article dataset for model training and evaluation.
+
+Author: Robin Suxdorf
+"""
+
 import torch
 from torch.utils.data import Dataset
 from scipy.sparse import csr_matrix

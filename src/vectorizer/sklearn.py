@@ -1,4 +1,7 @@
-# src/vectorizer/sklearn.py
+"""Vectorizer class definitions for vectorizers using Scikit-learn models.
+
+Author: Sebastian Bunge
+"""
 
 import logging
 from sklearn.feature_extraction.text import CountVectorizer, TfidfVectorizer

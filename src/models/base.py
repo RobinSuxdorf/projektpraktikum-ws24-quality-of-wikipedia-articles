@@ -1,4 +1,7 @@
-# src/models/base.py
+"""Abstract base class for machine learning models.
+
+Authors: Sebastian Bunge, Robin Suxdorf
+"""
 
 from abc import ABC, abstractmethod
 import joblib
@@ -27,7 +30,7 @@ class Model(ABC):
         Make predictions using the fitted model.
 
         Args:
-            features (array-like or similar): Input data for prediction. Typically a 2D array or similar structure.
+            features (sparse matrix): Input data for prediction.
 
         Returns:
             array-like: Predicted labels corresponding to the input features.

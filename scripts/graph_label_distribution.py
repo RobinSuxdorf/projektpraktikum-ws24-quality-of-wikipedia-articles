@@ -1,4 +1,4 @@
-"""Graph the distribution of the labels in the promotional dataset
+"""Graph the distribution of labels in the promotional dataset
 
 Author: Emmanuelle Steenhof
 """

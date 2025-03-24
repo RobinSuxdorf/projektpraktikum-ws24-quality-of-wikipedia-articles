@@ -1,4 +1,7 @@
-# src/evaluation.py
+"""Module for evaluating classification models by computing metrics and visualizing them using bar plots.
+
+Author: Sebastian Bunge
+"""
 
 import logging
 import matplotlib.pyplot as plt
@@ -28,9 +31,11 @@ def evaluate_model(model: Model, x_test, y_test) -> plt.Figure:
         plt.Figure: A matplotlib figure containing a bar chart of precision, recall,
                     and F1-score for each label and overall accuracy.
     """
+    # Evaluate the model
     logger.info("Evaluating the model.")
     y_pred = model.predict(x_test)
 
+    # Compute and log the evaluation metrics
     accuracy = accuracy_score(y_test, y_pred)
     logger.info(f"Accuracy: {accuracy:.2%}")
     report = classification_report(y_test, y_pred, zero_division=0)
@@ -44,15 +49,18 @@ def evaluate_model(model: Model, x_test, y_test) -> plt.Figure:
         conf_matrix = confusion_matrix(y_test, y_pred)
         logger.info(f"Confusion Matrix:\n{conf_matrix}")
 
+    # Compute metrics per label
     report = classification_report(y_test, y_pred, output_dict=True, zero_division=0)
     labels = [label for label in report if label.isdigit()]
     metrics = ["precision", "recall", "f1-score"]
     data = {metric: [report[label][metric] for label in labels] for metric in metrics}
 
+    # Create bar chart
     x = range(len(labels))
     bar_width = 0.2
     fig, ax = plt.subplots()
 
+    # Plot bars
     bars1 = ax.bar(
         [xi - bar_width for xi in x], data["precision"], bar_width, label="Precision"
     )
@@ -72,6 +80,7 @@ def evaluate_model(model: Model, x_test, y_test) -> plt.Figure:
                 va="bottom",
             )
 
+    # Add labels and legend
     ax.set_title("Metrics per Label")
     ax.set_xticks(x)
     ax.set_xticklabels(labels)

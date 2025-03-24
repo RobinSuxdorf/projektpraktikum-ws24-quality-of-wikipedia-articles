@@ -31,13 +31,13 @@ pip install -r requirements.txt
 
 ## Usage
 
-To run an end-to-end pipeline, use the following command:
+To run a machine learning pipeline, use the following command:
 
 ```sh
 python main.py -c <config-name>
 ```
 
-- -c, --config: Name of the YAML configuration file.
+To run a deep learning pipeline, use the `main_deep_learning.ipynb` notebook.
 
 ## Configuration
 
@@ -214,28 +214,33 @@ evaluation:
   - main_wp_dump_convert.py: Convert a Wikipedia XML dump into CSV files
   - main_wp_dump_sampling.py: Sample Wikipedia dump with reservoir sampling
 - src/: Main source code of the project
-  - models/: Model definitions and training functions
-    - base.py: Abstract base class for models
-    - logistic_regression.py: Logistic regression model implementation
-    - naive_bayes.py: Naive Bayes model implementation
-    - support_vector_machine.py: SVM model implementation
+  - models/: Model implementations
+    - deep_learning/: Deep learning implementations
+      - base.py: Base class for neural network models
+      - dl_binary.py: Model class definitions for a neural network for binary classification
+      - dl_multilabel.py: Model class definitions for a neural network for multilabel classification
+      - dl_wp_binary.py: Model class definitions for a neural network for multiclass classification
+    - base.py: bstract base class for machine learning models
+    - logistic_regression.py: Model class definitions for Logistic Regression models
+    - naive_bayes.py: Model class definitions for Naive Bayes models
+    - support_vector_machine.py: Model class definitions for Support Vector Machine models
   - vectorizer/: Vectorizer implementations
     - base.py: Abstract base class for vectorizers
-    - gensim.py: Gensim vectorizer implementations (Word2Vec, GloVe)
-    - sklearn.py: Scikit-learn vectorizer implementations (TF-IDF, Count, Bag of Words)
+    - gensim.py: Vectorizer class definitions for vectorizers using Gensim models
+    - sklearn.py: Vectorizer class definitions for vectorizers using Scikit-learn models
   - wp/: Wikipedia dump processing code
-    - categorized_page.py: Categorized page class for Wikipedia dump
-    - wp_dump.py: Wikipedia dump processing class
-  - data_loader.py: Functions for loading and processing data
-  - evaluation.py: Functions for evaluating the trained models
-  - features.py: Functions for extracting features from text data
-  - preprocessing.py: Functions for preprocessing text data
-  - train.py: Functions for training models
-  - utils.py: Utility functions
+    - categorized_page.py: Module for categorizing Wikipedia pages with quality and type classification functionalities
+    - wp_dump.py: Module for processing Wikipedia dump files and categorizing pages into CSV outputs
+  - data_loader.py: Module for loading data for binary and multilabel classification tasks
+  - evaluation.py: Module for evaluating classification models by computing metrics and visualizing them using bar plots
+  - features.py: Module for extracting features from text using various vectorization techniques
+  - preprocessing.py: Module for preprocessing text data using various techniques
+  - train.py: Module for training models using various algorithms with optional grid search optimization
+  - utils.py: Module for utility functions and pipeline step definitions
 - main_deep_learning.ipynb: Main script to run the pipeline for deep learning approach
-- main.py: Main script to run the pipeline for machine learning approaches
+- main.py: Main script for machine learning preprocessing and model training and evaluation pipeline
 - README.md: Project documentation <-- YOU ARE HERE
-- requirements.txt: List of required Python packages
+- requirements.txt: List of required Python packages (experiments not included)
 
 ## Logging
 

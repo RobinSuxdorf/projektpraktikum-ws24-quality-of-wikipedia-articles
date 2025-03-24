@@ -1,3 +1,8 @@
+"""Model class definitions for a neural network for multiclass classification.
+
+Authors: Robin Suxdorf
+"""
+
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
@@ -9,6 +14,7 @@ class NeuralNetwork(nn.Module):
     """
     A simple feedforward neural network with one hidden layer.
     """
+
     def __init__(self, input_dim: int, num_classes: int) -> None:
         """
         Initializes the neural network.
@@ -32,9 +38,9 @@ class NeuralNetwork(nn.Module):
         Returns:
             torch.Tensor: Output tensor of shape (batch_size, num_classes).
         """
-        x = F.relu(self.fc1(x)) # (batch_size, 512)
-        x = self.dropout(x) # (batch_size, 512)
-        x = self.fc2(x) # (batch_size, num_classes)
+        x = F.relu(self.fc1(x))  # (batch_size, 512)
+        x = self.dropout(x)  # (batch_size, 512)
+        x = self.fc2(x)  # (batch_size, num_classes)
         return x
 
 
@@ -55,6 +61,7 @@ class MulticlassNeuralNetworkModel(BaseNeuralNetworkModel):
     """
     A multiclass classification model using a feedforward neural network.
     """
+
     def __init__(self, input_dim: int) -> None:
         """
         Intializes the multilabel classification model.

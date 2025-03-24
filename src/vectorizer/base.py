@@ -1,4 +1,7 @@
-# src/vectorizer/base.py
+"""Abstract base class for vectorizers.
+
+Author: Sebastian Bunge
+"""
 
 from abc import ABC, abstractmethod
 import pandas as pd
