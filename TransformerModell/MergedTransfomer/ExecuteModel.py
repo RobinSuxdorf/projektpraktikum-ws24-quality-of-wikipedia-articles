@@ -1,3 +1,7 @@
+"""Executes the entire transformer flow
+
+Authors: Emmanuelle Steenhof"""
+
 from transformers import AutoTokenizer
 import datasets
 from DataLoaders import read_data_with_multilabel, read_data_with_multilabel_augmented, read_data_for_binary_classification, read_data_for_three_class_classification

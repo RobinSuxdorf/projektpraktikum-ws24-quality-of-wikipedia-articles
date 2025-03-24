@@ -1,3 +1,7 @@
+"""Tokenizes the data
+
+Authors: Emmanuelle Steenhof"""
+
 def tokenizer_function(examples):
     """Is used to tokenize the articles"""
     return tokenizer(examples["text"], padding="max_length", truncation=True)

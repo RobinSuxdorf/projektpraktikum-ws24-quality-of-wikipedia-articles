@@ -1,3 +1,7 @@
+"""Provides supporting functions for anomaly detection
+
+Authors: Emmanuelle Steenhof"""
+
 import numpy as np
 def calculate_gauss(values):
     """The gauss value gets calculated here"""

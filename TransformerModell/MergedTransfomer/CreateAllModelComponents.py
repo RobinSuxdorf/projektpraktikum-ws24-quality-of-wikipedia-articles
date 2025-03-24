@@ -1,3 +1,8 @@
+"""Creates all model components
+
+Authors: Emmanuelle Steenhof"""
+
+
 from torch.utils.data import DataLoader
 from transformers import DistilBertForSequenceClassification
 from transformers import get_scheduler

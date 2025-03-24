@@ -1,3 +1,8 @@
+"""Defines the configurations and executes the test cases
+
+
+Authors: Emmanuelle Steenhof"""
+
 """This file sets the parameters and executes the whole transformer flow. The settings below are the ones used for esting the Transformers. They can be altered for different tests."""
 
 from ExecuteModel import execute_all_methods

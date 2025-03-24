@@ -1,3 +1,6 @@
+"""Reads in the data 
+
+Authors: Emmanuelle Steenhof"""
 import pandas as pd
 from DataPreprocessing import preprocess_data
 import datasets

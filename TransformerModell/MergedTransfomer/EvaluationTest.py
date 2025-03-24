@@ -1,3 +1,7 @@
+"""Used to evaluate the model
+
+Authors: Emmanuelle Steenhof"""
+
 import logging
 #import matplotlib.pyplot as plt
 from sklearn.metrics import (

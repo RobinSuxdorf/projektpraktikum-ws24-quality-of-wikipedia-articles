@@ -1,3 +1,7 @@
+"""Provides the required data preprocessing tools
+
+Authors: Sebastian Bunge, Emmanuelle Steenhof"""
+
 import re
 import pandas as pd
 import nltk

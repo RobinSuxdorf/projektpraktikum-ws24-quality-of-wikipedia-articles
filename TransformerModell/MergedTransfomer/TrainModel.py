@@ -1,3 +1,7 @@
+"""Prepares data for training and executes the training
+
+Authors: Emmanuelle Steenhof"""
+
 import datasets
 
 

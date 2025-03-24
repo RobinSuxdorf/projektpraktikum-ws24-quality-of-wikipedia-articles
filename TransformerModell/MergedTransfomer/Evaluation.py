@@ -1,3 +1,7 @@
+"""Reads in the Batches and evaluates the model
+
+Authors: Emmanuelle Steenhof"""
+
 from EvaluationTest import evaluate_model
 import torch
 import numpy as np
