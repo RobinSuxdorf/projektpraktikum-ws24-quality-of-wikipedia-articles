@@ -220,7 +220,7 @@ evaluation:
       - dl_binary.py: Model class definitions for a neural network for binary classification
       - dl_multilabel.py: Model class definitions for a neural network for multilabel classification
       - dl_wp_binary.py: Model class definitions for a neural network for multiclass classification
-    - base.py: bstract base class for machine learning models
+    - base.py: Abstract base class for machine learning models
     - logistic_regression.py: Model class definitions for Logistic Regression models
     - naive_bayes.py: Model class definitions for Naive Bayes models
     - support_vector_machine.py: Model class definitions for Support Vector Machine models
