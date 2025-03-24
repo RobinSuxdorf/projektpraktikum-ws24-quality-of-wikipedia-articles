@@ -1,3 +1,7 @@
+"""Building a lexicon from letters
+
+Author: Emmanuelle Steenhof"""
+
 def buildingLexiconLetters():
     """creates a lexicon with letter encodings"""
     alphabet = "abcdefghijklmnopqurstuvwxyz"

@@ -1,15 +1,19 @@
+"""Trying to classify words as a preparation for word encoding. Unsuccessfull attempt therefore not fully fledged out.
+
+
+Author: Emmanuelle Steenhof"""
+
+
 import pandas as pd
-
-
 
 def read_in_data_binary(promotional_path, good_path):
     """reads in the data and adds binary labels"""
     df_promo = pd.read_csv(promotional_path)
     df_promo["label"] = 1
-    df_promo = df_promo[:10000]
+    df_promo = df_promo[:10]
     df_good = pd.read_csv(good_path)
     df_good["label"] = 0
-    df_good = df_good[:10000]
+    df_good = df_good[:10]
     df_promo = df_promo[["text", "label"]]
     df_good = df_good[["text", "label"]]
     df = pd.concat((df_good, df_promo), axis=0, ignore_index= True)
@@ -29,7 +33,7 @@ def read_in_data(promotional_path, good_path):
 
     df_promo_final = df_final[['label', 'text_y', 'url_y']]
     df_good = pd.read_csv(good_path)
-    df_good = df_good[:1000]
+    df_good = df_good[:10]
     df_good["label"] = 0
     df_promo2 = df_promo_final[["text_y", "label"]]
     df_promo3 = df_promo2.rename(columns={"text_y": "text"})
@@ -76,8 +80,6 @@ def list_words_appears_in_both_categories(lexicon):
             words_in_both.append(l)
         if not("1" in lexicon[l] and "0" in lexicon[l]):
             words_in_one_cat.append(l)
-    print("Number Of Words in both Categories:" +str(len(words_in_both)))
-    print("Number Of Words in one Category:" +str(len(words_in_one_cat)))
 
 
 def word_in_both_cat(lexicon, word):
@@ -125,9 +127,9 @@ def create_list_for_training_words(lexicon, letter_lexicon):
     return all_words_encoded, label_of_words, letter_lexicon
 
 """Defining the paths"""
-promotional_path = "ErsteVersuche/Daten/good.csv"
+promotional_path = "Daten/good.csv"
 
-good_path = "ErsteVersuche/Daten/promotional.csv"
+good_path = "Daten/promotional.csv"
 
 """reading in the data"""
 df = read_in_data_binary(promotional_path, good_path)
@@ -148,15 +150,10 @@ lexicon = create_word_list_with_all_categories(word_label_list)
 """prints the amount of words in both categories and only one"""
 list_words_appears_in_both_categories(lexicon)
 final_word_mapping = create_final_word_number_mapping(lexicon)
-print(final_word_mapping)
 
 """Creates the lexicon with only letters"""
 letter_lexicon = buildingLexiconLetters()
 all_words_encoded, label_of_words, letter_lexicon = create_list_for_training_words(final_word_mapping, letter_lexicon)
-
-print("length of lists")
-print(len(all_words_encoded))
-print(len(label_of_words))
 
 """Splitting the Words and labels in training and testing data"""
 Word_X_train, Word_X_test, Word_Y_train, Word_Y_test = model_selection.train_test_split(all_words_encoded, label_of_words, shuffle=True,  test_size=0.33)
