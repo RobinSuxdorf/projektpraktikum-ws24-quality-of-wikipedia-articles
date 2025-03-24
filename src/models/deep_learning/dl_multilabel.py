@@ -1,6 +1,6 @@
 """Model class definitions for a neural network for multilabel classification.
 
-Authors: Robin Suxdorf
+Author: Robin Suxdorf
 """
 
 import torch

@@ -1,6 +1,6 @@
 """Base class for neural network models.
 
-Authors: Robin Suxdorf
+Author: Robin Suxdorf
 """
 
 import os

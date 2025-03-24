@@ -55,11 +55,14 @@ def load_data(
         # Concatenate data
         df = pd.concat([good_df, promo_df], axis=0, ignore_index=True)
 
+        ##################################################################################
         # Add neutral data if available
+        # Author: Johannes Krämer
         if neutral_file_path:
             neutral_df = pd.read_csv(neutral_file_path, nrows=nrows)
             neutral_df["label"] = 2
             df = pd.concat([df, neutral_df], axis=0, ignore_index=True)
+        ##################################################################################
 
         # Select only relevant columns
         df = df[["text", "label"]]

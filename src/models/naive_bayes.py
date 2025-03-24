@@ -1,6 +1,6 @@
 """Model class definitions for Naive Bayes models.
 
-Authors: Sebastian Bunge
+Author: Sebastian Bunge
 """
 
 import logging
