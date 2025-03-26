@@ -3,8 +3,18 @@
 
 Author: Emmanuelle Steenhof"""
 
-
 import pandas as pd
+
+
+def buildingLexiconLetters():
+    """creates a lexicon with letter encodings"""
+    alphabet = "abcdefghijklmnopqurstuvwxyz"
+    letterLexicon = {}
+    for pos in range(len(alphabet)):
+        letterLexicon[alphabet[pos]] = pos + 1
+
+    return letterLexicon
+
 
 def read_in_data_binary(promotional_path, good_path):
     """reads in the data and adds binary labels"""
@@ -16,22 +26,25 @@ def read_in_data_binary(promotional_path, good_path):
     df_good = df_good[:10]
     df_promo = df_promo[["text", "label"]]
     df_good = df_good[["text", "label"]]
-    df = pd.concat((df_good, df_promo), axis=0, ignore_index= True)
-    df = df.sample(frac = 1)
+    df = pd.concat((df_good, df_promo), axis=0, ignore_index=True)
+    df = df.sample(frac=1)
     return df
-
 
 
 def read_in_data(promotional_path, good_path):
     """reads in the data and groups the articles based on labels"""
     df_promo = pd.read_csv(promotional_path)
     df_promo_aggregated = df_promo.groupby(["advert", "fanpov", "coi", "pr"]).count()
-    df_promo_aggregated['label'] = range(1, len(df_promo_aggregated) + 1)
+    df_promo_aggregated["label"] = range(1, len(df_promo_aggregated) + 1)
 
-    df_final = df_promo_aggregated.merge(df_promo, left_on=["advert", "fanpov", "coi", "pr"],
-                                         right_on=["advert", "fanpov", "coi", "pr"], how='inner')
+    df_final = df_promo_aggregated.merge(
+        df_promo,
+        left_on=["advert", "fanpov", "coi", "pr"],
+        right_on=["advert", "fanpov", "coi", "pr"],
+        how="inner",
+    )
 
-    df_promo_final = df_final[['label', 'text_y', 'url_y']]
+    df_promo_final = df_final[["label", "text_y", "url_y"]]
     df_good = pd.read_csv(good_path)
     df_good = df_good[:10]
     df_good["label"] = 0
@@ -43,14 +56,11 @@ def read_in_data(promotional_path, good_path):
     return df_temp, len(df_promo_aggregated) + 1
 
 
-
-
-
 def create_word_label_list(article_test_list, label_test_list):
     """Creates a list with a the words for each articles combined with the label of the articles"""
     word_label_list = []
     for article_no in range(len(article_test_list)):
-        for word in article_test_list[article_no].split(' '):
+        for word in article_test_list[article_no].split(" "):
             x = []
             x.append(word)
             x.append(label_test_list[article_no])
@@ -78,13 +88,14 @@ def list_words_appears_in_both_categories(lexicon):
     for l in lexicon.keys():
         if "1" in lexicon[l] and "0" in lexicon[l]:
             words_in_both.append(l)
-        if not("1" in lexicon[l] and "0" in lexicon[l]):
+        if not ("1" in lexicon[l] and "0" in lexicon[l]):
             words_in_one_cat.append(l)
 
 
 def word_in_both_cat(lexicon, word):
     """Checks if a word is in both categories"""
-    return ("1" in lexicon[word] and "0" in lexicon[word])
+    return "1" in lexicon[word] and "0" in lexicon[word]
+
 
 def create_final_word_number_mapping(lexicon):
     """Creates the final mapping between words and labels
@@ -101,7 +112,6 @@ def create_final_word_number_mapping(lexicon):
     return final_mapping
 
 
-
 from EncodingWordsWithLetters import buildingLexiconLetters
 
 
@@ -114,17 +124,18 @@ def create_list_for_training_words(lexicon, letter_lexicon):
         word_encoding = []
         for letter in word:
             if letter not in letter_lexicon.keys():
-                letter_lexicon[letter] = int(alphabet_length+1)
-                alphabet_length = alphabet_length +1
+                letter_lexicon[letter] = int(alphabet_length + 1)
+                alphabet_length = alphabet_length + 1
             word_encoding.append(letter_lexicon[letter])
-        if len(word_encoding) >32:
+        if len(word_encoding) > 32:
             word_encoding = word_encoding[:32]
         else:
-            while len(word_encoding)<32:
+            while len(word_encoding) < 32:
                 word_encoding.append(0)
         all_words_encoded.append(word_encoding)
         label_of_words.append(lexicon[word])
     return all_words_encoded, label_of_words, letter_lexicon
+
 
 """Defining the paths"""
 promotional_path = "Daten/good.csv"
@@ -138,7 +149,9 @@ df = read_in_data_binary(promotional_path, good_path)
 from sklearn import model_selection
 
 """Splitting the data into testing data and training data"""
-X_train, X_test, Y_train, Y_test = model_selection.train_test_split(df["text"], df["label"], shuffle=True,  test_size=0.33)
+X_train, X_test, Y_train, Y_test = model_selection.train_test_split(
+    df["text"], df["label"], shuffle=True, test_size=0.33
+)
 
 """creating the list with the words and all their labels"""
 article_test_list = X_train.to_list()
@@ -153,10 +166,14 @@ final_word_mapping = create_final_word_number_mapping(lexicon)
 
 """Creates the lexicon with only letters"""
 letter_lexicon = buildingLexiconLetters()
-all_words_encoded, label_of_words, letter_lexicon = create_list_for_training_words(final_word_mapping, letter_lexicon)
+all_words_encoded, label_of_words, letter_lexicon = create_list_for_training_words(
+    final_word_mapping, letter_lexicon
+)
 
 """Splitting the Words and labels in training and testing data"""
-Word_X_train, Word_X_test, Word_Y_train, Word_Y_test = model_selection.train_test_split(all_words_encoded, label_of_words, shuffle=True,  test_size=0.33)
+Word_X_train, Word_X_test, Word_Y_train, Word_Y_test = model_selection.train_test_split(
+    all_words_encoded, label_of_words, shuffle=True, test_size=0.33
+)
 
 from sklearn import svm
 from sklearn import metrics
@@ -170,6 +187,7 @@ print(metrics.accuracy_score(y_predicted, Word_Y_test))
 
 
 from sklearn import linear_model
+
 print("training the Logistic Regression starts here")
 t_model = linear_model.LogisticRegression().fit(Word_X_train, Word_Y_train)
 y_predicted = t_model.predict(Word_X_test)
@@ -177,6 +195,7 @@ print(metrics.accuracy_score(y_predicted, Word_Y_test))
 
 
 from sklearn.naive_bayes import GaussianNB
+
 print("training the GaussianNB starts here")
 t_model = GaussianNB().fit(Word_X_train, Word_Y_train)
 y_predicted = t_model.predict(Word_X_test)

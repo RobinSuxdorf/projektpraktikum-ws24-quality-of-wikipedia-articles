@@ -1,5 +1,7 @@
-import re
-import pandas as pd
+"""Provides the required data preprocessing tools
+
+Authors: Sebastian Bunge, Emmanuelle Steenhof"""
+
 import nltk
 from nltk.corpus import stopwords
 from nltk.stem import PorterStemmer
@@ -24,4 +26,5 @@ def preprocess_data(text_series):
     text_series = text_series.str.strip()
     return text_series
 
-#print(preprocess_data(["This is a test. I wonder what text will be returned .... ..", "Does this count as a series?"]))
+
+# print(preprocess_data(["This is a test. I wonder what text will be returned .... ..", "Does this count as a series?"]))
