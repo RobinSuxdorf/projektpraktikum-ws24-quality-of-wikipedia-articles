@@ -19,16 +19,24 @@ Für die Multilabel-Klassifikation betrachten wir den Klassifikator $\clf\colon\
 \end{equation*}
 
 \subsection{Ergebnisse}
-\begin{center}
-    \begin{tabular}{|c|c|c|c|c|}
+\begin{table}[h]
+    \centering
+    \begin{tabular}{|c|c|c|c|c|c|c|}
         \hline
-        Ansatz                       & acc  & prec & rec  & F1   \\
+        \multirow{2}{*}{Ansatz} & \multicolumn{2}{c|}{Binär} & \multicolumn{2}{c|}{Multiklasse} & \multicolumn{2}{c|}{Multilabel} \\
+        \cline{2-7}
+        & rec & prec & rec & prec & macro avg rec & macro avg prec \\
         \hline
-        Logistische Regression       & 0.99 & 0.98 & 0.92 & 0.93 \\
-        Bayes-Klassifikator          & 0.95 & 0.98 & 0.93 & 0.91 \\
-        Support Vector Machine       & 0.94 & 0.92 & 0.89 & 0.95 \\
-        Convolutional Neural Network & 0.91 & 0.94 & 0.92 & 0.96 \\
-        Transformer                  & 0.97 & 0.95 & 0.92 & 0.93 \\
+        LR & 0.95 & 0.96 & 0.89 & 0.89 & 0.32 & 0.44 \\
+        \hline
+        NB & 0.88 & 0.91 & 0.86 & 0.80 & 0.65 & 0.34 \\
+        \hline
+        SVM & 0.95 & 0.97 & 0.89 & 0.88 & 0.38 & 0.38 \\
+        \hline
+        NN & 0.96 & 0.95 & 0.89 & 0.87 & 0.35 & 0.43 \\
+        \hline
+        DBERT & 0 & 1 & 2 & 3 & 4 & 5 \\
         \hline
     \end{tabular}
-\end{center}
+    \caption{Die Abkürzungen bedeuten: LR (Logistische Regression), NB (Naive Bayes), SVM (Support Vector Machine), NN (Künstliches Neuronales Netz) und DBERT (DistilBERT).}
+\end{table}
