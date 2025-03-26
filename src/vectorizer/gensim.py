@@ -1,4 +1,7 @@
-# src/vectorizer/gensim.py
+"""Vectorizer class definitions for vectorizers using Gensim models.
+
+Author: Sebastian Bunge
+"""
 
 import logging
 from gensim.models import Word2Vec
@@ -15,6 +18,7 @@ class Word2Vec_Vectorizer(Vectorizer):
     """
 
     def __init__(self, features_config):
+        # Load configuration parameters
         self.workers = features_config.get("workers", 3)
         self.vector_size = features_config.get("vector_size")
         self.window = features_config.get("window")
@@ -26,6 +30,7 @@ class Word2Vec_Vectorizer(Vectorizer):
         self.epochs = features_config.get("epochs")
 
     def fit_transform(self, text_series):
+        # Tokenize the text data
         tokenized_texts = [text.split() for text in text_series]
         self._vectorizer = Word2Vec(
             tokenized_texts,
@@ -39,6 +44,7 @@ class Word2Vec_Vectorizer(Vectorizer):
             alpha=self.alpha,
             epochs=self.epochs,
         )
+        # Transform each tokenized text into a vector
         vectors = []
         for tokens in tokenized_texts:
             word_vecs = [
@@ -65,12 +71,14 @@ class GloVe_Vectorizer(Vectorizer):
     """
 
     def __init__(self, features_config):
+        # Load configuration parameters
         model_name = features_config.get("model_name")
         logger.info(f"Loading GloVe model: {model_name}")
         self._vectorizer = api.load(model_name)
         logger.info(f"Successfully loaded GloVe model: {model_name}")
 
     def fit_transform(self, text_series):
+        # Transform each text into a vector
         vectors = []
         for text in text_series:
             tokens = text.split()

@@ -1,3 +1,8 @@
+"""Main script for machine learning preprocessing and model training and evaluation pipeline.
+
+Author: Sebastian Bunge
+"""
+
 import logging
 import sys
 import pandas as pd
@@ -26,7 +31,7 @@ logger = logging.getLogger(__name__)
 
 def run_preprocessing_pipeline(config: dict) -> tuple:
     """
-    Run the data processing pipeline for classification.
+    Run only the data processing pipeline for classification.
 
     Args:
         config (dict): Configuration dictionary.

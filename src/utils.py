@@ -1,4 +1,7 @@
-# src/utils.py
+"""Module for utility functions and pipeline step definitions.
+
+Author: Sebastian Bunge
+"""
 
 import argparse
 import logging
@@ -11,16 +14,19 @@ from src.models import Model
 
 logger = logging.getLogger(__name__)
 
+# Constants
 CONFIGS_DIR = "configs"
 DATA_DIR = "data/intermediary"
 
 
+# Define the supported data types for saving and loading
 class DataType(StrEnum):
     DATA = "data"
     FEATURES = "features"
     MODEL = "model"
 
 
+# Define the pipeline steps
 class PipelineStep(IntEnum):
     DATA_LOADER = 0
     PREPROCESSING = 1

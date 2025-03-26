@@ -1,4 +1,7 @@
-# src/features.py
+"""Module for extracting features from text using various vectorization techniques.
+
+Author: Sebastian Bunge
+"""
 
 import logging
 from enum import StrEnum
@@ -14,6 +17,7 @@ from src.vectorizer import (
 logger = logging.getLogger(__name__)
 
 
+# Define the supported vectorizer types
 class FeatureType(StrEnum):
     TFIDF = "tfidf"
     COUNT = "count"
@@ -35,8 +39,10 @@ def get_features(text_series: pd.Series, features_config: dict):
     """
     logger.info(f"Getting features with {features_config}.")
 
+    # Load common configuration parameters
     feature_type = features_config.get("type")
 
+    # Initialize the vectorizer based on the feature type
     if feature_type == FeatureType.TFIDF:
         logger.info("Using a TF-IDF vectorizer.")
         vectorizer = Tfidf_Vectorizer(features_config)
@@ -57,6 +63,7 @@ def get_features(text_series: pd.Series, features_config: dict):
             f"Invalid feature extraction type '{feature_type}'. Supported types: {[ft for ft in FeatureType]}."
         )
 
+    # Extract features
     features = vectorizer.fit_transform(text_series)
 
     logger.info("Feature extraction complete.")

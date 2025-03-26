@@ -5,7 +5,6 @@ This project aims to analyze and classify Wikipedia articles into promotional an
 ## Table of Contents
 
 - [Installation](#installation)
-- [Code Formatter](#code-formatter)
 - [Usage](#usage)
 - [Configuration](#configuration)
   - [Data Loader](#data-loader)
@@ -22,7 +21,7 @@ This project aims to analyze and classify Wikipedia articles into promotional an
 
 ### Prerequisites
 
-- Python 3.x
+- Python 3.12.x (gensim does not compile in 3.13.x as of 2025-03-21)
 
 To install the required packages, run the following command:
 
@@ -30,23 +29,15 @@ To install the required packages, run the following command:
 pip install -r requirements.txt
 ```
 
-## Code Formatter
-
-We use Ruff for code formatting. To format the code, run:
-
-```sh
-ruff check .
-```
-
 ## Usage
 
-To run the script, use the following command:
+To run a machine learning pipeline, use the following command:
 
 ```sh
 python main.py -c <config-name>
 ```
 
-- -c, --config: Name of the YAML configuration file (without the .yaml extension).
+To run a deep learning pipeline, use the `main_deep_learning.ipynb` notebook.
 
 ## Configuration
 
@@ -213,31 +204,43 @@ evaluation:
 
 ## Project Structure
 
-- configs/: Contains the YAML configuration files.
-- src/: Contains the source code.
-  - models/: Contains model definitions and training functions.
-    - base.py: Base class for models.
-    - logistic_regression.py: Logistic regression model implementation.
-    - naive_bayes.py: Naive Bayes model implementation.
-    - support_vector_machine.py: SVM model implementation.
-  - vectorizer/: Contains vectorizer implementations.
-    - base.py: Base class for vectorizers.
-    - gensim.py: Gensim vectorizer implementations (Word2Vec, GloVe).
-    - sklearn.py: Scikit-learn vectorizer implementations (TF-IDF, Count, Bag of Words).
-  - wp/: Contains Wikipedia dump processing code.
-    - categorized_page.py: Categorized page class for Wikipedia dump.
-    - wp_dump.py: Wikipedia dump processing class.
-  - data_loader.py: Functions for loading and processing data.
-  - evaluation.py: Functions for evaluating the trained models.
-  - features.py: Functions for extracting features from text data.
-  - preprocessing.py: Functions for preprocessing text data.
-  - train.py: Functions for training models.
-  - utils.py: Utility functions including argument parsing and file validation.
-- main_wp_dump_convert.py: Script to convert Wikipedia dump to CSV files.
-- main_wp_dump_sampling.py: Script to extract samples from CSV files.
-- main.py: Main script to run the project.
-- README.md: Project documentation.
-- requirements.txt: List of required Python packages.
+- Berichte/: LaTeX code for presentations and report associated with the project
+- configs/: YAML configuration files
+- graphics/: Visualizations generated during data analysis and model evaluation
+- preserved_experiments/: Preserved artifacts from exploratory data analysis, prototyping experiments, and interactive development
+- scripts/: Auxillary scripts intended to be run directly rather than imported
+  - graph_label_distribution.py: Graph the distribution of the labels in the promotional dataset
+  - graph_results_bar.py: Graph the results of the model performances using bar plots
+  - main_wp_dump_convert.py: Convert a Wikipedia XML dump into CSV files
+  - main_wp_dump_sampling.py: Sample Wikipedia dump with reservoir sampling
+- src/: Main source code of the project
+  - models/: Model implementations
+    - deep_learning/: Deep learning implementations
+      - base.py: Base class for neural network models
+      - dl_binary.py: Model class definitions for a neural network for binary classification
+      - dl_multilabel.py: Model class definitions for a neural network for multilabel classification
+      - dl_wp_binary.py: Model class definitions for a neural network for multiclass classification
+    - base.py: Abstract base class for machine learning models
+    - logistic_regression.py: Model class definitions for Logistic Regression models
+    - naive_bayes.py: Model class definitions for Naive Bayes models
+    - support_vector_machine.py: Model class definitions for Support Vector Machine models
+  - vectorizer/: Vectorizer implementations
+    - base.py: Abstract base class for vectorizers
+    - gensim.py: Vectorizer class definitions for vectorizers using Gensim models
+    - sklearn.py: Vectorizer class definitions for vectorizers using Scikit-learn models
+  - wp/: Wikipedia dump processing code
+    - categorized_page.py: Module for categorizing Wikipedia pages with quality and type classification functionalities
+    - wp_dump.py: Module for processing Wikipedia dump files and categorizing pages into CSV outputs
+  - data_loader.py: Module for loading data for binary and multilabel classification tasks
+  - evaluation.py: Module for evaluating classification models by computing metrics and visualizing them using bar plots
+  - features.py: Module for extracting features from text using various vectorization techniques
+  - preprocessing.py: Module for preprocessing text data using various techniques
+  - train.py: Module for training models using various algorithms with optional grid search optimization
+  - utils.py: Module for utility functions and pipeline step definitions
+- main_deep_learning.ipynb: Main script to run the pipeline for deep learning approach
+- main.py: Main script for machine learning preprocessing and model training and evaluation pipeline
+- README.md: Project documentation <-- YOU ARE HERE
+- requirements.txt: List of required Python packages (experiments not included)
 
 ## Logging
 

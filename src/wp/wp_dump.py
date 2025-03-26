@@ -1,4 +1,7 @@
-# src/wp/wp_dump.py
+"""Module for processing Wikipedia dump files and categorizing pages into CSV outputs.
+
+Author: Johannes Krämer
+"""
 
 from collections import Counter
 from io import BufferedReader

@@ -1,4 +1,7 @@
-# src/wp/categorized_page.py
+"""Module for categorizing Wikipedia pages with quality and type classification functionalities.
+
+Author: Johannes Krämer
+"""
 
 import re
 from dataclasses import dataclass

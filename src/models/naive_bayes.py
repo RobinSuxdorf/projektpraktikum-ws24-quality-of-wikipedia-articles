@@ -1,4 +1,7 @@
-# src/models/naive_bayes.py
+"""Model class definitions for Naive Bayes models.
+
+Author: Sebastian Bunge
+"""
 
 import logging
 from sklearn.model_selection import GridSearchCV

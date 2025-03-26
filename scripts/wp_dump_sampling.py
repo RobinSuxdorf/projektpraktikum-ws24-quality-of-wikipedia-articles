@@ -1,3 +1,8 @@
+"""Sample Wikipedia dump with reservoir sampling
+
+Author: Johannes Krämer
+"""
+
 import logging
 import sys
 import random

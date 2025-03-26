@@ -1,4 +1,7 @@
-# src/models/logistic_regression.py
+"""Model class definitions for Logistic Regression models.
+
+Authors: Alexander Kunze, Sebastian Bunge
+"""
 
 import logging
 from sklearn.linear_model import LogisticRegression

@@ -1,0 +1,71 @@
+
+%Bevor die Modellbildung starten konnte, mussten zunächst die Bedingungen geklärt werden. 
+%Das bedeutet, dass der Datensatz analysiert werden musste und eine entsprechende Problemstellung identifiziert werden musste. 
+Im Rahmen des Praktikums wurde zuerst der Datensatz analysiert. Im Folgenden wird zunächst der ursprüngliche Datensatz beschrieben und anschließend erklärt, wie dieser in Laufe des Projekts ausgebaut und ergänzt wird. Danach wird die daraus abgeleitete Problemstellung erläutert.
+
+\subsection{Ursprünglicher Datensatz}
+\label{UrsprunglicherDatensatz}
+%Erter Satz geändert
+Als Basis wurde ein Datensatz verwendet, welcher  verschiedene Wikipedia-Artikel enthält \cite{Urbanbricks2020}. Der Datensatz wurde in zwei Dateien unterteilt. Die erste Datei enthielt gute Artikel und die zweite enthielt %\emph{promotional} (
+Werbeartikel und wurde noch weiter unterteilt. Dabei sind folgende Label vergeben: advert (Werbeanzeigen), coi (enge Verbindung des Autors zum Artikel), fanpov (Potentieller Artikel eines Fans), PR  (Presseartikel), resume (Lebenslauf)
+%\begin{itemize}
+%    \item advert - „Dieser Artikel enthält Inhalte, die wie eine Werbeanzeige verfasst sind.“
+%\item coi - „Ein Hauptautor dieses Artikels scheint eine enge Verbindung zu seinem Thema zu haben.“
+%\item fanpov - „Dieser Artikel ist möglicherweise aus der Sicht eines Fans geschrieben, statt aus einer neutralen Perspektive.“
+%\item pr - „Dieser Artikel liest sich wie eine Pressemitteilung oder ein Nachrichtenartikel oder basiert weitgehend auf routinemäßiger Berichterstattung oder Sensationslust.“
+%\item resume - „Dieser biografische Artikel ist wie ein Lebenslauf geschrieben.“
+%\end{itemize}
+%Der zweite Datensatz enthielt Artikel, die als \emph{good} klassifiziert worden sind. 
+Die beiden oben genannten Datensätze wurden zusammen verwendet, um die gesamte Datenbasis zu bilden. Insgesamt ergab das \textbf{Anzahl Datensätze einfügen} Daten. Die Label dieser Daten war wie folgt verteilt:
+
+
+\textbf{2 Bilder einfügen: 1. Bild einzelne Label, 2. Bild Kombination der Label}
+\\
+
+
+
+\subsection{Probleme des ursprünglichen Datensatzes}
+\label{ProblemeDatensatz}
+Der Datensatz wiess einige Probleme auf. Diese waren zum einen ein unechtes Verhältniss der Daten, weil die guten Artikel viel zu häufig vertreten waren. Ausserdem, gab es unter unterlabels der Promotional-Artikel ungleich verteilte Klassen und überschneidende Klassen. Zudem gab es keine Kategorie für neutrale Artikel, was dazu führen könnte, dass Artikel, die eigentlich in Ordnung sind als werbend klassifiziert werden.
+%Wie man anhand des Diagramms \textbf{Auf Bild referenzieren} sehen kann, sind die Daten ungleich verteilt. Daten mit dem Label \textit{good} nehmen laut \textbf{Quelle einfügen} nur 0.59\% aller Wikipedia-Artikel ein. Allerdings sieht man anhand der Grafik, dass sie im Vergleich zu \textbf{Prozentsatz berechnen}. Zum einen führt das zu einem Verhältnis, das nicht der Realität entspricht, zum anderen kann das die Ergebnisse der trainierten Modelle verschlechtern.
+
+
+
+\subsection{Weitere Daten}
+%Um ein gutes Modell zu erstellen, welches auf maschinellem Lernen basiert, braucht man entsprechende Datensätze. 
+Um die in Abschnitt \ref{ProblemeDatensatz} besprochenen Probleme lösen zu können, wurden die Daten mithilfe des Wikipedia Dumps \ref{WPDump} um eine neutrale Kategorie erweitert. Ausserdem gab es Versuche untervertretenen Labels durch Datenaugmentierung \ref{dataAugmentation} mehr Vertreter zu geben.
+% besprochen worden ist, ist der ursprüngliche Datensatz nicht ausreichend, um entsprechende Modelle zu trainieren. Aus diesem Grund wurden verschiedene Methoden ausprobiert und verwendet, um den ursprünglichen Datensatz zu erweitern.
+
+\subsubsection{Datensatzerweiterung durch Wikipedia-Dump}
+\label{WPDump}
+Beim Wikipedia-Dump handelt es sich um einen von der Wikimedia-Foundation veröffentlichten Datensatz, der alle Wikipedia-Seiten umfasst. Durch Hinzuziehen des Dumps konnte die Datenbasis nicht nur auf einen aktuellen Stand gebracht werden, sondern wurde darüber hinaus auch um diejenigen Artikel erweitert, welche weder als \emph{good} noch als \emph{promotional} eingestuft sind.
+
+Der Dump ist für die verschiedenen Wikipedia-Sprachversionen und in Varianten mit oder ohne Historie verfügbar. Hier wurde der Dump der englischsprachigen Wikipedia ohne Historie verwendet, der unter \url{https://dumps.wikimedia.org/enwiki/20241220/} zu finden ist. Er besteht aus zwei Dateien: \emph{enwiki-20241020-pages-articles-multistream.xml.bz2} (entpackt circa 97 GB) enthält eine komprimierte XML-Datei mit allen 24.091.931 Seiten und den dazugehörigen Metadaten, \emph{enwiki-20241020-pages-articles-multistream-index.txt.bz2} (entpackt circa 1 GB) enthält eine Index-Datei mit 240.953 Offsets in der komprimierten XML-Datei zwischen denen jeweils 100 Seiten liegen. Aufgrund seiner Größe konnte der Dump nicht komplett in den Arbeitsspeicher geladen werden. Unter Nutzung der Index-Datei wurden daher einzelne Abschnitte von jeweils 100 Seiten entpackt und verarbeitet.
+
+Da die Seiten im Dump in Wiki-Sytax vorliegen, enthalten sie auch alle von den Wikipedia-Autoren eingesetzten Vorlagen (Templates). Jeder Artikel, der von der Wiki\-pedia-Gemeinschaft als lesenswert (\emph{good}), exzellent (\emph{featured}) oder werbend (\emph{promotional}) klassifiziert wurde, enthält mindestens ein Template, anhand dessen diese Klassifizierung erkannt werden kann. Für \emph{good} und \emph{featured} ist dabei jeweils nur ein Template vorgesehen, dass in Wiki-Syntax als \textit{\{\{good article\}\}} beziehungsweise \textit{\{\{featured article\}\}} im Quellcode auftaucht, wobei abweichende Groß- und Kleinschreibung möglich ist. Für \emph{promotional} sind hingegen 21 verschiedene Templates möglich, die unterschiedliche Arten von werbendem Inhalt kennzeichnen. Außerdem lassen sich anhand von Templates und anderen Syntax-Elementen noch diejenigen Seiten identifizieren, welche keine Artikel darstellen, beispielsweise Begriffsklärungsseiten, Umleitungen, Kategorien und Benutzerseiten.
+
+Es wurde ein Konverter entwickelt, der zunächst alle Seiten aus dem Dump verarbeitet, die zuvor genannten Nicht-Artikel-Seiten ausschließt und den Rest auf drei Kategorien verteilt: In die erste Kategorie \emph{good} fallen die wie zuvor beschrieben als lesenswert und exzellent gekennzeichneten Artikel; in die zweite Kategorie \emph{promo} die anhand der Templates als werbend erkannten und in die letzte Kategorie \emph{neutral} alle weiteren Artikel. Die zur Kategorisierung genutzten Templates sowie alle Zeilenumbrüche wurden aus dem Artikeltext entfernt, ansonsten wurde er unverändert übernommen. Insgesamt ergab sich die folgende Aufteilung: 46.882 \emph{good}, 32.633 \emph{promo}, 6.611.303 \emph{neutral} und 17.401.113 Nicht-Artikel-Seiten.
+
+Da die Klassen extrem ungleich verteilt sind (neutrale Artikel etwa um einen Faktor 200 häufiger als werbende), wurde anschließend noch eine zufällige Auswahl der Artikel jeder Klasse getroffen. Hierbei kam \textit{Reservoir Sampling} \cite{Vitter1985} zum Einsatz, bei dem die Elemente des Datensatzes einzeln gelesen werden, ohne dass deren Anzahl zuvor bekannt sein muss.
+
+Um die Daten genau wie den Kaggle-Datensatz verarbeiten zu können, wurden sie in einem kompatiblen Format ebenfalls in CSV-Dateien geschrieben. Die Pipeline wurde so erweitert, dass sie neben der binären Klassifikation auch eine Mehrklassen-Klassifikation inklusive der Klasse \emph{neutral} unterstützt.
+
+\subsubsection{Augmentierung der Daten}
+\label{dataAugmentation}
+Da es nicht sicher ist, ob der Wikimedia Dump das Problem vollkommen lösen kann, wurde neben dem Hinzuziehen weiterer Daten auch versucht die Daten zu augmentieren. Dabei sollten besonders untervetretene Klassen mehr Repräsentanten kriegen. Dabei wurden verschiedene Methoden ausprobiert, um die Daten zu augmentieren. Diese Methoden werden in \textbf{Referenz ergänzen} vorgestellt.
+
+\subsection{Problemdefinition}
+\label{Problemdefinition}
+Das Ziel dieses Projekts ist die Entwicklung von Modellen zur automatisierten Klassifikation von Wikipedia-Artikeln als \emph{promotional} (werblich) oder \emph{nicht-promotional}. Dabei gab es eine Unterteilung in drei Problemarten.
+\begin{itemize}
+    \item Die Verwendung des ursprünglichen Datensatzes zur binären Klassifizierung
+    \item Die Verwendung des Wikipedia Dump Datensatzes zur Muultiklassenklassifizierung zwischen guten Artikeln, neutralen Artikeln und Werbenden Artikeln
+    \item Eine Multilabelklassifizierung, welche in den werbenden Artikeln zwischen den verschiedenen Arten (advert, coi, fanpov, pr, resume) unterscheiden kann.
+\end{itemize}
+%Dabei wird ebenfalls klassifiziert, wie ein Artikel promotional ist, also z.B. ob er eine Werbung, ein PR-Artikel usw. ist. Wikipedia strebt nach objektiven und neutralen Inhalten; daher ist die Identifizierung von Artikeln mit werbenden Charakter von großer Bedeutung, um die sachliche Qualität der Plattform zu gewährleisten.
+
+%\subsection{Zielsetzung}
+
+%Die Hauptziele des Projekts sind:
+
+%\begin{itemize} \item Entwicklung von drei klassischen maschinellen Lernmodellen und einem Deep-Learning-Modell zur Klassifikation von Wikipedia-Artikeln. \item Vergleich der Modelle anhand von Leistungsmetriken wie Genauigkeit, Präzision, Recall und F1-Score. \item Identifikation des Modells mit der besten Leistung für die gegebene Aufgabe. \end{itemize}

@@ -1,0 +1,29 @@
+\begin{figure}[H]
+    \centering
+    \includestandalone[width=.8\textwidth]{figures/knn.tex}
+    \caption{Caption}
+\end{figure}
+Die Wikipedia-Artikel werden durch die TF-IDF-Vektorisierung als Vektoren $x\in\mathbb{R}^{10000}$ dargestellt. Das neuronale Netz besteht aus einer versteckte Schicht mit 512 Neuronen, wobei die ReLU-Aktivierungsfunktion verwendet wird. Zudem wird zur Regularisierung Dropout mit einer Wahrscheinlichkeit von $p=0.5$ auf die versteckte Schicht angewendet, wodurch die Ausgabe der Neuronen mit einer Wahrscheinlichkeit von 50\% auf 0 gesetzt werden. Das Netzwerk lässt sich formal wie folgt beschreiben: $W_1\in\mathbb{R}^{512\times 10000}$, $b_1\in\mathbb{R}^{512}$, $W_2\in\mathbb{R}^{K\times 512}$ und $b_2\in\mathbb{R}^{K}$. Dann ist die Ausgabe des neuronalen Netzes gegeben durch
+\begin{equation*}
+    \hat{y} = W_2\cdot \dropout(\max(W_1x + b_1, 0)), p=0.5) + b_2\in\mathbb{R}^{K}.
+\end{equation*}
+
+Für die binäre Klassifikation ($K=2$) bzw. der Multiclass-Klassifikation ($K=3$) wird das Label mit dem höchsten Wert zurückgegeben, d.h. $\argmax (\hat{y})$.
+
+Bei der Multilabel-Klassifikation wird die Sigmoidfunktion $\sigma\colon t\mapsto \frac{1}{1 + e^{-t}}\in [0, 1]$ komponentenweise auf $\hat{y}$ angewendet. Ein Label wird als aktiv betrachtet, wenn der entsprechende Wert von $\hat{y}_i$ größer oder gleich 0.5 ist.
+
+Das Optimierungsziel für die Multiclass-Klassifikation ist die Minimierung der Kreuzentropie
+\begin{equation*}
+    L = - \sum_{i=1}^{K}y_i\log(\hat{y}_i).
+\end{equation*}
+
+Bei der Multilabel-Klassifikation wird zunächst für ein Label $i$ die Kreuzentropie 
+\begin{equation*}
+    l_i = y_i\log (\sigma(\hat{y}_i)) + (1 - y_i)\log (1 - \sigma(\hat{y}_i))
+\end{equation*}
+berechnet und anschließend der Gesamtfehler als Durchschnitt der $l_i$, d.h.
+\begin{equation*}
+    L = \frac{1}{K}\sum_{i=1}^{K} l_i.
+\end{equation*}
+
+Die Modelle wurden jeweils 10 Epochen mit einer Lernrate von 0.001 und einer Batchgröße von 16 unter Verwendung des Adam-Optimierers trainiert.

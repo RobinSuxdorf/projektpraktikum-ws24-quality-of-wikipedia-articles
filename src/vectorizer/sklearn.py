@@ -1,4 +1,7 @@
-# src/vectorizer/sklearn.py
+"""Vectorizer class definitions for vectorizers using Scikit-learn models.
+
+Author: Sebastian Bunge
+"""
 
 import logging
 from sklearn.feature_extraction.text import CountVectorizer, TfidfVectorizer
@@ -36,11 +39,11 @@ class Count_Vectorizer(Vectorizer):
     """
 
     def __init__(self, features_config):
-        ngram_range = (tuple(features_config.get("ngram_range")),)
-        max_df = (features_config.get("max_df"),)
-        min_df = (features_config.get("min_df"),)
-        max_features = (features_config.get("max_features"),)
-        binary = (features_config.get("binary"),)
+        ngram_range = tuple(features_config.get("ngram_range"))
+        max_df = features_config.get("max_df")
+        min_df = features_config.get("min_df")
+        max_features = features_config.get("max_features")
+        binary = features_config.get("binary")
         self._vectorizer = CountVectorizer(
             ngram_range=ngram_range,
             max_df=max_df,
