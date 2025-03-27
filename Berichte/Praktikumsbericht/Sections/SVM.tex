@@ -12,3 +12,5 @@ Im Rahmen des Projekts wurden verschiedene Varianten der SVM von Scikit-Learn \c
 \end{equation*}
 
 Dabei ist \( w \in \mathbb{R}^d \) der Gewichtsvektor, \( b \in \mathbb{R} \) der Bias-Term, \( x_i \in \mathbb{R}^d \) ein Element aus dem Trainingsdatensatz mit Label \( y_i \in \{-1, 1\} \), \( l \) die Anzahl der Trainingsbeispiele und \( C > 0 \) der Regularisierungsparameter.
+
+Zur binären Klassifikation eines \( x \in \mathbb{R}^d \) berechnet \texttt{LinearSVC} dann \( sign(w^T x + b) \) als Klassenzugehörigkeit. Bei mehr als zwei Klassen wird das One-vs-Rest-Verfahren verwendet, also für jede Klasse ein binärer Klassifikator trainiert, der zwischen dieser Klasse und allen anderen unterscheidet. Beim Vorhersagen wird der Klassifikator mit dem höchsten Funktionswert \( w^T x + b \) ausgewählt, um die finale Klassenzuweisung zu bestimmen.
