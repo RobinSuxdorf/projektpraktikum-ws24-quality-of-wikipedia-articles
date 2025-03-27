@@ -1,5 +1,5 @@
 \section{Experimente}
-% Text?
+In diesem Kapitel wird die Durchführung der Experimente beschrieben. Dafür wird zunächst die zugrunde liegende Projektstruktur erklärt, gefolgt von einer Vorstellung der verwendeten Metriken. Abschließend werden die Ergebnisse der verschiedenen Modelle dargestellt und interpretiert.
 
 \subsection{Projektstruktur}
 \label{sec:projektstruktur}
@@ -13,17 +13,18 @@ Die Modelle sind als Klassen implementiert, die von einer abstrakten Basisklasse
 \label{sec:evaluationsmetriken}
 Sei $D$ ein Datensatz. In der binären Klassifikation liegt unser Hauptfokus primär auf der Optimierung des \textbf{Recalls} $\rec(D, \clf)$ und sekundär auf der \textbf{Precision} $\prec(D, \clf)$. Dabei ist $\clf\colon\mathbb{R}^d\to \{0, 1\}$ ein binärer Klassifikator.\\
 
-Für die Multilabel-Klassifikation betrachten wir den Klassifikator $\clf\colon\mathbb{R}^d\to\{0, 1\}^k$, wobei $k$ die Anzahl der verschiedenen Labels ist (in diesem Bericht $k=5$). Komponentenweise können wir $\clf$ auch schreiben als $\clf = (\clf_i)_{1\leq i\leq k}$, wobei $\clf_i\colon\mathbb{R}^d\to\{0, 1\}$ ein binärer Klassifikator ist. Wir definieren den \textbf{Macro Average Recall} von $\clf$ als
+Für die Multi-Label-Klassifikation betrachten wir den Klassifikator $\clf\colon\mathbb{R}^d\to\{0, 1\}^k$, wobei $k$ die Anzahl der verschiedenen Labels ist (in diesem Bericht $k=5$). Komponentenweise können wir $\clf$ auch schreiben als $\clf = (\clf_i)_{1\leq i\leq k}$, wobei $\clf_i\colon\mathbb{R}^d\to\{0, 1\}$ ein binärer Klassifikator ist. Wir definieren den \textbf{Macro Average Recall} von $\clf$ als
 \begin{equation*}
     \operatorname{macro\,avg\,rec}(D, \clf) = \frac{1}{k}\sum_{i=1}^k\rec (D, \clf_i).
 \end{equation*}
 
 \subsection{Ergebnisse}
+Die folgende Tabelle zeigt die Performance der verschiedenen Modelle:
 \begin{table}[h]
     \centering
     \begin{tabular}{|c|c|c|c|c|c|c|}
         \hline
-        \multirow{2}{*}{Ansatz} & \multicolumn{2}{c|}{Binär} & \multicolumn{2}{c|}{Multiklasse} & \multicolumn{2}{c|}{Multilabel} \\
+        \multirow{2}{*}{Ansatz} & \multicolumn{2}{c|}{Binär} & \multicolumn{2}{c|}{Multi-Klasse} & \multicolumn{2}{c|}{Multi-Label} \\
         \cline{2-7}
         & rec & prec & rec & prec & macro avg rec & macro avg prec \\
         \hline
@@ -35,8 +36,12 @@ Für die Multilabel-Klassifikation betrachten wir den Klassifikator $\clf\colon\
         \hline
         NN & 0.96 & 0.95 & 0.89 & 0.87 & 0.35 & 0.43 \\
         \hline
-        DBERT & 0 & 1 & 2 & 3 & 4 & 5 \\
+        DBERT & 0.94 & 0.94 & 0.81 & 0.82 & 0.46 & 0.38 \\
         \hline
     \end{tabular}
     \caption{Die Abkürzungen bedeuten: LR (Logistische Regression), NB (Naive Bayes), SVM (Support Vector Machine), NN (Künstliches Neuronales Netz) und DBERT (DistilBERT).}
 \end{table}
+
+Bei der binären Klassifikation schneiden alle Modelle sehr gut ab. Die besten Ergebnisse werden von der logistischen Regression, Support Vector Machine und dem neuronalen Netz erzielt. Das schlechteste Ergebnis wurde vom Naiven Bayes-Klassifikator erzielt. Die gleichen Modelle schneiden ebenfalls bei der Multi-Klassen-Klassifikation gut ab. DistilBERT fällt hier deutlich ab. Dies könnte darauf hinweisen, dass DistilBERT in der Unterscheidung zwischen drei Klassen weniger robust ist. Möglicherweise liegt dies daran, dass die feineren Unterschiede zwischen den Klassen eine stärkere kontextuelle Einbettung erfordern. Insgesamt zeigen die Ergebnisse, dass für die binäre und für die Multi-Klassen-Klassifikation die logistische Regression, die Support Vector Machine und das neuronale Netz eine robuste Wahl darstellen.
+
+Die Ergebnisse für die Multi-Label-Klassifikation fallen deutlich schlechter aus als bei den anderen beiden Klassifikationsproblemen. Dies deutet darauf hin, dass sich die Labels teilweise überlappen oder mehr kontextuelles Verständnis notwendig ist. Den besten Macro Average Recall erzielt der Naive Bayes-Klassifikator, wobei hier die Macro Average Precision am geringsten ist, d.h. es werden auch viele falsch-positive Vorhersagen getroffen.

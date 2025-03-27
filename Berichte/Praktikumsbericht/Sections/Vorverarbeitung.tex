@@ -3,11 +3,11 @@
 
 Die Wikipedia-Artikel wurden vorverarbeitet, indem Sonderzeichen und Interpunktion entfernt, alle Zeichen in Kleinbuchstaben umgewandelt und häufige Stoppwörter entfernt wurden. Zudem wurde der Porter-Stemmer \cite{Porter2006} zur Reduktion auf Wortstämme eingesetzt, während Zahlen beibehalten wurden.
 
-Für die Vektorisierung wurden verschiedene Ansätze getestet: die klassische Count-Vektorisierung, das Bag-of-Words-Modell, sowie die semantischen Repräsentationen Word2Vec \cite{Mikolov2013} und GloVe \cite{Pennington2014}. Die \textit{term frequency} $\tf(t, d)$ eines Terms $t$ in einem Dokument $d$ ist definiert als
+Für die Vektorisierung wurden verschiedene Ansätze getestet: die klassische Count-Vektorisierung, das Bag-of-Words-Modell, sowie die semantischen Repräsentationen Word2Vec \cite{Mikolov2013} und GloVe \cite{Pennington2014}. Die besten Ergebnisse wurden mit der TF-IDF-Vektorisierung erzielt. Dabei ist die \textit{term frequency} $\tf(t, d)$ eines Terms $t$ in einem Dokument $d$ definiert als
 \begin{equation*}
     \tf(t, d) = \frac{f_{t, d}}{\sum_{t'\in d}f_{t', d}},
 \end{equation*}
-wobei $f_{t, d}$ die absolute Häufigkeit von $t$ in $d$ ist. Die sublineare Skalierung erfolgt durch
+wobei $f_{t, d}$ die absolute Häufigkeit von $t$ in $d$ ist. Die \textit{sublineare Skalierung} erfolgt durch
 \begin{equation*}
     \wf(t, d) = \begin{cases}
         1 + \log \tf(t, d) &\text{falls } \tf(t, d) > 0,\\
@@ -18,7 +18,7 @@ Die \textit{inverse document frequency} $\idf(t, D)$ ist definiert als
 \begin{equation*}
     \idf(t, D) = \log\frac{\vert D\vert}{\vert\{d\in D \mid t\in d\}\vert},
 \end{equation*}
-wobei $D$ die gesamte Dokumentensammlung ist. Der endgültige TF-IDF-Wert ergibt sich aus
+wobei $D$ die gesamte Dokumentensammlung ist. Der endgültige \textit{WF-IDF}-Wert ergibt sich aus
 \begin{equation*}
     \wfidf(t, d, D) = \wf(t, d)\cdot \idf(t, D).
 \end{equation*}
