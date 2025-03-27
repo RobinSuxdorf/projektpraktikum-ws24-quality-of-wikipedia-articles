@@ -8,7 +8,7 @@ Die Wikipedia-Artikel werden durch die TF-IDF-Vektorisierung als Vektoren $x\in\
     \hat{y} = W_2\cdot \dropout(\max(W_1x + b_1, 0)), p=0.5) + b_2\in\mathbb{R}^{K}.
 \end{equation*}
 
-Für die binäre Klassifikation ($K=2$) bzw. der Multiclass-Klassifikation ($K=3$) wird das Label mit dem höchsten Wert zurückgegeben, d.h. $\argmax (\hat{y})$.
+Für die binäre Klassifikation ($K=2$) bzw. der Multiclass-Klassifikation ($K=3$) wird das Label mit dem höchsten Wert zurückgegeben, d.h. $\arg\max (\hat{y})$.
 
 Bei der Multilabel-Klassifikation wird die Sigmoidfunktion $\sigma\colon t\mapsto \frac{1}{1 + e^{-t}}\in [0, 1]$ komponentenweise auf $\hat{y}$ angewendet. Ein Label wird als aktiv betrachtet, wenn der entsprechende Wert von $\hat{y}_i$ größer oder gleich 0.5 ist.
 

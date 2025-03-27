@@ -11,6 +11,7 @@
 \usepackage{hyperref}                       % Zeilenumbruch in URL
 \usepackage{xurl}                           % Nach hyperref laden
 \usepackage{microtype}                      % Verbessert den Blocksatz und verhindert overfull \hbox
+\usepackage{multirow}                       % Multirow in Tabellen
 
 %%%% optional packages
 \usepackage{tikz}                           % creating graphs and other structures
@@ -25,7 +26,6 @@
 \usepackage{float}
 %%%% commands
 
-\DeclareMathOperator*{\argmax}{arg\,max}
 \DeclareMathOperator*{\dropout}{Dropout}
 
 \newcommand{\clf}{\operatorname{clf}}
@@ -37,17 +37,16 @@
 \renewcommand{\prec}{\operatorname{prec}}
 \newcommand{\rec}{\operatorname{rec}}
 \newcommand{\fscore}{\operatorname{F1}}
+\newcommand{\tf}{\operatorname{tf}}
+\newcommand{\wf}{\operatorname{wf}}
+\newcommand{\idf}{\operatorname{idf}}
+\newcommand{\tfidf}{\operatorname{tf-idf}}
+\newcommand{\wfidf}{\operatorname{wf-idf}}
 
 %%%% Author and Title Information %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \author{Robin Suxdorf \and Sebastian Bunge \and Johannes Krämer \and Emmanuelle Steenhof \and Alexander Kunze}
 
 \title{Web Science - Die Qualität von Wikipedia-Artikeln}
-
-%%%% Abstract %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\germanabstract{
-Erstmal nur ein Draft. Inhalte werden weiter abgestimmt. 
-}
 
 \begin{document}
 
