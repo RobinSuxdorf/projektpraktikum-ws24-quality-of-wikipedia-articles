@@ -10,12 +10,12 @@ Um gute Modelle zu finden, die die Aufgabe lösen konnten, gab es einige Versuch
 Um das Ungleichgewicht bei unterrepräsentierten Sublabeln auszugleichen, wurde versucht, zusätzliche Texte mithilfe von Easy Data Augmentation \cite{Wei2019} zu generieren. Dabei wurden Synonymaustausch, zufällige Ersetzungen, Löschungen und Wortvertauschungen angewendet. Ein erster Testlauf  auf den augmentierten Daten zeigte eine Verbesserung  des Macro Average Recall für die unterrepräsentierten Sublabeln. Allerdings haben die so trainierten Modelle auf den Originaldaten eine deutlich schlechtere Leistung gehabt, weswegen dieser Ansatz verworfen wurde.
 
 \subsubsection{Gram-Schmidt Verfahren zur Erstellung von Embedding}
+\label{sec:gram}
 Das Gram-Schmidt-Verfahren wurde zur Erzeugung von Vektorrepräsentationen eingesetzt, indem $n$ Artikel aus $m$ Kategorien eine Orthonormalbasis für einen $m\cdot n$-dimensionalen Raum definierten. Die Skalarprodukte der verbleibenden Vektoren mit dieser Basis dienten als Koordinaten der Artikel in diesem Raum. Ein sehr ähnlicher Ansatz findet sich bei Yang et al. \cite{Yang2019}. Da die Methode zu einer Verschlechterung der Ergebnisse führte, wurde sie verworfen. Eine detaillierte Beschreibung der Implementierung und der Experimente ist im Skript <Quelle einfügen> zu finden.
 
 \subsubsection{Klassifizierung einzelner Wörter als Kodierung}
+\label{sec:wordcoding}
 Da die ersten vier Ansätze Schwächen in der Multi-Label-Klassifikation zeigten, wurde ein alternativer Ansatz erprobt, bei dem einzelne Wörter klassifiziert und anschließend so kodiert wurden, dass ähnlich klassifizierte Wörter durch nahe beieinanderliegende Vektoren repräsentiert werden. Das Verfahren verlief wie folgt: Zunächst wurden alle Artikel in Wörter zerlegt, die das Label ihres jeweiligen Artikels erhielten. Wörter mit mehreren Zugehörigkeiten wurden als separate Klassen behandelt. Anschließend erfolgte eine Klassifikation mittels eines Modells wie einer Support Vector Machine. Da bereits die Klassifikation einzelner Wörter unzureichende Ergebnisse lieferte, wurde dieser Ansatz nicht weiterverfolgt.
-
 
 \subsection{Ausbaumöglichkeiten}
 Es gibt mehrere Möglichkeiten, um die Ergebnisse dieser Arbeit möglicherweise weiter zu verbessern. Zunächst könnten weitere Vorverarbeitungsmethoden getestet werden. Beispielsweise könnten andere Vektorisierungsmethoden zu einer besseren Repräsentation der Artikel führen. Eine weitere Möglichkeit wären weitere Modellarchitekturen zu testen. Zusätzlich könnte es hilfreich sein, Metadaten wie Autoren, Editoren oder der die Anzahl der Bearbeitungen in die Analyse einzubeziehen, um zusätzliche Kontextinformationen zu nutzen.
-

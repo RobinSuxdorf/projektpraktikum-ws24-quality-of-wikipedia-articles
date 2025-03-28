@@ -3,7 +3,7 @@ In diesem Kapitel wird die Durchführung der Experimente beschrieben. Dafür wir
 
 \subsection{Projektstruktur}
 \label{sec:projektstruktur}
-Um eine konsistente Datenverarbeitung und vergleichbare Ergebnisse zu gewährleisten, wurde eine modulare Pipeline in einem Python-Package implementiert. Diese Pipeline umfasst Methoden zum Laden, Vorverarbeiten, Extrahieren von Merkmalen, Trainieren und Evaluieren von Modellen. Alle Komponenten können sowohl in der Pipeline als auch in Jupyter-Notebooks verwendet werden. 
+Um eine konsistente Datenverarbeitung und vergleichbare Ergebnisse zu gewährleisten, wurde eine modulare Pipeline in einem Python-Package implementiert. Diese Pipeline umfasst Methoden zum Laden, Vorverarbeiten, Extrahieren von Merkmalen, Trainieren und Evaluieren von Modellen. Alle Komponenten können sowohl in der Pipeline als auch in Jupyter-Notebooks verwendet werden.
 
 Die Pipeline wird über YAML-Konfigurationsdateien gesteuert, die Parameter wie Dateipfade, aktivierte Vorverarbeitungsschritte, Modellparameter und Evaluationskriterien enthalten. Zudem erlaubt sie die partielle Ausführung einzelner Schritte, sodass beispielsweise nur das Modell mit variierenden Parametern trainiert werden kann, was die Laufzeit reduziert.
 
@@ -24,19 +24,19 @@ Die folgende Tabelle zeigt die Performance der verschiedenen Modelle:
     \centering
     \begin{tabular}{|c|c|c|c|c|c|c|}
         \hline
-        \multirow{2}{*}{Ansatz} & \multicolumn{2}{c|}{Binär} & \multicolumn{2}{c|}{Multi-Klasse} & \multicolumn{2}{c|}{Multi-Label} \\
+        \multirow{2}{*}{Ansatz} & \multicolumn{2}{c|}{Binär} & \multicolumn{2}{c|}{Multi-Klasse} & \multicolumn{2}{c|}{Multi-Label}                                         \\
         \cline{2-7}
-        & rec & prec & rec & prec & macro avg rec & macro avg prec \\
+                                & rec                        & prec                              & rec                              & prec & macro avg rec & macro avg prec \\
         \hline
-        LR & 0.95 & 0.96 & 0.89 & 0.89 & 0.32 & 0.44 \\
+        LR                      & 0.95                       & 0.96                              & 0.89                             & 0.89 & 0.32          & 0.44           \\
         \hline
-        NB & 0.88 & 0.91 & 0.86 & 0.80 & 0.65 & 0.34 \\
+        NB                      & 0.88                       & 0.91                              & 0.86                             & 0.80 & 0.65          & 0.34           \\
         \hline
-        SVM & 0.95 & 0.97 & 0.89 & 0.88 & 0.38 & 0.38 \\
+        SVM                     & 0.95                       & 0.97                              & 0.89                             & 0.88 & 0.38          & 0.38           \\
         \hline
-        NN & 0.96 & 0.95 & 0.89 & 0.87 & 0.35 & 0.43 \\
+        NN                      & 0.96                       & 0.95                              & 0.89                             & 0.87 & 0.35          & 0.43           \\
         \hline
-        DBERT & 0.94 & 0.94 & 0.81 & 0.82 & 0.46 & 0.38 \\
+        DBERT                   & 0.94                       & 0.94                              & 0.81                             & 0.82 & 0.46          & 0.38           \\
         \hline
     \end{tabular}
     \caption{Die Abkürzungen bedeuten: LR (Logistische Regression), NB (Naive Bayes), SVM (Support Vector Machine), NN (Künstliches Neuronales Netz) und DBERT (DistilBERT).}
