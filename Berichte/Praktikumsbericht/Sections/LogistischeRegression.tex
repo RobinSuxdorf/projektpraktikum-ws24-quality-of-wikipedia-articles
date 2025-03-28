@@ -1,17 +1,17 @@
 \subsection{Logistische Regression}
 \label{sec:logreg}
 
-Für die Klassifikation von Labeln wurde die logistische Regression ausgewählt, weil dies insbesondere schnell und einfach zu implementieren war. Um Overfitting zu verhindern, wurden Lasso und Ridge-Regularisierung eingesetzt. Außerdem wurden zwei Solver evaluiert: Der \texttt{liblinear}-Solver wurde als Standardmethode eingesetzt, da er sowohl \texttt{L1}- als auch \texttt{L2}-Regularisierung unterstützt. Zusätzlich wurde \texttt{saga}, eine Erweiterung des Stochastic Average Gradient, getestet, die speziell für große Datensätze geeignet ist und ebenfalls mit beiden Regularisierungen kompatibel ist.
+Für die Klassifikation von Labeln wurde die logistische Regression ausgewählt, da sie schnell und einfach zu implementieren war. Um Overfitting zu verhindern, wurden Lasso und Ridge-Regularisierung eingesetzt. Außerdem wurden zwei Solver evaluiert: Der \texttt{liblinear}-Solver wurde als Standardmethode eingesetzt, da er sowohl \texttt{L1}- als auch \texttt{L2}-Regularisierung unterstützt. Zusätzlich wurde \texttt{saga}, eine Erweiterung des Stochastic Average Gradient, getestet, die speziell für große Datensätze geeignet ist und ebenfalls mit beiden Regularisierungen kompatibel ist.
 
-Für die Klassifizierung bei der logistischen Regression wird das Optimierungsproblem $\min_\theta L(D,h_\theta)$ gelöst. Dabei ist D der gegebene Datensatz und $\theta$ die Parameter, über die optimiert wird. Außerdem sei $x \in D$, dann ist $h_\theta$ als Sigmoidfunktion definiert:
+Für die Klassifizierung bei der logistischen Regression wird das Optimierungsproblem $\min_\theta L(D,h_\theta)$ gelöst. Dabei ist D der gegebene Datensatz und $\theta$ die Parameter, über die optimiert wird. Für $x \in D$ ist $h_\theta$ definiert als
 \begin{equation*}
-    h_\theta(x) = \frac{1}{1 + e^{-(\theta_0 + \theta_1 x_1 + \dots + \theta_n x_n)}}
+    h_\theta(x) = \frac{1}{1 + e^{-(\theta_0 + \theta_1 x_1 + \dots + \theta_n x_n)}}.
 \end{equation*}
-L ist die Kostenfunktion und definiert als:
+Die Kostenfunktion $L$ ist dann und definiert als
 \begin{equation*}
-    L_\lambda(D, h_\theta)=L(D,h_\theta)+\lambda R(h_\theta)
+    L_\lambda(D, h_\theta)=L(D,h_\theta)+\lambda R(h_\theta),
 \end{equation*}
-Mit
+wobei
 \begin{equation*}
     L(D,h_\theta)=- \sum_{i=1}^{m}  y_i \ln h_\theta(x_i) + (1 - y_i) \ln (1 - h_\theta(x_i))
 \end{equation*}

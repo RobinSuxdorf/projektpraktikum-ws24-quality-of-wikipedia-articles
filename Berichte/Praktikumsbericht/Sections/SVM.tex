@@ -3,14 +3,10 @@
 
 Die Support Vector Machine (SVM) ist ein überwachtes Lernverfahren zur Klassifikation, das darauf abzielt, eine die Klassen trennende Hyperebene mit maximalem Margin zu finden. Wie zum Beispiel in \cite{Joachims1998} beschrieben, eignet sich das Verfahren besonders gut zur Textklassifizierung.
 
-Im Rahmen des Projekts wurden verschiedene Varianten der SVM von Scikit-Learn \cite{Pedregosa2011} getestet. Da der lineare Kernel auf den vorliegenden Daten leicht bessere Ergebnisse lieferte als die Alternativen RBF, Sigmoid und Polynomial, konnte die Implementierung \texttt{LinearSVC} eingesetzt werden. Diese unterstützt ausschließlich lineare Kernel, skaliert aber besser mit der Anzahl Wikipedia-Artikel als die Implementierung \texttt{SVC}, welche kompatibel mit weiteren Kernel-Funktionen ist.
+Im Rahmen des Projekts wurden verschiedene Varianten der SVM von Scikit-Learn \cite{Pedregosa2011} getestet. Da der lineare Kernel auf den vorliegenden Daten leicht bessere Ergebnisse lieferte als die Alternativen RBF, Sigmoid und Polynomial, konnte die Implementierung \texttt{LinearSVC} eingesetzt werden. Diese unterstützt ausschließlich lineare Kernel, skaliert aber besser mit der Anzahl der Wikipedia-Artikel als die Implementierung \texttt{SVC}, welche kompatibel mit weiteren Kernel-Funktionen ist.
 
 \texttt{LinearSVC} basiert auf der Bibliothek \texttt{LIBLINEAR}, die in \cite{Fan2008} beschrieben ist und löst das Optimierungsproblem
-
 \begin{equation*}
   \min_{w,\, b} \frac{1}{2} w^T w + C \sum_{i=1}^{l} \left( \max(0, 1 - y_i (w^T x_i + b)) \right)^2.
 \end{equation*}
-
-Dabei ist \( w \in \mathbb{R}^d \) der Gewichtsvektor, \( b \in \mathbb{R} \) der Bias-Term, \( x_i \in \mathbb{R}^d \) ein Element aus dem Trainingsdatensatz mit Label \( y_i \in \{-1, 1\} \), \( l \) die Anzahl der Trainingsbeispiele und \( C > 0 \) der Regularisierungsparameter.
-
-Zur binären Klassifikation eines \( x \in \mathbb{R}^d \) berechnet \texttt{LinearSVC} dann \( sign(w^T x + b) \) als Klassenzugehörigkeit. Bei mehr als zwei Klassen wird das One-vs-Rest-Verfahren verwendet, also für jede Klasse ein binärer Klassifikator trainiert, der zwischen dieser Klasse und allen anderen unterscheidet. Beim Vorhersagen wird der Klassifikator mit dem höchsten Funktionswert \( w^T x + b \) ausgewählt, um die finale Klassenzuweisung zu bestimmen.
+Dabei ist \( w \in \mathbb{R}^d \) der Gewichtsvektor, \( b \in \mathbb{R} \) der Bias-Term, \( x_i \in \mathbb{R}^d \) ein Element aus dem Trainingsdatensatz mit Label \( y_i \in \{-1, 1\} \), \( l \) die Anzahl der Trainingsbeispiele und \( C > 0 \) der Regularisierungsparameter. Einem \( x \in \mathbb{R}^d \) wird dabei die Klasse \( sign(w^T x + b) \) zugeteilt.

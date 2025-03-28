@@ -3,7 +3,7 @@
 Nachdem alle Experimente durchgeführt und evaluiert worden sind, werden die gesammelten Erfahrungen festgehalten.
 
 \subsection{Erfolglose Versuche}
-Um gute Modelle zu finden, die die Aufgabe lösen konnten, gab es einige Versuche, die zwar vielversprechend schienen, aber in der Praxis keine erfolgreichen Ergebnisse lieferten.
+Es wurden weitere Ansätze getestet, die jedoch keine Verbesserung erzielten und deswegen eingestellt wurden.
 
 \subsubsection{Easy Data Augmentation}
 \label{EDA}
@@ -15,7 +15,7 @@ Das Gram-Schmidt-Verfahren wurde zur Erzeugung von Vektorrepräsentationen einge
 
 \subsubsection{Klassifizierung einzelner Wörter als Kodierung}
 \label{sec:wordcoding}
-Da die ersten vier Ansätze Schwächen in der Multi-Label-Klassifikation zeigten, wurde ein alternativer Ansatz erprobt, bei dem einzelne Wörter klassifiziert und anschließend so kodiert wurden, dass ähnlich klassifizierte Wörter durch nahe beieinanderliegende Vektoren repräsentiert werden. Das Verfahren verlief wie folgt: Zunächst wurden alle Artikel in Wörter zerlegt, die das Label ihres jeweiligen Artikels erhielten. Wörter mit mehreren Zugehörigkeiten wurden als separate Klassen behandelt. Anschließend erfolgte eine Klassifikation mittels eines Modells wie einer Support Vector Machine. Da bereits die Klassifikation einzelner Wörter unzureichende Ergebnisse lieferte, wurde dieser Ansatz nicht weiterverfolgt.
+Um den Kontext der Wörter miteinzubeziehen, gab es den Versuch bereits die einzelnen Wörter zu klassifizieren und dementsprechend zu kodieren. Dazu wurden alle Artikel in ihre Worte zerteilt. Die Wörter erhielten das Label ihres jeweiligen Artikels, wobei Wörter mit mehreren Zugehörigkeiten separate Klassen waren. Die Wörter wurden vektorisiert, indem sie auf Basis ihrer Buchstaben kodiert worden sind. Anschliessend wurden sie mithilfe eines Modells z.B. einem SVM klassifiziert. Der Versuch wurde abgebrochen, als bereits die binäre Klassifizierung einzelner Wörter keine ausreichenden Resultate zurückgab.
 
 \subsection{Ausbaumöglichkeiten}
 Es gibt mehrere Möglichkeiten, um die Ergebnisse dieser Arbeit möglicherweise weiter zu verbessern. Zunächst könnten weitere Vorverarbeitungsmethoden getestet werden. Beispielsweise könnten andere Vektorisierungsmethoden zu einer besseren Repräsentation der Artikel führen. Eine weitere Möglichkeit wären weitere Modellarchitekturen zu testen. Zusätzlich könnte es hilfreich sein, Metadaten wie Autoren, Editoren oder der die Anzahl der Bearbeitungen in die Analyse einzubeziehen, um zusätzliche Kontextinformationen zu nutzen.

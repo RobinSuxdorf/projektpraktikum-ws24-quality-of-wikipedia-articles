@@ -1,19 +1,19 @@
 \section{Experimente}
-In diesem Kapitel wird die Durchführung der Experimente beschrieben. Dafür wird zunächst die zugrunde liegende Projektstruktur erklärt, gefolgt von einer Vorstellung der verwendeten Metriken. Abschließend werden die Ergebnisse der verschiedenen Modelle dargestellt und interpretiert.
+In diesem Kapitel werden die Experimente beschrieben, beginnend mit der Projektstruktur und den verwendeten Metriken, gefolgt von der Darstellung und Interpretation der Ergebnisse der verschiedenen Modelle.
 
 \subsection{Projektstruktur}
 \label{sec:projektstruktur}
 Um eine konsistente Datenverarbeitung und vergleichbare Ergebnisse zu gewährleisten, wurde eine modulare Pipeline in einem Python-Package implementiert. Diese Pipeline umfasst Methoden zum Laden, Vorverarbeiten, Extrahieren von Merkmalen, Trainieren und Evaluieren von Modellen. Alle Komponenten können sowohl in der Pipeline als auch in Jupyter-Notebooks verwendet werden.
 
-Die Pipeline wird über YAML-Konfigurationsdateien gesteuert, die Parameter wie Dateipfade, aktivierte Vorverarbeitungsschritte, Modellparameter und Evaluationskriterien enthalten. Zudem erlaubt sie die partielle Ausführung einzelner Schritte, sodass beispielsweise nur das Modell mit variierenden Parametern trainiert werden kann, was die Laufzeit reduziert.
+Die Pipeline wird über YAML-Konfigurationsdateien gesteuert, die Parameter wie Dateipfade, Vorverarbeitungsschritte, Modellparameter und Evaluationskriterien enthalten. Sie ermöglicht die Ausführung einzelner Schritte, sodass beispielsweise nur das Modell mit variierenden Parametern trainiert werden kann, was die Laufzeit reduziert.
 
 Die Modelle sind als Klassen implementiert, die von einer abstrakten Basisklasse erben, um eine einheitliche Schnittstelle für die Pipeline bereitzustellen. Die klassischen maschinellen Lernmethoden lassen sich direkt über die Konfigurationsdateien auswählen. Aufgrund zusätzlicher Komplexität wurden die Deep Learning Ansätze nicht in die Pipeline integriert, sie verwenden jedoch Methoden aus der Pipeline.
 
 \subsection{Evaluationsmetriken}
 \label{sec:evaluationsmetriken}
-Sei $D$ ein Datensatz. In der binären Klassifikation liegt unser Hauptfokus primär auf der Optimierung des \textbf{Recalls} $\rec(D, \clf)$ und sekundär auf der \textbf{Precision} $\prec(D, \clf)$. Dabei ist $\clf\colon\mathbb{R}^d\to \{0, 1\}$ ein binärer Klassifikator.\\
+Sei $D$ ein Datensatz. In der binären Klassifikation liegt unser Hauptfokus primär auf der Optimierung des \textit{Recalls} $\rec(D, \clf)$ und sekundär auf der \textit{Precision} $\prec(D, \clf)$. Dabei ist $\clf\colon\mathbb{R}^d\to \{0, 1\}$ ein binärer Klassifikator.\\
 
-Für die Multi-Label-Klassifikation betrachten wir den Klassifikator $\clf\colon\mathbb{R}^d\to\{0, 1\}^k$, wobei $k$ die Anzahl der verschiedenen Labels ist (in diesem Bericht $k=5$). Komponentenweise können wir $\clf$ auch schreiben als $\clf = (\clf_i)_{1\leq i\leq k}$, wobei $\clf_i\colon\mathbb{R}^d\to\{0, 1\}$ ein binärer Klassifikator ist. Wir definieren den \textbf{Macro Average Recall} von $\clf$ als
+Für die Multi-Label-Klassifikation betrachten wir den Klassifikator $\clf\colon\mathbb{R}^d\to\{0, 1\}^k$, wobei $k$ die Anzahl der verschiedenen Labels ist (in diesem Bericht $k=5$). Komponentenweise können wir $\clf$ auch schreiben als $\clf = (\clf_i)_{1\leq i\leq k}$, wobei $\clf_i\colon\mathbb{R}^d\to\{0, 1\}$ ein binärer Klassifikator ist. Wir definieren den \textit{Macro Average Recall} von $\clf$ als
 \begin{equation*}
     \operatorname{macro\,avg\,rec}(D, \clf) = \frac{1}{k}\sum_{i=1}^k\rec (D, \clf_i).
 \end{equation*}

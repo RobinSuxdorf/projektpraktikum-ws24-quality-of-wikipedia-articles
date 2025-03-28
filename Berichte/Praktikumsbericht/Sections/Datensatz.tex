@@ -5,17 +5,8 @@ Im Rahmen des Praktikums wurde zuerst der Datensatz analysiert. Im Folgenden wir
 
 \subsection{Ursprünglicher Datensatz}
 \label{UrsprunglicherDatensatz}
-%Erter Satz geändert
-Als Basis wurden der Datensatz \cite{Urbanbricks2020} verwendet. Die Daten lagen in zwei Dateien unterteilt vor. Die erste Datei enthielt gute Artikel und die zweite enthielt %\emph{promotional} (
-Werbeartikel. Die Werbeartikel haben dabei eigene Labels: advert (Werbeanzeigen), coi (enge Verbindung des Autors zum Artikel), fanpov (potentielle Fandarstellung), PR  (Presseartikel), resume (Lebenslauf).
-%\begin{itemize}
-%    \item advert - „Dieser Artikel enthält Inhalte, die wie eine Werbeanzeige verfasst sind.“
-%\item coi - „Ein Hauptautor dieses Artikels scheint eine enge Verbindung zu seinem Thema zu haben.“
-%\item fanpov - „Dieser Artikel ist möglicherweise aus der Sicht eines Fans geschrieben, statt aus einer neutralen Perspektive.“
-%\item pr - „Dieser Artikel liest sich wie eine Pressemitteilung oder ein Nachrichtenartikel oder basiert weitgehend auf routinemäßiger Berichterstattung oder Sensationslust.“
-%\item resume - „Dieser biografische Artikel ist wie ein Lebenslauf geschrieben.“
-%\end{itemize}
-%Der zweite Datensatz enthielt Artikel, die als \emph{good} klassifiziert worden sind. 
+Als Basis wurde der Datensatz \cite{Urbanbricks2020} verwendet, welcher sowohl hochwertige Wikipedia-Artikel enthält, die den Status eines \emph{Good Article} (GA) erreicht haben, sowie Artikel mit \textit{promotional} (werblichen) Inhalten. Ein \emph{Good Article} erf"ullt bestimmte Qualitätskriterien wie eine verständliche Schreibweise, faktische Korrektheit und Neutralität \cite{wiki}. Diese Artikel haben den Begutachtungsprozess der Wikipedia erfolgreich durchlaufen. Die werblichen Artikel sind in verschiedene Kategorien unterteilt: \emph{advert} (klassische Werbeanzeigen), \emph{coi} (Interessenkonflikte des Autors), \emph{fanpov} (mögliche Fandarstellung), \emph{PR} (Presseartikel) und \emph{resume} (Lebensläufe).
+
 Der Datensatz zeigte erhebliche Ungleichgewichte in der Verteilung der Werbe-Labels.
 
 \begin{figure}[H]
@@ -37,16 +28,9 @@ Es wurde ein Konverter entwickelt, der die Artikel anhand der Templates auf drei
 
 \subsection{Problemdefinition}
 \label{Problemdefinition}
-Das Ziel dieses Projekts ist die Entwicklung von Modellen zur automatisierten Klassifikation von Wikipedia-Artikeln als \emph{promotional} (werblich) oder \emph{nicht-promotional}. Dabei gab es eine Unterteilung in drei Problemarten.
-\begin{itemize}
-    \item Die Verwendung des ursprünglichen Datensatzes zur binären Klassifizierung
-    \item Die Verwendung des Wikipedia Dump Datensatzes zur Multiklassen-Klassifizierung zwischen guten Artikeln, neutralen Artikeln und Werbenden Artikeln
-    \item Eine Multilabel-Klassifizierung, welche in den werbenden Artikeln zwischen den verschiedenen Arten (advert, coi, fanpov, pr, resume) unterscheiden kann.
-\end{itemize}
-%Dabei wird ebenfalls klassifiziert, wie ein Artikel promotional ist, also z.B. ob er eine Werbung, ein PR-Artikel usw. ist. Wikipedia strebt nach objektiven und neutralen Inhalten; daher ist die Identifizierung von Artikeln mit werbenden Charakter von großer Bedeutung, um die sachliche Qualität der Plattform zu gewährleisten.
+Das Ziel dieses Projekts ist die Entwicklung von Modellen zur automatisierten Klassifikation von Wikipedia-Artikeln hinsichtlich ihres \textit{promotional} (werblichen) Charakters. Dabei haben wir uns mit den folgenden zwei Fragestellungen beschäftigt:
+\begin{enumerate}
+    \item Ist ein gegebener Wikipedia-Artikel promotional oder nicht-promotional?
 
-%\subsection{Zielsetzung}
-
-%Die Hauptziele des Projekts sind:
-
-%\begin{itemize} \item Entwicklung von drei klassischen maschinellen Lernmodellen und einem Deep-Learning-Modell zur Klassifikation von Wikipedia-Artikeln. \item Vergleich der Modelle anhand von Leistungsmetriken wie Genauigkeit, Präzision, Recall und F1-Score. \item Identifikation des Modells mit der besten Leistung für die gegebene Aufgabe. \end{itemize}
+    \item Falls ein Wikipedia-Artikel als promotional klassifiziert wurde, welche Label treffen auf ihn zu?
+\end{enumerate}
