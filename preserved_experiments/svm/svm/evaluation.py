@@ -1,3 +1,5 @@
+"""Author: Johannes Krämer"""
+
 import logging
 import pandas as pd
 import numpy as np

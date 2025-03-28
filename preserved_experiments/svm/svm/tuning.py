@@ -1,3 +1,5 @@
+"""Author: Johannes Krämer"""
+
 import logging
 import optuna
 import sklearn.metrics as skm

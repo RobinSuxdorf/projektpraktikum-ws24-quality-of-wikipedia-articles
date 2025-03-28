@@ -1,3 +1,8 @@
+"""Compare different SVM kernels.
+
+Author: Johannes Krämer
+"""
+
 import logging
 import sklearn.model_selection as skms
 import sklearn.svm as sksvm
@@ -69,14 +74,14 @@ if __name__ == "__main__":
 #  [ 15 447]]
 # 2024-12-08 00:51:33,079 - INFO - LinearSVC(C=100) - Classification Report:
 #               precision    recall  f1-score   support
-# 
+#
 #         good       0.98      0.96      0.97       621
 #  promotional       0.95      0.97      0.96       462
-# 
+#
 #     accuracy                           0.96      1083
 #    macro avg       0.96      0.96      0.96      1083
 # weighted avg       0.96      0.96      0.96      1083
-# 
+#
 # 2024-12-08 00:51:33,081 - INFO - LinearSVC(C=100) - Accuracy: 0.96398891966759
 
 # 2024-12-08 00:51:33,081 - INFO - SVC(kernel='linear') - Tuning
@@ -88,14 +93,14 @@ if __name__ == "__main__":
 #  [ 15 447]]
 # 2024-12-08 00:53:58,731 - INFO - SVC(C=10, kernel='linear') - Classification Report:
 #               precision    recall  f1-score   support
-# 
+#
 #         good       0.98      0.96      0.97       621
 #  promotional       0.95      0.97      0.96       462
-# 
+#
 #     accuracy                           0.96      1083
 #    macro avg       0.96      0.96      0.96      1083
 # weighted avg       0.96      0.96      0.96      1083
-# 
+#
 # 2024-12-08 00:53:58,734 - INFO - SVC(C=10, kernel='linear') - Accuracy: 0.96398891966759
 
 # 2024-12-08 00:53:58,734 - INFO - SVC() - Tuning
@@ -107,14 +112,14 @@ if __name__ == "__main__":
 #  [ 19 443]]
 # 2024-12-08 00:57:08,836 - INFO - SVC(C=10) - Classification Report:
 #               precision    recall  f1-score   support
-# 
+#
 #         good       0.97      0.96      0.97       621
 #  promotional       0.95      0.96      0.95       462
-# 
+#
 #     accuracy                           0.96      1083
 #    macro avg       0.96      0.96      0.96      1083
 # weighted avg       0.96      0.96      0.96      1083
-# 
+#
 # 2024-12-08 00:57:08,839 - INFO - SVC(C=10) - Accuracy: 0.9602954755309326
 
 # 2024-12-08 00:57:08,839 - INFO - SVC(kernel='poly') - Tuning
@@ -126,14 +131,14 @@ if __name__ == "__main__":
 #  [ 38 424]]
 # 2024-12-08 01:00:47,884 - INFO - SVC(C=10, kernel='poly') - Classification Report:
 #               precision    recall  f1-score   support
-# 
+#
 #         good       0.94      0.93      0.93       621
 #  promotional       0.91      0.92      0.91       462
-# 
+#
 #     accuracy                           0.92      1083
 #    macro avg       0.92      0.92      0.92      1083
 # weighted avg       0.92      0.92      0.92      1083
-# 
+#
 # 2024-12-08 01:00:47,887 - INFO - SVC(C=10, kernel='poly') - Accuracy: 0.9242843951985226
 
 # 2024-12-08 01:00:47,888 - INFO - SVC(kernel='sigmoid') - Tuning
@@ -145,12 +150,12 @@ if __name__ == "__main__":
 #  [ 16 446]]
 # 2024-12-08 01:02:37,577 - INFO - SVC(C=10, kernel='sigmoid') - Classification Report:
 #               precision    recall  f1-score   support
-# 
+#
 #         good       0.97      0.96      0.97       621
 #  promotional       0.94      0.97      0.96       462
-# 
+#
 #     accuracy                           0.96      1083
 #    macro avg       0.96      0.96      0.96      1083
 # weighted avg       0.96      0.96      0.96      1083
-# 
+#
 # 2024-12-08 01:02:37,579 - INFO - SVC(C=10, kernel='sigmoid') - Accuracy: 0.961218836565097
