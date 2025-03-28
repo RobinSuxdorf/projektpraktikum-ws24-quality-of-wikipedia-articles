@@ -3,6 +3,9 @@ Below are the settings used for the use cases
 
 Author: Emmanuelle Steenhof"""
 
+"""This tutorial has been used to learn implementing transformers
+Fine-tune a pretrained model, https://huggingface.co/docs/transformers/en/training, 18.03.2025"""
+
 from src.transformer.ExecuteModel import execute_all_methods
 
 
