@@ -1,5 +1,5 @@
 """Reads in the data
-
+Based on files in pipeline adjusted to work for transformer
 Author: Emmanuelle Steenhof"""
 
 import pandas as pd
@@ -7,9 +7,7 @@ from DataPreprocessing import preprocess_data
 import datasets
 
 
-def read_data_for_binary_classification(
-    promotional_path, good_path, preprocess_data_flg
-):
+def read_data_for_binary_classification(promotional_path, good_path, preprocess_data_flg):
     """Reads in the data for binary classification"""
     df_promo = pd.read_csv(promotional_path)
     df_good = pd.read_csv(good_path)
@@ -29,9 +27,7 @@ def read_data_for_binary_classification(
     return ds, 2
 
 
-def read_data_for_three_class_classification(
-    promotional_path, neutral_path, good_path, preprocess_data_flg
-):
+def read_data_for_three_class_classification(promotional_path, neutral_path, good_path, preprocess_data_flg):
     """Here the data is being read in"""
     df_promo = pd.read_csv(promotional_path)
     df_good = pd.read_csv(good_path)
@@ -85,9 +81,7 @@ def read_data_with_multilabel(promotional_path, preprocess_data_flg):
     return dataset_final, 5
 
 
-def read_data_with_multilabel_augmented(
-    promotional_path, augmented_path, preprocess_data_flg
-):
+def read_data_with_multilabel_augmented(promotional_path, augmented_path, preprocess_data_flg):
     """This function makes reads in the data"""
     df_promo = pd.read_csv(promotional_path)
     df_promo_augmented = pd.read_csv(augmented_path)
@@ -133,3 +127,4 @@ def read_data_with_multilabel_augmented(
     ds["train"] = datasets.Dataset.from_pandas(df_promo_augmented)
     print(ds)
     return ds, 5
+

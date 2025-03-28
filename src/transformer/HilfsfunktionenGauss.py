@@ -3,8 +3,6 @@
 Author: Emmanuelle Steenhof"""
 
 import numpy as np
-
-
 def calculate_gauss(values):
     """The gauss value gets calculated here"""
     mean = np.mean(values)
@@ -26,7 +24,6 @@ def calculate_variance(values, mean):
         sum_variance = sum_variance + ((i - mean) * (i - mean))
     variance = sum_variance / float(len(values))
     return variance
-
 
 def extract_label_of_one_type(labels, position):
     """Here a label can be chosen and it is being extracted for all predictions"""

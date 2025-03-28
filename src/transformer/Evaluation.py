@@ -2,6 +2,7 @@
 
 Author: Emmanuelle Steenhof"""
 
+
 from EvaluationTest import evaluate_model
 import torch
 import numpy as np
@@ -10,10 +11,7 @@ from HilfsfunktionenGauss import calculate_gauss
 from HilfsfunktionenGauss import calculate_variance
 from matplotlib import pyplot as plt
 
-
-def evaluation_step_for_model_binary(
-    batch, batch_real_results_list, batch_predictions_list, model, device
-):
+def evaluation_step_for_model_binary(batch, batch_real_results_list, batch_predictions_list, model, device):
     """This function is one evaluation step of the model"""
     batch = {k: v.to(device) for k, v in batch.items()}
     with torch.no_grad():
@@ -26,26 +24,23 @@ def evaluation_step_for_model_binary(
     return batch_real_results_list, batch_predictions_list
 
 
+
 def evaluate_model_binary(eval_dataloader, model, device):
     """This function gathers the results in a list for further evaluations"""
     batch_real_results_list = []
     batch_predictions_list = []
     for batch in eval_dataloader:
-        batch_real_results_list, batch_predictions_list = (
-            evaluation_step_for_model_binary(
-                batch, batch_real_results_list, batch_predictions_list, model, device
-            )
-        )
+        batch_real_results_list, batch_predictions_list = evaluation_step_for_model_binary(batch, batch_real_results_list,
+                                                                                    batch_predictions_list, model, device)
     evaluate_model(np.array(batch_predictions_list), np.array(batch_real_results_list))
     plt.show()
 
 
-def evaluation_step_for_model_multilabel(
-    batch, batch_real_results_list, batch_predictions_list, backup_list, model, device
-):
+def evaluation_step_for_model_multilabel(batch, batch_real_results_list, batch_predictions_list, backup_list, model, device):
     """This function executes one evaluation step for the model"""
     batch = {k: v.to(device) for k, v in batch.items()}
     with torch.no_grad():
+
         outputs = model(**batch)
 
     predictions = outputs.logits
@@ -60,9 +55,9 @@ def evaluation_step_for_model_multilabel(
         current_max = 1
         for single_prediction in range(len(prediction_set)):
             x = 1 / (1 + np.exp(-prediction_set[single_prediction]))
-            if single_prediction == 0 and x > 0.5:
+            if (single_prediction == 0 and x > 0.5):
                 pred_list.append(1.0)
-            elif single_prediction == 0:
+            elif (single_prediction == 0):
                 pred_list.append(0.0)
             else:
                 if prediction_set[current_max] < prediction_set[single_prediction]:
@@ -79,19 +74,12 @@ def evaluate_model_multilabel(eval_dataloader, model, device):
     batch_predictions_list = []
     backup_list = []
     for batch in eval_dataloader:
-        batch_real_results_list, batch_predictions_list = (
-            evaluation_step_for_model_multilabel(
-                batch,
-                batch_real_results_list,
-                batch_predictions_list,
-                backup_list,
-                model,
-                device,
-            )
-        )
-    batch_predictions_list = set_label_via_anomaly_detection(batch_predictions_list, 1)
+        batch_real_results_list, batch_predictions_list = evaluation_step_for_model_multilabel(batch, batch_real_results_list,
+                                                                                    batch_predictions_list, backup_list,
+                                                                                    model, device)
+    batch_predictions_list = set_label_via_anomaly_detection(batch_predictions_list,1)
 
-    batch_predictions_list = set_label_via_anomaly_detection(batch_predictions_list, 2)
+    batch_predictions_list = set_label_via_anomaly_detection(batch_predictions_list,2)
 
     batch_predictions_list = set_label_via_anomaly_detection(batch_predictions_list, 3)
 
@@ -109,15 +97,12 @@ def evaluate_model_multilabel(eval_dataloader, model, device):
     evaluate_model(np.array(batch_predictions_list), np.array(batch_real_results_list))
     plt.show()
 
-
 def set_label_via_anomaly_detection(batch_predictions_list, position):
     """Sets the labels to 1 if they are considered an outlier"""
     labels_to_set = extract_label_of_one_type(batch_predictions_list, position)
     labels_to_set = calculate_gauss(labels_to_set)
     for i in range(len(batch_predictions_list)):
-        if labels_to_set[i] < np.mean(labels_to_set) - calculate_variance(
-            labels_to_set, np.mean(labels_to_set)
-        ):
+        if labels_to_set[i] < np.mean(labels_to_set) - calculate_variance(labels_to_set, np.mean(labels_to_set)):
             batch_predictions_list[i][position] = 1.0
         else:
             batch_predictions_list[i][position] = 0.0

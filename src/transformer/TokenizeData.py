@@ -2,11 +2,12 @@
 
 Author: Emmanuelle Steenhof"""
 
-
 def tokenizer_function(examples):
     """Is used to tokenize the articles"""
     return tokenizer(examples["text"], padding="max_length", truncation=True)
 
+
+from datasets import load_dataset, concatenate_datasets
 
 def tokenize_data(dataset_final, tokenizer_for_tokenization):
     global tokenizer

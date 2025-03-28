@@ -1,7 +1,11 @@
 """Provides the required data preprocessing tools
+Code copied from pipeline slightly adjusted to fit the transformer model
 
-Authors: Sebastian Bunge, Emmanuelle Steenhof"""
+Authors: Emmanuelle Steenhof"""
 
+
+import re
+import pandas as pd
 import nltk
 from nltk.corpus import stopwords
 from nltk.stem import PorterStemmer
@@ -26,5 +30,4 @@ def preprocess_data(text_series):
     text_series = text_series.str.strip()
     return text_series
 
-
-# print(preprocess_data(["This is a test. I wonder what text will be returned .... ..", "Does this count as a series?"]))
+#print(preprocess_data(["This is a test. I wonder what text will be returned .... ..", "Does this count as a series?"]))
