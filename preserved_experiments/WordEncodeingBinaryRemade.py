@@ -1,7 +1,8 @@
 """Trying to classify words as a preparation for word encoding. Unsuccessfull attempt therefore not fully fledged out.
 
 
-Author: Emmanuelle Steenhof"""
+Author: Emmanuelle Steenhof
+"""
 
 import pandas as pd
 

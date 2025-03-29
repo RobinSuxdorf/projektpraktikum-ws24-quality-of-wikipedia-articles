@@ -1,10 +1,9 @@
 """Used to evaluate the model
 
 Copied from the pipeline and slightly adjusted to use with the transformer
-Author: Emmanuelle Steenhof"""
+Author: Emmanuelle Steenhof
+"""
 
-import logging
-#import matplotlib.pyplot as plt
 from sklearn.metrics import (
     accuracy_score,
     classification_report,
@@ -14,6 +13,7 @@ from sklearn.metrics import (
 from sklearn.utils.multiclass import is_multilabel
 
 from matplotlib import pyplot as plt
+
 
 def evaluate_model(y_pred, y_test) -> plt.Figure:
     """
@@ -84,4 +84,3 @@ def evaluate_model(y_pred, y_test) -> plt.Figure:
 
     fig.tight_layout()
     return fig
-
