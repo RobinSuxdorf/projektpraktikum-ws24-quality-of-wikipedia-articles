@@ -35,7 +35,7 @@ model:
     penalty: ["l1", "l2"]
     solver: ["liblinear", "saga"]
     max_iter: [500, 1000]
-  save: "model_lr_wp_binary.pkl"
+  save: "model_lr_wp_multilabel.pkl"
 
 evaluation:
   save: "evaluation_lr_wp_multilabel.png"

@@ -1,4 +1,4 @@
-# configs/naive-bayes/naive-bayes-wp-binary.yaml
+# configs/naive-bayes/naive-bayes-multiclass.yaml
 
 usecase: "binary"
 start_step: "model"
@@ -8,7 +8,7 @@ data_loader:
   promo_file: "data/wp/promotional_sample.csv"
   neutral_file: "data/wp/neutral_sample.csv"
   shuffle: false
-  save: "loaded_data_wp_binary.csv"
+  save: "loaded_data_multiclass.csv"
 
 preprocessing:
   remove_non_word: true
@@ -17,7 +17,7 @@ preprocessing:
   apply_stemming: true
   remove_numbers: false
   remove_whitespace: true
-  save: "preprocessed_data_wp_binary.csv"
+  save: "preprocessed_data_multiclass.csv"
 
 features:
   type: tfidf
@@ -26,7 +26,7 @@ features:
   min_df: 0.001
   max_features: 10_000
   sublinear_tf: true
-  save: "features_wp_binary.pkl"
+  save: "features_multiclass.pkl"
 
 model:
   type: naive_bayes
@@ -36,10 +36,10 @@ model:
   param_grid:
     alpha: [0.01, 0.1, 0.5, 1.0, 1.5, 2.0, 2.5, 3.0]
     fit_prior: [true, false]
-  save: "model_nb_wp_binary.pkl"
+  save: "model_nb_multiclass.pkl"
 
 evaluation:
-  save: "evaluation_nb_wp_binary.png"
+  save: "evaluation_nb_multiclass.png"
 # 2025-03-10 20:41:47,264 - src.models.naive_bayes - INFO - Trained Naive Bayes model with {'alpha': 2.5, 'fit_prior': True}
 # 2025-03-10 20:41:47,308 - src.evaluation - INFO - Accuracy: 79.51%
 # 2025-03-10 20:41:47,315 - src.evaluation - INFO - Classification Report:

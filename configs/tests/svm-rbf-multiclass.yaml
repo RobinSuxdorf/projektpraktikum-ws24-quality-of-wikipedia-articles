@@ -1,4 +1,4 @@
-# configs/tests/svm-rbf-wp-binary.yaml
+# configs/tests/svm-rbf-multiclass.yaml
 
 usecase: "binary"
 start_step: "model"
@@ -9,7 +9,7 @@ data_loader:
   neutral_file: "data/wp/neutral_sample.csv"
   label_change_frac: 0.0
   shuffle: false
-  save: "loaded_data_wp_binary.csv"
+  save: "loaded_data_multiclass.csv"
 
 preprocessing:
   remove_non_word: true
@@ -18,7 +18,7 @@ preprocessing:
   apply_stemming: false
   remove_numbers: false
   remove_whitespace: true
-  save: "preprocessed_data_wp_binary.csv"
+  save: "preprocessed_data_multiclass.csv"
 
 features:
   type: tfidf
@@ -27,7 +27,7 @@ features:
   min_df: 0.001
   max_features: 10_000
   sublinear_tf: true
-  save: "features_wp_binary.pkl"
+  save: "features_multiclass.pkl"
 
 model:
   type: svm
@@ -37,13 +37,13 @@ model:
   C: 1.0
   kernel: "rbf"
   gamma: "scale"
-  save: "svm_rbf_wp_binary.pkl"
+  save: "svm_rbf_multiclass.pkl"
 
 evaluation:
-  save: "evaluation_svm_rbf_wp_binary.png"
+  save: "evaluation_svm_rbf_multiclass.png"
 # 2025-02-01 14:55:42,281 - src.train - INFO - Training a binary SVM model.
 # 2025-02-01 19:19:40,295 - src.train - INFO - Model training complete.
-# 2025-02-01 19:19:40,385 - src.utils - INFO - Data saved to data/intermediary\svm_rbf_wp_binary.pkl.
+# 2025-02-01 19:19:40,385 - src.utils - INFO - Data saved to data/intermediary\svm_rbf_multiclass.pkl.
 # 2025-02-01 19:19:40,386 - src.evaluation - INFO - Evaluating the model.
 # 2025-02-01 19:44:49,087 - src.evaluation - INFO - Accuracy: 90.42%
 # 2025-02-01 19:44:49,100 - src.evaluation - INFO - Classification Report:
@@ -62,6 +62,6 @@ evaluation:
 #  [ 115 5474  471]
 #  [ 306  658 5034]]
 # 2025-02-01 19:44:49,304 - src.evaluation - INFO - Evaluation finished.
-# 2025-02-01 19:44:49,364 - src.utils - INFO - Data saved to data/intermediary\evaluation_svm_rbf_wp_binary.png.
+# 2025-02-01 19:44:49,364 - src.utils - INFO - Data saved to data/intermediary\evaluation_svm_rbf_multiclass.png.
 # 2025-02-01 19:44:51,816 - __main__ - INFO - Pipeline completed.
 # 2025-02-01 19:44:51,817 - __main__ - INFO - Exiting with return code 0

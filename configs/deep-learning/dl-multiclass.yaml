@@ -6,7 +6,7 @@ data_loader:
   promo_file: "data/wp/promotional_sample.csv"
   neutral_file: "data/wp/neutral_sample.csv"
   shuffle: false
-  save: "loaded_data_wp_binary.csv"
+  save: "loaded_data_multiclass.csv"
 
 preprocessing:
   remove_non_word: true
@@ -15,7 +15,7 @@ preprocessing:
   apply_stemming: true
   remove_numbers: false
   remove_whitespace: true
-  save: "preprocessed_data_wp_binary.csv"
+  save: "preprocessed_data_multiclass.csv"
 
 features:
   type: tfidf
@@ -24,8 +24,7 @@ features:
   min_df: 0.001
   max_features: 10_000
   sublinear_tf: true
-  save: "features_wp_binary.pkl"
-
+  save: "features_multiclass.pkl"
 # 2025-03-15 23:29:31,309 - src.evaluation - INFO - Evaluating the model.
 # 2025-03-15 23:29:34,554 - src.evaluation - INFO - Accuracy: 88.76%
 # 2025-03-15 23:29:34,589 - src.evaluation - INFO - Classification Report:

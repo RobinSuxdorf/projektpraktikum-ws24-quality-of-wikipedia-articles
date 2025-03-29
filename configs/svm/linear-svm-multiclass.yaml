@@ -1,4 +1,4 @@
-# configs/svm/inear-svm-wp-binary.yaml
+# configs/svm/inear-svm-multiclass.yaml
 
 usecase: "binary"
 start_step: "model"
@@ -8,7 +8,7 @@ data_loader:
   promo_file: "data/wp/promotional_sample.csv"
   neutral_file: "data/wp/neutral_sample.csv"
   shuffle: false
-  save: "loaded_data_wp_binary.csv"
+  save: "loaded_data_multiclass.csv"
 
 preprocessing:
   remove_non_word: true
@@ -17,7 +17,7 @@ preprocessing:
   apply_stemming: true
   remove_numbers: false
   remove_whitespace: true
-  save: "preprocessed_data_wp_binary.csv"
+  save: "preprocessed_data_multiclass.csv"
 
 features:
   type: tfidf
@@ -26,7 +26,7 @@ features:
   min_df: 0.001
   max_features: 10_000
   sublinear_tf: true
-  save: "features_wp_binary.pkl"
+  save: "features_multiclass.pkl"
 
 model:
   type: linear_svm
@@ -36,10 +36,10 @@ model:
   param_grid:
     C: [0.1, 1.0, 10.0, 100.0]
     loss: ["hinge", "squared_hinge"]
-  save: "model_lsvm_wp_binary.pkl"
+  save: "model_lsvm_multiclass.pkl"
 
 evaluation:
-  save: "evaluation_lsvm_wp_binary.png"
+  save: "evaluation_lsvm_multiclass.png"
 # 2025-03-10 21:53:50,947 - src.models.support_vector_machine - INFO - Trained LinearSVC model with {'C': 0.1, 'loss': 'squared_hinge'}
 # 2025-03-10 21:53:50,979 - src.evaluation - INFO - Accuracy: 89.58%
 # 2025-03-10 21:53:50,987 - src.evaluation - INFO - Classification Report:

@@ -1,4 +1,4 @@
-# configs/log-reg/log-reg-wp-binary.yaml
+# configs/log-reg/log-reg-multiclass.yaml
 
 usecase: "binary"
 start_step: "model"
@@ -8,7 +8,7 @@ data_loader:
   promo_file: "data/wp/promotional_sample.csv"
   neutral_file: "data/wp/neutral_sample.csv"
   shuffle: false
-  save: "loaded_data_wp_binary.csv"
+  save: "loaded_data_multiclass.csv"
 
 preprocessing:
   remove_non_word: true
@@ -17,7 +17,7 @@ preprocessing:
   apply_stemming: true
   remove_numbers: false
   remove_whitespace: true
-  save: "preprocessed_data_wp_binary.csv"
+  save: "preprocessed_data_multiclass.csv"
 
 features:
   type: tfidf
@@ -26,7 +26,7 @@ features:
   min_df: 0.001
   max_features: 10_000
   sublinear_tf: true
-  save: "features_wp_binary.pkl"
+  save: "features_multiclass.pkl"
 
 model:
   type: logistic_regression
@@ -37,10 +37,10 @@ model:
     penalty: ["l1", "l2"]
     solver: ["liblinear", "saga"]
     max_iter: [500, 1000]
-  save: "model_lr_wp_binary.pkl"
+  save: "model_lr_multiclass.pkl"
 
 evaluation:
-  save: "evaluation_lr_wp_binary.png"
+  save: "evaluation_lr_multiclass.png"
 # 2025-03-10 21:42:46,790 - src.models.logistic_regression - INFO - Trained LogisticRegression model with {'max_iter': 500, 'penalty': 'l1', 'solver': 'saga'}
 # 2025-03-10 21:42:46,819 - src.evaluation - INFO - Accuracy: 89.65%
 # 2025-03-10 21:42:46,825 - src.evaluation - INFO - Classification Report:
