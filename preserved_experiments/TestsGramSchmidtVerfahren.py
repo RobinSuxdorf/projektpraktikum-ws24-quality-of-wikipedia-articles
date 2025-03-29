@@ -11,7 +11,9 @@ def truncate_lists(cat_list):
     cat_list_truncated = []
     for i in cat_list:
         temp = len(i)
-        padded_word = i
+        padded_word = []
+        for word in i.split(' '):
+            padded_word.append(i)
         while temp < amount_of_taken_words:
             padded_word.append(0)
             temp = temp+1
@@ -62,10 +64,10 @@ def transform_article_to_vector(dictionary, input_article):
     return output_vector
 
 
-def gram_schmidt(z1):
+def gram_schmidt(input_vectors):
     """Gram Schmidt algorithm"""
     ortho_vectors = []
-    for i in z1:
+    for i in input_vectors:
         w = i
         if len(ortho_vectors) > 0:
             for j in ortho_vectors:
@@ -127,9 +129,13 @@ def add_list_to_other_list(cat_list, label_list, cat2_list, label_list_2):
     return cat_list, label_list
 
 
-amount_of_taken_articles = 100
-amount_of_taken_words = 10
-amount_of_base_vectors_per_class = 10
+"""Here some parameters get defined can be altered as pleased"""
+#How many articles per label are taken
+amount_of_taken_articles = 10000
+#How many words per article are taken
+amount_of_taken_words = 1000
+#How many base vectors for orthonormalization are being taken per class.
+amount_of_base_vectors_per_class = 1000
 
 """reads in the data and converts it to lists"""
 df = read_in_data()
@@ -157,7 +163,10 @@ orthogonalized_vectors_base = []
 for j in base_vector_cat_1:
     x = []
     for i in range(amount_of_taken_words):
-         x.append(j[i])
+         if i < len(j):
+            x.append(j[i])
+         else:
+             x.append(0)
     orthogonalized_vectors_base.append(x)
 
 """Orthonomalizes the vectors"""
@@ -232,10 +241,16 @@ cat_list = truncate_lists(cat_list)
 """Calculates the results of the models with normal encoding (meaning word1: 1, word2:2 ...."""
 encoded_vector = []
 for i in article_vectors:
-    encoded_vector.append(i[:amount_of_taken_words])
+    j = i[:amount_of_taken_words]
+    while len(j)< amount_of_taken_words:
+        j.append(0)
+    encoded_vector.append(j)
+
 print("Testing the accuracy of normal encoding")
 from sklearn.metrics import accuracy_score
 X_train, X_test, Y_train, Y_test = train_test_split(encoded_vector, label_list, test_size=0.2, random_state=42)
+
+
 test_model = svm.SVC(kernel= 'rbf')
 test_model.fit(X_train, Y_train)
 test_results = test_model.predict(X_test)
