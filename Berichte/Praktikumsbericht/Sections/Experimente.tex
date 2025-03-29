@@ -11,7 +11,7 @@ Die Modelle sind als Klassen implementiert, die von einer abstrakten Basisklasse
 
 \subsection{Evaluationsmetriken}
 \label{sec:evaluationsmetriken}
-Sei $D$ ein Datensatz. In der binären Klassifikation liegt unser Hauptfokus primär auf der Optimierung des \textit{Recalls} $\rec(D, \clf)$ und sekundär auf der \textit{Precision} $\prec(D, \clf)$. Dabei ist $\clf\colon\mathbb{R}^d\to \{0, 1\}$ ein binärer Klassifikator.\\
+Sei $D$ ein Datensatz. In der binären Klassifikation liegt unser Hauptfokus primär auf der Optimierung des \textit{Recalls} $\rec(D, \clf)$ und sekundär auf der \textit{Precision} $\prec(D, \clf)$. Dabei ist $\clf\colon\mathbb{R}^d\to \{0, 1\}$ ein binärer Klassifikator.
 
 Für die Multi-Label-Klassifikation betrachten wir den Klassifikator $\clf\colon\mathbb{R}^d\to\{0, 1\}^k$, wobei $k$ die Anzahl der verschiedenen Labels ist (in diesem Bericht $k=5$). Komponentenweise können wir $\clf$ auch schreiben als $\clf = (\clf_i)_{1\leq i\leq k}$, wobei $\clf_i\colon\mathbb{R}^d\to\{0, 1\}$ ein binärer Klassifikator ist. Wir definieren den \textit{Macro Average Recall} von $\clf$ als
 \begin{equation*}
@@ -19,8 +19,8 @@ Für die Multi-Label-Klassifikation betrachten wir den Klassifikator $\clf\colon
 \end{equation*}
 
 \subsection{Ergebnisse}
-Die folgende Tabelle zeigt die Performance der verschiedenen Modelle:
-\begin{table}[h]
+Tabelle \ref{tab:ergebnisse} zeigt die Performance der verschiedenen Modelle.
+\begin{table}[ht]
     \centering
     \begin{tabular}{|c|c|c|c|c|c|c|}
         \hline
@@ -40,6 +40,7 @@ Die folgende Tabelle zeigt die Performance der verschiedenen Modelle:
         \hline
     \end{tabular}
     \caption{Die Abkürzungen bedeuten: LR (Logistische Regression), NB (Naive Bayes), SVM (Support Vector Machine), NN (Künstliches Neuronales Netz) und DBERT (DistilBERT).}
+    \label{tab:ergebnisse}
 \end{table}
 
 Bei der binären Klassifikation schneiden alle Modelle sehr gut ab. Die besten Ergebnisse werden von der logistischen Regression, Support Vector Machine und dem neuronalen Netz erzielt. Das schlechteste Ergebnis wurde vom Naiven Bayes-Klassifikator erzielt. Die gleichen Modelle schneiden ebenfalls bei der Multi-Klassen-Klassifikation gut ab. DistilBERT fällt hier deutlich ab. Dies könnte darauf hinweisen, dass DistilBERT in der Unterscheidung zwischen drei Klassen weniger robust ist. Möglicherweise liegt dies daran, dass die feineren Unterschiede zwischen den Klassen eine stärkere kontextuelle Einbettung erfordern. Insgesamt zeigen die Ergebnisse, dass für die binäre und für die Multi-Klassen-Klassifikation die logistische Regression, die Support Vector Machine und das neuronale Netz eine robuste Wahl darstellen.
