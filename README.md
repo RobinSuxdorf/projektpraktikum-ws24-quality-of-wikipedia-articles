@@ -201,6 +201,7 @@ model:
 
 ```yaml
 evaluation:
+  test_data: "data/raw/promotional.csv" # (optional) Path to a test dataset to be used instead of the test data from a train test split
   save: "evaluation.png" # Path to save the evaluation results.
 ```
 
