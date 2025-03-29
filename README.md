@@ -31,13 +31,15 @@ pip install -r requirements.txt
 
 ## Usage
 
-To run a machine learning pipeline, use the following command:
+To run a machine learning pipeline, use the command:
 
 ```sh
 python main.py -c <config-name>
 ```
 
 To run a deep learning pipeline, use the `main_deep_learning.ipynb` notebook.
+
+To run the transformer models, use the `main_transformer.py` script.
 
 ## Configuration
 
@@ -224,6 +226,7 @@ evaluation:
     - logistic_regression.py: Model class definitions for Logistic Regression models
     - naive_bayes.py: Model class definitions for Naive Bayes models
     - support_vector_machine.py: Model class definitions for Support Vector Machine models
+  - transformer/: Transformer model implementation with all its submodules
   - vectorizer/: Vectorizer implementations
     - base.py: Abstract base class for vectorizers
     - gensim.py: Vectorizer class definitions for vectorizers using Gensim models
