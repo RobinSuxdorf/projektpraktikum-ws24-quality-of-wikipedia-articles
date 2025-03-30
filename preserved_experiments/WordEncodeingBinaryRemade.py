@@ -113,9 +113,6 @@ def create_final_word_number_mapping(lexicon):
     return final_mapping
 
 
-from EncodingWordsWithLetters import buildingLexiconLetters
-
-
 def create_list_for_training_words(lexicon, letter_lexicon):
     """encodes the words based on the alphabet"""
     alphabet_length = len(letter_lexicon)

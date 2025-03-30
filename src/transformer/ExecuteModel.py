@@ -4,19 +4,19 @@ Author: Emmanuelle Steenhof
 """
 
 from transformers import AutoTokenizer
-from DataLoaders import (
+from src.transformer.DataLoaders import (
     read_data_with_multilabel,
     read_data_with_multilabel_augmented,
     read_data_for_binary_classification,
     read_data_for_three_class_classification,
 )
-from TokenizeData import tokenize_data
-from TrainModel import split_and_reduce_data
-from CreateAllModelComponents import create_dataloaders, create_model_and_functions
+from src.transformer.TokenizeData import tokenize_data
+from src.transformer.TrainModel import split_and_reduce_data
+from src.transformer.CreateAllModelComponents import create_dataloaders, create_model_and_functions
 from torch import optim
 from tqdm.auto import tqdm
-from TrainModel import train_model
-from Evaluation import evaluate_model_multilabel, evaluate_model_binary
+from src.transformer.TrainModel import train_model
+from src.transformer.Evaluation import evaluate_model_multilabel, evaluate_model_binary
 from transformers import DistilBertForSequenceClassification
 
 """This tutorial has been used to learn implementing transformers

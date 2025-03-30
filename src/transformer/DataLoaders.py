@@ -4,7 +4,7 @@ Author: Emmanuelle Steenhof
 """
 
 import pandas as pd
-from DataPreprocessing import preprocess_data
+from src.transformer.DataPreprocessing import preprocess_data
 import datasets
 
 

@@ -3,12 +3,12 @@
 Author: Emmanuelle Steenhof
 """
 
-from EvaluationTest import evaluate_model
+from src.transformer.EvaluationTest import evaluate_model
 import torch
 import numpy as np
-from HilfsfunktionenGauss import extract_label_of_one_type
-from HilfsfunktionenGauss import calculate_gauss
-from HilfsfunktionenGauss import calculate_variance
+from src.transformer.HilfsfunktionenGauss import extract_label_of_one_type
+from src.transformer.HilfsfunktionenGauss import calculate_gauss
+from src.transformer.HilfsfunktionenGauss import calculate_variance
 from matplotlib import pyplot as plt
 
 
