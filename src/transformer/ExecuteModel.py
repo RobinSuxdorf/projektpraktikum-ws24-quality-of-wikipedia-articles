@@ -37,13 +37,14 @@ def execute_all_methods(
     num_epochs,
     filePath,
     load_trained_model_flg,
+    train_test_split_value
 ):
     """This method executes the whole flow"""
 
     if classification_type == "multilabel_normal":
         model_config.num_labels = 5
         dataset_final, amount_of_classes = read_data_with_multilabel(
-            promotional_path, preprocess_data_flg
+            promotional_path, preprocess_data_flg, train_test_split_value
         )
     elif classification_type == "multilabel_augmented":
         model_config.num_labels = 5
@@ -53,12 +54,12 @@ def execute_all_methods(
     elif classification_type == "binary_classification":
         model_config.num_labels = 2
         dataset_final, amount_of_classes = read_data_for_binary_classification(
-            promotional_path, good_path, preprocess_data_flg
+            promotional_path, good_path, preprocess_data_flg, train_test_split_value
         )
     elif classification_type == "three_class_classification":
         model_config.num_labels = 3
         dataset_final, amount_of_classes = read_data_for_three_class_classification(
-            promotional_path, neutral_path, good_path, preprocess_data_flg
+            promotional_path, neutral_path, good_path, preprocess_data_flg, train_test_split_value
         )
 
     """Creates the tokenizer and tokenizes the data"""

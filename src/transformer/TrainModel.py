@@ -11,12 +11,12 @@ def split_and_reduce_data(tokenized_datasets, amount_of_entries):
         training_data = tokenized_datasets["train"].shuffle(seed=42)
     else:
         testing_data = (
-            tokenized_datasets["test"].shuffle(seed=42).select(range(amount_of_entries))
+            tokenized_datasets["test"].shuffle(seed=42).select(range(np.minimum(amount_of_entries, len(tokenized_datasets["test"]))))
         )
         training_data = (
             tokenized_datasets["train"]
             .shuffle(seed=42)
-            .select(range(amount_of_entries))
+            .select(range(np.minimum(amount_of_entries, len(tokenized_datasets["train"]))))
         )
     return testing_data, training_data
 

@@ -9,7 +9,7 @@ import datasets
 
 
 def read_data_for_binary_classification(
-    promotional_path, good_path, preprocess_data_flg
+    promotional_path, good_path, preprocess_data_flg, train_test_split_value
 ):
     """Reads in the data for binary classification"""
     df_promo = pd.read_csv(promotional_path)
@@ -26,12 +26,12 @@ def read_data_for_binary_classification(
     ds = datasets.Dataset.from_pandas(df)
     ds = ds.remove_columns("__index_level_0__")
     ds = ds.shuffle(seed=42)
-    ds = ds.train_test_split(0.2)
+    ds = ds.train_test_split(train_test_split_value)
     return ds, 2
 
 
 def read_data_for_three_class_classification(
-    promotional_path, neutral_path, good_path, preprocess_data_flg
+    promotional_path, neutral_path, good_path, preprocess_data_flg, train_test_split_value
 ):
     """Here the data is being read in"""
     df_promo = pd.read_csv(promotional_path)
@@ -52,11 +52,11 @@ def read_data_for_three_class_classification(
     ds = datasets.Dataset.from_pandas(df)
     ds = ds.remove_columns("__index_level_0__")
     ds = ds.shuffle(seed=42)
-    ds = ds.train_test_split(0.2)
+    ds = ds.train_test_split(train_test_split_value)
     return ds, 3
 
 
-def read_data_with_multilabel(promotional_path, preprocess_data_flg):
+def read_data_with_multilabel(promotional_path, preprocess_data_flg, train_test_split_value):
     df_promo = pd.read_csv(promotional_path)
     if preprocess_data_flg:
         df_promo["text"] = preprocess_data(df_promo["text"])
@@ -81,7 +81,7 @@ def read_data_with_multilabel(promotional_path, preprocess_data_flg):
     """The dataframe is being turned into a dataset"""
     dataset_final = datasets.Dataset.from_pandas(df_promo)
     dataset_final = dataset_final.shuffle()
-    dataset_final = dataset_final.train_test_split(0.2)
+    dataset_final = dataset_final.train_test_split(train_test_split_value)
     print(dataset_final)
     return dataset_final, 5
 

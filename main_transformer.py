@@ -28,6 +28,7 @@ classification_type = "binary_classification"
 save_file_path = "trained_models/binary_classification"
 # load_trained_model_flg means whether one wants to evaluate a pretrained model wiwthout further training.
 load_trained_model_flg = 0
+train_test_split_value = 0.2
 execute_all_methods(
     classification_type,
     model_type,
@@ -42,6 +43,7 @@ execute_all_methods(
     num_epochs,
     save_file_path,
     load_trained_model_flg,
+    train_test_split_value
 )
 
 
@@ -62,6 +64,7 @@ classification_type = "three_class_classification"
 save_file_path = "trained_models/three_class_classification"
 # load_trained_model_flg means whether one wants to evaluate a pretrained model wiwthout further training.
 load_trained_model_flg = 0
+train_test_split_value = 0.2
 execute_all_methods(
     classification_type,
     model_type,
@@ -76,6 +79,7 @@ execute_all_methods(
     num_epochs,
     save_file_path,
     load_trained_model_flg,
+    train_test_split_value
 )
 
 
@@ -96,6 +100,7 @@ classification_type = "multilabel_normal"
 save_file_path = "trained_models/multilabel_normal_classification"
 # load_trained_model_flg means whether one wants to evaluate a pretrained model wiwthout further training.
 load_trained_model_flg = 0
+train_test_split_value = 0.2
 execute_all_methods(
     "multilabel_normal",
     model_type,
@@ -110,6 +115,7 @@ execute_all_methods(
     num_epochs,
     save_file_path,
     load_trained_model_flg,
+    train_test_split_value
 )
 
 
@@ -130,6 +136,7 @@ classification_type = "multilabel_augmented"
 save_file_path = "trained_models/multilabel_augmented_classification"
 # load_trained_model_flg means whether one wants to evaluate a pretrained model wiwthout further training.
 load_trained_model_flg = 0
+train_test_split_value = 0.2
 execute_all_methods(
     classification_type,
     model_type,
@@ -144,4 +151,5 @@ execute_all_methods(
     num_epochs,
     save_file_path,
     load_trained_model_flg,
+    train_test_split_value
 )
