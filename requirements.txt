@@ -1,3 +1,5 @@
+accelerate==1.5.2
+datasets==3.4.1
 joblib==1.4.2
 matplotlib==3.10.1
 nltk==3.9.1
@@ -8,3 +10,5 @@ scipy
 seaborn==0.13.2
 torch==2.6.0
 gensim==4.3.3
+tqdm==4.67.1
+transformers==4.50.0
