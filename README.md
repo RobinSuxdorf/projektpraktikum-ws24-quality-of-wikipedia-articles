@@ -1,3 +1,5 @@
+<!-- Author: Sebastian Bunge -->
+
 # Quality of Wikipedia Articles
 
 This project aims to analyze and classify Wikipedia articles into promotional and non-promotional categories.
@@ -16,6 +18,7 @@ This project aims to analyze and classify Wikipedia articles into promotional an
 - [Project Structure](#project-structure)
 - [Logging](#logging)
 - [Convert Wikipedia Dump](#convert-wikipedia-dump)
+- [Transformer Models](#transformer-models)
 
 ## Installation
 
@@ -250,7 +253,7 @@ evaluation:
 
 Logs are saved to app.log and also printed to the console.
 
-## Convert Wikipedia Dump
+## Convert Wikipedia Dump <!-- Author: Johannes Krämer -->
 
 Download from https://dumps.wikimedia.org/enwiki/
 
@@ -268,3 +271,22 @@ To extract samples from the CSV files run:
 ```sh
 python main_wp_dump_sampling.py -c <config-name>
 ```
+
+## Transformer Models <!-- Author: Emmanuelle Steenhof -->
+
+For using the predefined use cases in the main_transformer file, ensure that your data is stored accordingly or adjust the filepaths defined in the script. The main_transformer file acts as a template with four evaluated use cases (default model: distilBERT) and supports custom adjustments. The following attributes can be modified:
+
+- model_config: Adjust the import and variable to choose a different model.
+- num_epochs: Number of training epochs.
+- augmented_promotional_path: Path to augmented promotional data (set to "" if unused).
+- good_path: Path to good data for binary/three-class classification (set to "" if unused).
+- neutral_path: Path to neutral data for three-class classification (set to "" if unused).
+- promotional_path: Path to promotional data (required for all test cases).
+- model_type: Model type, changeable as needed.
+- amount_of_entries: Number of entries for testing ("ALL" for all entries or an integer).
+- preprocess_data_flg: Flag to apply preprocessing steps (lemmatization, stopword removal, etc.).
+- batch_size: Batch size for model training.
+- classification_type: Determines the use case.
+- save_file_path: Filename for saving or loading the trained model.
+- load_trained_model_flg: Flag (1 to load a pretrained model without further training).
+- train_test_split_value: Fraction or exact count for the train-test split.
