@@ -13,9 +13,9 @@ Die Modelle sind als Klassen implementiert, die von einer abstrakten Basisklasse
 \label{sec:evaluationsmetriken}
 Sei $D$ ein Datensatz. In der binären Klassifikation liegt unser Hauptfokus primär auf der Optimierung des \textit{Recalls} $\rec(D, \clf)$ und sekundär auf der \textit{Precision} $\prec(D, \clf)$. Dabei ist $\clf\colon\mathbb{R}^d\to \{0, 1\}$ ein binärer Klassifikator.
 
-Für die Multi-Label-Klassifikation betrachten wir den Klassifikator $\clf\colon\mathbb{R}^d\to\{0, 1\}^k$, wobei $k$ die Anzahl der verschiedenen Labels ist (in diesem Bericht $k=5$). Komponentenweise können wir $\clf$ auch schreiben als $\clf = (\clf_i)_{1\leq i\leq k}$, wobei $\clf_i\colon\mathbb{R}^d\to\{0, 1\}$ ein binärer Klassifikator ist. Wir definieren den \textit{Macro Average Recall} von $\clf$ als
+Für die Multi-Label-Klassifikation betrachten wir den Klassifikator $\clf\colon\mathbb{R}^d\to\{0, 1\}^K$, wobei $K$ die Anzahl der verschiedenen Labels ist (in diesem Bericht $K=5$). Komponentenweise können wir $\clf$ auch schreiben als $\clf = (\clf_i)_{1\leq i\leq K}$, wobei $\clf_i\colon\mathbb{R}^d\to\{0, 1\}$ ein binärer Klassifikator ist. Wir definieren den \textit{Macro Average Recall} von $\clf$ als
 \begin{equation*}
-    \operatorname{macro\,avg\,rec}(D, \clf) = \frac{1}{k}\sum_{i=1}^k\rec (D, \clf_i).
+    \operatorname{macro\,avg\,rec}(D, \clf) = \frac{1}{k}\sum_{i=1}^K\rec (D, \clf_i).
 \end{equation*}
 
 \subsection{Ergebnisse}
