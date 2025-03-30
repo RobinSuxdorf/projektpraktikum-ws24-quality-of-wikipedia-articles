@@ -1,9 +1,9 @@
-Die Wikipedia-Artikel werden durch die TF-IDF-Vektorisierung als Vektoren $x\in\mathbb{R}^{10000}$ dargestellt. Das neuronale Netz besteht aus einer versteckte Schicht mit 512 Neuronen, wobei die ReLU-Aktivierungsfunktion verwendet wird. Zudem wird zur Regularisierung \textit{Dropout} mit einer Wahrscheinlichkeit von $p=0.5$ auf die versteckte Schicht angewendet, wodurch die Ausgabe der Neuronen mit einer Wahrscheinlichkeit von 50\% auf 0 gesetzt werden. Das Netzwerk lässt sich formal wie folgt beschreiben: $W_1\in\mathbb{R}^{512\times 10000}$, $b_1\in\mathbb{R}^{512}$, $W_2\in\mathbb{R}^{K\times 512}$ und $b_2\in\mathbb{R}^{K}$. Die Ausgabe des neuronalen Netzes ist gegeben durch
+Die Wikipedia-Artikel werden durch die TF-IDF-Vektorisierung als Vektoren $x\in\mathbb{R}^{10000}$ dargestellt. Das neuronale Netz besteht aus einer versteckten Schicht mit 512 Neuronen, wobei die ReLU-Aktivierungsfunktion verwendet wird. Zudem wird zur Regularisierung \textit{Dropout} mit einer Wahrscheinlichkeit von $p=0.5$ auf die versteckte Schicht angewendet, wodurch die Ausgabe der Neuronen mit einer Wahrscheinlichkeit von 50\% auf 0 gesetzt wird. Das Netzwerk lässt sich formal wie folgt beschreiben: $W_1\in\mathbb{R}^{512\times 10000}$, $b_1\in\mathbb{R}^{512}$, $W_2\in\mathbb{R}^{K\times 512}$ und $b_2\in\mathbb{R}^{K}$. Die Ausgabe des neuronalen Netzes ist gegeben durch
 \begin{equation*}
     \hat{y} = W_2\cdot \dropout(\max(W_1x + b_1, 0)), p=0.5) + b_2\in\mathbb{R}^{K}.
 \end{equation*}
 
-Für die binäre Klassifikation ($K=2$) bzw. der Multi-Klassen-Klassifikation ($K=3$) wird das Label mit dem höchsten Wert zurückgegeben, d.h. $\arg\max (\hat{y})$.
+Für die binäre Klassifikation ($K=2$) bzw. die Multi-Klassen-Klassifikation ($K=3$) wird das Label mit dem höchsten Wert zurückgegeben, d.h. $\arg\max (\hat{y})$.
 
 Bei der Multi-Label-Klassifikation wird die \textit{Sigmoidfunktion} $\sigma\colon t\mapsto \frac{1}{1 + e^{-t}}\in [0, 1]$ komponentenweise auf $\hat{y}$ angewendet. Ein Label wird als aktiv betrachtet, wenn der entsprechende Wert von $\hat{y}_i$ größer oder gleich 0.5 ist.
 

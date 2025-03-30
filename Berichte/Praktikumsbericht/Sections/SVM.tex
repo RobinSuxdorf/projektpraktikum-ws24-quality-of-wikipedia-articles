@@ -9,4 +9,4 @@ Im Rahmen des Projekts wurden verschiedene Varianten der SVM von Scikit-Learn \c
 \begin{equation*}
   \min_{w,\, b} \frac{1}{2} w^T w + C \sum_{i=1}^{l} \left( \max(0, 1 - y_i (w^T x_i + b)) \right)^2.
 \end{equation*}
-Dabei ist \( w \in \mathbb{R}^d \) der Gewichtsvektor, \( b \in \mathbb{R} \) der Bias-Term, \( x_i \in \mathbb{R}^d \) ein Element aus dem Trainingsdatensatz mit Label \( y_i \in \{-1, 1\} \), \( l \) die Anzahl der Trainingsbeispiele und \( C > 0 \) der Regularisierungsparameter. Einem \( x \in \mathbb{R}^d \) wird dabei die Klasse \( sign(w^T x + b) \) zugeteilt.
+Dabei ist \( w \in \mathbb{R}^d \) der Gewichtsvektor, \( b \in \mathbb{R} \) der Bias-Term, \( x_i \in \mathbb{R}^d \) ein Element aus dem Trainingsdatensatz mit Label \( y_i \in \{-1, 1\} \), \( l \) die Anzahl der Trainingsbeispiele und \( C > 0 \) der Regularisierungsparameter. Einem \( x \in \mathbb{R}^d \) wird dabei die Klasse \( sign(w^T x + b) \) zugewiesen.

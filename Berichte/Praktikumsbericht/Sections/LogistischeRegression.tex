@@ -7,7 +7,7 @@ Für die Klassifizierung bei der logistischen Regression wird das Optimierungspr
 \begin{equation*}
     h_\theta(x) = \frac{1}{1 + e^{-(\theta_0 + \theta_1 x_1 + \dots + \theta_n x_n)}}.
 \end{equation*}
-Die Kostenfunktion $L$ ist dann und definiert als
+Die Kostenfunktion $L$ ist dann definiert als
 \begin{equation*}
     L_\lambda(D, h_\theta)=L(D,h_\theta)+\lambda R(h_\theta),
 \end{equation*}
@@ -15,4 +15,4 @@ wobei
 \begin{equation*}
     L(D,h_\theta)=- \sum_{i=1}^{m}  y_i \ln h_\theta(x_i) + (1 - y_i) \ln (1 - h_\theta(x_i))
 \end{equation*}
-und den Regularisierungsmethoden $R(h_\theta)=\sum_{i=1}^m\theta^2$ (Ridge-Regression) und $ R(h_\theta)=\sum_{i=1}^m\|\theta\|$ (Lasso-Regression).
+mit den Regularisierungsmethoden $R(h_\theta)=\sum_{i=1}^m\theta^2$ (Ridge-Regression) und $ R(h_\theta)=\sum_{i=1}^m\|\theta\|$ (Lasso-Regression).
