@@ -3,6 +3,7 @@
 Author: Emmanuelle Steenhof
 """
 
+import numpy as np
 
 def split_and_reduce_data(tokenized_datasets, amount_of_entries):
     """This functions reduced the data"""
