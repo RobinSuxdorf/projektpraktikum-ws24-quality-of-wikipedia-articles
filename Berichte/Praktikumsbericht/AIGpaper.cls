@@ -412,7 +412,7 @@
                             \ifenglish%
                                 Research Lab Report
                             \else
-                                Fachpraktikumsbericht
+                                Projektpraktikumsbericht
                             \fi 
                         \else
                             \PackageError{AIGpaper}{It is required to set the type of document}{document type must be one of: seminar, researchlab, proposal}
