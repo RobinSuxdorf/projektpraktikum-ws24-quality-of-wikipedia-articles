@@ -11,6 +11,7 @@
 \usepackage{hyperref}                       % Zeilenumbruch in URL
 \usepackage{xurl}                           % Nach hyperref laden
 \usepackage{microtype}                      % Verbessert den Blocksatz und verhindert overfull \hbox
+\usepackage{multirow}                       % Multirow in Tabellen
 
 %%%% optional packages
 \usepackage{tikz}                           % creating graphs and other structures
@@ -25,7 +26,6 @@
 \usepackage{float}
 %%%% commands
 
-\DeclareMathOperator*{\argmax}{arg\,max}
 \DeclareMathOperator*{\dropout}{Dropout}
 
 \newcommand{\clf}{\operatorname{clf}}
@@ -37,17 +37,16 @@
 \renewcommand{\prec}{\operatorname{prec}}
 \newcommand{\rec}{\operatorname{rec}}
 \newcommand{\fscore}{\operatorname{F1}}
+\newcommand{\tf}{\operatorname{tf}}
+\newcommand{\wf}{\operatorname{wf}}
+\newcommand{\idf}{\operatorname{idf}}
+\newcommand{\tfidf}{\operatorname{tf-idf}}
+\newcommand{\wfidf}{\operatorname{wf-idf}}
 
 %%%% Author and Title Information %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\author{Robin Suxdorf \and Sebastian Bunge \and Johannes Krämer \and Emmanuelle Steenhof \and Alexander Kunze}
+\author{Sebastian Bunge \and Johannes Krämer \and Alexander Kunze \and Robin Suxdorf  \and Emmanuelle Steenhof }
 
 \title{Web Science - Die Qualität von Wikipedia-Artikeln}
-
-%%%% Abstract %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\germanabstract{
-Erstmal nur ein Draft. Inhalte werden weiter abgestimmt. 
-}
 
 \begin{document}
 
@@ -89,7 +88,9 @@ Erstmal nur ein Draft. Inhalte werden weiter abgestimmt.
 
 \section{Ansätze}
 \label{sec:Ansaetze}
-Nachdem die Problemstellung identifiziert wurde, bestand die nächste Aufgabe darin, geeignete Ansätze auszuwählen. Im Rahmen des Projektpraktikums wurden drei klassische Lernverfahren sowie ein Deep-Learning-Ansatz eingesetzt. Aufbauend auf diesen Ansätzen wurde ein fünfter Ansatz entwickelt, der gezielt die Schwächen der vorangegangenen Verfahren beheben sollte. Im Folgenden wird erläutert, welche Techniken hinsichtlich der Vorverarbeitung und Repräsentation der Daten eingesetzt wurden. Anschließend werden die verwendeten Machine-Learning- und Deep-Learning-Ansätze vorgestellt.
+Nachdem die Problemstellung identifiziert wurde, bestand die nächste Aufgabe darin, geeignete Ansätze auszuwählen. Im Rahmen des Projektpraktikums wurden drei klassische Lernverfahren sowie ein Deep-Learning-Ansatz eingesetzt. Aufbauend auf diesen Ansätzen wurde ein fünfter Ansatz entwickelt, der gezielt die Schwächen der vorherigen Verfahren beheben sollte. Im Folgenden wird erläutert, welche Techniken hinsichtlich der Vorverarbeitung und Repräsentation der Daten eingesetzt wurden. Anschließend werden die verwendeten Machine-Learning- und Deep-Learning-Ansätze vorgestellt.
+
+Die Implementierungen der drei klassischen Lernverfahren sind in der Lage, sowohl binäre Klassifikationen als auch Multi-Klassen-Klassifikationen durchzuführen. Für die Multi-Label-Klassifikation wurde in allen drei Fällen ein One-vs-Rest-Ansatz gewählt, bei dem für jedes Label ein separater binärer Klassifikator trainiert wird. Für alle drei Ansätze wurde eine Hyperparameteroptimierung mithilfe von \texttt{GridSearchCV} von Scikit-Learn \cite{Pedregosa2011} durchgeführt. Dieser Ansatz ermittelt mit Hilfe einer Kreuzvalidierung die besten Hyperparameter für die jeweiligen Klassifikatoren. Es wurde nach Macro-Average Recall optimiert. Die Wahl der Metrik wird in \ref{sec:evaluationsmetriken} erläutert.
 
 \input{Sections/Vorverarbeitung}
 
@@ -99,20 +100,17 @@ Nachdem die Problemstellung identifiziert wurde, bestand die nächste Aufgabe da
 
 \input{Sections/SVM}
 
-\subsection{Künstliches neuronales Netz}
+\subsection{Künstliches Neuronales Netz}
 \label{KNN}
 \input{Sections/KNN}
 %Als Deep Learning Verfahren wurden Convolutional Neural Networks (CNN) verwendet. Zunächst war die Idee ein Neuronales Netz mit Rückkoppelung zu verwenden. Da das aber zu schlechten Ergebnissen führte wurden versuche mit einem Convolutional Neural Network gestartet. Diese hatten einen grösseren Erfolg, was dazu geführt hat, dass diese weiter als Ansatz verwendet worden sind.
 
-\subsection{Fünfter Ansatz}
+\subsection{Bidirectional Encoder Representations from Transformers (BERT)}
 \label{Transformer}
 \input{Sections/EigenerAnsatz}
 
 %\subsection{Vortrainierte Transformer Modelle}
 %Für die verwendete Methode wurden Vortrainierte Transformer Modelle verwendet. Dabei wurden verschiedene Transformer betrachtet. 
-
-%\input{Sections/WeitereVerwendeteMethoden} 
-%https://arxiv.org/pdf/2308.00939
 
 \input{Sections/Experimente}
 \label{Experimente}
@@ -125,6 +123,6 @@ Nachdem die Problemstellung identifiziert wurde, bestand die nächste Aufgabe da
 % References
 \addreferences
 
-\makestatement{5}
+% \makestatement{5} % statements are added manually with signature
 
 \end{document}

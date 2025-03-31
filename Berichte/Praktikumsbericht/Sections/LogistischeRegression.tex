@@ -1,9 +1,18 @@
 \subsection{Logistische Regression}
+\label{sec:logreg}
 
-Für die Klassifikation von Wikipedia-Artikeln wurde eine logistische Regression als Modell eingesetzt. Bei der Unterscheidung der Hauptlabels reichte eine einfache Implementierung für die binäre Entscheidung. Bei der Klassifikation der Sublabels wurde der OneVsRest-Ansatz gewählt, um jeweils die binäre Entscheidung zu treffen. Um eine optimale Modellkonfiguration zu gewährleisten, wurde eine Hyperparameteroptimierung mittels GridSearch durchgeführt. Zur Feinabstimmung des Modells wurden folgende spezifische Parameter variiert. Für die Regularisierung wurden zwei Varianten getestet: Die \texttt{l1}-Regularisierung (Lasso) setzt irrelevante Merkmale auf null und führt somit zu einem sparsamen Modell. Die \texttt{l2}-Regularisierung (Ridge) reduziert die Gewichte irrelevanter Merkmale und verstärkt jene, die für die Klassifikation relevanter erscheinen. Neben der Regularisierung spielte das \textbf{Optimierungsverfahren} eine entscheidende Rolle. Zwei Solver wurden evaluiert: Der \texttt{liblinear}-Solver wurde als Standardmethode eingesetzt, da sie sowohl L1- als auch L2-Regularisierung unterstützt. Zusätzlich wurde \texttt{saga}, eine Erweiterung des Stochastic Average Gradient, getestet, die speziell für große Datensätze geeignet ist und ebenfalls mit beiden Regularisierungsarten kompatibel ist.
-Ein weiterer wichtiger Parameter war die \textbf{maximale Anzahl an Iterationen} (\texttt{max\_iter}): \texttt{500} und \texttt{1000}.
+Für die Klassifikation von Labeln wurde die logistische Regression ausgewählt, da sie schnell und einfach zu implementieren war. Um Overfitting zu verhindern, wurden Lasso und Ridge-Regularisierung eingesetzt. Außerdem wurden zwei Solver evaluiert: Der \texttt{liblinear}-Solver wurde als Standardmethode eingesetzt, da er sowohl \texttt{L1}- als auch \texttt{L2}-Regularisierung unterstützt. Zusätzlich wurde \texttt{saga}, eine Erweiterung des Stochastic Average Gradient, getestet, die speziell für große Datensätze geeignet ist und ebenfalls mit beiden Regularisierungen kompatibel ist.
 
-Zur optimalen Abstimmung dieser Hyperparameter wurde eine \textbf{Grid Search} durchgeführt. Dabei wurden verschiedene Kombinationen von Regularisierung, Optimierungsverfahren und Iterationsanzahl systematisch getestet, um die beste Konfiguration für die logistische Regression zu bestimmen.
-
-
-
+Für die Klassifizierung bei der logistischen Regression wird das Optimierungsproblem $\min_\theta L(D,h_\theta)$ gelöst. Dabei ist D der gegebene Datensatz und $\theta$ die Parameter, über die optimiert wird. Für $x \in D$ ist $h_\theta$ definiert als
+\begin{equation*}
+    h_\theta(x) = \frac{1}{1 + e^{-(\theta_0 + \theta_1 x_1 + \dots + \theta_n x_n)}}.
+\end{equation*}
+Die Kostenfunktion $L$ ist dann definiert als
+\begin{equation*}
+    L_\lambda(D, h_\theta)=L(D,h_\theta)+\lambda R(h_\theta),
+\end{equation*}
+wobei
+\begin{equation*}
+    L(D,h_\theta)=- \sum_{i=1}^{m}  y_i \ln h_\theta(x_i) + (1 - y_i) \ln (1 - h_\theta(x_i))
+\end{equation*}
+mit den Regularisierungsmethoden $R(h_\theta)=\sum_{i=1}^m\theta^2$ (\textit{Ridge-Regression}) und $ R(h_\theta)=\sum_{i=1}^m\|\theta\|$ (\textit{Lasso-Regression}).

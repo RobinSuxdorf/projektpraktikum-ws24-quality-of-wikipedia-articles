@@ -1,33 +1,49 @@
 \section{Experimente}
-% Text?
+In diesem Kapitel werden die Experimente beschrieben, beginnend mit der Projektstruktur und den verwendeten Metriken, gefolgt von der Darstellung und Interpretation der Ergebnisse der verschiedenen Modelle.
 
 \subsection{Projektstruktur}
 \label{sec:projektstruktur}
-Zu Beginn des Projekts arbeiteten alle Teilnehmenden explorativ in Jupyter Notebooks, um ein grundlegendes Verständnis der Daten zu entwickeln und erste Modellierungsansätze zu testen. Um konsistente Datenverarbeitung und vergleichbare Ergebnisse zu gewährleisten, wurden gemeinsame Methoden und abstrakte Klassen entwickelt und in einer Python-Bibliothek implementiert.
+Um eine konsistente Datenverarbeitung und vergleichbare Ergebnisse zu gewährleisten, wurde eine modulare Pipeline in einem Python-Package implementiert. Diese Pipeline umfasst Methoden zum Laden, Vorverarbeiten, Extrahieren von Merkmalen, Trainieren und Evaluieren von Modellen. Alle Komponenten können sowohl in der Pipeline als auch in Jupyter-Notebooks verwendet werden.
 
-Diese Pipeline \texttt{main.py} verwendet gemeinsame Methoden zum Laden, Vorverarbeiten, Extrahieren von Merkmalen, Trainieren von Modellen und Evaluieren von Ergebnissen. Diese Komponenten sind in \texttt{src/} implementiert, sodass sie sowohl in die Pipeline als auch in Jupyter Notebooks importiert werden können. Die Pipeline wird über YAML-Konfigurationsdateien \texttt{configs/} gesteuert, die alle relevanten Einstellungen wie Dateipfade, aktivierte Vorverarbeitungsschritte, Modellparameter und Evaluationskriterien beinhalten. Dadurch ist eine einfache Anpassung zum Testen verschiedener Parameter und Anwendungsfälle möglich. Zudem können einzelne Pipeline-Schritte partiell ausgeführt werden, zum Beispiel können die Vorverarbeitungsschritte aus vorherigen Läufen geladen werden, um ausschließlich das Modell mit variierenden Parametern zu trainieren und so die Laufzeit deutlich zu verringern.
+Die Pipeline wird über YAML-Konfigurationsdateien gesteuert, die Parameter wie Dateipfade, Vorverarbeitungsschritte, Modellparameter und Evaluationskriterien enthalten. Sie ermöglicht die Ausführung einzelner Schritte, sodass beispielsweise nur das Modell mit variierenden Parametern trainiert werden kann, was die Laufzeit reduziert.
 
-Die Modelle wurden als Klassen implementiert, die von einer abstrakten Basisklasse erben. Dadurch wird eine einheitliche Schnittstelle für die Pipeline bereitgestellt, die es ermöglicht, verschiedene Modelle einfach zu vergleichen. Die klassischen maschinellen Lernmethoden können ohne weiteres über Konfigurationsdateien ausgewählt werden. Die Deep Learning Modelle, wie MLPs und Transformer, wurden aufgrund ihrer zusätzlichen Komplexität in Jupyter Notebooks mit kleineren Anpassungen ausgeführt und evaluiert, welche aber die gleichen Methoden aus \texttt{src/} verwendeten.
+Die Modelle sind als Klassen implementiert, die von einer abstrakten Basisklasse erben, um eine einheitliche Schnittstelle für die Pipeline bereitzustellen. Die klassischen maschinellen Lernmethoden lassen sich direkt über die Konfigurationsdateien auswählen. Aufgrund zusätzlicher Komplexität wurden die Deep Learning Ansätze nicht in die Pipeline integriert, sie verwenden jedoch Methoden aus der Pipeline.
 
 \subsection{Evaluationsmetriken}
-Sei $D$ ein Datensatz. In der binären Klassifikation liegt unser Hauptfokus primär auf der Optimierung des \textbf{Recalls} $\rec(D, \clf)$ und sekundär auf der \textbf{Precision} $\prec(D, \clf)$. Dabei ist $\clf\colon\mathbb{R}^d\to \{0, 1\}$ ein binärer Klassifikator.\\
+\label{sec:evaluationsmetriken}
+Sei $D$ ein Datensatz. In der binären Klassifikation liegt unser Hauptfokus primär auf der Optimierung des \textit{Recalls} $\rec(D, \clf)$ und sekundär auf der \textit{Precision} $\prec(D, \clf)$. Dabei ist $\clf\colon\mathbb{R}^d\to \{0, 1\}$ ein binärer Klassifikator.
 
-Für die Multilabel-Klassifikation betrachten wir den Klassifikator $\clf\colon\mathbb{R}^d\to\{0, 1\}^k$, wobei $k$ die Anzahl der verschiedenen Labels ist (in diesem Bericht $k=5$). Komponentenweise können wir $\clf$ auch schreiben als $\clf = (\clf_i)_{1\leq i\leq k}$, wobei $\clf_i\colon\mathbb{R}^d\to\{0, 1\}$ ein binärer Klassifikator ist. Wir definieren den \textbf{Macro Average Recall} von $\clf$ als
+Für die Multi-Label-Klassifikation betrachten wir den Klassifikator $\clf\colon\mathbb{R}^d\to\{0, 1\}^K$, wobei $K$ die Anzahl der verschiedenen Labels ist (in diesem Bericht $K=5$). Komponentenweise können wir $\clf$ auch schreiben als $\clf = (\clf_i)_{1\leq i\leq K}$, wobei $\clf_i\colon\mathbb{R}^d\to\{0, 1\}$ ein binärer Klassifikator ist. Wir definieren den \textit{Macro Average Recall} von $\clf$ als
 \begin{equation*}
-    \operatorname{macro\,avg\,rec}(D, \clf) = \frac{1}{k}\sum_{i=1}^k\rec (D, \clf_i).
+    \operatorname{macro\,avg\,rec}(D, \clf) = \frac{1}{k}\sum_{i=1}^K\rec (D, \clf_i).
 \end{equation*}
 
 \subsection{Ergebnisse}
-\begin{center}
-    \begin{tabular}{|c|c|c|c|c|}
+\label{Ergebnisse}
+Tabelle \ref{tab:ergebnisse} zeigt die Performance der verschiedenen Modelle.
+\begin{table}[ht]
+    \centering
+    \begin{tabular}{|c|c|c|c|c|c|c|}
         \hline
-        Ansatz                       & acc  & prec & rec  & F1   \\
+        \multirow{2}{*}{Ansatz} & \multicolumn{2}{c|}{Binär} & \multicolumn{2}{c|}{Multi-Klasse} & \multicolumn{2}{c|}{Multi-Label}                                         \\
+        \cline{2-7}
+                                & rec                        & prec                              & rec                              & prec & macro avg rec & macro avg prec \\
         \hline
-        Logistische Regression       & 0.99 & 0.98 & 0.92 & 0.93 \\
-        Bayes-Klassifikator          & 0.95 & 0.98 & 0.93 & 0.91 \\
-        Support Vector Machine       & 0.94 & 0.92 & 0.89 & 0.95 \\
-        Convolutional Neural Network & 0.91 & 0.94 & 0.92 & 0.96 \\
-        Transformer                  & 0.97 & 0.95 & 0.92 & 0.93 \\
+        LR                      & 0.95                       & 0.96                              & 0.89                             & 0.89 & 0.32          & 0.44           \\
+        \hline
+        NB                      & 0.88                       & 0.91                              & 0.86                             & 0.80 & 0.65          & 0.34           \\
+        \hline
+        SVM                     & 0.95                       & 0.97                              & 0.89                             & 0.88 & 0.38          & 0.38           \\
+        \hline
+        NN                      & 0.96                       & 0.95                              & 0.89                             & 0.87 & 0.35          & 0.43           \\
+        \hline
+        DBERT                   & 0.94                       & 0.94                              & 0.88                             & 0.88 & 0.46          & 0.38           \\
         \hline
     \end{tabular}
-\end{center}
+    \caption{Die Abkürzungen bedeuten: LR (Logistische Regression), NB (Naive Bayes), SVM (Support Vector Machine), NN (Künstliches Neuronales Netz) und DBERT (DistilBERT).}
+    \label{tab:ergebnisse}
+\end{table}
+
+Bei der binären Klassifikation schneiden alle Modelle sehr gut ab. Die besten Ergebnisse werden von der logistischen Regression, Support Vector Machine und dem neuronalen Netz erzielt. Das schlechteste Ergebnis wurde vom Naiven Bayes-Klassifikator erzielt. Die gleichen Modelle schneiden bei der Multi-Klassen-Klassifikation am Besten ab. Insgesamt zeigen die Ergebnisse, dass für die binäre und für die Multi-Klassen-Klassifikation die logistische Regression, die Support Vector Machine und das neuronale Netz eine robuste Wahl darstellen.
+
+Die Ergebnisse für die Multi-Label-Klassifikation fallen deutlich schlechter aus als bei den anderen beiden Klassifikationsproblemen. Der Grund dafür könnte sein, dass sich die Labels teilweise überlappen oder mehr kontextuelles Verständnis notwendig ist. Den besten Macro Average Recall erzielt der Naive Bayes-Klassifikator, wobei hier die Macro Average Precision am geringsten ist, d.h. es werden auch viele falsch-positive Vorhersagen getroffen.
