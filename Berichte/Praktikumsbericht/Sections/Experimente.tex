@@ -37,13 +37,13 @@ Tabelle \ref{tab:ergebnisse} zeigt die Performance der verschiedenen Modelle.
         \hline
         NN                      & 0.96                       & 0.95                              & 0.89                             & 0.87 & 0.35          & 0.43           \\
         \hline
-        DBERT                   & 0.94                       & 0.94                              & 0.95                             & 0.95 & 0.46          & 0.38           \\
+        DBERT                   & 0.94                       & 0.94                              & 0.88                             & 0.88 & 0.46          & 0.38           \\
         \hline
     \end{tabular}
     \caption{Die Abkürzungen bedeuten: LR (Logistische Regression), NB (Naive Bayes), SVM (Support Vector Machine), NN (Künstliches Neuronales Netz) und DBERT (DistilBERT).}
     \label{tab:ergebnisse}
 \end{table}
 
-Bei der binären Klassifikation schneiden alle Modelle sehr gut ab. Die besten Ergebnisse werden von der logistischen Regression, Support Vector Machine und dem neuronalen Netz erzielt. Das schlechteste Ergebnis wurde vom Naiven Bayes-Klassifikator erzielt. DistilBERT schneidet bei der Multi-Klassen-Klassifikation am Besten ab. Insgesamt zeigen die Ergebnisse, dass für die binäre und für die Multi-Klassen-Klassifikation die logistische Regression, die Support Vector Machine und das neuronale Netz eine robuste Wahl darstellen.
+Bei der binären Klassifikation schneiden alle Modelle sehr gut ab. Die besten Ergebnisse werden von der logistischen Regression, Support Vector Machine und dem neuronalen Netz erzielt. Das schlechteste Ergebnis wurde vom Naiven Bayes-Klassifikator erzielt. Die gleichen Modelle schneiden bei der Multi-Klassen-Klassifikation am Besten ab. Insgesamt zeigen die Ergebnisse, dass für die binäre und für die Multi-Klassen-Klassifikation die logistische Regression, die Support Vector Machine und das neuronale Netz eine robuste Wahl darstellen.
 
 Die Ergebnisse für die Multi-Label-Klassifikation fallen deutlich schlechter aus als bei den anderen beiden Klassifikationsproblemen. Der Grund dafür könnte sein, dass sich die Labels teilweise überlappen oder mehr kontextuelles Verständnis notwendig ist. Den besten Macro Average Recall erzielt der Naive Bayes-Klassifikator, wobei hier die Macro Average Precision am geringsten ist, d.h. es werden auch viele falsch-positive Vorhersagen getroffen.
